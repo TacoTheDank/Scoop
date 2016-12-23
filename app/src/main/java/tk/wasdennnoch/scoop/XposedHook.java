@@ -64,17 +64,20 @@ public class XposedHook implements IXposedHookLoadPackage {
         @Override
         protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
             if (mSent) {
-                Log.d("scoop", "uncaughtExceptionHook (" + mPkg + "): Broadcast already sent, aborting");
+                Log.d("scoop", "uncaughtExceptionHook (" + mPkg + "): Broadcast already sent");
                 return;
             }
-            Log.d("scoop", "uncaughtExceptionHook (" + mPkg + "): sending broadcast");
+            Log.d("scoop", "uncaughtExceptionHook (" + mPkg + "): Sending broadcast");
             Intent intent = new Intent(INTENT_ACTION)
                     .setPackage(XposedHook.class.getPackage().getName())
                     .putExtra(INTENT_PACKAGE_NAME, mApplication.getPackageName())
                     .putExtra(INTENT_TIME, System.currentTimeMillis())
-                    .putExtra(INTENT_THROWABLE, (Throwable) param.args[1]);
+                    .putExtra(INTENT_THROWABLE, new MockThrowable((Throwable) param.args[1]));
+            // Just wrap everything because it costs no performance (well, technically it does,
+            // but the process is about to die anyways, so I don't care).
+            // Also I have no idea how to detect custom subclasses efficiently.
             mApplication.sendBroadcast(intent);
-            mSent = true; // Doesn't need to be reset as process dies anyways
+            mSent = true; // Doesn't need to be reset as process dies soon
         }
     };
 

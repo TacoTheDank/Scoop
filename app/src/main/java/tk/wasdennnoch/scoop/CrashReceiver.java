@@ -25,8 +25,6 @@ public class CrashReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent i) {
 
-        Log.d("scoop", "CrashReceiver RECEIVED " + i.getAction());
-
         if (!i.getAction().equals(XposedHook.INTENT_ACTION)) return;
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
