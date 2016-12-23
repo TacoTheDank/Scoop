@@ -1,0 +1,17 @@
+<resources>
+
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="crash_list_divider_size">1dp</dimen>
+    <dimen name="crash_container_padding">16dp</dimen>
+    <dimen name="crash_icon_size">48dp</dimen>
+    <dimen name="crash_header_size">16sp</dimen>
+
+    <dimen name="detail_text_padding">16dp</dimen>
+
+    <dimen name="no_crash_icon_size">92dp</dimen>
+    <dimen name="no_crash_text_size">18sp</dimen>
+    <dimen name="no_crash_item_spacing">36dp</dimen>
+
+</resources>

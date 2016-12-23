@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="show_notification"
+        android:title="@string/settings_show_notif"/>
+
+    <SwitchPreference
+        android:defaultValue="false"
+        android:dependency="show_notification"
+        android:key="show_stack_trace_notif"
+        android:summary="@string/settings_show_stack_trace_summary"
+        android:title="@string/settings_show_stack_trace"/>
+
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="ignore_threaddeath"
+        android:summary="@string/settings_ignore_threaddeath_summary"
+        android:title="@string/settings_ignore_threaddeath"/>
+
+</PreferenceScreen>

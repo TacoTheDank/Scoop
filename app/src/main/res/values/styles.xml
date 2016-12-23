@@ -1,0 +1,16 @@
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="android:textColorPrimary">@color/text_primary_light</item>
+        <item name="android:textColorSecondary">@color/text_secondary_light</item>
+        <item name="android:textColorTertiary">@color/text_disabled_light</item>
+        <item name="android:textColorPrimaryInverse">@color/text_primary_dark</item>
+        <item name="android:textColorSecondaryInverse">@color/text_secondary_dark</item>
+        <item name="android:textColorTertiaryInverse">@color/text_disabled_dark</item>
+    </style>
+
+</resources>

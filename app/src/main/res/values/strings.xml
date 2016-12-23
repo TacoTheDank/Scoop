@@ -1,0 +1,29 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <string name="app_name">Scoop</string>
+    <string name="settings_title">Scoop - Settings</string>
+
+    <string name="xposed_description">Catches a stack trace when an app crashes unexpectedly</string>
+
+    <string name="action_clear">Clear</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_share">Share</string>
+    <string name="action_copy">Copy to clipboard</string>
+
+    <string name="just_now">Just Now</string>
+    <string name="dialog_clear_content">Are you sure you want to clear all crashes?</string>
+    <string name="app_not_installed">%s (not installed)</string>
+    <string name="copy_label">Stack trace of %s</string>
+    <string name="copied_toast">Stack Trace copied to clipboard</string>
+
+    <string name="no_items">No items yet.</string>
+    <!--<string name="make_crash" tools:ignore="Typos">Wanna make something crash? ಠ‿ಠ</string>-->
+    <string name="make_crash_plain" tools:ignore="Typos">Wanna make something crash? .</string> <!-- dot gets replaced with image, see explanation in MainActivity -->
+
+    <string name="settings_show_notif">Show notification on crash</string>
+    <string name="settings_show_stack_trace">Show stack trace in notification</string>
+    <string name="settings_show_stack_trace_summary">Display the beginning of the stack trace in the notification instead of just the description</string>
+    <string name="settings_ignore_threaddeath">Ignore ThreadDeath Errors</string>
+    <string name="settings_ignore_threaddeath_summary">A ThreadDeath Error gets thrown to force stop a worker thread. It\'s a \"normal occurrence\" and doesn\'t make apps crash</string>
+
+</resources>
