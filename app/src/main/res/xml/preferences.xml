@@ -2,19 +2,22 @@
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <tk.wasdennnoch.scoop.view.SwitchPreferenceCompat
+    <CheckBoxPreference
+        android:widgetLayout="@layout/preference_switch_layout"
         android:defaultValue="true"
         android:key="show_notification"
         android:title="@string/settings_show_notif"/>
 
-    <tk.wasdennnoch.scoop.view.SwitchPreferenceCompat
+    <CheckBoxPreference
+        android:widgetLayout="@layout/preference_switch_layout"
         android:defaultValue="false"
         android:dependency="show_notification"
         android:key="show_stack_trace_notif"
         android:summary="@string/settings_show_stack_trace_summary"
         android:title="@string/settings_show_stack_trace"/>
 
-    <tk.wasdennnoch.scoop.view.SwitchPreferenceCompat
+    <CheckBoxPreference
+        android:widgetLayout="@layout/preference_switch_layout"
         android:defaultValue="true"
         android:key="ignore_threaddeath"
         android:summary="@string/settings_ignore_threaddeath_summary"
