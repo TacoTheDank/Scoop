@@ -730,6 +730,15 @@ public class MergedScrollView extends FrameLayout {
                             (overscrollMode == OVER_SCROLL_IF_CONTENT_SCROLLS && (rangeX > 0 || rangeY > 0));
 
                     scrollBy(deltaX, deltaY);
+                    final int newX = getScrollX();
+                    final int newY = getScrollY();
+                    // In corners
+                    if ((newX == 0 && newY == 0) ||
+                            (newX == rangeX && newY == rangeY) ||
+                            (newX == 0 && newY == rangeY) ||
+                            (newX == rangeX && newY == 0)) {
+                        mVelocityTracker.clear();
+                    }
 
                     if (canOverscroll) {
                         final int pulledToX = oldX + deltaX;

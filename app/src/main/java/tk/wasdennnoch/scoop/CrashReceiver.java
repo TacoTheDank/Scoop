@@ -60,7 +60,7 @@ public class CrashReceiver extends BroadcastReceiver {
 
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
                     .setSmallIcon(R.drawable.ic_bug_notification)
-                    .setLargeIcon(drawabeToBitmap(CrashLoader.getAppIcon(context, packageName)))
+                    .setLargeIcon(drawableToBitmap(CrashLoader.getAppIcon(context, packageName)))
                     .setContentTitle(CrashLoader.getAppName(context, packageName, false))
                     .setContentText(description)
                     .setStyle(new NotificationCompat.BigTextStyle()
@@ -75,7 +75,7 @@ public class CrashReceiver extends BroadcastReceiver {
         MainActivity.requestUpdate();
     }
 
-    private Bitmap drawabeToBitmap(Drawable drawable) {
+    private Bitmap drawableToBitmap(Drawable drawable) {
         if (drawable instanceof BitmapDrawable)
             return ((BitmapDrawable) drawable).getBitmap();
         Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
