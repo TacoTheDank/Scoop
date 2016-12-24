@@ -5,6 +5,8 @@
     <color name="colorPrimaryDark">#388E3C</color>
     <color name="colorAccent">#607D8B</color>
 
+    <color name="highlightColor">#70FF74</color>
+
     <color name="text_primary_dark">#FFFFFFFF</color>
     <color name="text_secondary_dark">#B3FFFFFF</color>
     <color name="text_disabled_dark">#4DFFFFFF</color>

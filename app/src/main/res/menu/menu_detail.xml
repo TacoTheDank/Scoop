@@ -3,16 +3,24 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/action_search"
+        android:icon="@drawable/ic_search"
+        android:orderInCategory="50"
+        android:title="@string/action_search"
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        app:showAsAction="always|collapseActionView"/>
+
+    <item
         android:id="@+id/action_copy"
         android:icon="@drawable/ic_copy"
-        android:orderInCategory="0"
+        android:orderInCategory="100"
         android:title="@string/action_copy"
-        app:showAsAction="always"/>
+        app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/action_share"
         android:icon="@drawable/ic_share"
-        android:orderInCategory="50"
+        android:orderInCategory="150"
         android:title="@string/action_share"
         app:showAsAction="ifRoom"/>
 

@@ -14,8 +14,8 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
-    <tk.wasdennnoch.scoop.view.MergedScrollView
-        android:id="@+id/horScroll"
+    <tk.wasdennnoch.scoop.view.CroppingScrollView
+        android:id="@+id/scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="horizontal|vertical">
@@ -27,6 +27,6 @@
             android:padding="@dimen/detail_text_padding"
             android:textColor="@color/text_primary_light"/>
 
-    </tk.wasdennnoch.scoop.view.MergedScrollView>
+    </tk.wasdennnoch.scoop.view.CroppingScrollView>
 
 </LinearLayout>
