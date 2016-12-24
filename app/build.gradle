@@ -8,8 +8,8 @@ android {
         applicationId "tk.wasdennnoch.scoop"
         minSdkVersion 14
         targetSdkVersion 25
-        versionCode 2
-        versionName "1.1.0"
+        versionCode 3
+        versionName "1.2.0"
 
         vectorDrawables.useSupportLibrary = true
     }
@@ -20,6 +20,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    return void // 'cause AS is stupid
 }
 
 dependencies {
