@@ -46,7 +46,12 @@
 
         <activity
             android:name=".ui.SettingsActivity"
-            android:label="@string/settings_title"/>
+            android:label="@string/settings_title">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.NOTIFICATION_PREFERENCES" />
+            </intent-filter>
+        </activity>
 
         <receiver
             android:name=".CrashReceiver"

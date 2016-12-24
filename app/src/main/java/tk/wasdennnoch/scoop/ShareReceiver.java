@@ -19,7 +19,7 @@ public class ShareReceiver extends BroadcastReceiver {
             Intent shareIntent = new Intent(Intent.ACTION_SEND)
                     .setType("text/plain")
                     .putExtra(Intent.EXTRA_TEXT, stackTrace);
-            context.startActivity(Intent.createChooser(shareIntent, context.getString(R.string.action_share)));
+            context.startActivity(Intent.createChooser(shareIntent, context.getString(R.string.action_share)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
         } else if (intent.getAction().equals(XposedHook.INTENT_ACTION_COPY)) {
             ((ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE)).setPrimaryClip(
                     ClipData.newPlainText(
