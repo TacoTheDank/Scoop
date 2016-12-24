@@ -35,7 +35,15 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.DetailActivity"/>
+        <activity
+            android:name=".ui.DetailActivity"
+            android:parentActivityName=".ui.MainActivity"
+            tools:ignore="UnusedAttribute">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.MainActivity"/>
+        </activity>
+
         <activity
             android:name=".ui.SettingsActivity"
             android:label="@string/settings_title"/>

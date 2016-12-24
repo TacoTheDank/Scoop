@@ -12,6 +12,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
@@ -19,6 +20,7 @@ import com.afollestad.inquiry.Inquiry;
 
 import tk.wasdennnoch.scoop.data.Crash;
 import tk.wasdennnoch.scoop.data.CrashLoader;
+import tk.wasdennnoch.scoop.ui.DetailActivity;
 import tk.wasdennnoch.scoop.ui.MainActivity;
 
 public class CrashReceiver extends BroadcastReceiver {
@@ -54,8 +56,11 @@ public class CrashReceiver extends BroadcastReceiver {
         if (prefs.getBoolean("show_notification", true)) {
             NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
-            Intent clickIntent = new Intent(context, MainActivity.class);
-            PendingIntent clickPendingIntent = PendingIntent.getActivity(context, 0, clickIntent, PendingIntent.FLAG_ONE_SHOT);
+            Intent clickIntent = new Intent(context, DetailActivity.class).putExtra(DetailActivity.EXTRA_CRASH, crash);
+            TaskStackBuilder stackBuilder = TaskStackBuilder.create(context)
+                    .addParentStack(DetailActivity.class)
+                    .addNextIntent(clickIntent);
+            PendingIntent clickPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
                     .setSmallIcon(R.drawable.ic_bug_notification)
