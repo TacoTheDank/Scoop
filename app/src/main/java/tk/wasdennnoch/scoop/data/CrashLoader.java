@@ -30,41 +30,40 @@ public class CrashLoader {
     private WeakReference<MainActivity> mListener;
 
     public void loadData(MainActivity listener) {
-        if (mListener == null || mListener.get() == null) {
-            mListener = new WeakReference<>(listener);
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    Crash[] result = Inquiry.get("main").selectFrom("crashes", Crash.class).all();
-                    final MainActivity listener = mListener.get();
-                    if (listener == null || listener.isFinishing() || (Build.VERSION.SDK_INT >= 17 && listener.isDestroyed())) return;
-                    if (result == null) {
-                        listener.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                listener.onDataLoaded(null);
-                            }
-                        });
-                        return;
-                    }
-                    // Prefetch and cache the first items to avoid scroll lag.
-                    // There is the chance the Activity will be destroyed while the items
-                    // get prefetched but the chance is low as it doesn't take long to load
-                    for (int i = 0; i < CACHE_SIZE && i < result.length; i++) {
-                        getAppIcon(listener, result[i].packageName);
-                        getAppName(listener, result[i].packageName, false);
-                    }
-                    final ArrayList<Crash> data = new ArrayList<>();
-                    Collections.addAll(data, result);
+        mListener = new WeakReference<>(listener);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Crash[] result = Inquiry.get("main").selectFrom("crashes", Crash.class).all();
+                final MainActivity listener = mListener.get();
+                if (listener == null || listener.isFinishing() || (Build.VERSION.SDK_INT >= 17 && listener.isDestroyed()))
+                    return;
+                if (result == null) {
                     listener.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            listener.onDataLoaded(data);
+                            listener.onDataLoaded(null);
                         }
                     });
+                    return;
                 }
-            }).start();
-        }
+                // Prefetch and cache the first items to avoid scroll lag.
+                // There is the chance the Activity will be destroyed while the items
+                // get prefetched but the chance is low as it doesn't take long to load
+                for (int i = 0; i < CACHE_SIZE && i < result.length; i++) {
+                    getAppIcon(listener, result[i].packageName);
+                    getAppName(listener, result[i].packageName, false);
+                }
+                final ArrayList<Crash> data = new ArrayList<>();
+                Collections.addAll(data, result);
+                listener.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        listener.onDataLoaded(data);
+                    }
+                });
+            }
+        }).start();
     }
 
     @NonNull
@@ -89,7 +88,7 @@ public class CrashLoader {
         PackageManager manager = context.getPackageManager();
         try {
             ApplicationInfo info = manager.getApplicationInfo(packageName, 0);
-            name =  info.loadLabel(manager).toString();
+            name = info.loadLabel(manager).toString();
             sNameCache.put(packageName, name);
             return name;
         } catch (PackageManager.NameNotFoundException n) {

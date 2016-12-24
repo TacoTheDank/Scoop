@@ -10,6 +10,14 @@
 
     <CheckBoxPreference
         android:widgetLayout="@layout/preference_switch_layout"
+        android:defaultValue="true"
+        android:dependency="show_notification"
+        android:key="show_action_buttons"
+        android:summary="@string/settings_action_buttons_summary"
+        android:title="@string/settings_action_buttons"/>
+
+    <CheckBoxPreference
+        android:widgetLayout="@layout/preference_switch_layout"
         android:defaultValue="false"
         android:dependency="show_notification"
         android:key="show_stack_trace_notif"

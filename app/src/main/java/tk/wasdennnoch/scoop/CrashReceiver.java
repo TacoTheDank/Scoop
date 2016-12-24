@@ -12,6 +12,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 import com.afollestad.inquiry.Inquiry;
@@ -53,19 +54,31 @@ public class CrashReceiver extends BroadcastReceiver {
         if (prefs.getBoolean("show_notification", true)) {
             NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
-            Intent intent = new Intent(context, MainActivity.class);
-            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+            Intent clickIntent = new Intent(context, MainActivity.class);
+            PendingIntent clickPendingIntent = PendingIntent.getActivity(context, 0, clickIntent, PendingIntent.FLAG_ONE_SHOT);
 
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
                     .setSmallIcon(R.drawable.ic_bug_notification)
                     .setLargeIcon(drawableToBitmap(CrashLoader.getAppIcon(context, packageName)))
                     .setContentTitle(CrashLoader.getAppName(context, packageName, false))
                     .setContentText(description)
+                    .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
                     .setStyle(new NotificationCompat.BigTextStyle()
                             .bigText(prefs.getBoolean("show_stack_trace_notif", false) ? stackTrace : description))
                     .setAutoCancel(true)
-                    .setContentIntent(pendingIntent);
+                    .setContentIntent(clickPendingIntent);
 
+            if (prefs.getBoolean("show_action_buttons", true)) {
+                Intent copyIntent = new Intent(context, ShareReceiver.class).putExtra("stackTrace", stackTrace).putExtra("pkg", packageName).setAction(XposedHook.INTENT_ACTION_COPY);
+                PendingIntent copyPendingIntent = PendingIntent.getBroadcast(context, 0, copyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                NotificationCompat.Action copyAction = new NotificationCompat.Action(R.drawable.ic_copy_notification, context.getString(R.string.action_copy_short), copyPendingIntent);
+                builder.addAction(copyAction);
+
+                Intent shareIntent = new Intent(context, ShareReceiver.class).putExtra("stackTrace", stackTrace).putExtra("pkg", packageName).setAction(XposedHook.INTENT_ACTION_SHARE);
+                PendingIntent sharePendingIntent = PendingIntent.getBroadcast(context, 0, shareIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                NotificationCompat.Action shareAction = new NotificationCompat.Action(R.drawable.ic_share_notification, context.getString(R.string.action_share), sharePendingIntent);
+                builder.addAction(shareAction);
+            }
 
             manager.notify(1, builder.build());
         }

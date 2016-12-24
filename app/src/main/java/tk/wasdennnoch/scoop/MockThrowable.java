@@ -22,16 +22,16 @@ import java.io.PrintWriter;
  * This works because Scoop only cares about the description and the stack trace.
  */
 @Keep
-class MockThrowable extends Throwable {
+@SuppressWarnings("WeakerAccess")
+public class MockThrowable extends Throwable {
 
     private String mockMessage;
     private String mockStackTrace;
 
-    MockThrowable(Throwable toMock) {
+    public MockThrowable(Throwable toMock) {
         super("Mocking Throwable: " + toMock.toString());
         mockMessage = toMock.toString();
         mockStackTrace = Log.getStackTraceString(toMock);
-        Log.d("scoop", "original throwable trace: "+mockStackTrace);
     }
 
     @Override

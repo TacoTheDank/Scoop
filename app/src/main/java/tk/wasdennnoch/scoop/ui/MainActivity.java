@@ -27,14 +27,16 @@ import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.util.List;
 
-import tk.wasdennnoch.scoop.data.CrashAdapter;
+import tk.wasdennnoch.scoop.CrashReceiver;
+import tk.wasdennnoch.scoop.MockThrowable;
 import tk.wasdennnoch.scoop.R;
 import tk.wasdennnoch.scoop.data.Crash;
+import tk.wasdennnoch.scoop.data.CrashAdapter;
 import tk.wasdennnoch.scoop.data.CrashLoader;
 
 public class MainActivity extends AppCompatActivity implements CrashAdapter.OnCrashClickListener {
 
-    private static final int UPDATE_DELAY = 2000;
+    private static final int UPDATE_DELAY = 1000;
     private static boolean sUpdateRequired; // cheapest way to keep track of updates lol
 
     private Handler mHandler;
@@ -67,12 +69,33 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.OnCr
         sUpdateRequired = false;
         loadData();
         mHandler = new Handler();
+
+        //noinspection ConstantConditions,ConstantIfStatement
+        if (false) {
+            final Intent intent = new Intent("tk.wasdennnoch.scoop.EXCEPTION")
+                    .setClassName(getPackageName(), CrashReceiver.class.getName())
+                    .putExtra("pkg", getPackageName())
+                    .putExtra("time", System.currentTimeMillis())
+                    .putExtra("cause", new MockThrowable(new NullPointerException("Just a test")));
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    sendBroadcast(intent);
+                }
+            }, 4000);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         mHandler.postDelayed(mUpdateCheckerRunnable, UPDATE_DELAY);
     }
 
     @Override
     public void onPause() {
         super.onPause();
+        mHandler.removeCallbacks(mUpdateCheckerRunnable);
         if (isFinishing())
             Inquiry.destroy("main");
     }

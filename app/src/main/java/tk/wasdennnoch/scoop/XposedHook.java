@@ -10,13 +10,16 @@ import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
+@SuppressWarnings("WeakerAccess")
 @Keep
 public class XposedHook implements IXposedHookLoadPackage {
 
-    static final String INTENT_ACTION = "tk.wasdennnoch.scoop.EXCEPTION";
-    static final String INTENT_PACKAGE_NAME = "pkg";
-    static final String INTENT_TIME = "time";
-    static final String INTENT_THROWABLE = "cause";
+    public static final String INTENT_ACTION = "tk.wasdennnoch.scoop.EXCEPTION";
+    public static final String INTENT_ACTION_COPY = "tk.wasdennnoch.scoop.ACTION_COPY";
+    public static final String INTENT_ACTION_SHARE = "tk.wasdennnoch.scoop.ACTION_SHARE";
+    public static final String INTENT_PACKAGE_NAME = "pkg";
+    public static final String INTENT_TIME = "time";
+    public static final String INTENT_THROWABLE = "cause";
 
     private Application mApplication;
     private static String mPkg;
@@ -69,7 +72,7 @@ public class XposedHook implements IXposedHookLoadPackage {
             }
             Log.d("scoop", "uncaughtExceptionHook (" + mPkg + "): Sending broadcast");
             Intent intent = new Intent(INTENT_ACTION)
-                    .setPackage(XposedHook.class.getPackage().getName())
+                    .setClassName(XposedHook.class.getPackage().getName(), CrashReceiver.class.getName())
                     .putExtra(INTENT_PACKAGE_NAME, mApplication.getPackageName())
                     .putExtra(INTENT_TIME, System.currentTimeMillis())
                     .putExtra(INTENT_THROWABLE, new MockThrowable((Throwable) param.args[1]));

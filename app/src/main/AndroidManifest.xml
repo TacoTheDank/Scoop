@@ -48,6 +48,15 @@
                 <action android:name="tk.wasdennnoch.scoop.EXCEPTION"/>
             </intent-filter>
         </receiver>
+        <receiver
+            android:name=".ShareReceiver"
+            android:exported="true"
+            tools:ignore="ExportedReceiver">
+            <intent-filter>
+                <action android:name="tk.wasdennnoch.scoop.ACTION_SHARE"/>
+                <action android:name="tk.wasdennnoch.scoop.ACTION_COPY"/>
+            </intent-filter>
+        </receiver>
 
     </application>
 
