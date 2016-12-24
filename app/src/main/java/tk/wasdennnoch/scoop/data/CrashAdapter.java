@@ -31,6 +31,15 @@ public class CrashAdapter extends RecyclerView.Adapter<CrashAdapter.CrashViewHol
         notifyDataSetChanged();
     }
 
+    public void addCrash(Crash c) {
+        mItems.add(c);
+        notifyItemInserted(mItems.size());
+    }
+
+    public boolean isEmpty() {
+        return mItems.isEmpty();
+    }
+
     @Override
     public CrashViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new CrashViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_crash, parent, false));

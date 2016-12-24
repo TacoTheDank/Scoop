@@ -83,7 +83,7 @@ public class CrashReceiver extends BroadcastReceiver {
             manager.notify(1, builder.build());
         }
 
-        MainActivity.requestUpdate();
+        MainActivity.requestUpdate(crash);
     }
 
     private Bitmap drawableToBitmap(Drawable drawable) {

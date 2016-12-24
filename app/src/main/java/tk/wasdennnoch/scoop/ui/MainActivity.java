@@ -36,8 +36,10 @@ import tk.wasdennnoch.scoop.data.CrashLoader;
 
 public class MainActivity extends AppCompatActivity implements CrashAdapter.OnCrashClickListener {
 
-    private static final int UPDATE_DELAY = 1000;
-    private static boolean sUpdateRequired; // cheapest way to keep track of updates lol
+    private static final int UPDATE_DELAY = 200;
+    private static boolean sUpdateRequired;
+    private static boolean sVisible;
+    private static Crash sNewCrash;
 
     private Handler mHandler;
     private CrashLoader mLoader = new CrashLoader();
@@ -89,31 +91,24 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.OnCr
     @Override
     protected void onResume() {
         super.onResume();
-        mHandler.postDelayed(mUpdateCheckerRunnable, UPDATE_DELAY);
+        sVisible = true;
+        mHandler.post(mUpdateCheckerRunnable);
     }
 
     @Override
     public void onPause() {
         super.onPause();
+        sVisible = false;
         mHandler.removeCallbacks(mUpdateCheckerRunnable);
         if (isFinishing())
             Inquiry.destroy("main");
     }
 
-    private void loadData() {
-        mLoading.setVisibility(View.VISIBLE);
-        if (mNoItems != null)
-            mNoItems.setVisibility(View.GONE);
-        mList.setVisibility(View.GONE);
-        mLoader.loadData(this);
-    }
-
-    public void onDataLoaded(List<Crash> data) {
-        mLoading.setVisibility(View.GONE);
-        mAdapter.setCrashes(data);
-        if (data != null && !data.isEmpty()) {
-            mList.setVisibility(View.VISIBLE);
-        } else {
+    private void updateViewStates(boolean loading) {
+        boolean empty = mAdapter.isEmpty();
+        mLoading.setVisibility(loading ? View.VISIBLE : View.GONE);
+        mList.setVisibility(loading || empty ? View.GONE : View.VISIBLE);
+        if (!loading && empty) {
             if (mNoItems == null) {
                 mNoItems = mNoItemsStub.inflate();
                 // Need to do it that way because the devious face doesn't show
@@ -132,7 +127,19 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.OnCr
                 makeCrashTextView.setText(spannable);
             }
             mNoItems.setVisibility(View.VISIBLE);
+        } else if (mNoItems != null) {
+            mNoItems.setVisibility(View.GONE);
         }
+    }
+
+    private void loadData() {
+        updateViewStates(true);
+        mLoader.loadData(this);
+    }
+
+    public void onDataLoaded(List<Crash> data) {
+        mAdapter.setCrashes(data);
+        updateViewStates(false);
     }
 
     @Override
@@ -170,16 +177,25 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.OnCr
         return super.onOptionsItemSelected(item);
     }
 
-    public static void requestUpdate() {
+    public static void requestUpdate(Crash newCrash) {
         sUpdateRequired = true;
+        if (sVisible) {
+            sNewCrash = newCrash;
+        }
     }
 
     private final Runnable mUpdateCheckerRunnable = new Runnable() {
         @Override
         public void run() {
             if (sUpdateRequired) {
-                loadData();
                 sUpdateRequired = false;
+                if (sVisible && sNewCrash != null) {
+                    mAdapter.addCrash(sNewCrash);
+                    updateViewStates(false);
+                    sNewCrash = null;
+                } else {
+                    loadData();
+                }
             }
             mHandler.postDelayed(mUpdateCheckerRunnable, UPDATE_DELAY);
         }
