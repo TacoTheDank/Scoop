@@ -7,8 +7,10 @@ import android.util.Log;
 
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.XC_MethodHook;
+import de.robv.android.xposed.XC_MethodReplacement;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
+import tk.wasdennnoch.scoop.ui.MainActivity;
 
 @SuppressWarnings("WeakerAccess")
 @Keep
@@ -40,6 +42,10 @@ public class XposedHook implements IXposedHookLoadPackage {
         XposedHelpers.findAndHookMethod(Thread.class, "setUncaughtExceptionHandler", Thread.UncaughtExceptionHandler.class, setUncaughtExceptionHandlerHook);
         XposedHelpers.findAndHookMethod(ThreadGroup.class, "uncaughtException", Thread.class, Throwable.class, uncaughtExceptionHook);
         hookUncaughtException(Thread.getDefaultUncaughtExceptionHandler().getClass()); // Gets initialized in between native application creation, handleLoadPackage gets called after native creation
+
+        if (lpparam.packageName.equals(XposedHook.class.getPackage().getName())) {
+            XposedHelpers.findAndHookMethod(MainActivity.class, "isActive", XC_MethodReplacement.returnConstant(true));
+        }
     }
 
     private final XC_MethodHook setUncaughtExceptionHandlerHook = new XC_MethodHook() {

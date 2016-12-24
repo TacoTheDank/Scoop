@@ -13,5 +13,6 @@
     <dimen name="no_crash_icon_size">92dp</dimen>
     <dimen name="no_crash_text_size">18sp</dimen>
     <dimen name="no_crash_item_spacing">36dp</dimen>
+    <dimen name="no_xposed_item_spacing">12dp</dimen>
 
 </resources>

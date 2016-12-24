@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <string name="app_name">Scoop</string>
+    <string name="app_name" translatable="false">Scoop</string>
     <string name="settings_title">Scoop - Settings</string>
 
     <string name="xposed_description">Catches a stack trace when an app crashes unexpectedly</string>
@@ -18,8 +18,9 @@
     <string name="copied_toast">Stack trace copied to clipboard</string>
 
     <string name="no_items">No items yet.</string>
-    <!--<string name="make_crash" tools:ignore="Typos">Wanna make something crash? ಠ‿ಠ</string>-->
-    <string name="make_crash_plain" tools:ignore="Typos">Wanna make something crash? .</string> <!-- dot gets replaced with image, see explanation in MainActivity -->
+    <string name="make_crash_plain" tools:ignore="Typos">Wanna make something crash? .</string> <!-- dot gets replaced with image (ಠ‿ಠ), see explanation in MainActivity -->
+    <string name="no_xposed_1" translatable="false">Y U NO</string>
+    <string name="no_xposed_2" translatable="false">XPOSED INSTALLED</string>
 
     <string name="settings_show_notif">Show notification on crash</string>
     <string name="settings_action_buttons">Show action buttons</string>

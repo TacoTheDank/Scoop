@@ -104,11 +104,16 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.OnCr
             Inquiry.destroy("main");
     }
 
+    private boolean isActive() {
+        return false;
+    }
+
     private void updateViewStates(boolean loading) {
         boolean empty = mAdapter.isEmpty();
         mLoading.setVisibility(loading ? View.VISIBLE : View.GONE);
         mList.setVisibility(loading || empty ? View.GONE : View.VISIBLE);
-        if (!loading && empty) {
+        //noinspection ConstantConditions
+        if (!loading && empty && isActive()) {
             if (mNoItems == null) {
                 mNoItems = mNoItemsStub.inflate();
                 // Need to do it that way because the devious face doesn't show
@@ -129,6 +134,12 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.OnCr
             mNoItems.setVisibility(View.VISIBLE);
         } else if (mNoItems != null) {
             mNoItems.setVisibility(View.GONE);
+        }
+        //noinspection ConstantConditions
+        if (!isActive()) {
+            ViewStub noXposedStub = (ViewStub) findViewById(R.id.noXposedStub);
+            if (noXposedStub != null)
+                noXposedStub.inflate();
         }
     }
 
