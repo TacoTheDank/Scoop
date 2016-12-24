@@ -24,15 +24,15 @@ import tk.wasdennnoch.scoop.ui.MainActivity;
 public class CrashReceiver extends BroadcastReceiver {
 
     @Override
-    public void onReceive(Context context, Intent i) {
+    public void onReceive(Context context, Intent broadcastIntent) {
 
-        if (!i.getAction().equals(XposedHook.INTENT_ACTION)) return;
+        if (!broadcastIntent.getAction().equals(XposedHook.INTENT_ACTION)) return;
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
-        String packageName = i.getStringExtra(XposedHook.INTENT_PACKAGE_NAME);
-        long time = i.getLongExtra(XposedHook.INTENT_TIME, System.currentTimeMillis());
-        Throwable throwable = (Throwable) i.getSerializableExtra(XposedHook.INTENT_THROWABLE);
+        String packageName = broadcastIntent.getStringExtra(XposedHook.INTENT_PACKAGE_NAME);
+        long time = broadcastIntent.getLongExtra(XposedHook.INTENT_TIME, System.currentTimeMillis());
+        Throwable throwable = (Throwable) broadcastIntent.getSerializableExtra(XposedHook.INTENT_THROWABLE);
 
         if (throwable instanceof ThreadDeath && prefs.getBoolean("ignore_threaddeath", true))
             return;
@@ -63,10 +63,19 @@ public class CrashReceiver extends BroadcastReceiver {
                     .setContentTitle(CrashLoader.getAppName(context, packageName, false))
                     .setContentText(description)
                     .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
-                    .setStyle(new NotificationCompat.BigTextStyle()
-                            .bigText(prefs.getBoolean("show_stack_trace_notif", false) ? stackTrace : description))
                     .setAutoCancel(true)
                     .setContentIntent(clickPendingIntent);
+
+            if (prefs.getBoolean("show_stack_trace_notif", false)) {
+                NotificationCompat.InboxStyle style = new NotificationCompat.InboxStyle();
+                String[] traces = stackTrace.split("\n");
+                for (int i = 0; i < 6 && i < traces.length; i++) {
+                    style.addLine(traces[i]);
+                }
+                builder.setStyle(style);
+            } else {
+                builder.setStyle(new NotificationCompat.BigTextStyle().bigText(description));
+            }
 
             if (prefs.getBoolean("show_action_buttons", true)) {
                 Intent copyIntent = new Intent(context, ShareReceiver.class).putExtra("stackTrace", stackTrace).putExtra("pkg", packageName).setAction(XposedHook.INTENT_ACTION_COPY);
