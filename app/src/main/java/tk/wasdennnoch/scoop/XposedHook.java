@@ -2,7 +2,6 @@ package tk.wasdennnoch.scoop;
 
 import android.app.Application;
 import android.content.Intent;
-import android.support.annotation.Keep;
 import android.util.Log;
 
 import de.robv.android.xposed.IXposedHookLoadPackage;
@@ -13,7 +12,6 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage;
 import tk.wasdennnoch.scoop.ui.MainActivity;
 
 @SuppressWarnings("WeakerAccess")
-@Keep
 public class XposedHook implements IXposedHookLoadPackage {
 
     public static final String INTENT_ACTION = "tk.wasdennnoch.scoop.EXCEPTION";

@@ -2,12 +2,10 @@ package tk.wasdennnoch.scoop.data;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.Keep;
 
 import com.afollestad.inquiry.annotations.Column;
 
 @SuppressWarnings("WeakerAccess")
-@Keep
 public class Crash implements Parcelable {
 
     @SuppressWarnings("unused")
