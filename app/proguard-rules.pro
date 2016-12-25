@@ -16,10 +16,10 @@
 #   public *;
 #}
 
--keepclasseswithmembers class tk.wasdennnoch.scoop.XposedHook { *; }
+-keepclassmembers class tk.wasdennnoch.scoop.XposedHook { *; }
 -keep class tk.wasdennnoch.scoop.MockThrowable { *; }
 -keep class android.support.v7.widget.SearchView { *; }
--keepclasseswithmembers class tk.wasdennnoch.scoop.data.Crash {
+-keepclassmembers class tk.wasdennnoch.scoop.data.Crash {
     public *;
 }
 -keepclassmembers class tk.wasdennnoch.scoop.ui.MainActivity {

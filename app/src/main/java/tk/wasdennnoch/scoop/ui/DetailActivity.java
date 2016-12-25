@@ -20,6 +20,8 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Locale;
+
 import tk.wasdennnoch.scoop.R;
 import tk.wasdennnoch.scoop.data.Crash;
 import tk.wasdennnoch.scoop.data.CrashLoader;
@@ -52,8 +54,8 @@ public class DetailActivity extends AppCompatActivity implements SearchView.OnQu
     }
 
     private void highlightText(String text) {
-        text = text.toLowerCase(); // Ignore case
-        final String stackTrace = mCrash.stackTrace.toLowerCase();
+        text = text.toLowerCase(Locale.ENGLISH); // Ignore case
+        final String stackTrace = mCrash.stackTrace.toLowerCase(Locale.ENGLISH);
         SpannableString span = new SpannableString(mCrash.stackTrace);
         if (!TextUtils.isEmpty(text)) {
             final int size = text.length();

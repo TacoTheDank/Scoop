@@ -24,6 +24,7 @@
     <string name="no_xposed_2" translatable="false">XPOSED INSTALLED</string>
 
     <string name="settings_notif">Notifications</string>
+    <string name="settings_overview">Overview</string>
     <string name="settings_detail_view">Detail View</string>
     <string name="settings_misc">Miscellaneous</string>
     <string name="settings_show_notif">Show notification on crash</string>
@@ -31,9 +32,11 @@
     <string name="settings_action_buttons_summary">Add buttons to copy and share the crash to the notification</string>
     <string name="settings_show_stack_trace">Show stack trace in notification</string>
     <string name="settings_show_stack_trace_summary">Display the beginning of the stack trace in the notification instead of just the description</string>
+    <string name="settings_search_pkg">Search in package name</string>
+    <string name="settings_search_pkg_summary">Search for the given term in the app name as well as in the package name</string>
     <string name="settings_auto_wrap">Automatic line wrap</string>
     <string name="settings_auto_wrap_summary">Limit maximum line width to screen width</string>
     <string name="settings_ignore_threaddeath">Ignore ThreadDeath Errors</string>
-    <string name="settings_ignore_threaddeath_summary">A ThreadDeath Error gets thrown to force stop a worker thread. It\'s a \"normal occurrence\" and doesn\'t make apps crash</string>
+    <string name="settings_ignore_threaddeath_summary">A ThreadDeath Error gets thrown to force stop a worker thread. It is a \"normal occurrence\" and does not make apps crash</string>
 
 </resources>

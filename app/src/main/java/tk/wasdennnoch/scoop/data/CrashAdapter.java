@@ -1,7 +1,9 @@
 package tk.wasdennnoch.scoop.data;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,21 +11,28 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Locale;
 
 import tk.wasdennnoch.scoop.R;
 import tk.wasdennnoch.scoop.view.RelativeTimeTextView;
 
 public class CrashAdapter extends RecyclerView.Adapter<CrashAdapter.CrashViewHolder> {
 
-    private List<Crash> mItems = new ArrayList<>();
+    private ArrayList<Crash> mItems = new ArrayList<>();
+    private ArrayList<Crash> mSearchedItems = new ArrayList<>();
+    private boolean mSearchActive = false;
+    private boolean mSearchPackageName = true;
     private OnCrashClickListener mListener;
 
     public CrashAdapter(OnCrashClickListener listener) {
         mListener = listener;
     }
 
-    public void setCrashes(List<Crash> crashes) {
+    public void setSearchPackageName(boolean searchPkg) {
+        mSearchPackageName = searchPkg;
+    }
+
+    public void setCrashes(ArrayList<Crash> crashes) {
         if (crashes == null)
             mItems.clear();
         else
@@ -38,6 +47,32 @@ public class CrashAdapter extends RecyclerView.Adapter<CrashAdapter.CrashViewHol
 
     public boolean isEmpty() {
         return mItems.isEmpty();
+    }
+
+    public void search(Context context, String text) {
+        mSearchedItems.clear();
+        mSearchActive = !TextUtils.isEmpty(text);
+        if (mSearchActive) {
+            for (Crash c : mItems) { // Search app name and package (if configured)
+                if ((mSearchPackageName && c.packageName.toLowerCase(Locale.ENGLISH).contains(text))
+                        || CrashLoader.getAppName(context, c.packageName, false).toLowerCase(Locale.ENGLISH).contains(text)) {
+                    mSearchedItems.add(c);
+                }
+            }
+        }
+        notifyDataSetChanged();
+    }
+
+    public void saveInstanceState(Bundle outState) {
+        outState.putParcelableArrayList("mItems", mItems);
+        outState.putParcelableArrayList("mSearchedItems", mSearchedItems);
+        outState.putBoolean("mSearchActive", mSearchActive);
+    }
+
+    public void restoreInstanceState(Bundle outState) {
+        mItems = outState.getParcelableArrayList("mItems");
+        mSearchedItems = outState.getParcelableArrayList("mSearchedItems");
+        mSearchActive = outState.getBoolean("mSearchActive");
     }
 
     @Override
@@ -60,7 +95,7 @@ public class CrashAdapter extends RecyclerView.Adapter<CrashAdapter.CrashViewHol
 
     @Override
     public int getItemCount() {
-        return mItems.size();
+        return mSearchActive ? mSearchedItems.size() : mItems.size();
     }
 
     public interface OnCrashClickListener {

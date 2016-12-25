@@ -31,6 +31,19 @@
 
 
     <PreferenceCategory
+        android:title="@string/settings_overview">
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="search_package_name"
+            android:summary="@string/settings_search_pkg_summary"
+            android:title="@string/settings_search_pkg"
+            android:widgetLayout="@layout/preference_switch_layout"/>
+
+    </PreferenceCategory>
+
+
+    <PreferenceCategory
         android:title="@string/settings_detail_view">
 
         <CheckBoxPreference
@@ -44,7 +57,7 @@
 
 
     <PreferenceCategory
-        android:title="@string/settings_notif">
+        android:title="@string/settings_misc">
 
         <CheckBoxPreference
             android:defaultValue="true"

@@ -1,15 +1,20 @@
 package tk.wasdennnoch.scoop.ui;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -25,7 +30,7 @@ import com.afollestad.inquiry.Inquiry;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import tk.wasdennnoch.scoop.CrashReceiver;
 import tk.wasdennnoch.scoop.MockThrowable;
@@ -34,20 +39,21 @@ import tk.wasdennnoch.scoop.data.Crash;
 import tk.wasdennnoch.scoop.data.CrashAdapter;
 import tk.wasdennnoch.scoop.data.CrashLoader;
 
-public class MainActivity extends AppCompatActivity implements CrashAdapter.OnCrashClickListener {
+public class MainActivity extends AppCompatActivity implements CrashAdapter.OnCrashClickListener, SearchView.OnQueryTextListener, SearchView.OnCloseListener {
 
     private static final int UPDATE_DELAY = 200;
     private static boolean sUpdateRequired;
     private static boolean sVisible;
     private static Crash sNewCrash;
 
+    private SharedPreferences mPrefs;
     private Handler mHandler;
+    private CrashAdapter mAdapter;
     private CrashLoader mLoader = new CrashLoader();
     private RecyclerView mList;
     private ProgressBar mLoading;
     private ViewStub mNoItemsStub;
     private View mNoItems;
-    private CrashAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +66,8 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.OnCr
         mLoading = (ProgressBar) findViewById(R.id.loading);
         mNoItemsStub = (ViewStub) findViewById(R.id.noItemStub);
 
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+
         mAdapter = new CrashAdapter(this);
         mList.setAdapter(mAdapter);
         mList.setVisibility(View.GONE);
@@ -68,8 +76,13 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.OnCr
                 .instanceName("main")
                 .build();
 
-        sUpdateRequired = false;
-        loadData();
+        if (savedInstanceState == null) {
+            sUpdateRequired = false;
+            loadData();
+        } else {
+            mAdapter.restoreInstanceState(savedInstanceState);
+            updateViewStates(false);
+        }
         mHandler = new Handler();
 
         //noinspection ConstantConditions,ConstantIfStatement
@@ -89,8 +102,15 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.OnCr
     }
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mAdapter.saveInstanceState(outState);
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
+        mAdapter.setSearchPackageName(mPrefs.getBoolean("search_package_name", true)); // Cheap way to instantly apply changes
         sVisible = true;
         mHandler.post(mUpdateCheckerRunnable);
     }
@@ -105,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.OnCr
     }
 
     private boolean isActive() {
-        return false;
+        return Build.HARDWARE.equals("goldfish") || Build.HARDWARE.equals("ranchu"); // true on emulator
     }
 
     private void updateViewStates(boolean loading) {
@@ -148,7 +168,7 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.OnCr
         mLoader.loadData(this);
     }
 
-    public void onDataLoaded(List<Crash> data) {
+    public void onDataLoaded(ArrayList<Crash> data) {
         mAdapter.setCrashes(data);
         updateViewStates(false);
     }
@@ -161,6 +181,27 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.OnCr
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView.setOnQueryTextListener(this);
+        searchView.setOnCloseListener(this);
+        return true;
+    }
+
+    @Override
+    public boolean onClose() {
+        mAdapter.search(this, null);
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        mAdapter.search(this, newText);
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
         return true;
     }
 
