@@ -23,5 +23,5 @@
     public *;
 }
 -keepclassmembers class tk.wasdennnoch.scoop.ui.MainActivity {
-    public boolean isActive();
+    private boolean isActive();
 }
