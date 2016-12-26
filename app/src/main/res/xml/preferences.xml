@@ -40,6 +40,13 @@
             android:title="@string/settings_search_pkg"
             android:widgetLayout="@layout/preference_switch_layout"/>
 
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="combine_same_stack_trace"
+            android:summary="@string/settings_combime_same_trace_summary"
+            android:title="@string/settings_combime_same_trace"
+            android:widgetLayout="@layout/preference_switch_layout"/>
+
     </PreferenceCategory>
 
 

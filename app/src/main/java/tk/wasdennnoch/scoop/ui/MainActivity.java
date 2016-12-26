@@ -165,7 +165,7 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.OnCr
 
     private void loadData() {
         updateViewStates(true);
-        mLoader.loadData(this);
+        mLoader.loadData(this, mPrefs.getBoolean("combine_same_stack_trace", true));
     }
 
     public void onDataLoaded(ArrayList<Crash> data) {

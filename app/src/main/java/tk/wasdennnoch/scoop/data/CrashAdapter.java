@@ -88,6 +88,8 @@ public class CrashAdapter extends RecyclerView.Adapter<CrashAdapter.CrashViewHol
         holder.crash = crash;
         holder.icon.setImageDrawable(CrashLoader.getAppIcon(context, pkg));
         holder.title.setText(CrashLoader.getAppName(context, pkg, false));
+        holder.count.setVisibility(crash.count > 1 ? View.VISIBLE : View.GONE);
+        holder.count.setText(context.getString(R.string.crash_count, crash.count));
         holder.time.setReferenceTime(crash.time);
         holder.crashText.setText(crash.description);
         holder.itemView.setOnClickListener(holder);
@@ -107,6 +109,7 @@ public class CrashAdapter extends RecyclerView.Adapter<CrashAdapter.CrashViewHol
         Crash crash;
         ImageView icon;
         TextView title;
+        TextView count;
         RelativeTimeTextView time;
         TextView crashText;
 
@@ -114,6 +117,7 @@ public class CrashAdapter extends RecyclerView.Adapter<CrashAdapter.CrashViewHol
             super(v);
             icon = (ImageView) v.findViewById(R.id.icon);
             title = (TextView) v.findViewById(R.id.title);
+            count = (TextView) v.findViewById(R.id.count);
             time = (RelativeTimeTextView) v.findViewById(R.id.time);
             crashText = (TextView) v.findViewById(R.id.crash);
         }

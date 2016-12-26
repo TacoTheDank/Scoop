@@ -31,12 +31,15 @@ public class Crash implements Parcelable {
     @Column
     public String stackTrace;
 
+    public int count = 1;
+
     private Crash(Parcel in) {
         id = in.readLong();
         time = in.readLong();
         packageName = in.readString();
         description = in.readString();
         stackTrace = in.readString();
+        count = in.readInt();
     }
 
     public static final Creator<Crash> CREATOR = new Creator<Crash>() {
@@ -63,5 +66,6 @@ public class Crash implements Parcelable {
         dest.writeString(packageName);
         dest.writeString(description);
         dest.writeString(stackTrace);
+        dest.writeInt(count);
     }
 }

@@ -14,7 +14,6 @@ import com.afollestad.inquiry.Inquiry;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Map;
 
 import tk.wasdennnoch.scoop.R;
@@ -29,7 +28,7 @@ public class CrashLoader {
 
     private WeakReference<MainActivity> mListener;
 
-    public void loadData(MainActivity listener) {
+    public void loadData(MainActivity listener, final boolean combineSameStackTrace) {
         mListener = new WeakReference<>(listener);
         new Thread(new Runnable() {
             @Override
@@ -47,19 +46,36 @@ public class CrashLoader {
                     });
                     return;
                 }
+                final ArrayList<Crash> finalData = new ArrayList<>();
+                Crash prevSameCrash = null;
+                // Combine same crashes. Don't ask me how it works, but it works.
+                for (int i = 1; i < result.length + 1; i++) {
+                    Crash previousCrash = result[i - 1];
+                    Crash c = i >= result.length ? null : result[i];
+                    if (combineSameStackTrace && c != null && previousCrash.stackTrace.equals(c.stackTrace) && previousCrash.packageName.equals(c.packageName)) {
+                        c.count = previousCrash.count + 1;
+                        prevSameCrash = c;
+                    } else {
+                        if (prevSameCrash != null) {
+                            finalData.add(prevSameCrash);
+                            prevSameCrash = null;
+                        } else {
+                            finalData.add(previousCrash);
+                        }
+                    }
+                }
                 // Prefetch and cache the first items to avoid scroll lag.
                 // There is the chance the Activity will be destroyed while the items
                 // get prefetched but the chance is low as it doesn't take long to load
-                for (int i = 0; i < CACHE_SIZE && i < result.length; i++) {
-                    getAppIcon(listener, result[i].packageName);
-                    getAppName(listener, result[i].packageName, false);
+                for (int i = 0; i < CACHE_SIZE && i < finalData.size(); i++) {
+                    Crash c = finalData.get(i);
+                    getAppIcon(listener, c.packageName);
+                    getAppName(listener, c.packageName, false);
                 }
-                final ArrayList<Crash> data = new ArrayList<>();
-                Collections.addAll(data, result);
                 listener.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        listener.onDataLoaded(data);
+                        listener.onDataLoaded(finalData);
                     }
                 });
             }
