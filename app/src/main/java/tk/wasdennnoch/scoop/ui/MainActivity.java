@@ -3,7 +3,6 @@ package tk.wasdennnoch.scoop.ui;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -125,7 +124,8 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.OnCr
     }
 
     private boolean isActive() {
-        return Build.HARDWARE.equals("goldfish") || Build.HARDWARE.equals("ranchu"); // true on emulator
+        // TODO looks like this doesn't get hoked correctly
+        return true; // Build.HARDWARE.equals("goldfish") || Build.HARDWARE.equals("ranchu"); // true on emulator
     }
 
     private void updateViewStates(boolean loading) {

@@ -49,7 +49,8 @@ public class XposedHook implements IXposedHookLoadPackage {
     private final XC_MethodHook setUncaughtExceptionHandlerHook = new XC_MethodHook() {
         @Override
         protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-            hookUncaughtException(param.args[0].getClass());
+            if (param.args[0] != null)
+                hookUncaughtException(param.args[0].getClass());
         }
     };
 
