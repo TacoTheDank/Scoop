@@ -29,8 +29,7 @@ android {
 }
 
 dependencies {
-    provided 'de.robv.android.xposed:api:81'
-    provided 'de.robv.android.xposed:api:81:sources'
+    provided files('libs-provide/XposedBridgeApi-52.jar')
     provided files('libs-provide/android_hidden_api_23.jar')
     compile 'com.android.support:appcompat-v7:25.1.0'
     compile 'com.android.support:recyclerview-v7:25.1.0'
