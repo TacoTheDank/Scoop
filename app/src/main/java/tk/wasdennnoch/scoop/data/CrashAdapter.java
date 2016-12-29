@@ -24,6 +24,7 @@ public class CrashAdapter extends RecyclerView.Adapter<CrashAdapter.CrashViewHol
     private ArrayList<Crash> mSearchedItems = new ArrayList<>();
     private boolean mSearchActive = false;
     private boolean mSearchPackageName = true;
+    private String mLastSearchTerm;
     private boolean mSelectionEnabled = false;
     private int mSelectedCount;
     private Listener mListener;
@@ -34,8 +35,9 @@ public class CrashAdapter extends RecyclerView.Adapter<CrashAdapter.CrashViewHol
         mSelectedColor = ContextCompat.getColor(context, R.color.selectedBgColor);
     }
 
-    public void setSearchPackageName(boolean searchPkg) {
+    public void setSearchPackageName(Context context, boolean searchPkg) {
         mSearchPackageName = searchPkg;
+        search(context, mLastSearchTerm);
     }
 
     public void setCrashes(ArrayList<Crash> crashes) {
@@ -56,6 +58,7 @@ public class CrashAdapter extends RecyclerView.Adapter<CrashAdapter.CrashViewHol
     }
 
     public void search(Context context, String text) {
+        mLastSearchTerm = text;
         mSearchedItems.clear();
         mSearchActive = !TextUtils.isEmpty(text);
         if (mSearchActive) {

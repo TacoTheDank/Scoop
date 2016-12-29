@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
     @Override
     protected void onResume() {
         super.onResume();
-        mAdapter.setSearchPackageName(mPrefs.getBoolean("search_package_name", true)); // Cheap way to instantly apply changes
+        mAdapter.setSearchPackageName(this, mPrefs.getBoolean("search_package_name", true)); // Cheap way to instantly apply changes
         sVisible = true;
         mHandler.post(mUpdateCheckerRunnable);
     }
