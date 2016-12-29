@@ -49,9 +49,11 @@ public class CrashReceiver extends BroadcastReceiver {
                 .build();
 
         Inquiry.get("receiver")
-                .insertInto("crashes", Crash.class)
+                .insert(Crash.class)
                 .values(crash)
                 .run();
+
+        Inquiry.destroy("receiver");
 
         if (prefs.getBoolean("show_notification", true)) {
             NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);

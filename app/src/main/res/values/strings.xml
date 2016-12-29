@@ -11,13 +11,24 @@
     <string name="action_share">Share</string>
     <string name="action_copy">Copy to clipboard</string>
     <string name="action_copy_short">Copy</string>
+    <string name="action_delete">Delete</string>
 
+    <string name="dialog_ok">OK</string>
+    <string name="dialog_cancel">Cancel</string>
     <string name="just_now">Just Now</string>
     <string name="crash_count">(%d)</string>
-    <string name="dialog_clear_content">Are you sure you want to clear all crashes?</string>
     <string name="app_not_installed">%s (not installed)</string>
     <string name="copy_label">Stack trace of %s</string>
     <string name="copied_toast">Stack trace copied to clipboard</string>
+    <plurals name="items_selected_count">
+        <item quantity="one">%d item selected</item>
+        <item quantity="other">%d items selected</item>
+    </plurals>
+    <string name="dialog_clear_content">Are you sure you want to clear all crashes?</string>
+    <plurals name="delete_multiple_confirm">
+        <item quantity="one">Delete %d file? This can\'t be undone!</item>
+        <item quantity="other">Delete %d files? This can\'t be undone!</item>
+    </plurals>
 
     <string name="no_items">No items yet.</string>
     <string name="make_crash_plain" tools:ignore="Typos">Wanna make something crash? .</string> <!-- dot gets replaced with image (ಠ‿ಠ), see explanation in MainActivity -->

@@ -26,6 +26,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.afollestad.inquiry.Inquiry;
+import com.afollestad.materialcab.MaterialCab;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 
@@ -38,7 +39,7 @@ import tk.wasdennnoch.scoop.data.Crash;
 import tk.wasdennnoch.scoop.data.CrashAdapter;
 import tk.wasdennnoch.scoop.data.CrashLoader;
 
-public class MainActivity extends AppCompatActivity implements CrashAdapter.OnCrashClickListener, SearchView.OnQueryTextListener, SearchView.OnCloseListener {
+public class MainActivity extends AppCompatActivity implements CrashAdapter.Listener, SearchView.OnQueryTextListener, SearchView.OnCloseListener, MaterialCab.Callback {
 
     private static final int UPDATE_DELAY = 200;
     private static boolean sUpdateRequired;
@@ -54,6 +55,9 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.OnCr
     private ViewStub mNoItemsStub;
     private View mNoItems;
 
+    private MaterialCab mCab;
+    private boolean mAnimatingCab; // Required to properly animate the cab (otherwise it instantly hides when pressing the up button)
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true); // To make vector drawables work as menu item drawables
@@ -67,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.OnCr
 
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-        mAdapter = new CrashAdapter(this);
+        mAdapter = new CrashAdapter(this, this);
         mList.setAdapter(mAdapter);
         mList.setVisibility(View.GONE);
 
@@ -77,9 +81,11 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.OnCr
 
         if (savedInstanceState == null) {
             sUpdateRequired = false;
+            mCab = new MaterialCab(this, R.id.cab_stub);
             loadData();
         } else {
             mAdapter.restoreInstanceState(savedInstanceState);
+            mCab = MaterialCab.restoreState(savedInstanceState, this, this);
             updateViewStates(false);
         }
         mHandler = new Handler();
@@ -104,6 +110,7 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.OnCr
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         mAdapter.saveInstanceState(outState);
+        mCab.saveState(outState);
     }
 
     @Override
@@ -121,6 +128,15 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.OnCr
         mHandler.removeCallbacks(mUpdateCheckerRunnable);
         if (isFinishing())
             Inquiry.destroy("main");
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mCab.isActive()) {
+            mAdapter.setSelectionEnabled(false);
+        } else {
+            super.onBackPressed();
+        }
     }
 
     private boolean isActive() {
@@ -164,6 +180,7 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.OnCr
     }
 
     private void loadData() {
+        mAdapter.setSelectionEnabled(false);
         updateViewStates(true);
         mLoader.loadData(this, mPrefs.getBoolean("combine_same_stack_trace", true));
     }
@@ -173,9 +190,72 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.OnCr
         updateViewStates(false);
     }
 
+    private void setCabActive(boolean active) {
+        if (active) {
+            mCab.start(this);
+            AnimationUtils.slideToolbar(mCab.getToolbar(), false, AnimationUtils.ANIM_DURATION_DEFAULT);
+        } else {
+            mAnimatingCab = true;
+            AnimationUtils.slideToolbar(mCab.getToolbar(), true, AnimationUtils.ANIM_DURATION_DEFAULT, false, new Runnable() {
+                @Override
+                public void run() {
+                    mAnimatingCab = false;
+                    mCab.finish();
+                }
+            });
+        }
+    }
+
     @Override
     public void onCrashClicked(Crash crash) {
         startActivity(new Intent(this, DetailActivity.class).putExtra(DetailActivity.EXTRA_CRASH, crash));
+    }
+
+    @Override
+    public void onToggleSelectionMode(boolean enabled) {
+        setCabActive(enabled);
+    }
+
+    @Override
+    public void onItemSelected(int count) {
+        mCab.setTitle(String.format(getResources().getQuantityString(R.plurals.items_selected_count, count), count));
+    }
+
+    @Override
+    public boolean onCabCreated(MaterialCab cab, Menu menu) {
+        return true;
+    }
+
+    @Override
+    public boolean onCabItemClicked(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_delete:
+                final ArrayList<Crash> items = mAdapter.getSelectedItems();
+                Crash[] itemsArr = new Crash[items.size()];
+                itemsArr = items.toArray(itemsArr);
+                final Crash[] finalItemsArr = itemsArr;
+                String content = String.format(getResources().getQuantityString(R.plurals.delete_multiple_confirm, finalItemsArr.length), finalItemsArr.length);
+                new MaterialDialog.Builder(this)
+                        .content(content)
+                        .positiveText(R.string.dialog_ok)
+                        .negativeText(R.string.dialog_cancel)
+                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog materialDialog, @NonNull DialogAction dialogAction) {
+                                Inquiry.get("main").delete(Crash.class).values(finalItemsArr).run();
+                                loadData();
+                            }
+                        })
+                        .show();
+                return true;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onCabFinished(MaterialCab cab) {
+        mAdapter.setSelectionEnabled(false);
+        return !mAnimatingCab;
     }
 
     @Override
@@ -217,7 +297,7 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.OnCr
                             @Override
                             public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                                 Inquiry.get("main")
-                                        .dropTable("crashes"); // bam!
+                                        .dropTable(Crash.class); // bam!
                                 onDataLoaded(null);
                             }
                         }).show();

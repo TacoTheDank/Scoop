@@ -33,7 +33,7 @@ public class CrashLoader {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                Crash[] result = Inquiry.get("main").selectFrom("crashes", Crash.class).all();
+                Crash[] result = Inquiry.get("main").select(Crash.class).all();
                 final MainActivity listener = mListener.get();
                 if (listener == null || listener.isFinishing() || (Build.VERSION.SDK_INT >= 17 && listener.isDestroyed()))
                     return;

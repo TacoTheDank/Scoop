@@ -1,7 +1,9 @@
 package tk.wasdennnoch.scoop.data;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -22,10 +24,14 @@ public class CrashAdapter extends RecyclerView.Adapter<CrashAdapter.CrashViewHol
     private ArrayList<Crash> mSearchedItems = new ArrayList<>();
     private boolean mSearchActive = false;
     private boolean mSearchPackageName = true;
-    private OnCrashClickListener mListener;
+    private boolean mSelectionEnabled = false;
+    private int mSelectedCount;
+    private Listener mListener;
+    private int mSelectedColor;
 
-    public CrashAdapter(OnCrashClickListener listener) {
+    public CrashAdapter(Context context, Listener listener) {
         mListener = listener;
+        mSelectedColor = ContextCompat.getColor(context, R.color.selectedBgColor);
     }
 
     public void setSearchPackageName(boolean searchPkg) {
@@ -63,6 +69,38 @@ public class CrashAdapter extends RecyclerView.Adapter<CrashAdapter.CrashViewHol
         notifyDataSetChanged();
     }
 
+    public void setSelectionEnabled(boolean enabled) {
+        if (enabled == mSelectionEnabled) return;
+        mSelectionEnabled = enabled;
+        if (!enabled) {
+            for (int i = 0; i < mItems.size(); i++) {
+                setItemSelected(i, false);
+            }
+        }
+        mListener.onToggleSelectionMode(enabled);
+    }
+
+    public ArrayList<Crash> getSelectedItems() {
+        ArrayList<Crash> items = new ArrayList<>();
+        for (Crash c : mItems)
+            if (c.selected)
+                items.add(c);
+        return items;
+    }
+
+    private void setItemSelected(int item, boolean selected) {
+        Crash c = mItems.get(item);
+        if (c.selected == selected) return;
+        c.selected = selected;
+        if (c.selected) {
+            mSelectedCount++;
+        } else {
+            mSelectedCount--;
+        }
+        notifyItemChanged(item);
+        mListener.onItemSelected(mSelectedCount);
+    }
+
     public void saveInstanceState(Bundle outState) {
         outState.putParcelableArrayList("mItems", mItems);
         outState.putParcelableArrayList("mSearchedItems", mSearchedItems);
@@ -93,6 +131,8 @@ public class CrashAdapter extends RecyclerView.Adapter<CrashAdapter.CrashViewHol
         holder.time.setReferenceTime(crash.time);
         holder.crashText.setText(crash.description);
         holder.itemView.setOnClickListener(holder);
+        holder.itemView.setOnLongClickListener(holder);
+        holder.itemView.setBackgroundColor(crash.selected ? mSelectedColor : Color.TRANSPARENT);
     }
 
     @Override
@@ -100,11 +140,15 @@ public class CrashAdapter extends RecyclerView.Adapter<CrashAdapter.CrashViewHol
         return mSearchActive ? mSearchedItems.size() : mItems.size();
     }
 
-    public interface OnCrashClickListener {
+    public interface Listener {
         void onCrashClicked(Crash crash);
+
+        void onToggleSelectionMode(boolean enabled);
+
+        void onItemSelected(int totalCount);
     }
 
-    class CrashViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class CrashViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
         Crash crash;
         ImageView icon;
@@ -124,8 +168,22 @@ public class CrashAdapter extends RecyclerView.Adapter<CrashAdapter.CrashViewHol
 
         @Override
         public void onClick(View v) {
-            if (mListener != null)
+            if (mSelectionEnabled) {
+                setItemSelected(getAdapterPosition(), !crash.selected);
+                if (mSelectedCount == 0)
+                    setSelectionEnabled(false);
+            } else {
                 mListener.onCrashClicked(crash);
+            }
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            if (!mSelectionEnabled) {
+                setSelectionEnabled(true);
+                setItemSelected(getAdapterPosition(), !crash.selected);
+            }
+            return false;
         }
     }
 

@@ -19,9 +19,7 @@
 -keep class tk.wasdennnoch.scoop.XposedHook
 -keep class tk.wasdennnoch.scoop.MockThrowable { *; }
 -keep class android.support.v7.widget.SearchView { *; }
--keepclassmembers class tk.wasdennnoch.scoop.data.Crash {
-    public *;
-}
+-keep class tk.wasdennnoch.scoop.data.Crash
 -keepclassmembers class tk.wasdennnoch.scoop.ui.MainActivity {
     private boolean isActive();
 }

@@ -11,6 +11,9 @@
         <item name="android:textColorPrimaryInverse">@color/text_primary_dark</item>
         <item name="android:textColorSecondaryInverse">@color/text_secondary_dark</item>
         <item name="android:textColorTertiaryInverse">@color/text_disabled_dark</item>
+
+        <item name="mcab_background_color">@color/colorPrimary</item>
+        <item name="mcab_menu">@menu/menu_cab</item>
     </style>
 
 </resources>

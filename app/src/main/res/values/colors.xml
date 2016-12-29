@@ -6,6 +6,7 @@
     <color name="colorAccent">#607D8B</color>
 
     <color name="highlightColor">#70FF74</color>
+    <color name="selectedBgColor">#22000000</color>
 
     <color name="text_primary_dark">#FFFFFFFF</color>
     <color name="text_secondary_dark">#B3FFFFFF</color>

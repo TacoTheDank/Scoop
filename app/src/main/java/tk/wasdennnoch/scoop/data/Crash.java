@@ -4,8 +4,10 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.afollestad.inquiry.annotations.Column;
+import com.afollestad.inquiry.annotations.Table;
 
 @SuppressWarnings("WeakerAccess")
+@Table
 public class Crash implements Parcelable {
 
     @SuppressWarnings("unused")
@@ -31,7 +33,9 @@ public class Crash implements Parcelable {
     @Column
     public String stackTrace;
 
+    // Adapter states
     public int count = 1;
+    public boolean selected = false;
 
     private Crash(Parcel in) {
         id = in.readLong();
@@ -40,6 +44,7 @@ public class Crash implements Parcelable {
         description = in.readString();
         stackTrace = in.readString();
         count = in.readInt();
+        selected = in.readInt() == 1;
     }
 
     public static final Creator<Crash> CREATOR = new Creator<Crash>() {
@@ -67,5 +72,6 @@ public class Crash implements Parcelable {
         dest.writeString(description);
         dest.writeString(stackTrace);
         dest.writeInt(count);
+        dest.writeInt(selected ? 1 : 0);
     }
 }
