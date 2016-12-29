@@ -1,4 +1,4 @@
-package tk.wasdennnoch.scoop.ui;
+package tk.wasdennnoch.scoop.ui.utils;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -11,17 +11,17 @@ import android.view.View;
 import android.view.ViewPropertyAnimator;
 import android.view.animation.Interpolator;
 
-class AnimationUtils {
+public class AnimationUtils {
 
     private static final Interpolator FAST_OUT_SLOW_IN = new FastOutSlowInInterpolator();
 
-    static final int ANIM_DURATION_DEFAULT = 400;
+    public static final int ANIM_DURATION_DEFAULT = 400;
 
-    static void slideToolbar(Toolbar t, boolean out, int duration) {
+    public static void slideToolbar(Toolbar t, boolean out, int duration) {
         slideToolbar(t, out, duration, false, null);
     }
 
-    static void slideToolbar(final Toolbar t, final boolean out, int duration, final boolean setVisibility, final Runnable endAction) {
+    public static void slideToolbar(final Toolbar t, final boolean out, int duration, final boolean setVisibility, final Runnable endAction) {
         if (setVisibility && !out) t.setVisibility(View.VISIBLE);
         int actionBarSize = getActionBarSize(t.getContext());
         t.setAlpha(out ? 1 : 0);

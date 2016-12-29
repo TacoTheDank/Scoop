@@ -74,4 +74,14 @@ public class Crash implements Parcelable {
         dest.writeInt(count);
         dest.writeInt(selected ? 1 : 0);
     }
+
+    @Override
+    public String toString() {
+        return "Crash[(Shortened)" +
+                "; _id " + id +
+                "; packageName " + packageName +
+                "; time " + time +
+                "; count " + count +
+                "]";
+    }
 }

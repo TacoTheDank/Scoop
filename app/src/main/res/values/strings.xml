@@ -21,16 +21,16 @@
     <string name="copy_label">Stack trace of %s</string>
     <string name="copied_toast">Stack trace copied to clipboard</string>
     <plurals name="items_selected_count">
-        <item quantity="one">%d item selected</item>
-        <item quantity="other">%d items selected</item>
+        <item quantity="one">%d crash selected</item>
+        <item quantity="other">%d crashes selected</item>
     </plurals>
     <string name="dialog_clear_content">Are you sure you want to clear all crashes?</string>
     <plurals name="delete_multiple_confirm">
-        <item quantity="one">Delete %d file? This can\'t be undone!</item>
-        <item quantity="other">Delete %d files? This can\'t be undone!</item>
+        <item quantity="one">Delete %d crash? This can\'t be undone!</item>
+        <item quantity="other">Delete %d crashes? This can\'t be undone!</item>
     </plurals>
 
-    <string name="no_items">No items yet.</string>
+    <string name="no_items">No crashes yet.</string>
     <string name="make_crash_plain" tools:ignore="Typos">Wanna make something crash? .</string> <!-- dot gets replaced with image (ಠ‿ಠ), see explanation in MainActivity -->
     <string name="no_xposed_1" translatable="false">Y U NO</string>
     <string name="no_xposed_2" translatable="false">XPOSED INSTALLED</string>

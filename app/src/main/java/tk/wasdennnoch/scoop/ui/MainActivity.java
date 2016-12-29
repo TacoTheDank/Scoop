@@ -38,6 +38,7 @@ import tk.wasdennnoch.scoop.R;
 import tk.wasdennnoch.scoop.data.Crash;
 import tk.wasdennnoch.scoop.data.CrashAdapter;
 import tk.wasdennnoch.scoop.data.CrashLoader;
+import tk.wasdennnoch.scoop.ui.utils.AnimationUtils;
 
 public class MainActivity extends AppCompatActivity implements CrashAdapter.Listener, SearchView.OnQueryTextListener, SearchView.OnCloseListener, MaterialCab.Callback {
 
@@ -102,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
                 public void run() {
                     sendBroadcast(intent);
                 }
-            }, 4000);
+            }, 1000);
         }
     }
 
@@ -231,10 +232,8 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
         switch (item.getItemId()) {
             case R.id.action_delete:
                 final ArrayList<Crash> items = mAdapter.getSelectedItems();
-                Crash[] itemsArr = new Crash[items.size()];
-                itemsArr = items.toArray(itemsArr);
-                final Crash[] finalItemsArr = itemsArr;
-                String content = String.format(getResources().getQuantityString(R.plurals.delete_multiple_confirm, finalItemsArr.length), finalItemsArr.length);
+                if (items.isEmpty()) return true;
+                String content = String.format(getResources().getQuantityString(R.plurals.delete_multiple_confirm, items.size()), items.size());
                 new MaterialDialog.Builder(this)
                         .content(content)
                         .positiveText(R.string.dialog_ok)
@@ -242,8 +241,16 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
                         .onPositive(new MaterialDialog.SingleButtonCallback() {
                             @Override
                             public void onClick(@NonNull MaterialDialog materialDialog, @NonNull DialogAction dialogAction) {
-                                Inquiry.get("main").delete(Crash.class).values(finalItemsArr).run();
-                                loadData();
+                                Inquiry instance = Inquiry.get("main");
+                                for (Crash c : items) {
+                                    int pos = mAdapter.getPosition(c);
+                                    for (int i = pos; i < pos + c.count; i++) {
+                                        instance.delete(Crash.class).atPosition(pos).run();
+                                    }
+                                    mAdapter.removeCrash(c);
+                                }
+                                mAdapter.setSelectionEnabled(false);
+                                updateViewStates(false);
                             }
                         })
                         .show();
