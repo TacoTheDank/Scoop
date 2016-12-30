@@ -81,6 +81,13 @@
             android:title="@string/settings_ignore_threaddeath"
             android:widgetLayout="@layout/preference_switch_layout"/>
 
+        <Preference
+            android:title="@string/settings_about">
+            <intent
+                android:targetClass="tk.wasdennnoch.scoop.ui.AboutActivity"
+                android:targetPackage="tk.wasdennnoch.scoop"/>
+        </Preference>
+
     </PreferenceCategory>
 
 </PreferenceScreen>

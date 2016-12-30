@@ -56,6 +56,10 @@
             android:name=".ui.BlacklistAppsActivity"
             android:label="@string/blacklist_title"/>
 
+        <activity
+            android:name=".ui.AboutActivity"
+            android:label="@string/about_title"/>
+
         <receiver
             android:name=".CrashReceiver"
             android:exported="true"
