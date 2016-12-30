@@ -13,20 +13,21 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
-    <tk.wasdennnoch.scoop.view.CroppingScrollView
-        android:id="@+id/scroll"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <me.zhanghai.android.materialprogressbar.MaterialProgressBar
+        android:id="@+id/loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginTop="?attr/actionBarSize"
-        android:scrollbars="horizontal|vertical">
+        android:indeterminate="true"
+        android:tint="@color/colorAccent"
+        app:mpb_progressStyle="circular"/>
 
-        <TextView
-            android:id="@+id/crash"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="@dimen/detail_text_padding"
-            android:textColor="@color/text_primary_light"/>
-
-    </tk.wasdennnoch.scoop.view.CroppingScrollView>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:scrollbars="vertical"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"/>
 
 </FrameLayout>

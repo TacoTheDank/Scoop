@@ -23,8 +23,8 @@ import android.widget.Toast;
 import java.util.Locale;
 
 import tk.wasdennnoch.scoop.R;
-import tk.wasdennnoch.scoop.data.Crash;
-import tk.wasdennnoch.scoop.data.CrashLoader;
+import tk.wasdennnoch.scoop.data.crash.Crash;
+import tk.wasdennnoch.scoop.data.crash.CrashLoader;
 import tk.wasdennnoch.scoop.view.CroppingScrollView;
 
 public class DetailActivity extends AppCompatActivity implements SearchView.OnQueryTextListener, SearchView.OnCloseListener {

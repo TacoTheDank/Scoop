@@ -1,4 +1,4 @@
-package tk.wasdennnoch.scoop.data;
+package tk.wasdennnoch.scoop.data.crash;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -107,8 +107,8 @@ public class CrashAdapter extends RecyclerView.Adapter<CrashAdapter.CrashViewHol
         return items;
     }
 
-    private void setItemSelected(int item, boolean selected) {
-        Crash c = mItems.get(item);
+    private void setItemSelected(int index, boolean selected) {
+        Crash c = mSearchActive ? mSearchedItems.get(index) : mItems.get(index);
         if (c.selected == selected) return;
         c.selected = selected;
         if (c.selected) {
@@ -116,7 +116,7 @@ public class CrashAdapter extends RecyclerView.Adapter<CrashAdapter.CrashViewHol
         } else {
             mSelectedCount--;
         }
-        notifyItemChanged(item);
+        notifyItemChanged(index);
         mListener.onItemSelected(mSelectedCount);
     }
 
@@ -140,7 +140,7 @@ public class CrashAdapter extends RecyclerView.Adapter<CrashAdapter.CrashViewHol
     @Override
     public void onBindViewHolder(CrashViewHolder holder, int position) {
         Context context = holder.itemView.getContext();
-        Crash crash = mItems.get(position);
+        Crash crash = mSearchActive ? mSearchedItems.get(position) : mItems.get(position);
         String pkg = crash.packageName;
         holder.crash = crash;
         holder.icon.setImageDrawable(CrashLoader.getAppIcon(context, pkg));

@@ -31,13 +31,14 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import tk.wasdennnoch.scoop.CrashReceiver;
 import tk.wasdennnoch.scoop.MockThrowable;
 import tk.wasdennnoch.scoop.R;
-import tk.wasdennnoch.scoop.data.Crash;
-import tk.wasdennnoch.scoop.data.CrashAdapter;
-import tk.wasdennnoch.scoop.data.CrashLoader;
+import tk.wasdennnoch.scoop.data.crash.Crash;
+import tk.wasdennnoch.scoop.data.crash.CrashAdapter;
+import tk.wasdennnoch.scoop.data.crash.CrashLoader;
 import tk.wasdennnoch.scoop.ui.utils.AnimationUtils;
 
 public class MainActivity extends AppCompatActivity implements CrashAdapter.Listener, SearchView.OnQueryTextListener, SearchView.OnCloseListener, MaterialCab.Callback {
@@ -183,7 +184,7 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
     private void loadData() {
         mAdapter.setSelectionEnabled(false);
         updateViewStates(true);
-        mLoader.loadData(this, mPrefs.getBoolean("combine_same_stack_trace", true));
+        mLoader.loadData(this, mPrefs.getBoolean("combine_same_stack_trace", true), Arrays.asList(mPrefs.getString("blacklisted_packages", "").split(",")));
     }
 
     public void onDataLoaded(ArrayList<Crash> data) {

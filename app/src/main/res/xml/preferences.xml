@@ -47,6 +47,14 @@
             android:title="@string/settings_combime_same_trace"
             android:widgetLayout="@layout/preference_switch_layout"/>
 
+        <Preference
+            android:summary="@string/settings_blacklisted_apps_summary"
+            android:title="@string/settings_blacklisted_apps">
+            <intent
+                android:targetClass="tk.wasdennnoch.scoop.ui.BlacklistAppsActivity"
+                android:targetPackage="tk.wasdennnoch.scoop"/>
+        </Preference>
+
     </PreferenceCategory>
 
 

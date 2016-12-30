@@ -18,8 +18,10 @@ import android.util.Log;
 
 import com.afollestad.inquiry.Inquiry;
 
-import tk.wasdennnoch.scoop.data.Crash;
-import tk.wasdennnoch.scoop.data.CrashLoader;
+import java.util.Arrays;
+
+import tk.wasdennnoch.scoop.data.crash.Crash;
+import tk.wasdennnoch.scoop.data.crash.CrashLoader;
 import tk.wasdennnoch.scoop.ui.DetailActivity;
 import tk.wasdennnoch.scoop.ui.MainActivity;
 
@@ -55,7 +57,8 @@ public class CrashReceiver extends BroadcastReceiver {
 
         Inquiry.destroy("receiver");
 
-        if (prefs.getBoolean("show_notification", true)) {
+        if (prefs.getBoolean("show_notification", true) &&
+                !Arrays.asList(PreferenceManager.getDefaultSharedPreferences(context).getString("blacklisted_packages", "").split(",")).contains(packageName)) {
             NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
             Intent clickIntent = new Intent(context, DetailActivity.class).putExtra(DetailActivity.EXTRA_CRASH, crash);
@@ -76,7 +79,7 @@ public class CrashReceiver extends BroadcastReceiver {
             if (prefs.getBoolean("show_stack_trace_notif", false)) {
                 NotificationCompat.InboxStyle style = new NotificationCompat.InboxStyle();
                 String[] traces = stackTrace.split("\n");
-                for (int i = 0; i < 6 && i < traces.length; i++) {
+                for (int i = 0; i < 6 && i < traces.length; i++) { // Inbox style only shows 6 entries
                     style.addLine(traces[i]);
                 }
                 builder.setStyle(style);

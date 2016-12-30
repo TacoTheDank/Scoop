@@ -7,7 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
-import tk.wasdennnoch.scoop.data.CrashLoader;
+import tk.wasdennnoch.scoop.data.crash.CrashLoader;
 
 public class ShareReceiver extends BroadcastReceiver {
 

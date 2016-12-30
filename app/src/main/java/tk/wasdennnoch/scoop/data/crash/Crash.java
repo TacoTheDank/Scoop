@@ -1,4 +1,4 @@
-package tk.wasdennnoch.scoop.data;
+package tk.wasdennnoch.scoop.data.crash;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -77,7 +77,7 @@ public class Crash implements Parcelable {
 
     @Override
     public String toString() {
-        return "Crash[(Shortened)" +
+        return "Crash[" +
                 "; _id " + id +
                 "; packageName " + packageName +
                 "; time " + time +

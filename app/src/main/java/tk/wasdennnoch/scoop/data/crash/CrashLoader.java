@@ -1,4 +1,4 @@
-package tk.wasdennnoch.scoop.data;
+package tk.wasdennnoch.scoop.data.crash;
 
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
@@ -14,6 +14,7 @@ import com.afollestad.inquiry.Inquiry;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import tk.wasdennnoch.scoop.R;
@@ -28,8 +29,8 @@ public class CrashLoader {
 
     private WeakReference<MainActivity> mListener;
 
-    public void loadData(MainActivity listener, final boolean combineSameStackTrace) {
-        mListener = new WeakReference<>(listener);
+    public void loadData(MainActivity activity, final boolean combineSameStackTrace, final List<String> blacklist) {
+        mListener = new WeakReference<>(activity);
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -57,10 +58,12 @@ public class CrashLoader {
                         prevSameCrash = c;
                     } else {
                         if (prevSameCrash != null) {
-                            finalData.add(prevSameCrash);
+                            if (!blacklist.contains(prevSameCrash.packageName))
+                                finalData.add(prevSameCrash);
                             prevSameCrash = null;
                         } else {
-                            finalData.add(previousCrash);
+                            if (!blacklist.contains(previousCrash.packageName))
+                                finalData.add(previousCrash);
                         }
                     }
                 }
