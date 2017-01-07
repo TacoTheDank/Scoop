@@ -8,7 +8,6 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.util.ArrayMap;
-import android.util.LruCache;
 
 import com.afollestad.inquiry.Inquiry;
 
@@ -20,11 +19,9 @@ import java.util.Map;
 import tk.wasdennnoch.scoop.R;
 import tk.wasdennnoch.scoop.ui.MainActivity;
 
-@SuppressWarnings("WeakerAccess")
 public class CrashLoader {
 
-    private static final int CACHE_SIZE = 25;
-    private static LruCache<String, Drawable> sIconCache = new LruCache<>(CACHE_SIZE);
+    private static Map<String, Drawable> sIconCache = new ArrayMap<>();
     private static Map<String, String> sNameCache = new ArrayMap<>();
 
     private WeakReference<MainActivity> mListener;
@@ -49,7 +46,7 @@ public class CrashLoader {
                 }
                 final ArrayList<Crash> finalData = new ArrayList<>();
                 Crash prevSameCrash = null;
-                // Combine same crashes. Don't ask me how it works, but it works.
+                // Combine same stack traces. Don't ask me how it works, but it works. Probably way too complicated.
                 for (int i = 1; i < result.length + 1; i++) {
                     Crash previousCrash = result[i - 1];
                     Crash c = i >= result.length ? null : result[i];
@@ -70,7 +67,7 @@ public class CrashLoader {
                 // Prefetch and cache the first items to avoid scroll lag.
                 // There is the chance the Activity will be destroyed while the items
                 // get prefetched but the chance is low as it doesn't take long to load
-                for (int i = 0; i < CACHE_SIZE && i < finalData.size(); i++) {
+                for (int i = 0; i < finalData.size(); i++) {
                     Crash c = finalData.get(i);
                     getAppIcon(listener, c.packageName);
                     getAppName(listener, c.packageName, false);
@@ -96,22 +93,27 @@ public class CrashLoader {
             sIconCache.put(packageName, icon);
             return icon;
         } catch (PackageManager.NameNotFoundException n) {
-            return ContextCompat.getDrawable(context, R.drawable.ic_bug_vector);
+            icon = ContextCompat.getDrawable(context, R.drawable.ic_bug_vector);
+            sIconCache.put(packageName, icon);
+            return icon;
         }
     }
 
     @NonNull
     public static String getAppName(Context context, String packageName, boolean withNotInstalledInfo) {
         String name = sNameCache.get(packageName);
-        if (name != null) return name;
+        if (name != null)
+            return withNotInstalledInfo ? context.getString(R.string.app_not_installed, name) : name;
         PackageManager manager = context.getPackageManager();
         try {
             ApplicationInfo info = manager.getApplicationInfo(packageName, 0);
             name = info.loadLabel(manager).toString();
             sNameCache.put(packageName, name);
-            return name;
+            return withNotInstalledInfo ? context.getString(R.string.app_not_installed, name) : name;
         } catch (PackageManager.NameNotFoundException n) {
-            return withNotInstalledInfo ? context.getString(R.string.app_not_installed, packageName) : packageName;
+            name = packageName;
+            sNameCache.put(packageName, name);
+            return withNotInstalledInfo ? context.getString(R.string.app_not_installed, name) : name;
         }
     }
 
