@@ -16,6 +16,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
         android:layout_marginLeft="@dimen/crash_container_padding"
         android:orientation="vertical"
         tools:ignore="RtlHardcoded">
@@ -32,26 +33,17 @@
                 android:layout_alignParentStart="true"
                 android:layout_marginEnd="@dimen/crash_count_spacing"
                 android:layout_marginRight="@dimen/crash_count_spacing"
+                android:layout_toLeftOf="@+id/time"
+                android:ellipsize="end"
                 android:maxLines="1"
                 android:textColor="@color/text_primary_light"
                 android:textSize="@dimen/crash_header_size"/>
-
-            <TextView
-                android:id="@+id/count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/crash_container_padding"
-                android:layout_marginRight="@dimen/crash_container_padding"
-                android:layout_toLeftOf="@+id/time"
-                android:layout_toRightOf="@+id/title"
-                android:textColor="@color/text_disabled_light"
-                android:textSize="@dimen/crash_header_size"
-                android:visibility="gone"/>
 
             <tk.wasdennnoch.scoop.view.RelativeTimeTextView
                 android:id="@+id/time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/title"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_gravity="end"

@@ -34,10 +34,10 @@
         android:title="@string/settings_overview">
 
         <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="search_package_name"
-            android:summary="@string/settings_search_pkg_summary"
-            android:title="@string/settings_search_pkg"
+            android:defaultValue="false"
+            android:key="combine_same_apps"
+            android:summary="@string/settings_combime_same_apps_summary"
+            android:title="@string/settings_combime_same_apps"
             android:widgetLayout="@layout/preference_switch_layout"/>
 
         <CheckBoxPreference
@@ -45,6 +45,13 @@
             android:key="combine_same_stack_trace"
             android:summary="@string/settings_combime_same_trace_summary"
             android:title="@string/settings_combime_same_trace"
+            android:widgetLayout="@layout/preference_switch_layout"/>
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="search_package_name"
+            android:summary="@string/settings_search_pkg_summary"
+            android:title="@string/settings_search_pkg"
             android:widgetLayout="@layout/preference_switch_layout"/>
 
         <Preference

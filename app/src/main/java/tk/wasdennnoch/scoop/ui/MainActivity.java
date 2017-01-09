@@ -12,7 +12,6 @@ import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
@@ -40,19 +39,24 @@ import tk.wasdennnoch.scoop.data.crash.Crash;
 import tk.wasdennnoch.scoop.data.crash.CrashAdapter;
 import tk.wasdennnoch.scoop.data.crash.CrashLoader;
 import tk.wasdennnoch.scoop.ui.utils.AnimationUtils;
+import tk.wasdennnoch.scoop.view.CrashRecyclerView;
 
 public class MainActivity extends AppCompatActivity implements CrashAdapter.Listener, SearchView.OnQueryTextListener, SearchView.OnCloseListener, MaterialCab.Callback {
+
+    private static final String EXTRA_CRASH = "tk.wasdennnoch.scoop.EXTRA_CRASH";
 
     private static final int UPDATE_DELAY = 200;
     private static boolean sUpdateRequired;
     private static boolean sVisible;
     private static Crash sNewCrash;
 
+    private boolean mCombineApps;
+    private boolean mHasCrash;
     private SharedPreferences mPrefs;
     private Handler mHandler;
     private CrashAdapter mAdapter;
     private CrashLoader mLoader = new CrashLoader();
-    private RecyclerView mList;
+    private CrashRecyclerView mList;
     private ProgressBar mLoading;
     private ViewStub mNoItemsStub;
     private View mNoItems;
@@ -67,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
         setContentView(R.layout.activity_main);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
 
-        mList = (RecyclerView) findViewById(R.id.list);
+        mList = (CrashRecyclerView) findViewById(R.id.list);
         mLoading = (ProgressBar) findViewById(R.id.loading);
         mNoItemsStub = (ViewStub) findViewById(R.id.noItemStub);
 
@@ -77,6 +81,20 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
         mList.setAdapter(mAdapter);
         mList.setVisibility(View.GONE);
 
+        Intent i = getIntent();
+        mHasCrash = i.hasExtra(EXTRA_CRASH);
+        if (mHasCrash) {
+            Crash c = i.getParcelableExtra(EXTRA_CRASH);
+            ArrayList<Crash> crashes = new ArrayList<>();
+            crashes.add(c);
+            crashes.addAll(c.children);
+            mAdapter.setCrashes(crashes);
+        }
+
+        mCombineApps = mPrefs.getBoolean("combine_same_apps", false);
+        mAdapter.setCombineSameApps(!mHasCrash && mCombineApps);
+        mList.setReverseOrder(mHasCrash || !mCombineApps);
+
         Inquiry.newInstance(this, "crashes")
                 .instanceName("main")
                 .build();
@@ -84,7 +102,10 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
         if (savedInstanceState == null) {
             sUpdateRequired = false;
             mCab = new MaterialCab(this, R.id.cab_stub);
-            loadData();
+            if (!mHasCrash)
+                loadData();
+            else
+                updateViewStates(false);
         } else {
             mAdapter.restoreInstanceState(savedInstanceState);
             mCab = MaterialCab.restoreState(savedInstanceState, this, this);
@@ -184,7 +205,10 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
     private void loadData() {
         mAdapter.setSelectionEnabled(false);
         updateViewStates(true);
-        mLoader.loadData(this, mPrefs.getBoolean("combine_same_stack_trace", true), Arrays.asList(mPrefs.getString("blacklisted_packages", "").split(",")));
+        mLoader.loadData(this,
+                mPrefs.getBoolean("combine_same_stack_trace", true),
+                mPrefs.getBoolean("combine_same_apps", false),
+                Arrays.asList(mPrefs.getString("blacklisted_packages", "").split(",")));
     }
 
     public void onDataLoaded(ArrayList<Crash> data) {
@@ -210,7 +234,11 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
 
     @Override
     public void onCrashClicked(Crash crash) {
-        startActivity(new Intent(this, DetailActivity.class).putExtra(DetailActivity.EXTRA_CRASH, crash));
+        if (mCombineApps && !mHasCrash) {
+            startActivity(new Intent(this, MainActivity.class).putExtra(EXTRA_CRASH, crash));
+        } else {
+            startActivity(new Intent(this, DetailActivity.class).putExtra(DetailActivity.EXTRA_CRASH, crash));
+        }
     }
 
     @Override

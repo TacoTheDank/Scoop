@@ -15,6 +15,8 @@ import tk.wasdennnoch.scoop.R;
 
 public class CrashRecyclerView extends RecyclerView {
 
+    private LinearLayoutManager mManager;
+
     public CrashRecyclerView(Context context) {
         this(context, null);
     }
@@ -25,12 +27,15 @@ public class CrashRecyclerView extends RecyclerView {
 
     public CrashRecyclerView(Context context, @Nullable AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        LinearLayoutManager manager = new LinearLayoutManager(context);
-        manager.setReverseLayout(true);
-        manager.setStackFromEnd(true);
-        setLayoutManager(manager);
+        mManager = new LinearLayoutManager(context);
+        setLayoutManager(mManager);
         addItemDecoration(new VerticalSpaceItemDecoration(getResources().getDimensionPixelSize(R.dimen.crash_list_divider_size)));
         addItemDecoration(new DividerItemDecoration(context));
+    }
+
+    public void setReverseOrder(boolean reverse) {
+        mManager.setReverseLayout(reverse);
+        mManager.setStackFromEnd(reverse);
     }
 
     private static class VerticalSpaceItemDecoration extends RecyclerView.ItemDecoration {

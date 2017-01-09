@@ -5,7 +5,10 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,13 +25,14 @@ public class CrashAdapter extends RecyclerView.Adapter<CrashAdapter.CrashViewHol
 
     private ArrayList<Crash> mItems = new ArrayList<>();
     private ArrayList<Crash> mSearchedItems = new ArrayList<>();
-    private boolean mSearchActive = false;
+    private boolean mSearchActive;
     private boolean mSearchPackageName = true;
     private String mLastSearchTerm;
-    private boolean mSelectionEnabled = false;
+    private boolean mSelectionEnabled;
     private int mSelectedCount;
     private Listener mListener;
     private int mSelectedColor;
+    private boolean mCombineSameApps;
 
     public CrashAdapter(Context context, Listener listener) {
         mListener = listener;
@@ -38,6 +42,10 @@ public class CrashAdapter extends RecyclerView.Adapter<CrashAdapter.CrashViewHol
     public void setSearchPackageName(Context context, boolean searchPkg) {
         mSearchPackageName = searchPkg;
         search(context, mLastSearchTerm);
+    }
+
+    public void setCombineSameApps(boolean combine) {
+        mCombineSameApps = combine;
     }
 
     public void setCrashes(ArrayList<Crash> crashes) {
@@ -142,13 +150,30 @@ public class CrashAdapter extends RecyclerView.Adapter<CrashAdapter.CrashViewHol
         Context context = holder.itemView.getContext();
         Crash crash = mSearchActive ? mSearchedItems.get(position) : mItems.get(position);
         String pkg = crash.packageName;
+        CharSequence title;
         holder.crash = crash;
         holder.icon.setImageDrawable(CrashLoader.getAppIcon(context, pkg));
-        holder.title.setText(CrashLoader.getAppName(context, pkg, false));
-        holder.count.setVisibility(crash.count > 1 ? View.VISIBLE : View.GONE);
-        holder.count.setText(context.getString(R.string.crash_count, crash.count));
         holder.time.setReferenceTime(crash.time);
-        holder.crashText.setText(crash.description);
+        if (!mCombineSameApps) {
+            String name = CrashLoader.getAppName(context, pkg, false);
+            if (crash.count > 1) {
+                title = context.getString(R.string.crash_count, name, crash.count);
+                title = new SpannableString(title);
+                ((Spannable) title).setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, R.color.text_disabled_light)), name.length(), title.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            } else {
+                title = name;
+            }
+            holder.crashText.setText(crash.description);
+        } else {
+            title = CrashLoader.getAppName(context, pkg, false);
+            int count = crash.count;
+            if (crash.children != null) {
+                for (Crash c : crash.children)
+                    count += c.count;
+            }
+            holder.crashText.setText(context.getResources().getQuantityString(R.plurals.items_children_count, count, count));
+        }
+        holder.title.setText(title);
         holder.itemView.setOnClickListener(holder);
         holder.itemView.setOnLongClickListener(holder);
         holder.itemView.setBackgroundColor(crash.selected ? mSelectedColor : Color.TRANSPARENT);
@@ -172,7 +197,6 @@ public class CrashAdapter extends RecyclerView.Adapter<CrashAdapter.CrashViewHol
         Crash crash;
         ImageView icon;
         TextView title;
-        TextView count;
         RelativeTimeTextView time;
         TextView crashText;
 
@@ -180,7 +204,6 @@ public class CrashAdapter extends RecyclerView.Adapter<CrashAdapter.CrashViewHol
             super(v);
             icon = (ImageView) v.findViewById(R.id.icon);
             title = (TextView) v.findViewById(R.id.title);
-            count = (TextView) v.findViewById(R.id.count);
             time = (RelativeTimeTextView) v.findViewById(R.id.time);
             crashText = (TextView) v.findViewById(R.id.crash);
         }

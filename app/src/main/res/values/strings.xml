@@ -18,13 +18,17 @@
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Cancel</string>
     <string name="just_now">Just Now</string>
-    <string name="crash_count">(%d)</string>
+    <string name="crash_count">%1$s (%2$d)</string>
     <string name="app_not_installed">%s (not installed)</string>
     <string name="copy_label">Stack trace of %s</string>
     <string name="copied_toast">Stack trace copied to clipboard</string>
     <plurals name="items_selected_count">
         <item quantity="one">%d crash selected</item>
         <item quantity="other">%d crashes selected</item>
+    </plurals>
+    <plurals name="items_children_count">
+        <item quantity="one">%d Crash</item>
+        <item quantity="other">%d Crashes</item>
     </plurals>
     <string name="dialog_clear_content">Are you sure you want to clear all crashes?</string>
     <plurals name="delete_multiple_confirm">
@@ -48,6 +52,8 @@
     <string name="settings_show_stack_trace_summary">Display the beginning of the stack trace in the notification instead of just the description</string>
     <string name="settings_search_pkg">Search in package name</string>
     <string name="settings_search_pkg_summary">Search for the given term in the app name as well as in the package name</string>
+    <string name="settings_combime_same_apps">Combime same apps</string>
+    <string name="settings_combime_same_apps_summary">Sort crashes by individual app entries which contain the different crashes</string>
     <string name="settings_combime_same_trace">Combime same crashes</string>
     <string name="settings_combime_same_trace_summary">Combime crashes from the same app with the same stack trace into one item</string>
     <string name="settings_blacklisted_apps">Blacklisted apps</string>

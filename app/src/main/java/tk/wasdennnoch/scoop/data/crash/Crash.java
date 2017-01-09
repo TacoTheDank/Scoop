@@ -6,6 +6,9 @@ import android.os.Parcelable;
 import com.afollestad.inquiry.annotations.Column;
 import com.afollestad.inquiry.annotations.Table;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @SuppressWarnings("WeakerAccess")
 @Table
 public class Crash implements Parcelable {
@@ -36,6 +39,7 @@ public class Crash implements Parcelable {
     // Adapter states
     public int count = 1;
     public boolean selected = false;
+    public List<Crash> children;
 
     private Crash(Parcel in) {
         id = in.readLong();
@@ -45,6 +49,8 @@ public class Crash implements Parcelable {
         stackTrace = in.readString();
         count = in.readInt();
         selected = in.readInt() == 1;
+        children = new ArrayList<>();
+        in.readTypedList(children, Crash.CREATOR);
     }
 
     public static final Creator<Crash> CREATOR = new Creator<Crash>() {
@@ -73,6 +79,7 @@ public class Crash implements Parcelable {
         dest.writeString(stackTrace);
         dest.writeInt(count);
         dest.writeInt(selected ? 1 : 0);
+        dest.writeTypedList(children);
     }
 
     @Override

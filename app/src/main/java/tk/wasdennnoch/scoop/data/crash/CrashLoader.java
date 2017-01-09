@@ -12,7 +12,10 @@ import android.support.v4.util.ArrayMap;
 import com.afollestad.inquiry.Inquiry;
 
 import java.lang.ref.WeakReference;
+import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -26,12 +29,41 @@ public class CrashLoader {
 
     private WeakReference<MainActivity> mListener;
 
-    public void loadData(MainActivity activity, final boolean combineSameStackTrace, final List<String> blacklist) {
+    private long randomTime() {
+        return (long) (System.currentTimeMillis() * Math.random());
+    }
+
+    public void loadData(MainActivity activity, final boolean combineSameStackTrace, final boolean combineSameApps, final List<String> blacklist) {
         mListener = new WeakReference<>(activity);
         new Thread(new Runnable() {
             @Override
             public void run() {
                 Crash[] result = Inquiry.get("main").select(Crash.class).all();
+                //noinspection ConstantConditions,ConstantIfStatement
+                if (false) {
+                    result = new Crash[21];
+                    result[0] = new Crash(randomTime(), "com.android.calculator", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
+                    result[1] = new Crash(randomTime(), "a.very.very.very.long.package.name", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
+                    result[2] = new Crash(randomTime(), "tk.wasdennnoch.scoop", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
+                    result[3] = new Crash(randomTime(), "tk.wasdennnoch.scoop", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
+                    result[4] = new Crash(randomTime(), "tk.wasdennnoch.scoop", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
+                    result[5] = new Crash(randomTime(), "tk.wasdennnoch.scoop", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
+                    result[6] = new Crash(randomTime(), "com.android.systemui", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
+                    result[7] = new Crash(randomTime(), "com.android.systemui", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
+                    result[8] = new Crash(randomTime(), "com.android.systemui", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
+                    result[9] = new Crash(randomTime(), "com.android.settings", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
+                    result[10] = new Crash(randomTime(), "com.android.settings", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
+                    result[11] = new Crash(randomTime(), "com.android.systemui", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
+                    result[12] = new Crash(randomTime(), "com.android.systemui", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
+                    result[13] = new Crash(randomTime(), "tk.wasdennnoch.scoop", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
+                    result[14] = new Crash(randomTime(), "tk.wasdennnoch.scoop", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
+                    result[15] = new Crash(randomTime(), "tk.wasdennnoch.scoop", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
+                    result[16] = new Crash(randomTime(), "tk.wasdennnoch.scoop", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
+                    result[17] = new Crash(randomTime(), "tk.wasdennnoch.scoop", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
+                    result[18] = new Crash(randomTime(), "tk.wasdennnoch.scoop", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
+                    result[19] = new Crash(randomTime(), "tk.wasdennnoch.puush", "3 Crasheeeeeeeeeees", "Nope.");
+                    result[20] = new Crash(randomTime(), "com.android.calculator2", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
+                }
                 final MainActivity listener = mListener.get();
                 if (listener == null || listener.isFinishing() || (Build.VERSION.SDK_INT >= 17 && listener.isDestroyed()))
                     return;
@@ -44,7 +76,7 @@ public class CrashLoader {
                     });
                     return;
                 }
-                final ArrayList<Crash> finalData = new ArrayList<>();
+                final ArrayList<Crash> data = new ArrayList<>();
                 Crash prevSameCrash = null;
                 // Combine same stack traces. Don't ask me how it works, but it works. Probably way too complicated.
                 for (int i = 1; i < result.length + 1; i++) {
@@ -56,13 +88,50 @@ public class CrashLoader {
                     } else {
                         if (prevSameCrash != null) {
                             if (!blacklist.contains(prevSameCrash.packageName))
-                                finalData.add(prevSameCrash);
+                                data.add(prevSameCrash);
                             prevSameCrash = null;
                         } else {
                             if (!blacklist.contains(previousCrash.packageName))
-                                finalData.add(previousCrash);
+                                data.add(previousCrash);
                         }
                     }
+                }
+                final ArrayList<Crash> finalData;
+                // Then combine to apps
+                if (combineSameApps) {
+                    // Sort apps by name
+                    Collections.sort(data, new Comparator<Crash>() {
+                        private final Collator sC = Collator.getInstance();
+
+                        @Override
+                        public int compare(Crash o1, Crash o2) {
+                            return sC.compare(getAppName(listener, o1.packageName, false), getAppName(listener, o2.packageName, false));
+                        }
+                    });
+                    finalData = new ArrayList<>();
+                    for (int i = 0; i < data.size(); i++) {
+                        Crash c = data.get(i);
+                        Crash p = i == 0 ? null : data.get(i - 1);
+                        if (p != null && c.packageName.equals(p.packageName)) {
+                            Crash c2 = finalData.get(finalData.size() - 1);
+                            if (c2.children == null) {
+                                c2.children = new ArrayList<>();
+                            }
+                            c2.children.add(c);
+                        } else {
+                            finalData.add(c);
+                        }
+                    }
+                    for (Crash c : finalData) {
+                        if (c.children == null) continue;
+                        long newestTime = c.time;
+                        for (Crash cc : c.children)
+                            if (cc.time > newestTime)
+                                newestTime = cc.time;
+                        c.time = newestTime;
+                    }
+                } else {
+                    finalData = data;
                 }
                 // Prefetch and cache the first items to avoid scroll lag.
                 // There is the chance the Activity will be destroyed while the items
@@ -70,7 +139,8 @@ public class CrashLoader {
                 for (int i = 0; i < finalData.size(); i++) {
                     Crash c = finalData.get(i);
                     getAppIcon(listener, c.packageName);
-                    getAppName(listener, c.packageName, false);
+                    if (!combineSameApps) // App names already get fetched during sorting, no need to fetch again
+                        getAppName(listener, c.packageName, false);
                 }
                 listener.runOnUiThread(new Runnable() {
                     @Override
@@ -85,36 +155,35 @@ public class CrashLoader {
     @NonNull
     public static Drawable getAppIcon(Context context, String packageName) {
         Drawable icon = sIconCache.get(packageName);
-        if (icon != null) return icon;
-        PackageManager manager = context.getPackageManager();
-        try {
-            ApplicationInfo info = manager.getApplicationInfo(packageName, 0);
-            icon = info.loadIcon(manager);
+        if (icon == null) {
+            PackageManager manager = context.getPackageManager();
+            try {
+                ApplicationInfo info = manager.getApplicationInfo(packageName, 0);
+                icon = info.loadIcon(manager);
+            } catch (PackageManager.NameNotFoundException n) {
+                icon = ContextCompat.getDrawable(context, R.drawable.ic_bug_vector);
+            }
             sIconCache.put(packageName, icon);
-            return icon;
-        } catch (PackageManager.NameNotFoundException n) {
-            icon = ContextCompat.getDrawable(context, R.drawable.ic_bug_vector);
-            sIconCache.put(packageName, icon);
-            return icon;
         }
+        return icon;
     }
 
     @NonNull
     public static String getAppName(Context context, String packageName, boolean withNotInstalledInfo) {
         String name = sNameCache.get(packageName);
-        if (name != null)
-            return withNotInstalledInfo ? context.getString(R.string.app_not_installed, name) : name;
-        PackageManager manager = context.getPackageManager();
-        try {
-            ApplicationInfo info = manager.getApplicationInfo(packageName, 0);
-            name = info.loadLabel(manager).toString();
+        boolean notInstalled = false;
+        if (name == null) {
+            PackageManager manager = context.getPackageManager();
+            try {
+                ApplicationInfo info = manager.getApplicationInfo(packageName, 0);
+                name = info.loadLabel(manager).toString();
+            } catch (PackageManager.NameNotFoundException n) {
+                name = packageName;
+                notInstalled = true;
+            }
             sNameCache.put(packageName, name);
-            return withNotInstalledInfo ? context.getString(R.string.app_not_installed, name) : name;
-        } catch (PackageManager.NameNotFoundException n) {
-            name = packageName;
-            sNameCache.put(packageName, name);
-            return withNotInstalledInfo ? context.getString(R.string.app_not_installed, name) : name;
         }
+        return withNotInstalledInfo && notInstalled ? context.getString(R.string.app_not_installed, name) : name;
     }
 
 }
