@@ -48,8 +48,8 @@ public class CrashLoader {
             public void run() {
                 //noinspection UnusedAssignment
                 Crash[] result = Inquiry.get("main").select(Crash.class).all();
-                //noinspection ConstantConditions,ConstantIfStatement
-                if (BuildConfig.FAKE_DATA) { // Gonna love random testing code
+                //noinspection ConstantConditions,ConstantIfStatement,PointlessBooleanExpression
+                if (false && BuildConfig.FAKE_DATA) { // Gonna love random testing code
                     result = new Crash[21];
                     result[0] = new Crash(randomTime(), "com.android.calculator", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
                     result[1] = new Crash(randomTime(), "a.very.very.very.long.package.name", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
@@ -72,6 +72,7 @@ public class CrashLoader {
                     result[18] = new Crash(randomTime(), "tk.wasdennnoch.scoop", "java.lang.NullPointerException: Forced NullPointerException", "Nope2.");
                     result[19] = new Crash(randomTime(), "tk.wasdennnoch.puush", "3 Crasheeeeeeeeeees", "Nope.");
                     result[20] = new Crash(randomTime(), "com.android.calculator2", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
+                    Inquiry.get("main").insert(Crash.class).values(result).run();
                 }
                 final MainActivity listener = mListener.get();
                 if (listener == null || listener.isFinishing() || (Build.VERSION.SDK_INT >= 17 && listener.isDestroyed()))
@@ -122,6 +123,11 @@ public class CrashLoader {
             Crash c = i >= crashes.size() ? null : crashes.get(i);
             if (mCombineSameTrace && c != null && previousCrash.stackTrace.equals(c.stackTrace) && previousCrash.packageName.equals(c.packageName)) {
                 c.count = previousCrash.count + 1;
+                if (c.hiddenIds == null)
+                    c.hiddenIds = new ArrayList<>();
+                if (previousCrash.hiddenIds != null)
+                    c.hiddenIds.addAll(previousCrash.hiddenIds);
+                c.hiddenIds.add(previousCrash.id);
                 prevSameCrash = c;
             } else {
                 if (prevSameCrash != null) {
@@ -213,7 +219,7 @@ public class CrashLoader {
                 name = packageName;
                 notInstalled = true;
             }
-            sNameCache.put(packageName, "!=!" + name); // Let's hope no app name starts with that
+            sNameCache.put(packageName, notInstalled ? "!=!" + name : name); // Let's hope no app name starts with that
         }
         if (!notInstalled && name.startsWith("!=!")) {
             name = name.substring(3);

@@ -17,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -43,6 +44,7 @@ import tk.wasdennnoch.scoop.view.CrashRecyclerView;
 public class MainActivity extends AppCompatActivity implements CrashAdapter.Listener, SearchView.OnQueryTextListener, SearchView.OnCloseListener, MaterialCab.Callback {
 
     private static final String EXTRA_CRASH = "tk.wasdennnoch.scoop.EXTRA_CRASH";
+    private static final int CODE_CHILDREN_VIEW = 1;
 
     private static final int UPDATE_DELAY = 200;
     private static boolean sUpdateRequired;
@@ -86,7 +88,8 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
             Crash c = i.getParcelableExtra(EXTRA_CRASH);
             ArrayList<Crash> crashes = new ArrayList<>();
             crashes.add(c);
-            crashes.addAll(c.children);
+            if (c.children != null)
+                crashes.addAll(c.children);
             mAdapter.setCrashes(crashes);
             //noinspection ConstantConditions
             getSupportActionBar().setTitle(CrashLoader.getAppName(this, c.packageName, true));
@@ -151,7 +154,7 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
         super.onPause();
         sVisible = false;
         mHandler.removeCallbacks(mUpdateCheckerRunnable);
-        if (isFinishing())
+        if (isFinishing() && !mHasCrash)
             Inquiry.destroy("main");
     }
 
@@ -235,9 +238,16 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CODE_CHILDREN_VIEW && resultCode == RESULT_OK)
+            loadData();
+    }
+
+    @Override
     public void onCrashClicked(Crash crash) {
         if (mCombineApps && !mHasCrash) {
-            startActivity(new Intent(this, MainActivity.class).putExtra(EXTRA_CRASH, crash));
+            startActivityForResult(new Intent(this, MainActivity.class).putExtra(EXTRA_CRASH, crash), CODE_CHILDREN_VIEW);
         } else {
             startActivity(new Intent(this, DetailActivity.class).putExtra(DetailActivity.EXTRA_CRASH, crash));
         }
@@ -272,16 +282,31 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
                         .onPositive(new MaterialDialog.SingleButtonCallback() {
                             @Override
                             public void onClick(@NonNull MaterialDialog materialDialog, @NonNull DialogAction dialogAction) {
+                                // TODO THIS IS A MESS
                                 Inquiry instance = Inquiry.get("main");
                                 for (Crash c : items) {
-                                    int pos = mAdapter.getPosition(c);
-                                    for (int i = pos; i < pos + c.count; i++) {
-                                        instance.delete(Crash.class).atPosition(pos).run();
+                                    if (!mHasCrash && c.children != null) {
+                                        for (Crash cc : c.children) {
+                                            if (cc.hiddenIds != null) {
+                                                instance.delete(Crash.class).whereIn("_id", cc.hiddenIds.toArray()).run();
+                                            }
+                                            mAdapter.removeCrash(cc);
+                                        }
+                                        instance.delete(Crash.class).values(c.children).run();
                                     }
+                                    if (c.hiddenIds != null) {
+                                        Log.d("scoop", "hiddenids notnull");
+                                        instance.delete(Crash.class).whereIn("_id", c.hiddenIds.toArray()).run();
+                                    }
+                                    instance.delete(Crash.class).values(c).run();
                                     mAdapter.removeCrash(c);
                                 }
                                 mAdapter.setSelectionEnabled(false);
-                                updateViewStates(false);
+                                setResult(RESULT_OK); // Reload overview when going back to reflect changes
+                                if (mHasCrash && mAdapter.isEmpty()) // Everything deleted, go back to overview
+                                    finish();
+                                else
+                                    updateViewStates(false);
                             }
                         })
                         .show();

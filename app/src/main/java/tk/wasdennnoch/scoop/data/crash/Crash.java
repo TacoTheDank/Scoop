@@ -41,6 +41,7 @@ public class Crash implements Parcelable {
     public int displayCount = 1;
     public boolean selected = false;
     public List<Crash> children;
+    public List<Long> hiddenIds;
 
     private Crash(Parcel in) {
         id = in.readLong();
@@ -53,6 +54,10 @@ public class Crash implements Parcelable {
         selected = in.readInt() == 1;
         children = new ArrayList<>();
         in.readTypedList(children, Crash.CREATOR);
+        if (children.isEmpty()) children = null;
+        hiddenIds = new ArrayList<>();
+        in.readList(hiddenIds, Long.class.getClassLoader());
+        if (hiddenIds.isEmpty()) hiddenIds = null;
     }
 
     public static final Creator<Crash> CREATOR = new Creator<Crash>() {
@@ -83,6 +88,7 @@ public class Crash implements Parcelable {
         dest.writeInt(displayCount);
         dest.writeInt(selected ? 1 : 0);
         dest.writeTypedList(children);
+        dest.writeList(hiddenIds);
     }
 
     @Override

@@ -63,6 +63,7 @@ public class CrashAdapter extends RecyclerView.Adapter<CrashAdapter.CrashViewHol
 
     public void removeCrash(Crash c) {
         int pos = getPosition(c);
+        if (pos == -1) return;
         if (mItems.get(pos).selected) mSelectedCount--;
         mItems.remove(pos);
         notifyItemRemoved(pos);
