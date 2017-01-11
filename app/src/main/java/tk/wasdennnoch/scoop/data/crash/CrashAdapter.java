@@ -154,8 +154,8 @@ public class CrashAdapter extends RecyclerView.Adapter<CrashAdapter.CrashViewHol
         holder.crash = crash;
         holder.icon.setImageDrawable(CrashLoader.getAppIcon(context, pkg));
         holder.time.setReferenceTime(crash.time);
+        String name = CrashLoader.getAppName(context, pkg, false);
         if (!mCombineSameApps) {
-            String name = CrashLoader.getAppName(context, pkg, false);
             if (crash.count > 1) {
                 title = context.getString(R.string.crash_count, name, crash.count);
                 title = new SpannableString(title);
@@ -165,13 +165,8 @@ public class CrashAdapter extends RecyclerView.Adapter<CrashAdapter.CrashViewHol
             }
             holder.crashText.setText(crash.description);
         } else {
-            title = CrashLoader.getAppName(context, pkg, false);
-            int count = crash.count;
-            if (crash.children != null) {
-                for (Crash c : crash.children)
-                    count += c.count;
-            }
-            holder.crashText.setText(context.getResources().getQuantityString(R.plurals.items_children_count, count, count));
+            title = name;
+            holder.crashText.setText(context.getResources().getQuantityString(R.plurals.items_children_count, crash.displayCount, crash.displayCount));
         }
         holder.title.setText(title);
         holder.itemView.setOnClickListener(holder);

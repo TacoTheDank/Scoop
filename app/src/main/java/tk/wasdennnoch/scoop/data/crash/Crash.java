@@ -38,6 +38,7 @@ public class Crash implements Parcelable {
 
     // Adapter states
     public int count = 1;
+    public int displayCount = 1;
     public boolean selected = false;
     public List<Crash> children;
 
@@ -48,6 +49,7 @@ public class Crash implements Parcelable {
         description = in.readString();
         stackTrace = in.readString();
         count = in.readInt();
+        displayCount = in.readInt();
         selected = in.readInt() == 1;
         children = new ArrayList<>();
         in.readTypedList(children, Crash.CREATOR);
@@ -78,6 +80,7 @@ public class Crash implements Parcelable {
         dest.writeString(description);
         dest.writeString(stackTrace);
         dest.writeInt(count);
+        dest.writeInt(displayCount);
         dest.writeInt(selected ? 1 : 0);
         dest.writeTypedList(children);
     }
@@ -89,6 +92,7 @@ public class Crash implements Parcelable {
                 "; packageName " + packageName +
                 "; time " + time +
                 "; count " + count +
+                "; displayCount " + displayCount +
                 "]";
     }
 }

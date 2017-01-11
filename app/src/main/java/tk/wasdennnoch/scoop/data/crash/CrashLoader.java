@@ -14,6 +14,7 @@ import com.afollestad.inquiry.Inquiry;
 import java.lang.ref.WeakReference;
 import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -28,19 +29,25 @@ public class CrashLoader {
     private static Map<String, String> sNameCache = new ArrayMap<>();
 
     private WeakReference<MainActivity> mListener;
+    private boolean mCombineSameTrace;
+    private boolean mCombineSameApps;
+    private List<String> mBlacklist;
 
     private long randomTime() {
         return (long) (System.currentTimeMillis() * Math.random());
     }
 
-    public void loadData(MainActivity activity, final boolean combineSameStackTrace, final boolean combineSameApps, final List<String> blacklist) {
+    public void loadData(MainActivity activity, boolean combineSameStackTrace, boolean combineSameApps, List<String> blacklist) {
         mListener = new WeakReference<>(activity);
+        mCombineSameTrace = combineSameStackTrace;
+        mCombineSameApps = combineSameApps;
+        mBlacklist = blacklist;
         new Thread(new Runnable() {
             @Override
             public void run() {
                 Crash[] result = Inquiry.get("main").select(Crash.class).all();
                 //noinspection ConstantConditions,ConstantIfStatement
-                if (false) {
+                if (false) { // Gonna love random testing code
                     result = new Crash[21];
                     result[0] = new Crash(randomTime(), "com.android.calculator", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
                     result[1] = new Crash(randomTime(), "a.very.very.very.long.package.name", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
@@ -55,12 +62,12 @@ public class CrashLoader {
                     result[10] = new Crash(randomTime(), "com.android.settings", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
                     result[11] = new Crash(randomTime(), "com.android.systemui", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
                     result[12] = new Crash(randomTime(), "com.android.systemui", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
-                    result[13] = new Crash(randomTime(), "tk.wasdennnoch.scoop", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
+                    result[13] = new Crash(randomTime(), "tk.wasdennnoch.scoop", "java.lang.NullPointerException: Forced NullPointerException", "Nope2.");
                     result[14] = new Crash(randomTime(), "tk.wasdennnoch.scoop", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
                     result[15] = new Crash(randomTime(), "tk.wasdennnoch.scoop", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
-                    result[16] = new Crash(randomTime(), "tk.wasdennnoch.scoop", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
-                    result[17] = new Crash(randomTime(), "tk.wasdennnoch.scoop", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
-                    result[18] = new Crash(randomTime(), "tk.wasdennnoch.scoop", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
+                    result[16] = new Crash(randomTime(), "tk.wasdennnoch.scoop", "java.lang.NullPointerException: Forced NullPointerException", "Nope2.");
+                    result[17] = new Crash(randomTime(), "tk.wasdennnoch.scoop", "java.lang.NullPointerException: Forced NullPointerException", "Nope2.");
+                    result[18] = new Crash(randomTime(), "tk.wasdennnoch.scoop", "java.lang.NullPointerException: Forced NullPointerException", "Nope2.");
                     result[19] = new Crash(randomTime(), "tk.wasdennnoch.puush", "3 Crasheeeeeeeeeees", "Nope.");
                     result[20] = new Crash(randomTime(), "com.android.calculator2", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
                 }
@@ -76,72 +83,21 @@ public class CrashLoader {
                     });
                     return;
                 }
-                final ArrayList<Crash> data = new ArrayList<>();
-                Crash prevSameCrash = null;
-                // Combine same stack traces. Don't ask me how it works, but it works. Probably way too complicated.
-                for (int i = 1; i < result.length + 1; i++) {
-                    Crash previousCrash = result[i - 1];
-                    Crash c = i >= result.length ? null : result[i];
-                    if (combineSameStackTrace && c != null && previousCrash.stackTrace.equals(c.stackTrace) && previousCrash.packageName.equals(c.packageName)) {
-                        c.count = previousCrash.count + 1;
-                        prevSameCrash = c;
-                    } else {
-                        if (prevSameCrash != null) {
-                            if (!blacklist.contains(prevSameCrash.packageName))
-                                data.add(prevSameCrash);
-                            prevSameCrash = null;
-                        } else {
-                            if (!blacklist.contains(previousCrash.packageName))
-                                data.add(previousCrash);
-                        }
-                    }
-                }
-                final ArrayList<Crash> finalData;
-                // Then combine to apps
-                if (combineSameApps) {
-                    // Sort apps by name
-                    Collections.sort(data, new Comparator<Crash>() {
-                        private final Collator sC = Collator.getInstance();
-
-                        @Override
-                        public int compare(Crash o1, Crash o2) {
-                            return sC.compare(getAppName(listener, o1.packageName, false), getAppName(listener, o2.packageName, false));
-                        }
-                    });
-                    finalData = new ArrayList<>();
-                    for (int i = 0; i < data.size(); i++) {
-                        Crash c = data.get(i);
-                        Crash p = i == 0 ? null : data.get(i - 1);
-                        if (p != null && c.packageName.equals(p.packageName)) {
-                            Crash c2 = finalData.get(finalData.size() - 1);
-                            if (c2.children == null) {
-                                c2.children = new ArrayList<>();
-                            }
-                            c2.children.add(c);
-                        } else {
-                            finalData.add(c);
-                        }
-                    }
-                    for (Crash c : finalData) {
-                        if (c.children == null) continue;
-                        long newestTime = c.time;
-                        for (Crash cc : c.children)
-                            if (cc.time > newestTime)
-                                newestTime = cc.time;
-                        c.time = newestTime;
-                    }
-                } else {
-                    finalData = data;
-                }
+                ArrayList<Crash> data = new ArrayList<>();
+                data.addAll(Arrays.asList(result));
+                sortApps(listener, data);
+                data = combineStackTraces(data);
+                data = combineSameApps(data);
                 // Prefetch and cache the first items to avoid scroll lag.
                 // There is the chance the Activity will be destroyed while the items
                 // get prefetched but the chance is low as it doesn't take long to load
-                for (int i = 0; i < finalData.size(); i++) {
-                    Crash c = finalData.get(i);
+                for (int i = 0; i < data.size(); i++) {
+                    Crash c = data.get(i);
                     getAppIcon(listener, c.packageName);
-                    if (!combineSameApps) // App names already get fetched during sorting, no need to fetch again
+                    if (!mCombineSameApps) // App names already get fetched during sorting, no need to fetch again
                         getAppName(listener, c.packageName, false);
                 }
+                final ArrayList<Crash> finalData = data;
                 listener.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -150,6 +106,74 @@ public class CrashLoader {
                 });
             }
         }).start();
+    }
+
+    private ArrayList<Crash> combineStackTraces(List<Crash> crashes) {
+        final ArrayList<Crash> newData = new ArrayList<>();
+        Crash prevSameCrash = null;
+        // Combine same stack traces. Don't ask me how it works, but it works. Probably way too complicated.
+        for (int i = 1; i < crashes.size() + 1; i++) {
+            Crash previousCrash = crashes.get(i - 1);
+            Crash c = i >= crashes.size() ? null : crashes.get(i);
+            if (mCombineSameTrace && c != null && previousCrash.stackTrace.equals(c.stackTrace) && previousCrash.packageName.equals(c.packageName)) {
+                c.count = previousCrash.count + 1;
+                prevSameCrash = c;
+            } else {
+                if (prevSameCrash != null) {
+                    if (!mBlacklist.contains(prevSameCrash.packageName))
+                        newData.add(prevSameCrash);
+                    prevSameCrash = null;
+                } else {
+                    if (!mBlacklist.contains(previousCrash.packageName))
+                        newData.add(previousCrash);
+                }
+            }
+        }
+        return newData;
+    }
+
+    private void sortApps(final Context context, ArrayList<Crash> crashes) {
+        Collections.sort(crashes, new Comparator<Crash>() {
+            private final Collator sC = Collator.getInstance();
+
+            @Override
+            public int compare(Crash o1, Crash o2) {
+                return sC.compare(getAppName(context, o1.packageName, false), getAppName(context, o2.packageName, false));
+            }
+        });
+    }
+
+    private ArrayList<Crash> combineSameApps(ArrayList<Crash> crashes) {
+        if (!mCombineSameApps) return crashes;
+        ArrayList<Crash> newData = new ArrayList<>();
+        for (int i = 0; i < crashes.size(); i++) {
+            Crash c = crashes.get(i);
+            Crash p = i == 0 ? null : crashes.get(i - 1);
+            if (p != null && c.packageName.equals(p.packageName)) {
+                Crash c2 = newData.get(newData.size() - 1);
+                if (c2.children == null) {
+                    c2.children = new ArrayList<>();
+                }
+                c2.children.add(c);
+            } else {
+                newData.add(c);
+            }
+        }
+        // Set time to latest crash time and count together the.. count
+        for (Crash c : newData) {
+            long newestTime = c.time;
+            int count = c.count;
+            if (c.children != null) {
+                for (Crash cc : c.children) {
+                    count += cc.count;
+                    if (cc.time > newestTime)
+                        newestTime = cc.time;
+                }
+            }
+            c.time = newestTime;
+            c.displayCount = count;
+        }
+        return newData;
     }
 
     @NonNull
