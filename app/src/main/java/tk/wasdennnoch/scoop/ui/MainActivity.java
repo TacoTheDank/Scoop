@@ -88,6 +88,8 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
             crashes.add(c);
             crashes.addAll(c.children);
             mAdapter.setCrashes(crashes);
+            //noinspection ConstantConditions
+            getSupportActionBar().setTitle(CrashLoader.getAppName(this, c.packageName, true));
         }
 
         mCombineApps = mPrefs.getBoolean("combine_same_apps", false);
@@ -357,7 +359,8 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
         public void run() {
             if (sUpdateRequired) {
                 sUpdateRequired = false;
-                if (mCombineApps) return; // It doesn't look right when there's suddenly a single crash of a different app in the list
+                if (mCombineApps)
+                    return; // It doesn't look right when there's suddenly a single crash of a different app in the list
                 if (sVisible && sNewCrash != null) {
                     mAdapter.addCrash(sNewCrash);
                     updateViewStates(false);

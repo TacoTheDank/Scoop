@@ -46,6 +46,7 @@ public class CrashLoader {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                //noinspection UnusedAssignment
                 Crash[] result = Inquiry.get("main").select(Crash.class).all();
                 //noinspection ConstantConditions,ConstantIfStatement
                 if (BuildConfig.FAKE_DATA) { // Gonna love random testing code
@@ -75,6 +76,7 @@ public class CrashLoader {
                 final MainActivity listener = mListener.get();
                 if (listener == null || listener.isFinishing() || (Build.VERSION.SDK_INT >= 17 && listener.isDestroyed()))
                     return;
+                //noinspection ConstantConditions
                 if (result == null) {
                     listener.runOnUiThread(new Runnable() {
                         @Override
@@ -90,6 +92,7 @@ public class CrashLoader {
                     sortApps(listener, data);
                 data = combineStackTraces(data);
                 data = combineSameApps(data);
+                setupAdapterData(data);
                 // Prefetch and cache the first items to avoid scroll lag.
                 // There is the chance the Activity will be destroyed while the items
                 // get prefetched but the chance is low as it doesn't take long to load
@@ -161,8 +164,12 @@ public class CrashLoader {
                 newData.add(c);
             }
         }
+        return newData;
+    }
+
+    private void setupAdapterData(ArrayList<Crash> crashes) {
         // Set time to latest crash time and count together the.. count
-        for (Crash c : newData) {
+        for (Crash c : crashes) {
             long newestTime = c.time;
             int count = c.count;
             if (c.children != null) {
@@ -175,7 +182,6 @@ public class CrashLoader {
             c.time = newestTime;
             c.displayCount = count;
         }
-        return newData;
     }
 
     @NonNull
@@ -207,7 +213,11 @@ public class CrashLoader {
                 name = packageName;
                 notInstalled = true;
             }
-            sNameCache.put(packageName, name);
+            sNameCache.put(packageName, "!=!" + name); // Let's hope no app name starts with that
+        }
+        if (!notInstalled && name.startsWith("!=!")) {
+            name = name.substring(3);
+            notInstalled = true;
         }
         return withNotInstalledInfo && notInstalled ? context.getString(R.string.app_not_installed, name) : name;
     }
