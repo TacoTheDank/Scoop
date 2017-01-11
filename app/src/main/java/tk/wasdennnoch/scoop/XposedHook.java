@@ -19,7 +19,8 @@ public class XposedHook implements IXposedHookLoadPackage {
     public static final String INTENT_ACTION_SHARE = "tk.wasdennnoch.scoop.ACTION_SHARE";
     public static final String INTENT_PACKAGE_NAME = "pkg";
     public static final String INTENT_TIME = "time";
-    public static final String INTENT_THROWABLE = "cause";
+    public static final String INTENT_DESCRIPTION = "description";
+    public static final String INTENT_STACKTRACE = "stacktrace";
 
     private Application mApplication;
     private static String mPkg;
@@ -76,11 +77,13 @@ public class XposedHook implements IXposedHookLoadPackage {
                 return;
             }
             Log.d("scoop", "uncaughtExceptionHook (" + mPkg + "): Sending broadcast");
+            Throwable t = (Throwable) param.args[1];
             Intent intent = new Intent(INTENT_ACTION)
                     .setClassName(XposedHook.class.getPackage().getName(), CrashReceiver.class.getName())
                     .putExtra(INTENT_PACKAGE_NAME, mApplication.getPackageName())
                     .putExtra(INTENT_TIME, System.currentTimeMillis())
-                    .putExtra(INTENT_THROWABLE, new MockThrowable((Throwable) param.args[1]));
+                    .putExtra(INTENT_DESCRIPTION, t.toString())
+                    .putExtra(INTENT_STACKTRACE, Log.getStackTraceString(t));
             // Just wrap everything because it costs no performance (well, technically it does,
             // but the process is about to die anyways, so I don't care).
             // Also I have no idea how to detect custom subclasses efficiently.

@@ -14,7 +14,6 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 
 import com.afollestad.inquiry.Inquiry;
 
@@ -36,13 +35,11 @@ public class CrashReceiver extends BroadcastReceiver {
 
         String packageName = broadcastIntent.getStringExtra(XposedHook.INTENT_PACKAGE_NAME);
         long time = broadcastIntent.getLongExtra(XposedHook.INTENT_TIME, System.currentTimeMillis());
-        Throwable throwable = (Throwable) broadcastIntent.getSerializableExtra(XposedHook.INTENT_THROWABLE);
+        String description = broadcastIntent.getStringExtra(XposedHook.INTENT_DESCRIPTION);
+        String stackTrace = broadcastIntent.getStringExtra(XposedHook.INTENT_STACKTRACE);
 
-        if (throwable instanceof ThreadDeath && prefs.getBoolean("ignore_threaddeath", true))
+        if (description.startsWith(ThreadDeath.class.getName()) && prefs.getBoolean("ignore_threaddeath", true))
             return;
-
-        String description = throwable.toString();
-        String stackTrace = Log.getStackTraceString(throwable);
 
         Crash crash = new Crash(time, packageName, description, stackTrace);
 

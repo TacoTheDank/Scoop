@@ -33,7 +33,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import tk.wasdennnoch.scoop.CrashReceiver;
-import tk.wasdennnoch.scoop.MockThrowable;
 import tk.wasdennnoch.scoop.R;
 import tk.wasdennnoch.scoop.data.crash.Crash;
 import tk.wasdennnoch.scoop.data.crash.CrashAdapter;
@@ -119,7 +118,8 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
                     .setClassName(getPackageName(), CrashReceiver.class.getName())
                     .putExtra("pkg", getPackageName())
                     .putExtra("time", System.currentTimeMillis())
-                    .putExtra("cause", new MockThrowable(new NullPointerException("Just a test")));
+                    .putExtra("description", "java.lang.NullPointerException: Someone screwed up")
+                    .putExtra("stacktrace", "Testtrace Testtrace Testtrace Testtrace Testtrace Testtrace Testtrace Testtrace Testtrace Testtrace Testtrace Testtrace");
             mHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -357,6 +357,7 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
         public void run() {
             if (sUpdateRequired) {
                 sUpdateRequired = false;
+                if (mCombineApps) return; // It doesn't look right when there's suddenly a single crash of a different app in the list
                 if (sVisible && sNewCrash != null) {
                     mAdapter.addCrash(sNewCrash);
                     updateViewStates(false);
