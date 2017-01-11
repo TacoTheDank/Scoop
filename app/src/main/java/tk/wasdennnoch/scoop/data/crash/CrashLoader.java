@@ -20,6 +20,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
+import tk.wasdennnoch.scoop.BuildConfig;
 import tk.wasdennnoch.scoop.R;
 import tk.wasdennnoch.scoop.ui.MainActivity;
 
@@ -47,7 +48,7 @@ public class CrashLoader {
             public void run() {
                 Crash[] result = Inquiry.get("main").select(Crash.class).all();
                 //noinspection ConstantConditions,ConstantIfStatement
-                if (false) { // Gonna love random testing code
+                if (BuildConfig.FAKE_DATA) { // Gonna love random testing code
                     result = new Crash[21];
                     result[0] = new Crash(randomTime(), "com.android.calculator", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
                     result[1] = new Crash(randomTime(), "a.very.very.very.long.package.name", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
@@ -85,7 +86,8 @@ public class CrashLoader {
                 }
                 ArrayList<Crash> data = new ArrayList<>();
                 data.addAll(Arrays.asList(result));
-                sortApps(listener, data);
+                if (mCombineSameApps)
+                    sortApps(listener, data);
                 data = combineStackTraces(data);
                 data = combineSameApps(data);
                 // Prefetch and cache the first items to avoid scroll lag.
