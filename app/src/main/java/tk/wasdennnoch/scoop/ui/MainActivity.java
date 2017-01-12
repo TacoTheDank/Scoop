@@ -17,7 +17,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -93,6 +92,7 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
             mAdapter.setCrashes(crashes);
             //noinspection ConstantConditions
             getSupportActionBar().setTitle(CrashLoader.getAppName(this, c.packageName, true));
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
         mCombineApps = mPrefs.getBoolean("combine_same_apps", false);
@@ -295,7 +295,6 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
                                         instance.delete(Crash.class).values(c.children).run();
                                     }
                                     if (c.hiddenIds != null) {
-                                        Log.d("scoop", "hiddenids notnull");
                                         instance.delete(Crash.class).whereIn("_id", c.hiddenIds.toArray()).run();
                                     }
                                     instance.delete(Crash.class).values(c).run();
@@ -367,6 +366,9 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
                 return true;
             case R.id.action_settings:
                 startActivity(new Intent(this, SettingsActivity.class));
+                return true;
+            case android.R.id.home:
+                finish();
                 return true;
         }
         return super.onOptionsItemSelected(item);

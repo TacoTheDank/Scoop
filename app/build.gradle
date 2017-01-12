@@ -16,13 +16,11 @@ android {
         vectorDrawables.useSupportLibrary = true
 
         buildConfigField 'boolean', 'FAKE_DATA', "$fakeData"
-        return void // 'cause AS is stupid
     }
     dexOptions {
         maxProcessCount 4
         javaMaxHeapSize "4g"
         preDexLibraries true
-        return void // seriously?
     }
     buildTypes {
         release {
@@ -36,7 +34,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    return void // ffs
 }
 
 dependencies {
