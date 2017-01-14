@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<resources>
+    <string name="settings_title">Scoop - Configurações</string>
+    <string name="blacklist_title">Scoop - Lista negra</string>
+    <string name="about_title">Scoop - Sobre</string>
+    <string name="xposed_description">Captura um stack trace quando um app trava de forma inesperada</string>
+    <string name="action_clear">Limpar</string>
+    <string name="action_settings">Configurações</string>
+    <string name="action_search">Procurar</string>
+    <string name="action_share">Compartilhar</string>
+    <string name="action_copy">Copiar para clipboard</string>
+    <string name="action_copy_short">Copiar</string>
+    <string name="action_delete">Deletar</string>
+    <string name="dialog_ok">OK</string>
+    <string name="dialog_cancel">Cancelar</string>
+    <string name="just_now">Agora mesmo</string>
+    <string name="crash_count">%1$s (%2$d)</string>
+    <string name="app_not_installed">%s (não instalado)</string>
+    <string name="copy_label">Stack trace de %s</string>
+    <string name="copied_toast">Stack trace copiado para o clipboard</string>
+    <plurals name="items_selected_count">
+        <item quantity="other">%d travamentos selecionados</item>
+        <item quantity="one">%d travamento selecionado</item>
+    </plurals>
+    <plurals name="items_children_count">
+        <item quantity="other">%d Travamentos</item>
+        <item quantity="one">%d Travamento</item>
+    </plurals>
+    <string name="dialog_clear_content">Você tem certeza que deseja limpar todos os travamentos?</string>
+    <plurals name="delete_multiple_confirm">
+        <item quantity="other">Deletar %d travamentos? Isso não pode ser desfeito!</item>
+        <item quantity="one">Deletar %d travamento? Isso não pode ser desfeito!</item>
+    </plurals>
+    <string name="no_items">Nenhum travamento ainda.</string>
+    <string name="make_crash_plain">Quer fazer algo travar? .</string>
+    <string name="settings_notif">Notificações</string>
+    <string name="settings_overview">Visão geral</string>
+    <string name="settings_detail_view">Visualização detalhada</string>
+    <string name="settings_misc">Variado</string>
+    <string name="settings_show_notif">Mostrar notificação ao travar</string>
+    <string name="settings_action_buttons">Mostrar botões de ações</string>
+    <string name="settings_action_buttons_summary">Adicionar botões para copiar e compartilhar o travamento na notificação</string>
+    <string name="settings_show_stack_trace">Mostrar stack trace na notificação</string>
+    <string name="settings_show_stack_trace_summary">Exibir o começo do stack trace na notificação ao invés de apenas a descrição</string>
+    <string name="settings_search_pkg">Procurar no nome do pacote</string>
+    <string name="settings_search_pkg_summary">Procurar pelo termo provido no nome do app assim como no nome do pacote</string>
+    <string name="settings_combime_same_apps">Combinar apps idênticos</string>
+    <string name="settings_combime_same_apps_summary">Ordenar travamentos por entradas de apps individuais que contém diferentes travamentos</string>
+    <string name="settings_combime_same_trace">Combinar travamentos idênticos</string>
+    <string name="settings_combime_same_trace_summary">Combinar travamentos do mesmo app com o mesmo stack trace em um item</string>
+    <string name="settings_blacklisted_apps">Apps na lista negra</string>
+    <string name="settings_blacklisted_apps_summary">Travamentos causados por apps na lista negra serão escondidos</string>
+    <string name="settings_auto_wrap">Quebra de linha automática</string>
+    <string name="settings_auto_wrap_summary">Limitar a largura máxima da linha à largura da tela</string>
+    <string name="settings_ignore_threaddeath">Ignorar erros ThreadDeath</string>
+    <string name="settings_ignore_threaddeath_summary">Um erro ThreadDeath é ativado para forçar a parada de um thread de trabalho. É uma \"ocorrência normal\" e não faz apps travarem</string>
+    <string name="settings_about">Sobre Scoop</string>
+    <string name="about_author">Desenvolvido por @MrWasdennnoch (XDA)</string>
+    <string name="about_version">Versão %1$s (%2$d)</string>
+</resources>
