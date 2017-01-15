@@ -88,6 +88,12 @@
             android:title="@string/settings_ignore_threaddeath"
             android:widgetLayout="@layout/preference_switch_layout"/>
 
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="force_english"
+            android:title="@string/settings_force_eng"
+            android:widgetLayout="@layout/preference_switch_layout"/>
+
         <Preference
             android:title="@string/settings_about">
             <intent

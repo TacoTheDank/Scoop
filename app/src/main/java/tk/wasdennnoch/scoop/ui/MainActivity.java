@@ -2,6 +2,7 @@ package tk.wasdennnoch.scoop.ui;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -31,6 +32,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Locale;
 
 import tk.wasdennnoch.scoop.CrashReceiver;
 import tk.wasdennnoch.scoop.R;
@@ -66,6 +68,15 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        if (mPrefs.getBoolean("force_english", false)) {
+            Configuration config = getResources().getConfiguration();
+            //noinspection deprecation
+            config.locale = Locale.ENGLISH;
+            //noinspection deprecation
+            getResources().updateConfiguration(config, null);
+        }
+
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true); // To make vector drawables work as menu item drawables
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -74,8 +85,6 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
         mList = (CrashRecyclerView) findViewById(R.id.list);
         mLoading = (ProgressBar) findViewById(R.id.loading);
         mNoItemsStub = (ViewStub) findViewById(R.id.noItemStub);
-
-        mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         mAdapter = new CrashAdapter(this, this);
         mList.setAdapter(mAdapter);

@@ -18,8 +18,11 @@
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Cancel</string>
     <string name="just_now">Just Now</string>
+    <!-- Scoop (2) -->
     <string name="crash_count">%1$s (%2$d)</string>
+    <!-- Scoop (not installed) -->
     <string name="app_not_installed">%s (not installed)</string>
+    <!-- Stack trace of Scoop -->
     <string name="copy_label">Stack trace of %s</string>
     <string name="copied_toast">Stack trace copied to clipboard</string>
     <plurals name="items_selected_count">
@@ -62,9 +65,11 @@
     <string name="settings_auto_wrap_summary">Limit maximum line width to screen width</string>
     <string name="settings_ignore_threaddeath">Ignore ThreadDeath Errors</string>
     <string name="settings_ignore_threaddeath_summary">A ThreadDeath Error gets thrown to force stop a worker thread. It is a \"normal occurrence\" and does not make apps crash</string>
+    <string name="settings_force_eng" translatable="false">Force English app language</string>
     <string name="settings_about">About Scoop</string>
 
     <string name="about_author">Developed by @MrWasdennnoch (XDA)</string>
+    <!-- Version 1.0.0 (1) -->
     <string name="about_version">Version %1$s (%2$d)</string>
 
 </resources>
