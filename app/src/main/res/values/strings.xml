@@ -40,6 +40,7 @@
     </plurals>
 
     <string name="no_items">No crashes yet.</string>
+    <!-- You can get a bit creative here as it's probably not too easy to translate directly -->
     <string name="make_crash_plain" tools:ignore="Typos">Wanna make something crash? .</string> <!-- dot gets replaced with image (ಠ‿ಠ), see explanation in MainActivity -->
     <string name="no_xposed_1" translatable="false">Y U NO</string>
     <string name="no_xposed_2" translatable="false">XPOSED INSTALLED</string>

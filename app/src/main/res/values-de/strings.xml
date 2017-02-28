@@ -1,0 +1,74 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <string name="settings_title">Scoop - Einstellungen</string>
+    <string name="blacklist_title">Scoop - Ausnahmen</string>
+    <string name="about_title">Scoop - Über</string>
+
+    <string name="xposed_description">Speichert die Stack Trace, wenn eine App unerwartet crasht</string>
+
+    <string name="action_clear">Alle löschen</string>
+    <string name="action_settings">Einstellungen</string>
+    <string name="action_search">Suchen</string>
+    <string name="action_share">Teilen</string>
+    <string name="action_copy">In Zwischenablage kopieren</string>
+    <string name="action_copy_short">Kopieren</string>
+    <string name="action_delete">Löschen</string>
+
+    <string name="dialog_ok">OK</string>
+    <string name="dialog_cancel">Abbrechen</string>
+    <string name="just_now">Gerade eben</string>
+    <!-- Scoop (2) -->
+    <string name="crash_count">%1$s (%2$d)</string>
+    <!-- Scoop (not installed) -->
+    <string name="app_not_installed">%s (nicht installiert)</string>
+    <!-- Stack trace of Scoop -->
+    <string name="copy_label">Stack Trace von %s</string>
+    <string name="copied_toast">Stack Trace in Zwischenablage kopiert</string>
+    <plurals name="items_selected_count">
+        <item quantity="one">%d Crash ausgewählt</item>
+        <item quantity="other">%d Crashes ausgewählt</item>
+    </plurals>
+    <plurals name="items_children_count">
+        <item quantity="one">%d Crash</item>
+        <item quantity="other">%d Crashes</item>
+    </plurals>
+    <string name="dialog_clear_content">Wirklich alle Crashes löschen?</string>
+    <plurals name="delete_multiple_confirm">
+        <item quantity="one">%d Crash löschen? Das kann nicht rückgängig gemacht werden!</item>
+        <item quantity="other">%d Crashes löschen? Das kann nicht rückgängig gemacht werden!</item>
+    </plurals>
+
+    <string name="no_items">Noch keine Crashes.</string>
+    <string name="make_crash_plain" tools:ignore="Typos">Mal was crashen lassen? .</string> <!-- dot gets replaced with image (ಠ‿ಠ), see explanation in MainActivity -->
+    <string name="no_xposed_1" translatable="false">Y U NO</string>
+    <string name="no_xposed_2" translatable="false">XPOSED INSTALLED</string>
+
+    <string name="settings_notif">Benachrichtigungen</string>
+    <string name="settings_overview">Übersicht</string>
+    <string name="settings_detail_view">Detailansicht</string>
+    <string name="settings_misc">Verschiedenes</string>
+    <string name="settings_show_notif">Benachrichtigung bei Crash zeigen</string>
+    <string name="settings_action_buttons">Schnellaktionen zeigen</string>
+    <string name="settings_action_buttons_summary">Fügt Buttons zum Kopieren und Teilen des Crashes zur Benachrichtigung hinzu</string>
+    <string name="settings_show_stack_trace">Zeige Stack Trace in Benachrichtigung</string>
+    <string name="settings_show_stack_trace_summary">Zeige den Anfang der Stack Trace anstatt nur der Beschreibung in der Benachrichtigung</string>
+    <string name="settings_search_pkg">Suche im Package Name</string>
+    <string name="settings_search_pkg_summary">Suche den gegebenen Term im Appnamen sowie im Paketnamen</string>
+    <string name="settings_combime_same_apps">Selbe Apps kombinieren</string>
+    <string name="settings_combime_same_apps_summary">Sortiere Crashes nach individuellen Appeinträgen, welche die verschiedenen Crashes enthalten</string>
+    <string name="settings_combime_same_trace">Selbe Crashes kombinieren</string>
+    <string name="settings_combime_same_trace_summary">Kombiniere Crashes von der Selben App mit gleichen Stack Traces in einen Eintrag</string>
+    <string name="settings_blacklisted_apps">Ausnahmen</string>
+    <string name="settings_blacklisted_apps_summary">Crahes von ausgewählten Apps werden ignoriert</string>
+    <string name="settings_auto_wrap">Automatischer Zeilenumbruch</string>
+    <string name="settings_auto_wrap_summary">Limitiert die maximale Zeilenbreite auf die Bildschirmbreite</string>
+    <string name="settings_ignore_threaddeath">Ignoriere ThreadDeath-Errors</string>
+    <string name="settings_ignore_threaddeath_summary">Ein ThreadDeath-Error wird geworfen, um einen Thread zu stoppen. Es ist ein \"normales Ereignis\" und führt zu keinem Crash</string>
+    <string name="settings_force_eng" translatable="false">Force English app language</string>
+    <string name="settings_about">Über Scoop</string>
+
+    <string name="about_author">Programmiert von @MrWasdennnoch (XDA)</string>
+    <!-- Version 1.0.0 (1) -->
+    <string name="about_version">Version %1$s (%2$d)</string>
+
+</resources>
