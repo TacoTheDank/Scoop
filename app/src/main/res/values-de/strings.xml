@@ -40,8 +40,6 @@
 
     <string name="no_items">Noch keine Crashes.</string>
     <string name="make_crash_plain" tools:ignore="Typos">Mal was crashen lassen? .</string> <!-- dot gets replaced with image (ಠ‿ಠ), see explanation in MainActivity -->
-    <string name="no_xposed_1" translatable="false">Y U NO</string>
-    <string name="no_xposed_2" translatable="false">XPOSED INSTALLED</string>
 
     <string name="settings_notif">Benachrichtigungen</string>
     <string name="settings_overview">Übersicht</string>
@@ -64,7 +62,6 @@
     <string name="settings_auto_wrap_summary">Limitiert die maximale Zeilenbreite auf die Bildschirmbreite</string>
     <string name="settings_ignore_threaddeath">Ignoriere ThreadDeath-Errors</string>
     <string name="settings_ignore_threaddeath_summary">Ein ThreadDeath-Error wird geworfen, um einen Thread zu stoppen. Es ist ein \"normales Ereignis\" und führt zu keinem Crash</string>
-    <string name="settings_force_eng" translatable="false">Force English app language</string>
     <string name="settings_about">Über Scoop</string>
 
     <string name="about_author">Programmiert von @MrWasdennnoch (XDA)</string>
