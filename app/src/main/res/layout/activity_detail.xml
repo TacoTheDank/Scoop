@@ -25,7 +25,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="@dimen/detail_text_padding"
-            android:textColor="@color/text_primary_light"/>
+            android:textColor="@color/text_primary_light"
+            android:textIsSelectable="true"/>
 
     </tk.wasdennnoch.scoop.view.CroppingScrollView>
 
