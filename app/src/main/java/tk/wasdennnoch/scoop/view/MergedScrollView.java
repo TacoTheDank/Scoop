@@ -2105,7 +2105,7 @@ public class MergedScrollView extends FrameLayout {
         return ss;
     }
 
-    static class SavedState extends BaseSavedState {
+    private static class SavedState extends BaseSavedState {
         int scrollOffsetFromStart;
         int scrollPositionY;
 

@@ -11,6 +11,13 @@
         app:showAsAction="always|collapseActionView"/>
 
     <item
+        android:id="@+id/action_select"
+        android:icon="@drawable/ic_select"
+        android:orderInCategory="75"
+        android:title="@string/action_select"
+        app:showAsAction="ifRoom"/>
+
+    <item
         android:id="@+id/action_copy"
         android:icon="@drawable/ic_copy"
         android:orderInCategory="100"

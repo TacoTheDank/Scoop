@@ -10,6 +10,7 @@
     <string name="action_clear">Clear</string>
     <string name="action_settings">Settings</string>
     <string name="action_search">Search</string>
+    <string name="action_select">Toggle selection mode</string>
     <string name="action_share">Share</string>
     <string name="action_copy">Copy to clipboard</string>
     <string name="action_copy_short">Copy</string>

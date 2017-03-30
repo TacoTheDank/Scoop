@@ -34,6 +34,7 @@ public class DetailActivity extends AppCompatActivity implements SearchView.OnQu
     private TextView mCrashText;
     private Crash mCrash;
     private int mHighlightColor;
+    private boolean mSelectionEnabled = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,10 +55,10 @@ public class DetailActivity extends AppCompatActivity implements SearchView.OnQu
     }
 
     private void highlightText(String text) {
-        text = text.toLowerCase(Locale.ENGLISH); // Ignore case
         final String stackTrace = mCrash.stackTrace.toLowerCase(Locale.ENGLISH);
         SpannableString span = new SpannableString(mCrash.stackTrace);
         if (!TextUtils.isEmpty(text)) {
+            text = text.toLowerCase(Locale.ENGLISH); // Ignore case
             final int size = text.length();
             int index = 0;
             while ((index = stackTrace.indexOf(text, index)) != -1) {
@@ -65,7 +66,7 @@ public class DetailActivity extends AppCompatActivity implements SearchView.OnQu
                 index += size;
             }
         }
-        mCrashText.setText(span);
+        mCrashText.setText(span, TextView.BufferType.SPANNABLE);
     }
 
     @Override
@@ -101,6 +102,12 @@ public class DetailActivity extends AppCompatActivity implements SearchView.OnQu
             case android.R.id.home:
                 finish();
                 return true;
+            case R.id.action_select:
+                highlightText(null);
+                mSelectionEnabled = !mSelectionEnabled;
+                item.setIcon(mSelectionEnabled ? R.drawable.ic_unselect : R.drawable.ic_select);
+                mCrashText.setTextIsSelectable(mSelectionEnabled);
+                break;
             case R.id.action_copy:
                 ((ClipboardManager) getSystemService(CLIPBOARD_SERVICE)).setPrimaryClip(
                         ClipData.newPlainText(
