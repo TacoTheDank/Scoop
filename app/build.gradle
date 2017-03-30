@@ -10,8 +10,8 @@ android {
         applicationId "tk.wasdennnoch.scoop"
         minSdkVersion 14
         targetSdkVersion 25
-        versionCode 12
-        versionName "1.6.1"
+        versionCode 13
+        versionName "1.6.2"
 
         vectorDrawables.useSupportLibrary = true
 
@@ -39,8 +39,8 @@ android {
 dependencies {
     provided files('libs-provide/XposedBridgeApi-52.jar')
     provided files('libs-provide/android_hidden_api_23.jar')
-    compile 'com.android.support:appcompat-v7:25.1.0'
-    compile 'com.android.support:recyclerview-v7:25.1.0'
+    compile 'com.android.support:appcompat-v7:25.3.0'
+    compile 'com.android.support:recyclerview-v7:25.3.0'
     compile 'com.afollestad.material-dialogs:core:0.9.1.0'
     compile 'com.afollestad:inquiry:4.1.2'
     compile 'com.afollestad:material-cab:0.1.12'
