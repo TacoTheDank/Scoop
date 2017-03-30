@@ -10,8 +10,8 @@ android {
         applicationId "tk.wasdennnoch.scoop"
         minSdkVersion 14
         targetSdkVersion 25
-        versionCode 13
-        versionName "1.6.2"
+        versionCode 14
+        versionName "1.6.3"
 
         vectorDrawables.useSupportLibrary = true
 
@@ -33,6 +33,9 @@ android {
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    lintOptions {
+        abortOnError false
     }
 }
 
