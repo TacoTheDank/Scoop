@@ -29,4 +29,16 @@
 
     </tk.wasdennnoch.scoop.view.CroppingScrollView>
 
+    <EditText
+        android:id="@+id/crashEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:gravity="top"
+        android:inputType="none"
+        android:scrollbars="vertical"
+        android:textColor="@color/text_primary_light"
+        android:textIsSelectable="true"
+        android:visibility="gone"/>
+
 </FrameLayout>

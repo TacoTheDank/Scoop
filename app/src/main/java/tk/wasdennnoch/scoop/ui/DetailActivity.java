@@ -17,6 +17,7 @@ import android.text.TextUtils;
 import android.text.style.BackgroundColorSpan;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,12 +27,15 @@ import tk.wasdennnoch.scoop.R;
 import tk.wasdennnoch.scoop.data.crash.Crash;
 import tk.wasdennnoch.scoop.data.crash.CrashLoader;
 import tk.wasdennnoch.scoop.view.CroppingScrollView;
+import tk.wasdennnoch.scoop.view.MergedScrollView;
 
 public class DetailActivity extends AppCompatActivity implements SearchView.OnQueryTextListener, SearchView.OnCloseListener {
 
     public static final String EXTRA_CRASH = "crash";
 
     private TextView mCrashText;
+    private TextView mCrashEdit;
+    private MergedScrollView mCrashScroll;
     private Crash mCrash;
     private int mHighlightColor;
     private boolean mSelectionEnabled = false;
@@ -47,8 +51,11 @@ public class DetailActivity extends AppCompatActivity implements SearchView.OnQu
         mHighlightColor = ContextCompat.getColor(this, R.color.highlightColor);
         mCrash = getIntent().getParcelableExtra(EXTRA_CRASH);
         getSupportActionBar().setTitle(CrashLoader.getAppName(this, mCrash.packageName, true));
+        mCrashScroll = (MergedScrollView) findViewById(R.id.scroll);
+        mCrashEdit = (TextView) findViewById(R.id.crashEdit);
         mCrashText = (TextView) findViewById(R.id.crash);
         mCrashText.setText(mCrash.stackTrace);
+        mCrashEdit.setText(mCrash.stackTrace);
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         ((CroppingScrollView) findViewById(R.id.scroll)).setCropHorizontally(prefs.getBoolean("auto_wrap", false));
@@ -103,10 +110,10 @@ public class DetailActivity extends AppCompatActivity implements SearchView.OnQu
                 finish();
                 return true;
             case R.id.action_select:
-                highlightText(null);
                 mSelectionEnabled = !mSelectionEnabled;
                 item.setIcon(mSelectionEnabled ? R.drawable.ic_unselect : R.drawable.ic_select);
-                mCrashText.setTextIsSelectable(mSelectionEnabled);
+                mCrashEdit.setVisibility(mSelectionEnabled ? View.VISIBLE : View.GONE);
+                mCrashScroll.setVisibility(mSelectionEnabled ? View.GONE : View.VISIBLE);
                 break;
             case R.id.action_copy:
                 ((ClipboardManager) getSystemService(CLIPBOARD_SERVICE)).setPrimaryClip(
