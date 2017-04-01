@@ -69,7 +69,7 @@ public class CrashAdapter extends RecyclerView.Adapter<CrashAdapter.CrashViewHol
         notifyItemRemoved(pos);
     }
 
-    public int getPosition(Crash c) {
+    private int getPosition(Crash c) {
         for (int i = 0; i < mItems.size(); i++) {
             if (mItems.get(i) == c) {
                 return i;
@@ -83,6 +83,8 @@ public class CrashAdapter extends RecyclerView.Adapter<CrashAdapter.CrashViewHol
     }
 
     public void search(Context context, String text) {
+        if (text != null)
+            text = text.toLowerCase(Locale.ENGLISH);
         mLastSearchTerm = text;
         mSearchedItems.clear();
         mSearchActive = !TextUtils.isEmpty(text);

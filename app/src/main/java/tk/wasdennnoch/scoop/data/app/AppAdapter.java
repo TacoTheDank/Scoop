@@ -43,6 +43,8 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.ViewHolder> {
     }
 
     public void search(String text) {
+        if (text != null)
+            text = text.toLowerCase(Locale.ENGLISH);
         mSearchedItems.clear();
         mSearchActive = !TextUtils.isEmpty(text);
         if (mSearchActive) {
