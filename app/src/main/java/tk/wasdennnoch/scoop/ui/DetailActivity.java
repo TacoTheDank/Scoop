@@ -15,6 +15,7 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.BackgroundColorSpan;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -56,6 +57,7 @@ public class DetailActivity extends AppCompatActivity implements SearchView.OnQu
         mCrashText = (TextView) findViewById(R.id.crash);
         mCrashText.setText(mCrash.stackTrace);
         mCrashEdit.setText(mCrash.stackTrace);
+        mCrashEdit.setTextSize(TypedValue.COMPLEX_UNIT_PX, mCrashText.getTextSize());
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         ((CroppingScrollView) findViewById(R.id.scroll)).setCropHorizontally(prefs.getBoolean("auto_wrap", false));

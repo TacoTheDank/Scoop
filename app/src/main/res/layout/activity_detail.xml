@@ -36,6 +36,7 @@
         android:layout_marginTop="?attr/actionBarSize"
         android:gravity="top"
         android:inputType="none"
+        android:padding="@dimen/detail_text_padding"
         android:scrollbars="vertical"
         android:textColor="@color/text_primary_light"
         android:textIsSelectable="true"
