@@ -29,10 +29,10 @@ public class XposedHook implements IXposedHookLoadPackage {
     @Override
     public void handleLoadPackage(final XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
         if (lpparam.packageName.equals("android")) return;
+        mPkg = lpparam.packageName;
         XposedHelpers.findAndHookConstructor(Application.class, new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(XC_MethodHook.MethodHookParam param) throws Throwable {
-                mPkg = lpparam.packageName;
                 mApplication = (Application) param.thisObject;
                 mSent = false;
             }
@@ -84,8 +84,8 @@ public class XposedHook implements IXposedHookLoadPackage {
                     .putExtra(INTENT_TIME, System.currentTimeMillis())
                     .putExtra(INTENT_DESCRIPTION, t.toString())
                     .putExtra(INTENT_STACKTRACE, Log.getStackTraceString(t));
-            // Just wrap everything because it costs no performance (well, technically it does,
-            // but the process is about to die anyways, so I don't care).
+            // Just send everything here because it costs no performance (well, technically
+            // it does, but the process is about to die anyways, so I don't care).
             // Also I have no idea how to detect custom subclasses efficiently.
             mApplication.sendBroadcast(intent);
             mSent = true; // Doesn't need to be reset as process dies soon
