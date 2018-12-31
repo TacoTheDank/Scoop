@@ -1,15 +1,15 @@
 apply plugin: 'com.android.application'
 
-ext.fakeData = System.getenv("WDN_PC") ?: "false"
+ext.fakeData = System.getenv("WDN_PC") ?: "true"
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.2"
+    compileSdkVersion 28
+    buildToolsVersion '28.0.3'
 
     defaultConfig {
         applicationId "tk.wasdennnoch.scoop"
         minSdkVersion 14
-        targetSdkVersion 26
+        targetSdkVersion 28
         versionCode 15
         versionName "1.6.4"
 
@@ -40,13 +40,12 @@ android {
 }
 
 dependencies {
-    provided files('libs-provide/XposedBridgeApi-52.jar')
-    provided files('libs-provide/android_hidden_api_23.jar')
-    compile 'com.android.support:appcompat-v7:26.0.2'
-    compile 'com.android.support:support-v13:26.0.2'
-    compile 'com.android.support:recyclerview-v7:26.0.2'
-    compile 'com.afollestad.material-dialogs:core:0.9.4.7'
-    compile 'com.afollestad:inquiry:4.1.2'
-    compile 'com.afollestad:material-cab:0.1.12'
-    compile 'me.zhanghai.android.materialprogressbar:library:1.4.2'
+    compileOnly files('libs-provide/XposedBridgeApi-52.jar')
+    implementation 'androidx.appcompat:appcompat:1.1.0-alpha01'
+    implementation 'androidx.legacy:legacy-support-v13:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0-alpha01'
+    implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
+    implementation 'com.afollestad:inquiry:4.1.2'
+    implementation 'com.afollestad:material-cab:0.1.12'
+    implementation 'me.zhanghai.android.materialprogressbar:library:1.4.2'
 }

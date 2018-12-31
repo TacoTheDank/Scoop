@@ -7,8 +7,8 @@ import android.graphics.Rect;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.v4.view.ViewCompat;
-import android.support.v4.widget.EdgeEffectCompat;
+import androidx.core.view.ViewCompat;
+import androidx.core.widget.EdgeEffectCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
@@ -164,19 +164,12 @@ public class MergedScrollView extends FrameLayout {
     }
 
     public MergedScrollView(Context context, AttributeSet attrs) {
-        this(context, attrs, com.android.internal.R.attr.scrollViewStyle);
+        this(context, attrs, android.R.attr.scrollViewStyle);
     }
 
     public MergedScrollView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initScrollView();
-
-        final TypedArray a = context.obtainStyledAttributes(
-                attrs, com.android.internal.R.styleable.ScrollView, defStyleAttr, 0);
-
-        setFillViewport(a.getBoolean(com.android.internal.R.styleable.ScrollView_fillViewport, false));
-
-        a.recycle();
     }
 
     @Override
@@ -878,7 +871,7 @@ public class MergedScrollView extends FrameLayout {
         if (mVerticalScrollFactor == 0) {
             TypedValue outValue = new TypedValue();
             if (!getContext().getTheme().resolveAttribute(
-                    com.android.internal.R.attr.listPreferredItemHeight, outValue, true)) {
+                    android.R.attr.listPreferredItemHeight, outValue, true)) {
                 throw new IllegalStateException(
                         "Expected theme to define listPreferredItemHeight.");
             }

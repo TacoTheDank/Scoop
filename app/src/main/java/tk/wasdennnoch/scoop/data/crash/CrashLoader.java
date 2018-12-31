@@ -5,9 +5,9 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.util.ArrayMap;
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.collection.ArrayMap;
 
 import com.afollestad.inquiry.Inquiry;
 

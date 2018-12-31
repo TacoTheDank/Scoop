@@ -2,7 +2,7 @@ package tk.wasdennnoch.scoop.ui;
 
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.widget.Toolbar;
 import android.view.MenuItem;
 
 import tk.wasdennnoch.scoop.R;
