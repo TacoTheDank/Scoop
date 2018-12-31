@@ -248,6 +248,7 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
     private void setCabActive(boolean active) {
         if (active) {
             mCab.start(this);
+            mCab.getToolbar().setOutlineProvider(null);
             AnimationUtils.slideToolbar(mCab.getToolbar(), false, AnimationUtils.ANIM_DURATION_DEFAULT);
         } else {
             mAnimatingCab = true;
