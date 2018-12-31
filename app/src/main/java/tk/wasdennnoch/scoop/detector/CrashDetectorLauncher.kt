@@ -39,8 +39,8 @@ class CrashDetectorLauncher(private val context: Context) {
     }
 
     fun launchProcess(): Boolean {
-        if (!Shell.SU.available()) return false
         if (crashDetector != null) return true
+        if (!Shell.SU.available()) return false
         if (rootShell?.isRunning != true) {
             rootShell = Shell.Builder()
                     .useSU()

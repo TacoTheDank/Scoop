@@ -22,44 +22,57 @@ class CrashDetector : ICrashDetector.Stub() {
         reader = BufferedReader(InputStreamReader(logcatProcess.inputStream))
         val readThread = object : Thread() {
 
-            var crashMessage: String? = null
+            var pendingLine: String? = null
 
             override fun run() {
                 Log.d("CrashDetector", "thread started")
                 while (true) {
-                    reader.readLine()?.let { line ->
-                        if (line.matches(linePattern)) {
-                            crashMessage += "$line\n"
-                        } else {
-                            crashMessage?.let {
-                                reportCrash(it.split("\n").joinToString("\n") {
-                                    line -> line.replace(androidRuntimePattern, "")
-                                })
-                                crashMessage = null
-                            }
-                            if (line.matches(beginPattern)) {
-                                crashMessage = "${reader.readLine()}\n${reader.readLine()}\n"
-                            }
+                    (pendingLine ?: reader.readLine())?.let { line ->
+                        pendingLine = null
+                        if (line.matches(fePattern)) {
+                            pendingLine = reportCrash(reader)
                         }
-                    }
+                    } ?: break
                 }
             }
         }
         readThread.start()
     }
 
-    fun reportCrash(crashMessage: String) {
-        val lines = crashMessage.split("\n")
-        if (lines.size < 2) return
-        val packageName = processInfoPattern.find(lines[0])?.groupValues?.get(1) ?: return
-        val exceptionInfo = lines[1]
+    fun reportCrash(reader: BufferedReader): String? {
+        val lines = ArrayList<String>()
+        var index = 0
+        var lastLine: String?
+        var foundTrace = false
+        var foundTraceAt = 0
+        while (true) {
+            val line = reader.readLine()
+            lastLine = line
+            if (line != null && checkLine(line, foundTrace)) {
+                if (!foundTrace && line.matches(linePattern)) {
+                    foundTrace = true
+                    foundTraceAt = index
+                }
+                lines.add(line.replace(arPattern, ""))
+            } else {
+                break
+            }
+            index++
+        }
+        if (lines.size < 2) return lastLine
+        val packageName = processInfoPattern.find(lines[0])?.groupValues?.get(1) ?: return lastLine
         val intent = Intent(INTENT_ACTION)
                 .setClassName(BuildConfig.APPLICATION_ID, CrashReceiver::class.java.name)
                 .putExtra(INTENT_PACKAGE_NAME, packageName)
                 .putExtra(INTENT_TIME, System.currentTimeMillis())
-                .putExtra(INTENT_DESCRIPTION, exceptionInfo)
-                .putExtra(INTENT_STACKTRACE, crashMessage)
+                .putExtra(INTENT_DESCRIPTION, lines.subList(1, foundTraceAt).joinToString("\n"))
+                .putExtra(INTENT_STACKTRACE, lines.joinToString("\n"))
         sendBroadcast(intent)
+        return lastLine
+    }
+
+    private fun checkLine(line: String, foundTrace: Boolean): Boolean {
+        return line.matches(if (foundTrace) linePattern else beginPattern)
     }
 
     override fun kill() {
@@ -68,8 +81,9 @@ class CrashDetector : ICrashDetector.Stub() {
 
     companion object {
 
-        private val androidRuntimePattern = Regex("[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3}( )+[0-9]+( )+[0-9]+( )+E AndroidRuntime: ")
-        private val beginPattern = Regex("[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3}( )+[0-9]+( )+[0-9]+( )+E AndroidRuntime: FATAL EXCEPTION: main")
+        private val beginPattern = Regex("[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3}( )+[0-9]+( )+[0-9]+( )+E AndroidRuntime: (.)*")
+        private val arPattern = Regex("[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3}( )+[0-9]+( )+[0-9]+( )+E AndroidRuntime: ")
+        private val fePattern = Regex("[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3}( )+[0-9]+( )+[0-9]+( )+E AndroidRuntime: FATAL EXCEPTION: main")
         private val linePattern = Regex("[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3}( )+[0-9]+( )+[0-9]+( )+E AndroidRuntime: \tat(.)*")
         private val processInfoPattern = Regex("Process: ([a-z][a-z0-9_]*(?:\\.[a-z0-9_]+)+[0-9a-z_]), PID: ([0-9]+)")
 
