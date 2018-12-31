@@ -1,13 +1,16 @@
 package tk.wasdennnoch.scoop.ui;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.core.view.MenuItemCompat;
@@ -36,6 +39,7 @@ import java.util.Locale;
 
 import tk.wasdennnoch.scoop.CrashReceiver;
 import tk.wasdennnoch.scoop.R;
+import tk.wasdennnoch.scoop.ScoopApplication;
 import tk.wasdennnoch.scoop.data.crash.Crash;
 import tk.wasdennnoch.scoop.data.crash.CrashAdapter;
 import tk.wasdennnoch.scoop.data.crash.CrashLoader;
@@ -65,6 +69,8 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
 
     private MaterialCab mCab;
     private boolean mAnimatingCab; // Required to properly animate the cab (otherwise it instantly hides when pressing the up button)
+
+    private boolean mDestroyed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,6 +147,8 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
                 }
             }, 1000);
         }
+
+        new AvailabilityCheck().execute();
     }
 
     @Override
@@ -165,6 +173,13 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
         mHandler.removeCallbacks(mUpdateCheckerRunnable);
         if (isFinishing() && !mHasCrash)
             Inquiry.destroy("main");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        mDestroyed = true;
     }
 
     @Override
@@ -408,5 +423,36 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
             mHandler.postDelayed(mUpdateCheckerRunnable, UPDATE_DELAY);
         }
     };
+
+    class AvailabilityCheck extends AsyncTask<Void, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            ScoopApplication app = (ScoopApplication) getApplication();
+            return ScoopApplication.Companion.xposedActive() || app.launcher.launchProcess();
+        }
+
+        @Override
+        protected void onPostExecute(Boolean available) {
+            if (!available && !mDestroyed) {
+                new AlertDialog.Builder(MainActivity.this)
+                        .setTitle(R.string.no_root_title)
+                        .setMessage(R.string.no_root_message)
+                        .setNegativeButton(R.string.exit, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                finish();
+                            }
+                        })
+                        .setOnDismissListener(new DialogInterface.OnDismissListener() {
+                            @Override
+                            public void onDismiss(DialogInterface dialog) {
+                                finish();
+                            }
+                        })
+                        .show();
+            }
+        }
+    }
 
 }

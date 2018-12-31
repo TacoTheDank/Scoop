@@ -42,8 +42,9 @@ public class XposedHook implements IXposedHookLoadPackage {
         XposedHelpers.findAndHookMethod(ThreadGroup.class, "uncaughtException", Thread.class, Throwable.class, uncaughtExceptionHook);
         hookUncaughtException(Thread.getDefaultUncaughtExceptionHandler().getClass()); // Gets initialized in between native application creation, handleLoadPackage gets called after native creation
 
-        if (lpparam.packageName.equals(XposedHook.class.getPackage().getName())) {
+        if (lpparam.packageName.equals(BuildConfig.APPLICATION_ID)) {
             XposedHelpers.findAndHookMethod(MainActivity.class, "isActive", XC_MethodReplacement.returnConstant(true));
+            XposedHelpers.findAndHookMethod(ScoopApplication.class, "xposedActive", XC_MethodReplacement.returnConstant(true));
         }
     }
 
@@ -79,7 +80,7 @@ public class XposedHook implements IXposedHookLoadPackage {
             Log.d("scoop", "uncaughtExceptionHook (" + mPkg + "): Sending broadcast");
             Throwable t = (Throwable) param.args[1];
             Intent intent = new Intent(INTENT_ACTION)
-                    .setClassName(XposedHook.class.getPackage().getName(), CrashReceiver.class.getName())
+                    .setClassName(BuildConfig.APPLICATION_ID, CrashReceiver.class.getName())
                     .putExtra(INTENT_PACKAGE_NAME, mApplication.getPackageName())
                     .putExtra(INTENT_TIME, System.currentTimeMillis())
                     .putExtra(INTENT_DESCRIPTION, t.toString())

@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 
 ext.fakeData = System.getenv("WDN_PC") ?: "true"
 
@@ -8,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "tk.wasdennnoch.scoop"
-        minSdkVersion 14
+        minSdkVersion 21
         targetSdkVersion 28
         versionCode 15
         versionName "1.6.4"
@@ -48,4 +49,13 @@ dependencies {
     implementation 'com.afollestad:inquiry:4.1.2'
     implementation 'com.afollestad:material-cab:0.1.12'
     implementation 'me.zhanghai.android.materialprogressbar:library:1.4.2'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    implementation 'eu.chainfire:libsuperuser:1.0.0.201704021214'
+    implementation 'eu.chainfire:librootjava:1.0.0'
 }
+repositories {
+    mavenCentral()
+}
+
+apply plugin: 'kotlin-android-extensions'

@@ -64,7 +64,7 @@ public class CrashReceiver extends BroadcastReceiver {
                     .addNextIntent(clickIntent);
             PendingIntent clickPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "crashes")
                     .setSmallIcon(R.drawable.ic_bug_notification)
                     .setLargeIcon(drawableToBitmap(CrashLoader.getAppIcon(context, packageName)))
                     .setContentTitle(CrashLoader.getAppName(context, packageName, false))

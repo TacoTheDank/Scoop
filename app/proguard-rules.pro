@@ -24,3 +24,5 @@
 -keepclassmembers class tk.wasdennnoch.scoop.ui.MainActivity {
     private boolean isActive();
 }
+
+-keep class eu.chainfire.librootjava.Reflection { *; }
