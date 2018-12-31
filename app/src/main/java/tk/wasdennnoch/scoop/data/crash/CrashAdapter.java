@@ -2,6 +2,7 @@ package tk.wasdennnoch.scoop.data.crash;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
@@ -174,7 +175,7 @@ public class CrashAdapter extends RecyclerView.Adapter<CrashAdapter.CrashViewHol
         holder.title.setText(title);
         holder.itemView.setOnClickListener(holder);
         holder.itemView.setOnLongClickListener(holder);
-        holder.itemView.setBackgroundColor(crash.selected ? mSelectedColor : Color.TRANSPARENT);
+        holder.setSelected(crash.selected);
     }
 
     @Override
@@ -198,12 +199,15 @@ public class CrashAdapter extends RecyclerView.Adapter<CrashAdapter.CrashViewHol
         RelativeTimeTextView time;
         TextView crashText;
 
+        Drawable normalBackground;
+
         CrashViewHolder(View v) {
             super(v);
             icon = (ImageView) v.findViewById(R.id.icon);
             title = (TextView) v.findViewById(R.id.title);
             time = (RelativeTimeTextView) v.findViewById(R.id.time);
             crashText = (TextView) v.findViewById(R.id.crash);
+            normalBackground = v.getBackground();
         }
 
         @Override
@@ -224,6 +228,14 @@ public class CrashAdapter extends RecyclerView.Adapter<CrashAdapter.CrashViewHol
                 setItemSelected(getAdapterPosition(), !crash.selected);
             }
             return false;
+        }
+
+        void setSelected(boolean selected) {
+            if (selected) {
+                itemView.setBackgroundColor(mSelectedColor);
+            } else {
+                itemView.setBackground(normalBackground);
+            }
         }
     }
 
