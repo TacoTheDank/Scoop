@@ -1,5 +1,6 @@
 package tk.wasdennnoch.scoop;
 
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -69,6 +70,8 @@ public class CrashReceiver extends BroadcastReceiver {
                     .setLargeIcon(drawableToBitmap(CrashLoader.getAppIcon(context, packageName)))
                     .setContentTitle(CrashLoader.getAppName(context, packageName, false))
                     .setContentText(description)
+                    .setPriority(NotificationCompat.PRIORITY_MAX)
+                    .setDefaults(Notification.DEFAULT_VIBRATE)
                     .setColor(ContextCompat.getColor(context, R.color.colorAccent))
                     .setAutoCancel(true)
                     .setContentIntent(clickPendingIntent);
