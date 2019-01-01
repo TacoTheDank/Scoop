@@ -8,11 +8,11 @@ android {
     buildToolsVersion '28.0.3'
 
     defaultConfig {
-        applicationId "tk.wasdennnoch.scoop"
+        applicationId "xyz.paphonb.scoop"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 15
-        versionName "1.6.4"
+        versionCode 16
+        versionName "2.0.0"
 
         vectorDrawables.useSupportLibrary = true
 
