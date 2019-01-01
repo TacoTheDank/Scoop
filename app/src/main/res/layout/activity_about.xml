@@ -36,10 +36,10 @@
             android:textStyle="bold"/>
 
         <TextView
+            android:id="@+id/credits"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:text="@string/about_author"
             android:textColor="?android:textColorTertiary"/>
 
         <TextView

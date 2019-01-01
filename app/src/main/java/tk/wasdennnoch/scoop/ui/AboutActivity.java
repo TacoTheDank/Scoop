@@ -26,6 +26,9 @@ public class AboutActivity extends AppCompatActivity {
         } catch (PackageManager.NameNotFoundException e) {
             // No.
         }
+
+        ((TextView) findViewById(R.id.credits)).setText(getString(R.string.about_author,
+                "@MrWasdennnoch (XDA), @paphonb (XDA)"));
     }
 
     @Override
