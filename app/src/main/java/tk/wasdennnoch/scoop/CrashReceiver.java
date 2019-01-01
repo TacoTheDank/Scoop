@@ -11,6 +11,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.TaskStackBuilder;
@@ -22,6 +23,7 @@ import java.util.Arrays;
 
 import tk.wasdennnoch.scoop.data.crash.Crash;
 import tk.wasdennnoch.scoop.data.crash.CrashLoader;
+import tk.wasdennnoch.scoop.dogbin.DogbinUploadService;
 import tk.wasdennnoch.scoop.ui.DetailActivity;
 import tk.wasdennnoch.scoop.ui.MainActivity;
 
@@ -39,21 +41,33 @@ public class CrashReceiver extends BroadcastReceiver {
         String description = broadcastIntent.getStringExtra(XposedHook.INTENT_DESCRIPTION);
         String stackTrace = broadcastIntent.getStringExtra(XposedHook.INTENT_STACKTRACE);
 
+        boolean update = broadcastIntent.getBooleanExtra(XposedHook.INTENT_UPDATE, false);
+        boolean hideUpload = broadcastIntent.getBooleanExtra(XposedHook.INTENT_HIDE_UPLOAD, false);
+        boolean uploadError = broadcastIntent.getBooleanExtra(XposedHook.INTENT_UPLOAD_ERROR, false);
+        String dogbinLink = broadcastIntent.getStringExtra(XposedHook.INTENT_DOGBIN_LINK);
+
         if (description.startsWith(ThreadDeath.class.getName()) && prefs.getBoolean("ignore_threaddeath", true))
             return;
 
-        Crash crash = new Crash(time, packageName, description, stackTrace);
+        Crash crash;
+        if (!update) {
+            crash = new Crash(time, packageName, description, stackTrace);
 
-        Inquiry.newInstance(context, "crashes")
-                .instanceName("receiver")
-                .build();
+            Inquiry.newInstance(context, "crashes")
+                    .instanceName("receiver")
+                    .build();
 
-        Inquiry.get("receiver")
-                .insert(Crash.class)
-                .values(crash)
-                .run();
+            Inquiry.get("receiver")
+                    .insert(Crash.class)
+                    .values(crash)
+                    .run();
 
-        Inquiry.destroy("receiver");
+            Inquiry.destroy("receiver");
+
+            MainActivity.requestUpdate(crash);
+        } else {
+            crash = broadcastIntent.getParcelableExtra("crash");
+        }
 
         if (prefs.getBoolean("show_notification", true) &&
                 !Arrays.asList(PreferenceManager.getDefaultSharedPreferences(context).getString("blacklisted_packages", "").split(",")).contains(packageName)) {
@@ -74,6 +88,8 @@ public class CrashReceiver extends BroadcastReceiver {
                     .setDefaults(Notification.DEFAULT_VIBRATE)
                     .setColor(ContextCompat.getColor(context, R.color.colorAccent))
                     .setAutoCancel(true)
+                    .setOnlyAlertOnce(true)
+                    .setGroup("crashes")
                     .setContentIntent(clickPendingIntent);
 
             if (prefs.getBoolean("show_stack_trace_notif", false)) {
@@ -87,22 +103,54 @@ public class CrashReceiver extends BroadcastReceiver {
                 builder.setStyle(new NotificationCompat.BigTextStyle().bigText(description));
             }
 
-            if (prefs.getBoolean("show_action_buttons", true)) {
-                Intent copyIntent = new Intent(context, ShareReceiver.class).putExtra("stackTrace", stackTrace).putExtra("pkg", packageName).setAction(XposedHook.INTENT_ACTION_COPY);
-                PendingIntent copyPendingIntent = PendingIntent.getBroadcast(context, 0, copyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-                NotificationCompat.Action copyAction = new NotificationCompat.Action(R.drawable.ic_copy_notification, context.getString(R.string.action_copy_short), copyPendingIntent);
-                builder.addAction(copyAction);
+            int notificationId = (int) (time - ScoopApplication.getBootTime());
 
-                Intent shareIntent = new Intent(context, ShareReceiver.class).putExtra("stackTrace", stackTrace).putExtra("pkg", packageName).setAction(XposedHook.INTENT_ACTION_SHARE);
-                PendingIntent sharePendingIntent = PendingIntent.getBroadcast(context, 0, shareIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-                NotificationCompat.Action shareAction = new NotificationCompat.Action(R.drawable.ic_share_notification, context.getString(R.string.action_share), sharePendingIntent);
-                builder.addAction(shareAction);
+            if (prefs.getBoolean("show_action_buttons", true)) {
+                Intent copyIntent = new Intent(context, ShareReceiver.class)
+                        .putExtra("stackTrace", stackTrace)
+                        .putExtra("pkg", packageName)
+                        .setAction(XposedHook.INTENT_ACTION_COPY);
+                PendingIntent copyPendingIntent = PendingIntent.getBroadcast(context,
+                        notificationId, copyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                builder.addAction(new NotificationCompat.Action(R.drawable.ic_copy_notification,
+                        context.getString(R.string.action_copy_short), copyPendingIntent));
+
+                Intent shareIntent = new Intent(context, ShareReceiver.class)
+                        .putExtra("stackTrace", stackTrace)
+                        .putExtra("pkg", packageName)
+                        .setAction(XposedHook.INTENT_ACTION_SHARE);
+                PendingIntent sharePendingIntent = PendingIntent.getBroadcast(context,
+                        notificationId, shareIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                builder.addAction(new NotificationCompat.Action(R.drawable.ic_share_notification,
+                        context.getString(R.string.action_share), sharePendingIntent));
+
+                if (dogbinLink != null) {
+
+                    Intent copyLinkIntent = new Intent(context, ShareReceiver.class)
+                            .putExtra("pkg", packageName)
+                            .putExtra(XposedHook.INTENT_DOGBIN_LINK, dogbinLink)
+                            .setAction(XposedHook.INTENT_ACTION_COPY_LINK);
+                    PendingIntent copyLinkPendingIntent = PendingIntent.getBroadcast(context,
+                            notificationId, copyLinkIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                    builder.addAction(new NotificationCompat.Action(0,
+                            context.getString(R.string.action_dogbin_copy_link), copyLinkPendingIntent));
+
+                } else if (!hideUpload) {
+
+                    int uploadTitle = uploadError ? R.string.action_dogbin_upload_error : R.string.action_dogbin_upload;
+                    Intent dogbinIntent = new Intent(context, DogbinUploadService.class)
+                            .putExtra("data", broadcastIntent)
+                            .putExtra("crash", crash);
+                    PendingIntent dogbinPendingIntent = PendingIntent.getService(context,
+                            notificationId, dogbinIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                    builder.addAction(new NotificationCompat.Action(0,
+                            context.getString(uploadTitle), dogbinPendingIntent));
+
+                }
             }
 
-            manager.notify(1, builder.build());
+            manager.notify(notificationId, builder.build());
         }
-
-        MainActivity.requestUpdate(crash);
     }
 
     private Bitmap drawableToBitmap(Drawable drawable) {

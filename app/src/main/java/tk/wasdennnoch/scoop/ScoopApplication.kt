@@ -7,6 +7,7 @@ import android.app.NotificationManager
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
+import android.os.SystemClock
 import androidx.core.content.ContextCompat
 import tk.wasdennnoch.scoop.detector.CrashDetectorLauncher
 import tk.wasdennnoch.scoop.detector.CrashDetectorService
@@ -75,5 +76,8 @@ class ScoopApplication : Application() {
     companion object {
 
         fun xposedActive() = false
+
+        @JvmStatic
+        val bootTime = System.currentTimeMillis() - SystemClock.uptimeMillis()
     }
 }

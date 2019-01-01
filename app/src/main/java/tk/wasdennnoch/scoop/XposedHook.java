@@ -16,11 +16,16 @@ public class XposedHook implements IXposedHookLoadPackage {
 
     public static final String INTENT_ACTION = "tk.wasdennnoch.scoop.EXCEPTION";
     public static final String INTENT_ACTION_COPY = "tk.wasdennnoch.scoop.ACTION_COPY";
+    public static final String INTENT_ACTION_COPY_LINK = "tk.wasdennnoch.scoop.ACTION_COPY_LINK";
     public static final String INTENT_ACTION_SHARE = "tk.wasdennnoch.scoop.ACTION_SHARE";
     public static final String INTENT_PACKAGE_NAME = "pkg";
     public static final String INTENT_TIME = "time";
     public static final String INTENT_DESCRIPTION = "description";
     public static final String INTENT_STACKTRACE = "stacktrace";
+    public static final String INTENT_UPDATE = "update";
+    public static final String INTENT_HIDE_UPLOAD = "hideUpload";
+    public static final String INTENT_UPLOAD_ERROR = "uploadError";
+    public static final String INTENT_DOGBIN_LINK = "dogbinLink";
 
     private Application mApplication;
     private static String mPkg;

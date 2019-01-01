@@ -26,6 +26,12 @@ public class ShareReceiver extends BroadcastReceiver {
                             context.getResources().getString(R.string.copy_label, CrashLoader.getAppName(context, pkg, false)),
                             stackTrace));
             Toast.makeText(context, R.string.copied_toast, Toast.LENGTH_LONG).show();
+        } else if (intent.getAction().equals(XposedHook.INTENT_ACTION_COPY_LINK)) {
+            ((ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE)).setPrimaryClip(
+                    ClipData.newPlainText(
+                            context.getResources().getString(R.string.copy_link_label, CrashLoader.getAppName(context, pkg, false)),
+                            intent.getStringExtra(XposedHook.INTENT_DOGBIN_LINK)));
+            Toast.makeText(context, R.string.copied_link_toast, Toast.LENGTH_LONG).show();
         }
     }
 

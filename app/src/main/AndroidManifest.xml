@@ -5,6 +5,7 @@
     android:installLocation="internalOnly">
 
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.READ_LOGS" />
 
@@ -94,6 +95,10 @@
             android:name=".detector.CrashDetectorService"
             android:enabled="true"
             android:process=":crashDetectorService" />
+        <service
+            android:name=".dogbin.DogbinUploadService"
+            android:enabled="true"
+            android:exported="false"></service>
     </application>
 
 </manifest>
