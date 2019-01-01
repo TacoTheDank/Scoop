@@ -205,10 +205,6 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
         }
     }
 
-    private boolean isActive() {
-        return false;
-    }
-
     private void updateViewStates(Boolean loading) {
         if (loading == null) {
             loading = mWasLoading;
@@ -221,7 +217,7 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
         mLoading.setVisibility(loading ? View.VISIBLE : View.GONE);
         mList.setVisibility(loading || empty || !mIsAvailable ? View.GONE : View.VISIBLE);
         //noinspection ConstantConditions
-        if (!loading && empty && isActive()) {
+        if (!loading && empty && mIsAvailable) {
             if (mNoItems == null) {
                 mNoItems = mNoItemsStub.inflate();
                 // Need to do it that way because the devious face doesn't show

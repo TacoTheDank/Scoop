@@ -98,7 +98,7 @@
             android:title="@string/settings_about">
             <intent
                 android:targetClass="tk.wasdennnoch.scoop.ui.AboutActivity"
-                android:targetPackage="tk.wasdennnoch.scoop"/>
+                android:targetPackage="xyz.paphonb.scoop"/>
         </Preference>
 
     </PreferenceCategory>

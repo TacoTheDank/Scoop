@@ -43,7 +43,6 @@ public class XposedHook implements IXposedHookLoadPackage {
         hookUncaughtException(Thread.getDefaultUncaughtExceptionHandler().getClass()); // Gets initialized in between native application creation, handleLoadPackage gets called after native creation
 
         if (lpparam.packageName.equals(BuildConfig.APPLICATION_ID)) {
-            XposedHelpers.findAndHookMethod(MainActivity.class, "isActive", XC_MethodReplacement.returnConstant(true));
             XposedHelpers.findAndHookMethod(ScoopApplication.class, "xposedActive", XC_MethodReplacement.returnConstant(true));
         }
     }
