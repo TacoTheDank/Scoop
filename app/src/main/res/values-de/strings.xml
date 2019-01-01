@@ -1,8 +1,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <string name="settings_title">Scoop - Einstellungen</string>
-    <string name="blacklist_title">Scoop - Ausnahmen</string>
-    <string name="about_title">Scoop - Über</string>
+    <string name="settings_title">Einstellungen</string>
+    <string name="blacklist_title">Ausnahmen</string>
+    <string name="about_title">Über</string>
 
     <string name="xposed_description">Speichert die Stack Trace, wenn eine App unerwartet crasht</string>
 

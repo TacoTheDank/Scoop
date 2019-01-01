@@ -24,7 +24,7 @@
         android:layout_toRightOf="@id/appIcon"
         android:layout_toStartOf="@+id/check"
         android:maxLines="1"
-        android:textColor="@color/text_primary_light"
+        android:textColor="?android:textColorPrimary"
         android:textSize="20sp"
         android:textStyle="bold"/>
 
@@ -40,7 +40,7 @@
         android:layout_toRightOf="@id/appIcon"
         android:layout_toStartOf="@+id/check"
         android:maxLines="1"
-        android:textColor="@color/text_secondary_light"/>
+        android:textColor="?android:textColorSecondary"/>
 
     <CheckBox
         android:id="@+id/check"

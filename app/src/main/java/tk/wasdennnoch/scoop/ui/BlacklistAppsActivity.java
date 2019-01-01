@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import tk.wasdennnoch.scoop.R;
+import tk.wasdennnoch.scoop.ToolbarElevationHelper;
 import tk.wasdennnoch.scoop.data.app.App;
 import tk.wasdennnoch.scoop.data.app.AppAdapter;
 import tk.wasdennnoch.scoop.data.app.AppLoader;
@@ -35,7 +36,9 @@ public class BlacklistAppsActivity extends AppCompatActivity implements SearchVi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_blacklist_apps);
-        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         //noinspection ConstantConditions
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -51,6 +54,8 @@ public class BlacklistAppsActivity extends AppCompatActivity implements SearchVi
 
         mAdapter = new AppAdapter();
         mList.setAdapter(mAdapter);
+
+        new ToolbarElevationHelper(mList, toolbar);
     }
 
     @Override

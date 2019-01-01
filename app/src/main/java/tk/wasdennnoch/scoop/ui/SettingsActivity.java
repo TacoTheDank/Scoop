@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.MenuItem;
 
 import tk.wasdennnoch.scoop.R;
+import tk.wasdennnoch.scoop.ToolbarElevationHelper;
 
 public class SettingsActivity extends AppCompatPreferenceActivity {
 
@@ -13,9 +14,13 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         //noinspection ConstantConditions
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        new ToolbarElevationHelper(getListView(), toolbar);
     }
 
     @Override

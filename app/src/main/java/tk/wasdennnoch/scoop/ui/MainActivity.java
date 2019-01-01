@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -37,16 +38,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
 
+import tk.wasdennnoch.scoop.BuildConfig;
 import tk.wasdennnoch.scoop.CrashReceiver;
 import tk.wasdennnoch.scoop.R;
 import tk.wasdennnoch.scoop.ScoopApplication;
+import tk.wasdennnoch.scoop.ToolbarElevationHelper;
+import tk.wasdennnoch.scoop.Utils;
 import tk.wasdennnoch.scoop.data.crash.Crash;
 import tk.wasdennnoch.scoop.data.crash.CrashAdapter;
 import tk.wasdennnoch.scoop.data.crash.CrashLoader;
 import tk.wasdennnoch.scoop.ui.utils.AnimationUtils;
 import tk.wasdennnoch.scoop.view.CrashRecyclerView;
 
-public class MainActivity extends AppCompatActivity implements CrashAdapter.Listener, SearchView.OnQueryTextListener, SearchView.OnCloseListener, MaterialCab.Callback {
+public class MainActivity extends AppCompatActivity implements CrashAdapter.Listener,
+        SearchView.OnQueryTextListener, SearchView.OnCloseListener, MaterialCab.Callback {
 
     private static final String EXTRA_CRASH = "tk.wasdennnoch.scoop.EXTRA_CRASH";
     private static final int CODE_CHILDREN_VIEW = 1;
@@ -72,6 +77,14 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
 
     private boolean mDestroyed;
 
+    private boolean mCheckPending = true;
+    private boolean mIsAvailable = true;
+    private boolean mWasLoading = false;
+
+    private Toolbar mToolbar;
+    private int mToolbarElevation;
+    private boolean mWasElevated;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -86,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true); // To make vector drawables work as menu item drawables
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+        setSupportActionBar(mToolbar = findViewById(R.id.toolbar));
 
         mList = (CrashRecyclerView) findViewById(R.id.list);
         mLoading = (ProgressBar) findViewById(R.id.loading);
@@ -95,6 +108,7 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
         mAdapter = new CrashAdapter(this, this);
         mList.setAdapter(mAdapter);
         mList.setVisibility(View.GONE);
+        new ToolbarElevationHelper(mList, mToolbar);
 
         Intent i = getIntent();
         mHasCrash = i.hasExtra(EXTRA_CRASH);
@@ -192,14 +206,20 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
     }
 
     private boolean isActive() {
-        // TODO looks like this doesn't get hoked correctly
-        return true; // Build.HARDWARE.equals("goldfish") || Build.HARDWARE.equals("ranchu"); // true on emulator
+        return false;
     }
 
-    private void updateViewStates(boolean loading) {
+    private void updateViewStates(Boolean loading) {
+        if (loading == null) {
+            loading = mWasLoading;
+        }
+        mWasLoading = loading;
+        if (mCheckPending) {
+            loading = true;
+        }
         boolean empty = mAdapter.isEmpty();
         mLoading.setVisibility(loading ? View.VISIBLE : View.GONE);
-        mList.setVisibility(loading || empty ? View.GONE : View.VISIBLE);
+        mList.setVisibility(loading || empty || !mIsAvailable ? View.GONE : View.VISIBLE);
         //noinspection ConstantConditions
         if (!loading && empty && isActive()) {
             if (mNoItems == null) {
@@ -214,7 +234,7 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
                 int width = (int) (((float) height / drawable.getIntrinsicHeight()) * drawable.getIntrinsicWidth());
                 drawable.setBounds(0, 0, width, height);
                 drawable = DrawableCompat.wrap(drawable);
-                DrawableCompat.setTint(drawable.mutate(), ContextCompat.getColor(this, R.color.text_disabled_light));
+                DrawableCompat.setTint(drawable.mutate(), Utils.getAttrColor(this, android.R.attr.textColorSecondary));
                 ImageSpan imageSpan = new ImageSpan(drawable, ImageSpan.ALIGN_BASELINE);
                 spannable.setSpan(imageSpan, makeCrashText.length() - 1, makeCrashText.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
                 makeCrashTextView.setText(spannable);
@@ -223,9 +243,8 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
         } else if (mNoItems != null) {
             mNoItems.setVisibility(View.GONE);
         }
-        //noinspection ConstantConditions
-        if (!isActive()) {
-            ViewStub noXposedStub = (ViewStub) findViewById(R.id.noXposedStub);
+        if (!mIsAvailable) {
+            ViewStub noXposedStub = findViewById(R.id.noXposedStub);
             if (noXposedStub != null)
                 noXposedStub.inflate();
         }
@@ -435,23 +454,10 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
 
         @Override
         protected void onPostExecute(Boolean available) {
-            if (!available && !mDestroyed) {
-                new AlertDialog.Builder(MainActivity.this)
-                        .setTitle(R.string.no_root_title)
-                        .setMessage(R.string.no_root_message)
-                        .setNegativeButton(R.string.exit, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                finish();
-                            }
-                        })
-                        .setOnDismissListener(new DialogInterface.OnDismissListener() {
-                            @Override
-                            public void onDismiss(DialogInterface dialog) {
-                                finish();
-                            }
-                        })
-                        .show();
+            if (!mDestroyed) {
+                mCheckPending = false;
+                mIsAvailable = available;
+                updateViewStates(null);
             }
         }
     }

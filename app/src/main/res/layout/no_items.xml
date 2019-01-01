@@ -18,7 +18,7 @@
         android:layout_marginTop="@dimen/no_crash_item_spacing"
         android:gravity="center_horizontal"
         android:text="@string/no_items"
-        android:textColor="@color/text_secondary_light"
+        android:textColor="?android:textColorSecondary"
         android:textSize="@dimen/no_crash_text_size"
         android:textStyle="bold"/>
 
@@ -28,6 +28,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/no_crash_item_spacing"
         android:gravity="center_horizontal"
-        android:textColor="@color/text_disabled_light"/>
+        android:textColor="?android:textColorTertiary"/>
 
 </LinearLayout>

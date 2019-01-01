@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
 <resources>
-    <string name="settings_title">Scoop - Configurações</string>
-    <string name="blacklist_title">Scoop - Lista negra</string>
-    <string name="about_title">Scoop - Sobre</string>
+    <string name="settings_title">Configurações</string>
+    <string name="blacklist_title">Lista negra</string>
+    <string name="about_title">Sobre</string>
     <string name="xposed_description">Captura um stack trace quando um app trava de forma inesperada</string>
     <string name="action_clear">Limpar</string>
     <string name="action_settings">Configurações</string>

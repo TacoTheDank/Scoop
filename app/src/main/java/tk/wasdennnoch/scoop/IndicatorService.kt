@@ -24,7 +24,7 @@ class IndicatorService : Service() {
         startForeground(100, NotificationCompat.Builder(this, "status")
                 .setSmallIcon(R.drawable.ic_bug_notification)
                 .setContentTitle(getString(R.string.scoop_running))
-                .setColor(ContextCompat.getColor(this, R.color.colorPrimary))
+                .setColor(ContextCompat.getColor(this, R.color.colorAccent))
                 .addAction(stopAction)
                 .build())
     }

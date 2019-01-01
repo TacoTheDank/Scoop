@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import tk.wasdennnoch.scoop.R;
+import tk.wasdennnoch.scoop.Utils;
 import tk.wasdennnoch.scoop.view.RelativeTimeTextView;
 
 public class CrashAdapter extends RecyclerView.Adapter<CrashAdapter.CrashViewHolder> {
@@ -37,7 +38,7 @@ public class CrashAdapter extends RecyclerView.Adapter<CrashAdapter.CrashViewHol
 
     public CrashAdapter(Context context, Listener listener) {
         mListener = listener;
-        mSelectedColor = ContextCompat.getColor(context, R.color.selectedBgColor);
+        mSelectedColor = Utils.getAttrColor(context, android.R.attr.colorControlHighlight);
     }
 
     public void setSearchPackageName(Context context, boolean searchPkg) {
@@ -163,7 +164,9 @@ public class CrashAdapter extends RecyclerView.Adapter<CrashAdapter.CrashViewHol
             if (crash.count > 1) {
                 title = context.getString(R.string.crash_count, name, crash.count);
                 title = new SpannableString(title);
-                ((Spannable) title).setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, R.color.text_disabled_light)), name.length(), title.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                int textColorSecondary = Utils.getAttrColor(context, android.R.attr.textColorSecondary);
+                ((Spannable) title).setSpan(new ForegroundColorSpan(textColorSecondary),
+                        name.length(), title.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             } else {
                 title = name;
             }

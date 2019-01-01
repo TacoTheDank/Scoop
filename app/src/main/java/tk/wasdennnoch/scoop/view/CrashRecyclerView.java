@@ -2,7 +2,6 @@ package tk.wasdennnoch.scoop.view;
 
 import android.content.Context;
 import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.util.AttributeSet;
@@ -23,7 +22,6 @@ public class CrashRecyclerView extends RecyclerView {
         super(context, attrs, defStyle);
         mManager = new LinearLayoutManager(context);
         setLayoutManager(mManager);
-        addItemDecoration(new DividerItemDecoration(context, mManager.getOrientation()));
     }
 
     public void setReverseOrder(boolean reverse) {

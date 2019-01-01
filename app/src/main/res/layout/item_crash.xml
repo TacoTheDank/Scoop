@@ -28,7 +28,7 @@
         android:ellipsize="end"
         android:fontFamily="@font/google_sans_medium"
         android:maxLines="1"
-        android:textColor="@color/text_primary_light"
+        android:textColor="?android:textColorPrimary"
         android:textSize="@dimen/crash_header_size"
         app:layout_constraintBottom_toTopOf="@+id/crash"
         app:layout_constraintEnd_toStartOf="@+id/time"
@@ -46,7 +46,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_gravity="end"
-        android:textColor="@color/text_disabled_light"
+        android:textColor="?android:textColorSecondary"
         app:layout_constraintBaseline_toBaselineOf="@+id/title"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -56,7 +56,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:ellipsize="end"
-        android:textColor="@color/text_secondary_light"
+        android:textColor="?android:textColorSecondary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

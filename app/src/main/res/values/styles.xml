@@ -1,19 +1,40 @@
 <resources>
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="BaseTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@color/mainBackground</item>
+        <item name="android:colorEdgeEffect">@color/colorEdgeEffect</item>
 
-        <item name="android:textColorPrimary">@color/text_primary_light</item>
-        <item name="android:textColorSecondary">@color/text_secondary_light</item>
-        <item name="android:textColorTertiary">@color/text_disabled_light</item>
-        <item name="android:textColorPrimaryInverse">@color/text_primary_dark</item>
-        <item name="android:textColorSecondaryInverse">@color/text_secondary_dark</item>
-        <item name="android:textColorTertiaryInverse">@color/text_disabled_dark</item>
+        <item name="actionBarTheme">@style/BaseTheme.ActionBar</item>
+        <item name="alertDialogTheme">@style/BaseTheme.AlertDialog</item>
 
         <item name="mcab_background_color">@color/colorPrimary</item>
         <item name="mcab_menu">@menu/menu_cab</item>
+    </style>
+
+    <style name="AppTheme" parent="@style/BaseTheme">
+        <item name="android:statusBarColor">#ff9e9e9e</item>
+    </style>
+
+    <style name="BaseTheme.Button" parent="Widget.AppCompat.Button">
+        <item name="android:fontFamily">@font/google_sans</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="BaseTheme.AlertDialog" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+        <item name="android:windowBackground">@drawable/dialog_material_background</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="buttonStyle">@style/BaseTheme.Button</item>
+    </style>
+
+    <style name="BaseTheme.ActionBar.Title" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="fontFamily">@font/google_sans_medium</item>
+    </style>
+    <style name="BaseTheme.ActionBar" parent="BaseTheme">
+        <item name="titleTextAppearance">@style/BaseTheme.ActionBar.Title</item>
     </style>
 
 </resources>

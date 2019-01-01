@@ -1,9 +1,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <string name="app_name" translatable="false">Scoop</string>
-    <string name="settings_title">Scoop - Settings</string>
-    <string name="blacklist_title">Scoop - Blacklist</string>
-    <string name="about_title">Scoop - About</string>
+    <string name="settings_title">Settings</string>
+    <string name="blacklist_title">Blacklist</string>
+    <string name="about_title">About</string>
 
     <string name="xposed_description">Catches a stack trace when an app crashes unexpectedly</string>
 
@@ -44,7 +44,7 @@
     <!-- You can get a bit creative here as it's probably not too easy to translate directly -->
     <string name="make_crash_plain" tools:ignore="Typos">Wanna make something crash? .</string> <!-- dot gets replaced with image (ಠ‿ಠ), see explanation in MainActivity -->
     <string name="no_xposed_1" translatable="false">Y U NO</string>
-    <string name="no_xposed_2" translatable="false">XPOSED INSTALLED</string>
+    <string name="no_xposed_2" translatable="false">GRANT ROOT OR GIB XPOSED</string>
 
     <string name="settings_notif">Notifications</string>
     <string name="settings_overview">Overview</string>
@@ -78,7 +78,7 @@
     <string name="no_root_message">This application requires root access or Xposed to work. Please grant root access or enable the Xposed module</string>
     <string name="exit">Exit</string>
     <string name="status_channel">Scoop status</string>
-    <string name="scoop_running">Scoop is running</string>
+    <string name="scoop_running">Monitoring app crashes</string>
     <string name="action_kill">Stop</string>
 
 </resources>

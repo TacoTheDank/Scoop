@@ -22,6 +22,9 @@
             android:name="xposedminversion"
             android:value="52" />
         <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+        <meta-data
             android:name="xposeddescription"
             android:value="@string/xposed_description" />
 

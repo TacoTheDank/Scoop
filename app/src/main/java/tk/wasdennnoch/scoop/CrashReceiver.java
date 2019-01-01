@@ -69,7 +69,7 @@ public class CrashReceiver extends BroadcastReceiver {
                     .setLargeIcon(drawableToBitmap(CrashLoader.getAppIcon(context, packageName)))
                     .setContentTitle(CrashLoader.getAppName(context, packageName, false))
                     .setContentText(description)
-                    .setColor(ContextCompat.getColor(context, R.color.colorPrimary))
+                    .setColor(ContextCompat.getColor(context, R.color.colorAccent))
                     .setAutoCancel(true)
                     .setContentIntent(clickPendingIntent);
 

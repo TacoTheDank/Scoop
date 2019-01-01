@@ -14,5 +14,7 @@
     <dimen name="no_crash_text_size">18sp</dimen>
     <dimen name="no_crash_item_spacing">36dp</dimen>
     <dimen name="no_xposed_item_spacing">12dp</dimen>
+    <dimen name="dialog_corner_radius">8dp</dimen>
+    <dimen name="toolbar_elevation">4dp</dimen>
 
 </resources>

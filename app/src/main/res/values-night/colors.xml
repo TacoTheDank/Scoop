@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="mainBackground">#ff202124</color>
+    <color name="colorEdgeEffect">@android:color/white</color>
+</resources>
