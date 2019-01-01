@@ -45,7 +45,7 @@ abstract class CrashDetector : ICrashDetector.Stub() {
         while (true) {
             val line = reader.readLine()
             lastLine = line
-            if (line != null && checkLine(line, foundTrace)) {
+            if (line != null && line.matches(beginPattern)) {
                 if (!foundTrace && line.matches(linePattern)) {
                     foundTrace = true
                     foundTraceAt = index
@@ -69,10 +69,6 @@ abstract class CrashDetector : ICrashDetector.Stub() {
     }
 
     protected abstract fun sendBroadcast(intent: Intent)
-
-    private fun checkLine(line: String, foundTrace: Boolean): Boolean {
-        return line.matches(if (foundTrace) linePattern else beginPattern)
-    }
 
     override fun kill() {
         android.os.Process.killProcess(android.os.Process.myPid())
