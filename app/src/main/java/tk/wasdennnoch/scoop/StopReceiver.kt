@@ -9,5 +9,6 @@ class StopReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         val app = context.applicationContext as ScoopApplication
         app.launcher.kill()
+        app.stopService()
     }
 }

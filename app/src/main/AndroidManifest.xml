@@ -5,6 +5,7 @@
     android:installLocation="internalOnly">
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
 
     <application
         android:name=".ScoopApplication"
@@ -87,6 +88,11 @@
         <receiver
             android:name=".StopReceiver"
             android:enabled="true" />
+
+        <service
+            android:name=".detector.CrashDetectorService"
+            android:enabled="true"
+            android:process=":crashDetectorService" />
     </application>
 
 </manifest>

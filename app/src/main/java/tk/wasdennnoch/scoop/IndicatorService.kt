@@ -7,7 +7,7 @@ import android.os.IBinder
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 
-class IndicatorService : Service() {
+open class IndicatorService : Service() {
 
     override fun onBind(intent: Intent): IBinder {
         TODO("unsupported.")

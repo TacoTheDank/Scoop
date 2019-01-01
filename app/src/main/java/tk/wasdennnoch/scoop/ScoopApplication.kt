@@ -4,9 +4,12 @@ import android.annotation.TargetApi
 import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
-import eu.chainfire.libsuperuser.Shell
+import androidx.core.content.ContextCompat
 import tk.wasdennnoch.scoop.detector.CrashDetectorLauncher
+import tk.wasdennnoch.scoop.detector.CrashDetectorService
 
 class ScoopApplication : Application() {
 
@@ -24,8 +27,8 @@ class ScoopApplication : Application() {
             launcher = CrashDetectorLauncher(this)
             val launcherThread = object : Thread("CrashDetectorLauncher") {
                 override fun run() {
-                    if (Shell.SU.available()) {
-                        launcher.launchProcess()
+                    if (!launcher.launchProcess()) {
+                        startService()
                     }
                 }
             }
@@ -50,6 +53,23 @@ class ScoopApplication : Application() {
         channel.setShowBadge(false)
         val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.createNotificationChannel(channel)
+    }
+
+    private fun isPermissionGranted(): Boolean {
+        return ContextCompat.checkSelfPermission(this,
+                "android.permission.READ_LOGS") == PackageManager.PERMISSION_GRANTED
+    }
+
+    fun startService(): Boolean {
+        if (!isPermissionGranted()) {
+            return false
+        }
+        startService(Intent(this, CrashDetectorService::class.java))
+        return true
+    }
+
+    fun stopService() {
+        stopService(Intent(this, CrashDetectorService::class.java))
     }
 
     companion object {

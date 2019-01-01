@@ -2,16 +2,13 @@ package tk.wasdennnoch.scoop.detector
 
 import android.content.Intent
 import android.util.Log
-import eu.chainfire.librootjava.RootIPC
 import tk.wasdennnoch.scoop.BuildConfig
 import tk.wasdennnoch.scoop.CrashReceiver
 import tk.wasdennnoch.scoop.XposedHook.*
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
-class CrashDetector : ICrashDetector.Stub() {
-
-    private var _callback: ICrashDetectorCallback? = null
+abstract class CrashDetector : ICrashDetector.Stub() {
 
     private val logcatProcess: Process
     private val reader: BufferedReader
@@ -39,7 +36,7 @@ class CrashDetector : ICrashDetector.Stub() {
         readThread.start()
     }
 
-    fun reportCrash(reader: BufferedReader): String? {
+    private fun reportCrash(reader: BufferedReader): String? {
         val lines = ArrayList<String>()
         var index = 0
         var lastLine: String?
@@ -71,6 +68,8 @@ class CrashDetector : ICrashDetector.Stub() {
         return lastLine
     }
 
+    protected abstract fun sendBroadcast(intent: Intent)
+
     private fun checkLine(line: String, foundTrace: Boolean): Boolean {
         return line.matches(if (foundTrace) linePattern else beginPattern)
     }
@@ -86,25 +85,5 @@ class CrashDetector : ICrashDetector.Stub() {
         private val fePattern = Regex("[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3}( )+[0-9]+( )+[0-9]+( )+E AndroidRuntime: FATAL EXCEPTION: main")
         private val linePattern = Regex("[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3}( )+[0-9]+( )+[0-9]+( )+E AndroidRuntime: \tat(.)*")
         private val processInfoPattern = Regex("Process: ([a-z][a-z0-9_]*(?:\\.[a-z0-9_]+)+[0-9a-z_]), PID: ([0-9]+)")
-
-        private val reflectionClass = Class.forName("eu.chainfire.librootjava.Reflection")
-        private val sendBroadcastMethod = reflectionClass.getDeclaredMethod("sendBroadcast", Intent::class.java)
-
-        init {
-            sendBroadcastMethod.isAccessible = true
-        }
-
-        @JvmStatic
-        fun main(vararg args: String) {
-            try {
-                RootIPC(BuildConfig.APPLICATION_ID, CrashDetector(), 0, 30 * 1000, true)
-            } catch (e: RootIPC.TimeoutException) {
-                // a connection wasn't established
-            }
-        }
-
-        fun sendBroadcast(intent: Intent) {
-            sendBroadcastMethod.invoke(null, intent)
-        }
     }
 }

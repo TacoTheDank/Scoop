@@ -445,7 +445,8 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
         @Override
         protected Boolean doInBackground(Void... voids) {
             ScoopApplication app = (ScoopApplication) getApplication();
-            return ScoopApplication.Companion.xposedActive() || app.launcher.launchProcess();
+            return ScoopApplication.Companion.xposedActive() || app.launcher.launchProcess()
+                    || app.startService();
         }
 
         @Override

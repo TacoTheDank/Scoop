@@ -46,7 +46,7 @@ class CrashDetectorLauncher(private val context: Context) {
                     .useSU()
                     .open().also { shell ->
                         shell.addCommand("killall -9 $processName")
-                        shell.addCommand(RootJava.getLaunchScript(context, CrashDetector::class.java,
+                        shell.addCommand(RootJava.getLaunchScript(context, CrashDetectorRoot::class.java,
                                 null, null, null, processName))
                         shell.addCommand("exit")
                     }
