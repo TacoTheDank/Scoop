@@ -59,7 +59,7 @@
             android:title="@string/settings_blacklisted_apps">
             <intent
                 android:targetClass="tk.wasdennnoch.scoop.ui.BlacklistAppsActivity"
-                android:targetPackage="tk.wasdennnoch.scoop"/>
+                android:targetPackage="@string/application_id"/>
         </Preference>
 
     </PreferenceCategory>
@@ -98,7 +98,7 @@
             android:title="@string/settings_about">
             <intent
                 android:targetClass="tk.wasdennnoch.scoop.ui.AboutActivity"
-                android:targetPackage="xyz.paphonb.scoop"/>
+                android:targetPackage="@string/application_id"/>
         </Preference>
 
     </PreferenceCategory>
