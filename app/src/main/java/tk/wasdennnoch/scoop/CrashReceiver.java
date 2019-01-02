@@ -11,16 +11,15 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.os.SystemClock;
 import android.preference.PreferenceManager;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.TaskStackBuilder;
-import androidx.core.content.ContextCompat;
 
 import com.afollestad.inquiry.Inquiry;
 
 import java.util.Arrays;
 
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.TaskStackBuilder;
+import androidx.core.content.ContextCompat;
 import tk.wasdennnoch.scoop.data.crash.Crash;
 import tk.wasdennnoch.scoop.data.crash.CrashLoader;
 import tk.wasdennnoch.scoop.dogbin.DogbinUploadService;
@@ -146,6 +145,9 @@ public class CrashReceiver extends BroadcastReceiver {
                     builder.addAction(new NotificationCompat.Action(0,
                             context.getString(uploadTitle), dogbinPendingIntent));
 
+                } else {
+                    builder.setProgress(0, 0, true);
+                    builder.setOngoing(true);
                 }
             }
 

@@ -9,7 +9,6 @@ import androidx.core.content.ContextCompat
 import tk.wasdennnoch.scoop.R
 import tk.wasdennnoch.scoop.XposedHook
 import tk.wasdennnoch.scoop.data.crash.Crash
-import java.lang.Exception
 import java.util.*
 
 class DogbinUploadService : Service() {
@@ -72,7 +71,6 @@ class DogbinUploadService : Service() {
                 .setSmallIcon(R.drawable.ic_bug_notification)
                 .setContentTitle(getString(R.string.dogbin_uploading))
                 .setColor(ContextCompat.getColor(this, R.color.colorAccent))
-                .setProgress(0, 0, true)
                 .setPriority(NotificationCompat.PRIORITY_MIN)
                 .build())
     }

@@ -82,7 +82,7 @@
     <string name="status_channel">Scoop status</string>
     <string name="scoop_running">Monitoring app crashes</string>
     <string name="action_kill">Stop</string>
-    <string name="dogbin_uploading">Uploading stack trace</string>
+    <string name="dogbin_uploading">Upload in progress</string>
     <string name="action_dogbin_upload">Upload to dogbin</string>
     <string name="action_dogbin_upload_error">Upload failed</string>
     <string name="action_dogbin_copy_link">Copy link</string>

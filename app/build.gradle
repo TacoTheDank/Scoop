@@ -48,7 +48,6 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     implementation 'eu.chainfire:libsuperuser:1.0.0.201704021214'
-    implementation 'eu.chainfire:librootjava:1.0.0'
 }
 repositories {
     mavenCentral()

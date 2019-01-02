@@ -2,6 +2,7 @@ package tk.wasdennnoch.scoop.detector
 
 import android.content.Intent
 import android.util.Log
+import eu.chainfire.libsuperuser.Shell
 import tk.wasdennnoch.scoop.BuildConfig
 import tk.wasdennnoch.scoop.CrashReceiver
 import tk.wasdennnoch.scoop.XposedHook.*
@@ -14,8 +15,9 @@ abstract class CrashDetector : ICrashDetector.Stub() {
     private val reader: BufferedReader
 
     init {
-        Runtime.getRuntime().exec("logcat -c").waitFor()
-        logcatProcess = Runtime.getRuntime().exec("logcat")
+        val prefix = if (Shell.SU.available()) "su -c " else ""
+        Runtime.getRuntime().exec(prefix + "logcat -c").waitFor()
+        logcatProcess = Runtime.getRuntime().exec(prefix + "logcat")
         reader = BufferedReader(InputStreamReader(logcatProcess.inputStream))
         val readThread = object : Thread() {
 
