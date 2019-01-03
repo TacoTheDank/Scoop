@@ -4,13 +4,18 @@ import android.annotation.TargetApi
 import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
+import android.os.Handler
+import android.os.HandlerThread
 import android.os.SystemClock
-import tk.wasdennnoch.scoop.detector.ServiceManager
+import androidx.core.content.ContextCompat
+import tk.wasdennnoch.scoop.detector.CrashDetectorService
 
 class ScoopApplication : Application() {
 
-    val serviceManager by lazy { ServiceManager(this) }
+    private val permissionLock = Object()
 
     override fun onCreate() {
         super.onCreate()
@@ -21,7 +26,11 @@ class ScoopApplication : Application() {
         }
 
         if (!xposedActive()) {
-            serviceManager.startService()
+            val thread = HandlerThread("startCrashDetector")
+            thread.start()
+            Handler(thread.looper).post {
+                startService()
+            }
         }
     }
 
@@ -42,6 +51,31 @@ class ScoopApplication : Application() {
         channel.setShowBadge(false)
         val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.createNotificationChannel(channel)
+    }
+
+    fun startService(): Boolean {
+        if (!isPermissionGranted()) return false
+        startService(Intent(this, CrashDetectorService::class.java))
+        return true
+    }
+
+    fun stopService() {
+        stopService(Intent(this, CrashDetectorService::class.java))
+    }
+
+    private fun isPermissionGranted(tryGranting: Boolean = true): Boolean {
+        synchronized(permissionLock) {
+            val permission = "android.permission.READ_LOGS"
+            val granted = ContextCompat.checkSelfPermission(this,
+                    permission) == PackageManager.PERMISSION_GRANTED
+            return if (!granted && tryGranting) {
+                Runtime.getRuntime().exec("su -c pm grant ${BuildConfig.APPLICATION_ID}" +
+                        " $permission").waitFor()
+                isPermissionGranted(false)
+            } else {
+                granted
+            }
+        }
     }
 
     companion object {

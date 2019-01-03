@@ -1,24 +1,13 @@
 package tk.wasdennnoch.scoop.ui;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.core.content.ContextCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
-import androidx.core.view.MenuItemCompat;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ImageSpan;
@@ -38,7 +27,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
 
-import tk.wasdennnoch.scoop.BuildConfig;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
+import androidx.core.view.MenuItemCompat;
 import tk.wasdennnoch.scoop.CrashReceiver;
 import tk.wasdennnoch.scoop.R;
 import tk.wasdennnoch.scoop.ScoopApplication;
@@ -445,7 +441,7 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
         @Override
         protected Boolean doInBackground(Void... voids) {
             ScoopApplication app = (ScoopApplication) getApplication();
-            return ScoopApplication.Companion.xposedActive() || app.getServiceManager().startService();
+            return ScoopApplication.Companion.xposedActive() || app.startService();
         }
 
         @Override
