@@ -27,7 +27,7 @@ abstract class CrashDetector : ICrashDetector.Stub() {
                     (pendingLine ?: reader.readLine())?.let { line ->
                         pendingLine = null
                         if (line.matches(fePattern)) {
-                            pendingLine = reportCrash(reader)
+                            pendingLine = reportCrash(reader, line.replace(arPattern, ""))
                         }
                     } ?: break
                 }
@@ -36,7 +36,7 @@ abstract class CrashDetector : ICrashDetector.Stub() {
         readThread.start()
     }
 
-    private fun reportCrash(reader: BufferedReader): String? {
+    private fun reportCrash(reader: BufferedReader, firstLine: String): String? {
         val lines = ArrayList<String>()
         var index = 0
         var lastLine: String?
@@ -63,7 +63,7 @@ abstract class CrashDetector : ICrashDetector.Stub() {
                 .putExtra(INTENT_PACKAGE_NAME, packageName)
                 .putExtra(INTENT_TIME, System.currentTimeMillis())
                 .putExtra(INTENT_DESCRIPTION, lines.subList(1, foundTraceAt).joinToString("\n"))
-                .putExtra(INTENT_STACKTRACE, lines.joinToString("\n"))
+                .putExtra(INTENT_STACKTRACE, "$firstLine\n" + lines.joinToString("\n"))
         sendBroadcast(intent)
         return lastLine
     }
@@ -78,7 +78,7 @@ abstract class CrashDetector : ICrashDetector.Stub() {
 
         private val beginPattern = Regex("[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3}( )+[0-9]+( )+[0-9]+( )+E AndroidRuntime: (.)*")
         private val arPattern = Regex("[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3}( )+[0-9]+( )+[0-9]+( )+E AndroidRuntime: ")
-        private val fePattern = Regex("[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3}( )+[0-9]+( )+[0-9]+( )+E AndroidRuntime: FATAL EXCEPTION: main")
+        private val fePattern = Regex("[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3}( )+[0-9]+( )+[0-9]+( )+E AndroidRuntime: FATAL EXCEPTION: (?:.)*")
         private val linePattern = Regex("[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3}( )+[0-9]+( )+[0-9]+( )+E AndroidRuntime: \tat(.)*")
         private val processInfoPattern = Regex("Process: ([a-z][a-z0-9_]*(?:\\.[a-z0-9_]+)+[0-9a-z_]), PID: ([0-9]+)")
     }
