@@ -1999,7 +1999,7 @@ public class MergedScrollView extends FrameLayout {
                 canvas.restoreToCount(restoreCount);
             }
 
-            final boolean clipToPadding = Build.VERSION.SDK_INT >= 21 && getClipToPadding();
+            final boolean clipToPadding = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && getClipToPadding();
             if (!mEdgeGlowTop.isFinished()) {
                 final int restoreCount = canvas.save();
                 final int width;

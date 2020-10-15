@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 
 import androidx.annotation.NonNull;
 import androidx.collection.ArrayMap;
@@ -114,7 +113,7 @@ public class CrashLoader {
                     Inquiry.get("main").insert(Crash.class).values(result).run();
                 }
                 final MainActivity listener = mListener.get();
-                if (listener == null || listener.isFinishing() || (Build.VERSION.SDK_INT >= 17 && listener.isDestroyed()))
+                if (listener == null || listener.isFinishing() || listener.isDestroyed())
                     return;
                 //noinspection ConstantConditions
                 if (result == null) {

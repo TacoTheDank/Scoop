@@ -1,9 +1,6 @@
 package tk.wasdennnoch.scoop.ui.utils;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
-import android.os.Build;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewPropertyAnimator;
@@ -50,16 +47,7 @@ public class AnimationUtils {
     }
 
     private static void addEndAction(ViewPropertyAnimator anim, final Runnable action) {
-        if (Build.VERSION.SDK_INT >= 16) {
-            anim.withEndAction(action);
-        } else {
-            anim.setListener(action == null ? null : new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    action.run();
-                }
-            });
-        }
+        anim.withEndAction(action);
     }
 
 }

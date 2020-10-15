@@ -2,7 +2,6 @@ package tk.wasdennnoch.scoop.data.app;
 
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.os.Build;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -35,7 +34,7 @@ public class AppLoader {
                 }
 
                 final BlacklistAppsActivity listener = mListener.get();
-                if (listener == null || listener.isFinishing() || (Build.VERSION.SDK_INT >= 17 && listener.isDestroyed()))
+                if (listener == null || listener.isFinishing() || listener.isDestroyed())
                     return;
 
                 listener.runOnUiThread(new Runnable() {
