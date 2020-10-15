@@ -2,6 +2,8 @@ package tk.wasdennnoch.scoop.data.app;
 
 import android.graphics.drawable.Drawable;
 
+import androidx.annotation.NonNull;
+
 public class App {
 
     final Drawable icon;
@@ -15,6 +17,7 @@ public class App {
         this.packageName = packageName;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "App[" +

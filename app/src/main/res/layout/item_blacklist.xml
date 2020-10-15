@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     android:background="?android:attr/selectableItemBackground"
     android:clickable="true"
+    android:focusable="true"
     android:orientation="vertical"
     android:padding="8dp">
 
@@ -19,9 +20,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_toStartOf="@+id/check"
-        android:layout_toLeftOf="@+id/check"
         android:layout_toEndOf="@id/appIcon"
-        android:layout_toRightOf="@id/appIcon"
         android:maxLines="1"
         android:textColor="?android:textColorPrimary"
         android:textSize="20sp"
@@ -35,9 +34,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_toStartOf="@+id/check"
-        android:layout_toLeftOf="@+id/check"
         android:layout_toEndOf="@id/appIcon"
-        android:layout_toRightOf="@id/appIcon"
         android:maxLines="1"
         android:textColor="?android:textColorSecondary" />
 
@@ -46,7 +43,6 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:clickable="false" />
 

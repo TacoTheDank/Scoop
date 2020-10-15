@@ -28,7 +28,6 @@ import androidx.core.graphics.drawable.DrawableCompat;
 
 import com.afollestad.inquiry.Inquiry;
 import com.afollestad.materialcab.MaterialCab;
-import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.util.ArrayList;
@@ -93,9 +92,6 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
             mHandler.postDelayed(mUpdateCheckerRunnable, UPDATE_DELAY);
         }
     };
-    private Toolbar mToolbar;
-    private int mToolbarElevation;
-    private boolean mWasElevated;
 
     public static void requestUpdate(Crash newCrash) {
         sUpdateRequired = true;
@@ -109,15 +105,14 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
         if (mPrefs.getBoolean("force_english", false)) {
             Configuration config = getResources().getConfiguration();
-            //noinspection deprecation
             config.locale = Locale.ENGLISH;
-            //noinspection deprecation
             getResources().updateConfiguration(config, null);
         }
 
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true); // To make vector drawables work as menu item drawables
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Toolbar mToolbar;
         setSupportActionBar(mToolbar = findViewById(R.id.toolbar));
 
         mList = findViewById(R.id.list);
@@ -138,7 +133,6 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
             if (c.children != null)
                 crashes.addAll(c.children);
             mAdapter.setCrashes(crashes);
-            //noinspection ConstantConditions
             getSupportActionBar().setTitle(CrashLoader.getAppName(this, c.packageName, true));
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
@@ -165,7 +159,7 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
         }
         mHandler = new Handler();
 
-        //noinspection ConstantConditions,ConstantIfStatement
+        // noinspection ConstantIfStatement
         if (false) {
             final Intent intent = new Intent("tk.wasdennnoch.scoop.EXCEPTION")
                     .setClassName(getPackageName(), CrashReceiver.class.getName())
@@ -173,19 +167,14 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
                     .putExtra("time", System.currentTimeMillis())
                     .putExtra("description", "java.lang.NullPointerException: Someone screwed up")
                     .putExtra("stacktrace", "Testtrace Testtrace Testtrace Testtrace Testtrace Testtrace Testtrace Testtrace Testtrace Testtrace Testtrace Testtrace");
-            mHandler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    sendBroadcast(intent);
-                }
-            }, 1000);
+            mHandler.postDelayed(() -> sendBroadcast(intent), 1000);
         }
 
         new AvailabilityCheck().execute();
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         mAdapter.saveInstanceState(outState);
         mCab.saveState(outState);
@@ -235,7 +224,6 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
         boolean empty = mAdapter.isEmpty();
         mLoading.setVisibility(loading ? View.VISIBLE : View.GONE);
         mList.setVisibility(loading || empty || !mIsAvailable ? View.GONE : View.VISIBLE);
-        //noinspection ConstantConditions
         if (!loading && empty && mIsAvailable) {
             if (mNoItems == null) {
                 mNoItems = mNoItemsStub.inflate();
@@ -286,12 +274,9 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
             AnimationUtils.slideToolbar(mCab.getToolbar(), false, AnimationUtils.ANIM_DURATION_DEFAULT);
         } else {
             mAnimatingCab = true;
-            AnimationUtils.slideToolbar(mCab.getToolbar(), true, AnimationUtils.ANIM_DURATION_DEFAULT, false, new Runnable() {
-                @Override
-                public void run() {
-                    mAnimatingCab = false;
-                    mCab.finish();
-                }
+            AnimationUtils.slideToolbar(mCab.getToolbar(), true, AnimationUtils.ANIM_DURATION_DEFAULT, false, () -> {
+                mAnimatingCab = false;
+                mCab.finish();
             });
         }
     }
@@ -329,46 +314,42 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
 
     @Override
     public boolean onCabItemClicked(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_delete:
-                final ArrayList<Crash> items = mAdapter.getSelectedItems();
-                if (items.isEmpty()) return true;
-                String content = String.format(getResources().getQuantityString(R.plurals.delete_multiple_confirm, items.size()), items.size());
-                new MaterialDialog.Builder(this)
-                        .content(content)
-                        .positiveText(R.string.dialog_ok)
-                        .negativeText(R.string.dialog_cancel)
-                        .onPositive(new MaterialDialog.SingleButtonCallback() {
-                            @Override
-                            public void onClick(@NonNull MaterialDialog materialDialog, @NonNull DialogAction dialogAction) {
-                                // TODO THIS IS A MESS
-                                Inquiry instance = Inquiry.get("main");
-                                for (Crash c : items) {
-                                    if (!mHasCrash && c.children != null) {
-                                        for (Crash cc : c.children) {
-                                            if (cc.hiddenIds != null) {
-                                                instance.delete(Crash.class).whereIn("_id", cc.hiddenIds.toArray()).run();
-                                            }
-                                            mAdapter.removeCrash(cc);
-                                        }
-                                        instance.delete(Crash.class).values(c.children).run();
+        if (item.getItemId() == R.id.action_delete) {
+            final ArrayList<Crash> items = mAdapter.getSelectedItems();
+            if (items.isEmpty()) return true;
+            String content = String.format(getResources().getQuantityString(R.plurals.delete_multiple_confirm, items.size()), items.size());
+            new MaterialDialog.Builder(this)
+                    .content(content)
+                    .positiveText(R.string.dialog_ok)
+                    .negativeText(R.string.dialog_cancel)
+                    .onPositive((materialDialog, dialogAction) -> {
+                        // TODO THIS IS A MESS
+                        Inquiry instance = Inquiry.get("main");
+                        for (Crash c : items) {
+                            if (!mHasCrash && c.children != null) {
+                                for (Crash cc : c.children) {
+                                    if (cc.hiddenIds != null) {
+                                        instance.delete(Crash.class).whereIn("_id", cc.hiddenIds.toArray()).run();
                                     }
-                                    if (c.hiddenIds != null) {
-                                        instance.delete(Crash.class).whereIn("_id", c.hiddenIds.toArray()).run();
-                                    }
-                                    instance.delete(Crash.class).values(c).run();
-                                    mAdapter.removeCrash(c);
+                                    mAdapter.removeCrash(cc);
                                 }
-                                mAdapter.setSelectionEnabled(false);
-                                setResult(RESULT_OK); // Reload overview when going back to reflect changes
-                                if (mHasCrash && mAdapter.isEmpty()) // Everything deleted, go back to overview
-                                    finish();
-                                else
-                                    updateViewStates(false);
+                                instance.delete(Crash.class).values(c.children).run();
                             }
-                        })
-                        .show();
-                return true;
+                            if (c.hiddenIds != null) {
+                                instance.delete(Crash.class).whereIn("_id", c.hiddenIds.toArray()).run();
+                            }
+                            instance.delete(Crash.class).values(c).run();
+                            mAdapter.removeCrash(c);
+                        }
+                        mAdapter.setSelectionEnabled(false);
+                        setResult(RESULT_OK); // Reload overview when going back to reflect changes
+                        if (mHasCrash && mAdapter.isEmpty()) // Everything deleted, go back to overview
+                            finish();
+                        else
+                            updateViewStates(false);
+                    })
+                    .show();
+            return true;
         }
         return true;
     }
@@ -414,13 +395,10 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
                         .content(R.string.dialog_clear_content)
                         .negativeText(android.R.string.cancel)
                         .positiveText(android.R.string.ok)
-                        .onPositive(new MaterialDialog.SingleButtonCallback() {
-                            @Override
-                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                Inquiry.get("main")
-                                        .dropTable(Crash.class); // bam!
-                                onDataLoaded(null);
-                            }
+                        .onPositive((dialog, which) -> {
+                            Inquiry.get("main")
+                                    .dropTable(Crash.class); // bam!
+                            onDataLoaded(null);
                         }).show();
                 return true;
             case R.id.action_settings:

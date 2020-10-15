@@ -16,34 +16,26 @@ public class AppLoader {
 
     public void loadData(BlacklistAppsActivity activity) {
         mListener = new WeakReference<>(activity);
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                PackageManager pm = mListener.get().getPackageManager();
-                List<ApplicationInfo> apps = pm.getInstalledApplications(0);
-                Collections.sort(apps, new ApplicationInfo.DisplayNameComparator(pm));
-                final ArrayList<App> finalApps = new ArrayList<>();
-                Loop:
-                for (ApplicationInfo a : apps) {
-                    // Some apps (like .Wave) add multiple launcher icons, this bugs blacklist selection, so only add one item per package name
-                    for (App app : finalApps) {
-                        if (app.packageName.equals(a.packageName))
-                            continue Loop;
-                    }
-                    finalApps.add(new App(a.loadIcon(pm), a.loadLabel(pm).toString(), a.packageName));
+        new Thread(() -> {
+            PackageManager pm = mListener.get().getPackageManager();
+            List<ApplicationInfo> apps = pm.getInstalledApplications(0);
+            Collections.sort(apps, new ApplicationInfo.DisplayNameComparator(pm));
+            final ArrayList<App> finalApps = new ArrayList<>();
+            Loop:
+            for (ApplicationInfo a : apps) {
+                // Some apps (like .Wave) add multiple launcher icons, this bugs blacklist selection, so only add one item per package name
+                for (App app : finalApps) {
+                    if (app.packageName.equals(a.packageName))
+                        continue Loop;
                 }
-
-                final BlacklistAppsActivity listener = mListener.get();
-                if (listener == null || listener.isFinishing() || listener.isDestroyed())
-                    return;
-
-                listener.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        listener.onDataLoaded(finalApps);
-                    }
-                });
+                finalApps.add(new App(a.loadIcon(pm), a.loadLabel(pm).toString(), a.packageName));
             }
+
+            final BlacklistAppsActivity listener = mListener.get();
+            if (listener == null || listener.isFinishing() || listener.isDestroyed())
+                return;
+
+            listener.runOnUiThread(() -> listener.onDataLoaded(finalApps));
         }).start();
     }
 

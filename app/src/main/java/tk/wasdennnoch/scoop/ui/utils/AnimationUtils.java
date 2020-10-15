@@ -29,13 +29,10 @@ public class AnimationUtils {
                 .translationY(out ? -actionBarSize : 0)
                 .setDuration(duration)
                 .setInterpolator(FAST_OUT_SLOW_IN);
-        addEndAction(animator, new Runnable() {
-            @Override
-            public void run() {
-                if (setVisibility && out) t.setVisibility(View.GONE);
-                if (endAction != null)
-                    endAction.run();
-            }
+        addEndAction(animator, () -> {
+            if (setVisibility && out) t.setVisibility(View.GONE);
+            if (endAction != null)
+                endAction.run();
         });
         animator.start();
     }

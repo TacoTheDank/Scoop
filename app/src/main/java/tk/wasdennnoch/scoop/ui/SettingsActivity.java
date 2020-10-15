@@ -18,7 +18,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        //noinspection ConstantConditions
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         new ToolbarElevationHelper(getListView(), toolbar);

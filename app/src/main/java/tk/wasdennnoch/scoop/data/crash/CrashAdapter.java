@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -120,7 +121,7 @@ public class CrashAdapter extends RecyclerView.Adapter<CrashAdapter.CrashViewHol
     }
 
     private void setItemSelected(int index, boolean selected) {
-        Crash c = mSearchActive ? mSearchedItems.get(index) : mItems.get(index);
+        Crash c = (mSearchActive ? mSearchedItems : mItems).get(index);
         if (c.selected == selected) return;
         c.selected = selected;
         if (c.selected) {
@@ -144,6 +145,7 @@ public class CrashAdapter extends RecyclerView.Adapter<CrashAdapter.CrashViewHol
         mSearchActive = outState.getBoolean("mSearchActive");
     }
 
+    @NonNull
     @Override
     public CrashViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new CrashViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_crash, parent, false));
@@ -152,7 +154,7 @@ public class CrashAdapter extends RecyclerView.Adapter<CrashAdapter.CrashViewHol
     @Override
     public void onBindViewHolder(CrashViewHolder holder, int position) {
         Context context = holder.itemView.getContext();
-        Crash crash = mSearchActive ? mSearchedItems.get(position) : mItems.get(position);
+        Crash crash = (mSearchActive ? mSearchedItems : mItems).get(position);
         String pkg = crash.packageName;
         CharSequence title;
         holder.crash = crash;
@@ -182,7 +184,7 @@ public class CrashAdapter extends RecyclerView.Adapter<CrashAdapter.CrashViewHol
 
     @Override
     public int getItemCount() {
-        return mSearchActive ? mSearchedItems.size() : mItems.size();
+        return (mSearchActive ? mSearchedItems : mItems).size();
     }
 
     public interface Listener {

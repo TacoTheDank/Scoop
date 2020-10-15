@@ -46,45 +46,42 @@ public final class DogbinUtils {
      * @param callback the callback to call on success / failure
      */
     public static void upload(final String content, final UploadResultCallback callback) {
-        getHandler().post(new Runnable() {
-            @Override
-            public void run() {
+        getHandler().post(() -> {
+            try {
+                HttpsURLConnection urlConnection = (HttpsURLConnection) new URL(API_URL).openConnection();
                 try {
-                    HttpsURLConnection urlConnection = (HttpsURLConnection) new URL(API_URL).openConnection();
-                    try {
-                        urlConnection.setRequestProperty("Accept-Charset", "UTF-8");
-                        urlConnection.setDoOutput(true);
+                    urlConnection.setRequestProperty("Accept-Charset", "UTF-8");
+                    urlConnection.setDoOutput(true);
 
-                        try (OutputStream output = urlConnection.getOutputStream()) {
-                            output.write(content.getBytes(StandardCharsets.UTF_8));
-                        }
-                        String key = "";
-                        try (JsonReader reader = new JsonReader(
-                                new InputStreamReader(urlConnection.getInputStream(), StandardCharsets.UTF_8))) {
-                            reader.beginObject();
-                            while (reader.hasNext()) {
-                                String name = reader.nextName();
-                                if (name.equals("key")) {
-                                    key = reader.nextString();
-                                    break;
-                                } else {
-                                    reader.skipValue();
-                                }
-                            }
-                            reader.endObject();
-                        }
-                        if (!key.isEmpty()) {
-                            callback.onSuccess(getUrl(key));
-                        } else {
-                            String msg = "Failed to upload to dogbin: No key retrieved";
-                            callback.onFail(msg, new DogbinException(msg));
-                        }
-                    } finally {
-                        urlConnection.disconnect();
+                    try (OutputStream output = urlConnection.getOutputStream()) {
+                        output.write(content.getBytes(StandardCharsets.UTF_8));
                     }
-                } catch (Exception e) {
-                    callback.onFail("Failed to upload to dogbin", e);
+                    String key = "";
+                    try (JsonReader reader = new JsonReader(
+                            new InputStreamReader(urlConnection.getInputStream(), StandardCharsets.UTF_8))) {
+                        reader.beginObject();
+                        while (reader.hasNext()) {
+                            String name = reader.nextName();
+                            if (name.equals("key")) {
+                                key = reader.nextString();
+                                break;
+                            } else {
+                                reader.skipValue();
+                            }
+                        }
+                        reader.endObject();
+                    }
+                    if (!key.isEmpty()) {
+                        callback.onSuccess(getUrl(key));
+                    } else {
+                        String msg = "Failed to upload to dogbin: No key retrieved";
+                        callback.onFail(msg, new DogbinException(msg));
+                    }
+                } finally {
+                    urlConnection.disconnect();
                 }
+            } catch (Exception e) {
+                callback.onFail("Failed to upload to dogbin", e);
             }
         });
     }

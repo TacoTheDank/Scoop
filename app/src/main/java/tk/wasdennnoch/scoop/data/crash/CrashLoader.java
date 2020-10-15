@@ -81,74 +81,58 @@ public class CrashLoader {
         mCombineSameTrace = combineSameStackTrace;
         mCombineSameApps = combineSameApps;
         mBlacklist = blacklist;
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                //noinspection UnusedAssignment
-                Crash[] result = Inquiry.get("main").select(Crash.class).all();
-                //noinspection ConstantConditions,ConstantIfStatement,PointlessBooleanExpression
-                if (false && BuildConfig.FAKE_DATA) { // Gonna love random testing code
-                    result = new Crash[21];
-                    result[0] = new Crash(randomTime(), "com.android.calculator", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
-                    result[1] = new Crash(randomTime(), "a.very.very.very.long.package.name", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
-                    result[2] = new Crash(randomTime(), BuildConfig.APPLICATION_ID, "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
-                    result[3] = new Crash(randomTime(), BuildConfig.APPLICATION_ID, "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
-                    result[4] = new Crash(randomTime(), BuildConfig.APPLICATION_ID, "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
-                    result[5] = new Crash(randomTime(), BuildConfig.APPLICATION_ID, "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
-                    result[6] = new Crash(randomTime(), "com.android.systemui", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
-                    result[7] = new Crash(randomTime(), "com.android.systemui", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
-                    result[8] = new Crash(randomTime(), "com.android.systemui", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
-                    result[9] = new Crash(randomTime(), "com.android.settings", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
-                    result[10] = new Crash(randomTime(), "com.android.settings", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
-                    result[11] = new Crash(randomTime(), "com.android.systemui", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
-                    result[12] = new Crash(randomTime(), "com.android.systemui", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
-                    result[13] = new Crash(randomTime(), BuildConfig.APPLICATION_ID, "java.lang.NullPointerException: Forced NullPointerException", "Nope2.");
-                    result[14] = new Crash(randomTime(), BuildConfig.APPLICATION_ID, "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
-                    result[15] = new Crash(randomTime(), BuildConfig.APPLICATION_ID, "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
-                    result[16] = new Crash(randomTime(), BuildConfig.APPLICATION_ID, "java.lang.NullPointerException: Forced NullPointerException", "Nope2.");
-                    result[17] = new Crash(randomTime(), BuildConfig.APPLICATION_ID, "java.lang.NullPointerException: Forced NullPointerException", "Nope2.");
-                    result[18] = new Crash(randomTime(), BuildConfig.APPLICATION_ID, "java.lang.NullPointerException: Forced NullPointerException", "Nope2.");
-                    result[19] = new Crash(randomTime(), "tk.wasdennnoch.puush", "3 Crasheeeeeeeeeees", "Nope.");
-                    result[20] = new Crash(randomTime(), "com.android.calculator2", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
-                    Inquiry.get("main").insert(Crash.class).values(result).run();
-                }
-                final MainActivity listener = mListener.get();
-                if (listener == null || listener.isFinishing() || listener.isDestroyed())
-                    return;
-                //noinspection ConstantConditions
-                if (result == null) {
-                    listener.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            listener.onDataLoaded(null);
-                        }
-                    });
-                    return;
-                }
-                ArrayList<Crash> data = new ArrayList<>();
-                data.addAll(Arrays.asList(result));
-                if (mCombineSameApps)
-                    sortApps(listener, data);
-                data = combineStackTraces(data);
-                data = combineSameApps(data);
-                setupAdapterData(data);
-                // Prefetch and cache the first items to avoid scroll lag.
-                // There is the chance the Activity will be destroyed while the items
-                // get prefetched but the chance is low as it doesn't take long to load
-                for (int i = 0; i < data.size(); i++) {
-                    Crash c = data.get(i);
-                    getAppIcon(listener, c.packageName);
-                    if (!mCombineSameApps) // App names already get fetched during sorting, no need to fetch again
-                        getAppName(listener, c.packageName, false);
-                }
-                final ArrayList<Crash> finalData = data;
-                listener.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        listener.onDataLoaded(finalData);
-                    }
-                });
+        new Thread(() -> {
+            Crash[] result = Inquiry.get("main").select(Crash.class).all();
+            // noinspection ConstantIfStatement,PointlessBooleanExpression
+            if (false && BuildConfig.FAKE_DATA) { // Gonna love random testing code
+                result = new Crash[21];
+                result[0] = new Crash(randomTime(), "com.android.calculator", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
+                result[1] = new Crash(randomTime(), "a.very.very.very.long.package.name", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
+                result[2] = new Crash(randomTime(), BuildConfig.APPLICATION_ID, "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
+                result[3] = new Crash(randomTime(), BuildConfig.APPLICATION_ID, "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
+                result[4] = new Crash(randomTime(), BuildConfig.APPLICATION_ID, "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
+                result[5] = new Crash(randomTime(), BuildConfig.APPLICATION_ID, "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
+                result[6] = new Crash(randomTime(), "com.android.systemui", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
+                result[7] = new Crash(randomTime(), "com.android.systemui", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
+                result[8] = new Crash(randomTime(), "com.android.systemui", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
+                result[9] = new Crash(randomTime(), "com.android.settings", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
+                result[10] = new Crash(randomTime(), "com.android.settings", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
+                result[11] = new Crash(randomTime(), "com.android.systemui", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
+                result[12] = new Crash(randomTime(), "com.android.systemui", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
+                result[13] = new Crash(randomTime(), BuildConfig.APPLICATION_ID, "java.lang.NullPointerException: Forced NullPointerException", "Nope2.");
+                result[14] = new Crash(randomTime(), BuildConfig.APPLICATION_ID, "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
+                result[15] = new Crash(randomTime(), BuildConfig.APPLICATION_ID, "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
+                result[16] = new Crash(randomTime(), BuildConfig.APPLICATION_ID, "java.lang.NullPointerException: Forced NullPointerException", "Nope2.");
+                result[17] = new Crash(randomTime(), BuildConfig.APPLICATION_ID, "java.lang.NullPointerException: Forced NullPointerException", "Nope2.");
+                result[18] = new Crash(randomTime(), BuildConfig.APPLICATION_ID, "java.lang.NullPointerException: Forced NullPointerException", "Nope2.");
+                result[19] = new Crash(randomTime(), "tk.wasdennnoch.puush", "3 Crasheeeeeeeeeees", "Nope.");
+                result[20] = new Crash(randomTime(), "com.android.calculator2", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
+                Inquiry.get("main").insert(Crash.class).values(result).run();
             }
+            final MainActivity listener = mListener.get();
+            if (listener == null || listener.isFinishing() || listener.isDestroyed())
+                return;
+            if (result == null) {
+                listener.runOnUiThread(() -> listener.onDataLoaded(null));
+                return;
+            }
+            ArrayList<Crash> data = new ArrayList<>(Arrays.asList(result));
+            if (mCombineSameApps)
+                sortApps(listener, data);
+            data = combineStackTraces(data);
+            data = combineSameApps(data);
+            setupAdapterData(data);
+            // Prefetch and cache the first items to avoid scroll lag.
+            // There is the chance the Activity will be destroyed while the items
+            // get prefetched but the chance is low as it doesn't take long to load
+            for (int i = 0; i < data.size(); i++) {
+                Crash c = data.get(i);
+                getAppIcon(listener, c.packageName);
+                if (!mCombineSameApps) // App names already get fetched during sorting, no need to fetch again
+                    getAppName(listener, c.packageName, false);
+            }
+            final ArrayList<Crash> finalData = data;
+            listener.runOnUiThread(() -> listener.onDataLoaded(finalData));
         }).start();
     }
 

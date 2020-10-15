@@ -8,6 +8,7 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -26,8 +27,10 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.ViewHolder> {
         mItems = items;
         for (App a : mItems)
             for (String pkg : blacklisted)
-                if (a.packageName.equals(pkg))
+                if (a.packageName.equals(pkg)) {
                     a.selected = true;
+                    break;
+                }
         notifyDataSetChanged();
     }
 
@@ -60,10 +63,11 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.ViewHolder> {
     }
 
     private void toggleItemSelection(int index) {
-        App a = mSearchActive ? mSearchedItems.get(index) : mItems.get(index);
+        App a = (mSearchActive ? mSearchedItems : mItems).get(index);
         a.selected = !a.selected;
     }
 
+    @NonNull
     @Override
     public AppAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new AppAdapter.ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_blacklist, parent, false));
@@ -71,7 +75,7 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(AppAdapter.ViewHolder holder, int position) {
-        App app = mSearchActive ? mSearchedItems.get(position) : mItems.get(position);
+        App app = (mSearchActive ? mSearchedItems : mItems).get(position);
         holder.app = app;
         holder.appIcon.setImageDrawable(app.icon);
         holder.appName.setText(app.name);
@@ -82,7 +86,7 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return mSearchActive ? mSearchedItems.size() : mItems.size();
+        return (mSearchActive ? mSearchedItems : mItems).size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

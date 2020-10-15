@@ -15,23 +15,27 @@ public class ShareReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         String stackTrace = intent.getStringExtra("stackTrace");
         String pkg = intent.getStringExtra("pkg");
-        if (intent.getAction().equals(XposedHook.INTENT_ACTION_SHARE)) {
-            Intent shareIntent = new Intent(Intent.ACTION_SEND)
-                    .setType("text/plain")
-                    .putExtra(Intent.EXTRA_TEXT, stackTrace);
-            context.startActivity(Intent.createChooser(shareIntent, context.getString(R.string.action_share)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-        } else if (intent.getAction().equals(XposedHook.INTENT_ACTION_COPY)) {
-            ((ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE)).setPrimaryClip(
-                    ClipData.newPlainText(
-                            context.getResources().getString(R.string.copy_label, CrashLoader.getAppName(context, pkg, false)),
-                            stackTrace));
-            Toast.makeText(context, R.string.copied_toast, Toast.LENGTH_LONG).show();
-        } else if (intent.getAction().equals(XposedHook.INTENT_ACTION_COPY_LINK)) {
-            ((ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE)).setPrimaryClip(
-                    ClipData.newPlainText(
-                            context.getResources().getString(R.string.copy_link_label, CrashLoader.getAppName(context, pkg, false)),
-                            intent.getStringExtra(XposedHook.INTENT_DOGBIN_LINK)));
-            Toast.makeText(context, R.string.copied_link_toast, Toast.LENGTH_LONG).show();
+        switch (intent.getAction()) {
+            case XposedHook.INTENT_ACTION_SHARE:
+                Intent shareIntent = new Intent(Intent.ACTION_SEND)
+                        .setType("text/plain")
+                        .putExtra(Intent.EXTRA_TEXT, stackTrace);
+                context.startActivity(Intent.createChooser(shareIntent, context.getString(R.string.action_share)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                break;
+            case XposedHook.INTENT_ACTION_COPY:
+                ((ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE)).setPrimaryClip(
+                        ClipData.newPlainText(
+                                context.getResources().getString(R.string.copy_label, CrashLoader.getAppName(context, pkg, false)),
+                                stackTrace));
+                Toast.makeText(context, R.string.copied_toast, Toast.LENGTH_LONG).show();
+                break;
+            case XposedHook.INTENT_ACTION_COPY_LINK:
+                ((ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE)).setPrimaryClip(
+                        ClipData.newPlainText(
+                                context.getResources().getString(R.string.copy_link_label, CrashLoader.getAppName(context, pkg, false)),
+                                intent.getStringExtra(XposedHook.INTENT_DOGBIN_LINK)));
+                Toast.makeText(context, R.string.copied_link_toast, Toast.LENGTH_LONG).show();
+                break;
         }
     }
 

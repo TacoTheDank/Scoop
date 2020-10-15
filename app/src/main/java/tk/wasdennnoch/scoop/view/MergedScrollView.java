@@ -27,6 +27,8 @@ import android.widget.ListView;
 import android.widget.OverScroller;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import java.util.List;
 
 /**
@@ -850,42 +852,41 @@ public class MergedScrollView extends FrameLayout {
     @Override
     public boolean onGenericMotionEvent(MotionEvent event) {
         if ((event.getSource() & InputDevice.SOURCE_CLASS_POINTER) != 0) {
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_SCROLL:
-                    if (!mIsBeingDragged) {
-                        final float hscroll = event.getAxisValue(MotionEvent.AXIS_HSCROLL);
-                        final float vscroll = event.getAxisValue(MotionEvent.AXIS_VSCROLL);
-                        if (vscroll != 0) {
-                            final int delta = (int) (vscroll * getVerticalScrollFactor());
-                            final int range = getScrollRangeVertical();
-                            int oldScrollY = getScrollY();
-                            int newScrollY = oldScrollY - delta;
-                            if (newScrollY < 0) {
-                                newScrollY = 0;
-                            } else if (newScrollY > range) {
-                                newScrollY = range;
-                            }
-                            if (newScrollY != oldScrollY) {
-                                super.scrollTo(getScrollX(), newScrollY);
-                                return true;
-                            }
+            if (event.getAction() == MotionEvent.ACTION_SCROLL) {
+                if (!mIsBeingDragged) {
+                    final float hscroll = event.getAxisValue(MotionEvent.AXIS_HSCROLL);
+                    final float vscroll = event.getAxisValue(MotionEvent.AXIS_VSCROLL);
+                    if (vscroll != 0) {
+                        final int delta = (int) (vscroll * getVerticalScrollFactor());
+                        final int range = getScrollRangeVertical();
+                        int oldScrollY = getScrollY();
+                        int newScrollY = oldScrollY - delta;
+                        if (newScrollY < 0) {
+                            newScrollY = 0;
+                        } else if (newScrollY > range) {
+                            newScrollY = range;
                         }
-                        if (hscroll != 0) {
-                            final int delta = (int) (hscroll * getHorizontalScrollFactor());
-                            final int range = getScrollRangeHorizontal();
-                            int oldScrollX = getScrollX();
-                            int newScrollX = oldScrollX - delta;
-                            if (newScrollX < 0) {
-                                newScrollX = 0;
-                            } else if (newScrollX > range) {
-                                newScrollX = range;
-                            }
-                            if (newScrollX != oldScrollX) {
-                                super.scrollTo(newScrollX, getScrollY());
-                                return true;
-                            }
+                        if (newScrollY != oldScrollY) {
+                            super.scrollTo(getScrollX(), newScrollY);
+                            return true;
                         }
                     }
+                    if (hscroll != 0) {
+                        final int delta = (int) (hscroll * getHorizontalScrollFactor());
+                        final int range = getScrollRangeHorizontal();
+                        int oldScrollX = getScrollX();
+                        int newScrollX = oldScrollX - delta;
+                        if (newScrollX < 0) {
+                            newScrollX = 0;
+                        } else if (newScrollX > range) {
+                            newScrollX = range;
+                        }
+                        if (newScrollX != oldScrollX) {
+                            super.scrollTo(newScrollX, getScrollY());
+                            return true;
+                        }
+                    }
+                }
             }
         }
         return super.onGenericMotionEvent(event);
@@ -1141,12 +1142,11 @@ public class MergedScrollView extends FrameLayout {
      * component is a good candidate for focus, this MergedScrollView reclaims the
      * focus.</p>
      *
-     * @param directionY the scroll direction: {@link android.view.View#FOCUS_UP}
+     * @param directionY the scroll direction: {@link View#FOCUS_UP}
      *                   to go one page up or
-     *                   {@link android.view.View#FOCUS_DOWN} to go one page down
-     * @return true if the key event is consumed by this method, false otherwise
+     *                   {@link View#FOCUS_DOWN} to go one page down
      */
-    public boolean pageScroll(int directionX, int directionY) {
+    public void pageScroll(int directionX, int directionY) {
         boolean right = directionX == View.FOCUS_RIGHT;
         boolean down = directionY == View.FOCUS_DOWN;
         int width = getWidth();
@@ -1185,7 +1185,7 @@ public class MergedScrollView extends FrameLayout {
         mTempRect.right = mTempRect.left + width;
         mTempRect.bottom = mTempRect.top + height;
 
-        return scrollAndFocus(directionX, directionY, mTempRect);
+        scrollAndFocus(directionX, directionY, mTempRect);
     }
 
     /**
@@ -2105,6 +2105,7 @@ public class MergedScrollView extends FrameLayout {
             dest.writeInt(scrollPositionY);
         }
 
+        @NonNull
         @Override
         public String toString() {
             return "MergedScrollView.SavedState{"

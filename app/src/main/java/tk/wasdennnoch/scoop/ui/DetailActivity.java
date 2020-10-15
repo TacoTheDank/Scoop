@@ -45,7 +45,6 @@ public class DetailActivity extends AppCompatActivity implements SearchView.OnQu
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         setSupportActionBar(findViewById(R.id.toolbar));
-        //noinspection ConstantConditions
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mHighlightColor = ContextCompat.getColor(this, R.color.highlightColor);

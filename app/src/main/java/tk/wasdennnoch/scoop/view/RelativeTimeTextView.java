@@ -9,7 +9,8 @@ import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.TextView;
+
+import androidx.appcompat.widget.AppCompatTextView;
 
 import java.lang.ref.WeakReference;
 
@@ -21,7 +22,7 @@ import tk.wasdennnoch.scoop.R;
  * @author Kiran Rao
  * @see #setReferenceTime(long)
  */
-public class RelativeTimeTextView extends TextView {
+public class RelativeTimeTextView extends AppCompatTextView {
 
     private static final long INITIAL_UPDATE_INTERVAL = DateUtils.MINUTE_IN_MILLIS;
     private final Handler mHandler = new Handler();
@@ -48,7 +49,7 @@ public class RelativeTimeTextView extends TextView {
             a.recycle();
             try {
                 if (!TextUtils.isEmpty(text))
-                    mReferenceTime = Long.valueOf(text);
+                    mReferenceTime = Long.parseLong(text);
                 else
                     mReferenceTime = System.currentTimeMillis();
             } catch (NumberFormatException e) {

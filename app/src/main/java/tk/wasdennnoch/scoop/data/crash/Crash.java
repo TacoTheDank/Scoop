@@ -3,6 +3,8 @@ package tk.wasdennnoch.scoop.data.crash;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.NonNull;
+
 import com.afollestad.inquiry.annotations.Column;
 import com.afollestad.inquiry.annotations.Table;
 
@@ -89,6 +91,7 @@ public class Crash implements Parcelable {
         dest.writeList(hiddenIds);
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "Crash[" +

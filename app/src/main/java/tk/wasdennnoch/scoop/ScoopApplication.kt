@@ -28,9 +28,7 @@ class ScoopApplication : Application() {
         if (!xposedActive()) {
             val thread = HandlerThread("startCrashDetector")
             thread.start()
-            Handler(thread.looper).post {
-                startService()
-            }
+            Handler(thread.looper).post(this@ScoopApplication::startService)
         }
     }
 
