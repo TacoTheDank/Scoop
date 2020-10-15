@@ -43,7 +43,7 @@ public class CrashLoader {
                 ApplicationInfo info = manager.getApplicationInfo(packageName, 0);
                 icon = info.loadIcon(manager);
             } catch (PackageManager.NameNotFoundException n) {
-                icon = ContextCompat.getDrawable(context, R.drawable.ic_bug_vector);
+                icon = ContextCompat.getDrawable(context, R.drawable.ic_bug_report);
             }
             sIconCache.put(packageName, icon);
         }

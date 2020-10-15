@@ -9,7 +9,7 @@
         android:layout_width="@dimen/no_crash_icon_size"
         android:layout_height="@dimen/no_crash_icon_size"
         android:layout_gravity="center_horizontal"
-        app:srcCompat="@drawable/ic_bug_vector" />
+        app:srcCompat="@drawable/ic_bug_report" />
 
     <TextView
         android:layout_width="match_parent"

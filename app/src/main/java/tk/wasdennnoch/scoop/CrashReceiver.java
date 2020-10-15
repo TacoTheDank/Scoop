@@ -80,7 +80,7 @@ public class CrashReceiver extends BroadcastReceiver {
             PendingIntent clickPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "crashes")
-                    .setSmallIcon(R.drawable.ic_bug_notification)
+                    .setSmallIcon(R.drawable.ic_bug_report)
                     .setLargeIcon(drawableToBitmap(CrashLoader.getAppIcon(context, packageName)))
                     .setContentTitle(CrashLoader.getAppName(context, packageName, false))
                     .setContentText(description)
@@ -112,7 +112,7 @@ public class CrashReceiver extends BroadcastReceiver {
                         .setAction(XposedHook.INTENT_ACTION_COPY);
                 PendingIntent copyPendingIntent = PendingIntent.getBroadcast(context,
                         notificationId, copyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-                builder.addAction(new NotificationCompat.Action(R.drawable.ic_copy_notification,
+                builder.addAction(new NotificationCompat.Action(R.drawable.ic_content_copy,
                         context.getString(R.string.action_copy_short), copyPendingIntent));
 
                 Intent shareIntent = new Intent(context, ShareReceiver.class)
@@ -121,7 +121,7 @@ public class CrashReceiver extends BroadcastReceiver {
                         .setAction(XposedHook.INTENT_ACTION_SHARE);
                 PendingIntent sharePendingIntent = PendingIntent.getBroadcast(context,
                         notificationId, shareIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-                builder.addAction(new NotificationCompat.Action(R.drawable.ic_share_notification,
+                builder.addAction(new NotificationCompat.Action(R.drawable.ic_share,
                         context.getString(R.string.action_share), sharePendingIntent));
 
                 if (dogbinLink != null) {

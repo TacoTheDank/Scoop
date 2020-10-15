@@ -71,7 +71,7 @@ class DogbinUploadService : Service() {
 
         startForeground(
             101, NotificationCompat.Builder(this, "status")
-                .setSmallIcon(R.drawable.ic_bug_notification)
+                .setSmallIcon(R.drawable.ic_bug_report)
                 .setContentTitle(getString(R.string.dogbin_uploading))
                 .setColor(ContextCompat.getColor(this, R.color.colorAccent))
                 .setPriority(NotificationCompat.PRIORITY_MIN)

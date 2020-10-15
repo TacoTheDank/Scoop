@@ -29,7 +29,7 @@ open class IndicatorService : Service() {
 
         startForeground(
             100, NotificationCompat.Builder(this, "status")
-                .setSmallIcon(R.drawable.ic_bug_notification)
+                .setSmallIcon(R.drawable.ic_bug_report)
                 .setContentTitle(getString(R.string.scoop_running))
                 .setColor(ContextCompat.getColor(this, R.color.colorAccent))
                 .setShowWhen(false)
