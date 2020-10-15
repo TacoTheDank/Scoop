@@ -204,10 +204,10 @@ public class CrashAdapter extends RecyclerView.Adapter<CrashAdapter.CrashViewHol
 
         CrashViewHolder(View v) {
             super(v);
-            icon = (ImageView) v.findViewById(R.id.icon);
-            title = (TextView) v.findViewById(R.id.title);
-            time = (RelativeTimeTextView) v.findViewById(R.id.time);
-            crashText = (TextView) v.findViewById(R.id.crash);
+            icon = v.findViewById(R.id.icon);
+            title = v.findViewById(R.id.title);
+            time = v.findViewById(R.id.time);
+            crashText = v.findViewById(R.id.crash);
             normalBackground = v.getBackground();
         }
 

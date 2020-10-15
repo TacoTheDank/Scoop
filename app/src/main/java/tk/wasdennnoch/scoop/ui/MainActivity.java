@@ -120,9 +120,9 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
         setContentView(R.layout.activity_main);
         setSupportActionBar(mToolbar = findViewById(R.id.toolbar));
 
-        mList = (CrashRecyclerView) findViewById(R.id.list);
-        mLoading = (ProgressBar) findViewById(R.id.loading);
-        mNoItemsStub = (ViewStub) findViewById(R.id.noItemStub);
+        mList = findViewById(R.id.list);
+        mLoading = findViewById(R.id.loading);
+        mNoItemsStub = findViewById(R.id.noItemStub);
 
         mAdapter = new CrashAdapter(this, this);
         mList.setAdapter(mAdapter);
@@ -241,7 +241,7 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
                 mNoItems = mNoItemsStub.inflate();
                 // Need to do it that way because the devious face doesn't show
                 // up as text pre-LP for some reason (at least in my emulators)
-                TextView makeCrashTextView = (TextView) findViewById(R.id.makeCrash);
+                TextView makeCrashTextView = findViewById(R.id.makeCrash);
                 String makeCrashText = getResources().getString(R.string.make_crash_plain);
                 SpannableString spannable = new SpannableString(makeCrashText);
                 Drawable drawable = ContextCompat.getDrawable(this, R.drawable.ic_devious_face);

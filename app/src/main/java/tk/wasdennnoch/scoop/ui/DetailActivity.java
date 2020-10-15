@@ -19,7 +19,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
 import java.util.Locale;
@@ -45,16 +44,16 @@ public class DetailActivity extends AppCompatActivity implements SearchView.OnQu
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+        setSupportActionBar(findViewById(R.id.toolbar));
         //noinspection ConstantConditions
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mHighlightColor = ContextCompat.getColor(this, R.color.highlightColor);
         mCrash = getIntent().getParcelableExtra(EXTRA_CRASH);
         getSupportActionBar().setTitle(CrashLoader.getAppName(this, mCrash.packageName, true));
-        mCrashScroll = (MergedScrollView) findViewById(R.id.scroll);
-        mCrashEdit = (TextView) findViewById(R.id.crashEdit);
-        mCrashText = (TextView) findViewById(R.id.crash);
+        mCrashScroll = findViewById(R.id.scroll);
+        mCrashEdit = findViewById(R.id.crashEdit);
+        mCrashText = findViewById(R.id.crash);
         mCrashText.setText(mCrash.stackTrace);
         mCrashEdit.setText(mCrash.stackTrace);
         mCrashEdit.setTextSize(TypedValue.COMPLEX_UNIT_PX, mCrashText.getTextSize());

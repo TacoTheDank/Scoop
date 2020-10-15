@@ -626,7 +626,7 @@ public class MergedScrollView extends FrameLayout {
                 break;
             }
 
-            case MotionEvent.ACTION_DOWN: {
+            case MotionEvent.ACTION_DOWN:
                 final int x = (int) ev.getX();
                 final int y = (int) ev.getY();
                 if (!inChild(x, y)) {
@@ -654,7 +654,6 @@ public class MergedScrollView extends FrameLayout {
                 mScroller.computeScrollOffset();
                 mIsBeingDragged = !mScroller.isFinished();
                 break;
-            }
 
             case MotionEvent.ACTION_CANCEL:
             case MotionEvent.ACTION_UP:
@@ -663,12 +662,11 @@ public class MergedScrollView extends FrameLayout {
                 mActivePointerId = INVALID_POINTER;
                 recycleVelocityTracker();
                 break;
-            case MotionEvent.ACTION_POINTER_DOWN: {
+            case MotionEvent.ACTION_POINTER_DOWN:
                 final int index = ev.getActionIndex();
                 mLastMotionX = (int) ev.getX(index);
                 mActivePointerId = ev.getPointerId(index);
                 break;
-            }
             case MotionEvent.ACTION_POINTER_UP:
                 onSecondaryPointerUp(ev);
                 mLastMotionX = (int) ev.getX(ev.findPointerIndex(mActivePointerId));
@@ -690,7 +688,7 @@ public class MergedScrollView extends FrameLayout {
         final int action = ev.getAction();
 
         switch (action & MotionEvent.ACTION_MASK) {
-            case MotionEvent.ACTION_DOWN: {
+            case MotionEvent.ACTION_DOWN:
                 if (getChildCount() == 0) {
                     return false;
                 }
@@ -714,7 +712,6 @@ public class MergedScrollView extends FrameLayout {
                 mLastMotionY = (int) ev.getY();
                 mActivePointerId = ev.getPointerId(0);
                 break;
-            }
             case MotionEvent.ACTION_MOVE:
                 final int activePointerIndex = ev.findPointerIndex(mActivePointerId);
                 if (activePointerIndex == -1) {
@@ -854,7 +851,7 @@ public class MergedScrollView extends FrameLayout {
     public boolean onGenericMotionEvent(MotionEvent event) {
         if ((event.getSource() & InputDevice.SOURCE_CLASS_POINTER) != 0) {
             switch (event.getAction()) {
-                case MotionEvent.ACTION_SCROLL: {
+                case MotionEvent.ACTION_SCROLL:
                     if (!mIsBeingDragged) {
                         final float hscroll = event.getAxisValue(MotionEvent.AXIS_HSCROLL);
                         final float vscroll = event.getAxisValue(MotionEvent.AXIS_VSCROLL);
@@ -889,7 +886,6 @@ public class MergedScrollView extends FrameLayout {
                             }
                         }
                     }
-                }
             }
         }
         return super.onGenericMotionEvent(event);
@@ -1025,8 +1021,7 @@ public class MergedScrollView extends FrameLayout {
                     foundFullyContainedFocusable = viewIsFullyContained;
                 } else {
                     final boolean viewIsCloserToBoundary =
-                            (leftFocus && viewLeft < focusCandidate.getLeft()) ||
-                                    (!leftFocus && viewRight > focusCandidate.getRight());
+                            leftFocus ? viewLeft < focusCandidate.getLeft() : viewRight > focusCandidate.getRight();
 
                     if (foundFullyContainedFocusable) {
                         if (viewIsFullyContained && viewIsCloserToBoundary) {
@@ -1107,9 +1102,8 @@ public class MergedScrollView extends FrameLayout {
                     foundFullyContainedFocusable = viewIsFullyContained;
                 } else {
                     final boolean viewIsCloserToBoundary =
-                            (topFocus && viewTop < focusCandidate.getTop()) ||
-                                    (!topFocus && viewBottom > focusCandidate
-                                            .getBottom());
+                            topFocus ? viewTop < focusCandidate.getTop() : viewBottom > focusCandidate
+                                    .getBottom();
 
                     if (foundFullyContainedFocusable) {
                         if (viewIsFullyContained && viewIsCloserToBoundary) {
@@ -1966,7 +1960,7 @@ public class MergedScrollView extends FrameLayout {
         super.setOverScrollMode(mode);
     }
 
-    @SuppressWarnings({"SuspiciousNameCombination"})
+    @SuppressWarnings("SuspiciousNameCombination")
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);

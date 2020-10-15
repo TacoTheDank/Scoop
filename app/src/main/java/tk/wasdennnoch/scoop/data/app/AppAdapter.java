@@ -95,10 +95,10 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.ViewHolder> {
 
         ViewHolder(View itemView) {
             super(itemView);
-            appIcon = (ImageView) itemView.findViewById(R.id.appIcon);
-            appName = (TextView) itemView.findViewById(R.id.appName);
-            packageName = (TextView) itemView.findViewById(R.id.packageName);
-            check = (CheckBox) itemView.findViewById(R.id.check);
+            appIcon = itemView.findViewById(R.id.appIcon);
+            appName = itemView.findViewById(R.id.appName);
+            packageName = itemView.findViewById(R.id.packageName);
+            check = itemView.findViewById(R.id.check);
         }
 
         @Override

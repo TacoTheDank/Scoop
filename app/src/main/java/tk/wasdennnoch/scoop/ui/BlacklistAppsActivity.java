@@ -44,9 +44,9 @@ public class BlacklistAppsActivity extends AppCompatActivity implements SearchVi
 
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-        mList = (RecyclerView) findViewById(R.id.list);
+        mList = findViewById(R.id.list);
         mList.setLayoutManager(new LinearLayoutManager(this));
-        mLoading = (ProgressBar) findViewById(R.id.loading);
+        mLoading = findViewById(R.id.loading);
 
         if (savedInstanceState != null) {
             mIsLoading = savedInstanceState.getBoolean("mIsLoading");
