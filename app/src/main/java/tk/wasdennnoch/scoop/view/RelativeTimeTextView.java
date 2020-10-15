@@ -1,15 +1,15 @@
 package tk.wasdennnoch.scoop.view;
 
 import android.content.Context;
-import android.text.TextUtils;
-import android.util.AttributeSet;
-import android.widget.TextView;
 import android.content.res.TypedArray;
 import android.os.Handler;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
 import android.text.format.DateUtils;
+import android.util.AttributeSet;
 import android.view.View;
+import android.widget.TextView;
 
 import java.lang.ref.WeakReference;
 
@@ -166,8 +166,8 @@ public class RelativeTimeTextView extends TextView {
 
     private static class UpdateTimeRunnable implements Runnable {
 
-        private long mRefTime;
         private final WeakReference<RelativeTimeTextView> weakRefRttv;
+        private long mRefTime;
 
         UpdateTimeRunnable(RelativeTimeTextView rttv, long refTime) {
             this.mRefTime = refTime;
@@ -199,18 +199,6 @@ public class RelativeTimeTextView extends TextView {
 
     public static class SavedState extends BaseSavedState {
 
-        private long referenceTime;
-
-        SavedState(Parcelable superState) {
-            super(superState);
-        }
-
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {
-            super.writeToParcel(dest, flags);
-            dest.writeLong(referenceTime);
-        }
-
         public static final Parcelable.Creator<SavedState> CREATOR = new Parcelable.Creator<SavedState>() {
             public SavedState createFromParcel(Parcel in) {
                 return new SavedState(in);
@@ -220,10 +208,21 @@ public class RelativeTimeTextView extends TextView {
                 return new SavedState[size];
             }
         };
+        private long referenceTime;
+
+        SavedState(Parcelable superState) {
+            super(superState);
+        }
 
         private SavedState(Parcel in) {
             super(in);
             referenceTime = in.readLong();
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            super.writeToParcel(dest, flags);
+            dest.writeLong(referenceTime);
         }
     }
 

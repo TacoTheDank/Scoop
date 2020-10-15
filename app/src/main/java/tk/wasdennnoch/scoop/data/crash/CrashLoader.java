@@ -6,6 +6,10 @@ import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 
+import androidx.annotation.NonNull;
+import androidx.collection.ArrayMap;
+import androidx.core.content.ContextCompat;
+
 import com.afollestad.inquiry.Inquiry;
 
 import java.lang.ref.WeakReference;
@@ -17,9 +21,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
-import androidx.annotation.NonNull;
-import androidx.collection.ArrayMap;
-import androidx.core.content.ContextCompat;
 import tk.wasdennnoch.scoop.BuildConfig;
 import tk.wasdennnoch.scoop.R;
 import tk.wasdennnoch.scoop.ui.MainActivity;
@@ -33,6 +34,44 @@ public class CrashLoader {
     private boolean mCombineSameTrace;
     private boolean mCombineSameApps;
     private List<String> mBlacklist;
+
+    @NonNull
+    public static Drawable getAppIcon(Context context, String packageName) {
+        Drawable icon = sIconCache.get(packageName);
+        if (icon == null) {
+            PackageManager manager = context.getPackageManager();
+            try {
+                ApplicationInfo info = manager.getApplicationInfo(packageName, 0);
+                icon = info.loadIcon(manager);
+            } catch (PackageManager.NameNotFoundException n) {
+                icon = ContextCompat.getDrawable(context, R.drawable.ic_bug_vector);
+            }
+            sIconCache.put(packageName, icon);
+        }
+        return icon;
+    }
+
+    @NonNull
+    public static String getAppName(Context context, String packageName, boolean withNotInstalledInfo) {
+        String name = sNameCache.get(packageName);
+        boolean notInstalled = false;
+        if (name == null) {
+            PackageManager manager = context.getPackageManager();
+            try {
+                ApplicationInfo info = manager.getApplicationInfo(packageName, 0);
+                name = info.loadLabel(manager).toString();
+            } catch (PackageManager.NameNotFoundException n) {
+                name = packageName;
+                notInstalled = true;
+            }
+            sNameCache.put(packageName, notInstalled ? "!=!" + name : name); // Let's hope no app name starts with that
+        }
+        if (!notInstalled && name.startsWith("!=!")) {
+            name = name.substring(3);
+            notInstalled = true;
+        }
+        return withNotInstalledInfo && notInstalled ? context.getString(R.string.app_not_installed, name) : name;
+    }
 
     private long randomTime() {
         return (long) (System.currentTimeMillis() * Math.random());
@@ -188,44 +227,6 @@ public class CrashLoader {
             c.time = newestTime;
             c.displayCount = count;
         }
-    }
-
-    @NonNull
-    public static Drawable getAppIcon(Context context, String packageName) {
-        Drawable icon = sIconCache.get(packageName);
-        if (icon == null) {
-            PackageManager manager = context.getPackageManager();
-            try {
-                ApplicationInfo info = manager.getApplicationInfo(packageName, 0);
-                icon = info.loadIcon(manager);
-            } catch (PackageManager.NameNotFoundException n) {
-                icon = ContextCompat.getDrawable(context, R.drawable.ic_bug_vector);
-            }
-            sIconCache.put(packageName, icon);
-        }
-        return icon;
-    }
-
-    @NonNull
-    public static String getAppName(Context context, String packageName, boolean withNotInstalledInfo) {
-        String name = sNameCache.get(packageName);
-        boolean notInstalled = false;
-        if (name == null) {
-            PackageManager manager = context.getPackageManager();
-            try {
-                ApplicationInfo info = manager.getApplicationInfo(packageName, 0);
-                name = info.loadLabel(manager).toString();
-            } catch (PackageManager.NameNotFoundException n) {
-                name = packageName;
-                notInstalled = true;
-            }
-            sNameCache.put(packageName, notInstalled ? "!=!" + name : name); // Let's hope no app name starts with that
-        }
-        if (!notInstalled && name.startsWith("!=!")) {
-            name = name.substring(3);
-            notInstalled = true;
-        }
-        return withNotInstalledInfo && notInstalled ? context.getString(R.string.app_not_installed, name) : name;
     }
 
 }

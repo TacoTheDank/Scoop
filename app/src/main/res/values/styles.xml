@@ -33,6 +33,7 @@
     <style name="BaseTheme.ActionBar.Title" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
         <item name="fontFamily">@font/google_sans_medium</item>
     </style>
+
     <style name="BaseTheme.ActionBar" parent="BaseTheme">
         <item name="titleTextAppearance">@style/BaseTheme.ActionBar.Title</item>
     </style>

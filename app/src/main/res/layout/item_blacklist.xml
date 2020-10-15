@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?android:attr/selectableItemBackground"
@@ -11,36 +10,36 @@
     <ImageView
         android:id="@+id/appIcon"
         android:layout_width="48dp"
-        android:layout_height="48dp"/>
+        android:layout_height="48dp" />
 
     <TextView
         android:id="@+id/appName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_toEndOf="@id/appIcon"
-        android:layout_toLeftOf="@+id/check"
-        android:layout_toRightOf="@id/appIcon"
+        android:layout_marginEnd="8dp"
         android:layout_toStartOf="@+id/check"
+        android:layout_toLeftOf="@+id/check"
+        android:layout_toEndOf="@id/appIcon"
+        android:layout_toRightOf="@id/appIcon"
         android:maxLines="1"
         android:textColor="?android:textColorPrimary"
         android:textSize="20sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/packageName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/appName"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_toEndOf="@id/appIcon"
-        android:layout_toLeftOf="@+id/check"
-        android:layout_toRightOf="@id/appIcon"
+        android:layout_marginEnd="8dp"
         android:layout_toStartOf="@+id/check"
+        android:layout_toLeftOf="@+id/check"
+        android:layout_toEndOf="@id/appIcon"
+        android:layout_toRightOf="@id/appIcon"
         android:maxLines="1"
-        android:textColor="?android:textColorSecondary"/>
+        android:textColor="?android:textColorSecondary" />
 
     <CheckBox
         android:id="@+id/check"
@@ -49,6 +48,6 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:clickable="false"/>
+        android:clickable="false" />
 
 </RelativeLayout>

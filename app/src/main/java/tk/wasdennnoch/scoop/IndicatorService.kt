@@ -18,16 +18,24 @@ open class IndicatorService : Service() {
     }
 
     override fun onCreate() {
-        val stopPendingIntent = PendingIntent.getBroadcast(this, 0, Intent(this, StopReceiver::class.java), PendingIntent.FLAG_UPDATE_CURRENT)
-        val stopAction = NotificationCompat.Action(0, getString(R.string.action_kill), stopPendingIntent)
+        val stopPendingIntent = PendingIntent.getBroadcast(
+            this,
+            0,
+            Intent(this, StopReceiver::class.java),
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
+        val stopAction =
+            NotificationCompat.Action(0, getString(R.string.action_kill), stopPendingIntent)
 
-        startForeground(100, NotificationCompat.Builder(this, "status")
+        startForeground(
+            100, NotificationCompat.Builder(this, "status")
                 .setSmallIcon(R.drawable.ic_bug_notification)
                 .setContentTitle(getString(R.string.scoop_running))
                 .setColor(ContextCompat.getColor(this, R.color.colorAccent))
                 .setShowWhen(false)
                 .setPriority(NotificationCompat.PRIORITY_MIN)
                 .addAction(stopAction)
-                .build())
+                .build()
+        )
     }
 }

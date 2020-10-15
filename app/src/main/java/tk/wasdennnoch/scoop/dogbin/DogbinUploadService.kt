@@ -42,23 +42,25 @@ class DogbinUploadService : Service() {
         if (data == null) {
             stopSelf()
         } else {
-            DogbinUtils.upload(data.getStringExtra(XposedHook.INTENT_STACKTRACE), object : DogbinUtils.UploadResultCallback {
+            DogbinUtils.upload(
+                data.getStringExtra(XposedHook.INTENT_STACKTRACE),
+                object : DogbinUtils.UploadResultCallback {
 
-                override fun onSuccess(url: String) {
-                    data.putExtra(XposedHook.INTENT_DOGBIN_LINK, url)
-                    next()
-                }
+                    override fun onSuccess(url: String) {
+                        data.putExtra(XposedHook.INTENT_DOGBIN_LINK, url)
+                        next()
+                    }
 
-                override fun onFail(message: String, e: Exception) {
-                    data.putExtra(XposedHook.INTENT_UPLOAD_ERROR, true)
-                    next()
-                }
+                    override fun onFail(message: String, e: Exception) {
+                        data.putExtra(XposedHook.INTENT_UPLOAD_ERROR, true)
+                        next()
+                    }
 
-                private fun next() {
-                    sendBroadcast(data)
-                    uploadNext()
-                }
-            })
+                    private fun next() {
+                        sendBroadcast(data)
+                        uploadNext()
+                    }
+                })
         }
     }
 
@@ -67,11 +69,13 @@ class DogbinUploadService : Service() {
 
         Log.d("DUS", "onCreate")
 
-        startForeground(101, NotificationCompat.Builder(this, "status")
+        startForeground(
+            101, NotificationCompat.Builder(this, "status")
                 .setSmallIcon(R.drawable.ic_bug_notification)
                 .setContentTitle(getString(R.string.dogbin_uploading))
                 .setColor(ContextCompat.getColor(this, R.color.colorAccent))
                 .setPriority(NotificationCompat.PRIORITY_MIN)
-                .build())
+                .build()
+        )
     }
 }

@@ -2,8 +2,9 @@ package tk.wasdennnoch.scoop.ui;
 
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
-import androidx.appcompat.widget.Toolbar;
 import android.view.MenuItem;
+
+import androidx.appcompat.widget.Toolbar;
 
 import tk.wasdennnoch.scoop.R;
 import tk.wasdennnoch.scoop.ToolbarElevationHelper;

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -10,13 +9,13 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
-        android:theme="?actionBarTheme"
-        android:elevation="4dp"/>
+        android:elevation="4dp"
+        android:theme="?actionBarTheme" />
 
     <ViewStub
         android:id="@+id/cab_stub"
         android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"/>
+        android:layout_height="?actionBarSize" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -27,7 +26,7 @@
             android:id="@+id/list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="vertical"/>
+            android:scrollbars="vertical" />
 
         <me.zhanghai.android.materialprogressbar.MaterialProgressBar
             android:id="@+id/loading"
@@ -36,21 +35,21 @@
             android:layout_gravity="center"
             android:indeterminate="true"
             android:tint="@color/colorAccent"
-            app:mpb_progressStyle="circular"/>
+            app:mpb_progressStyle="circular" />
 
         <ViewStub
             android:id="@+id/noItemStub"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout="@layout/no_items"/>
+            android:layout="@layout/no_items" />
 
         <ViewStub
             android:id="@+id/noXposedStub"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout="@layout/no_xposed"/>
+            android:layout="@layout/no_xposed" />
 
     </FrameLayout>
 

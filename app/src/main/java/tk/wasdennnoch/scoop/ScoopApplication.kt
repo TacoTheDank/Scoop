@@ -66,11 +66,15 @@ class ScoopApplication : Application() {
     private fun isPermissionGranted(tryGranting: Boolean = true): Boolean {
         synchronized(permissionLock) {
             val permission = "android.permission.READ_LOGS"
-            val granted = ContextCompat.checkSelfPermission(this,
-                    permission) == PackageManager.PERMISSION_GRANTED
+            val granted = ContextCompat.checkSelfPermission(
+                this,
+                permission
+            ) == PackageManager.PERMISSION_GRANTED
             return if (!granted && tryGranting) {
-                Runtime.getRuntime().exec("su -c pm grant ${BuildConfig.APPLICATION_ID}" +
-                        " $permission").waitFor()
+                Runtime.getRuntime().exec(
+                    "su -c pm grant ${BuildConfig.APPLICATION_ID}" +
+                            " $permission"
+                ).waitFor()
                 isPermissionGranted(false)
             } else {
                 granted

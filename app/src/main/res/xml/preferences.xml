@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory
-        android:title="@string/settings_notif">
+    <PreferenceCategory android:title="@string/settings_notif">
 
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="show_notification"
             android:title="@string/settings_show_notif"
-            android:widgetLayout="@layout/preference_switch_layout"/>
+            android:widgetLayout="@layout/preference_switch_layout" />
 
         <CheckBoxPreference
             android:defaultValue="true"
@@ -17,7 +15,7 @@
             android:key="show_action_buttons"
             android:summary="@string/settings_action_buttons_summary"
             android:title="@string/settings_action_buttons"
-            android:widgetLayout="@layout/preference_switch_layout"/>
+            android:widgetLayout="@layout/preference_switch_layout" />
 
         <CheckBoxPreference
             android:defaultValue="false"
@@ -25,80 +23,76 @@
             android:key="show_stack_trace_notif"
             android:summary="@string/settings_show_stack_trace_summary"
             android:title="@string/settings_show_stack_trace"
-            android:widgetLayout="@layout/preference_switch_layout"/>
+            android:widgetLayout="@layout/preference_switch_layout" />
 
     </PreferenceCategory>
 
 
-    <PreferenceCategory
-        android:title="@string/settings_overview">
+    <PreferenceCategory android:title="@string/settings_overview">
 
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="combine_same_apps"
             android:summary="@string/settings_combime_same_apps_summary"
             android:title="@string/settings_combime_same_apps"
-            android:widgetLayout="@layout/preference_switch_layout"/>
+            android:widgetLayout="@layout/preference_switch_layout" />
 
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="combine_same_stack_trace"
             android:summary="@string/settings_combime_same_trace_summary"
             android:title="@string/settings_combime_same_trace"
-            android:widgetLayout="@layout/preference_switch_layout"/>
+            android:widgetLayout="@layout/preference_switch_layout" />
 
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="search_package_name"
             android:summary="@string/settings_search_pkg_summary"
             android:title="@string/settings_search_pkg"
-            android:widgetLayout="@layout/preference_switch_layout"/>
+            android:widgetLayout="@layout/preference_switch_layout" />
 
         <Preference
             android:summary="@string/settings_blacklisted_apps_summary"
             android:title="@string/settings_blacklisted_apps">
             <intent
                 android:targetClass="tk.wasdennnoch.scoop.ui.BlacklistAppsActivity"
-                android:targetPackage="@string/application_id"/>
+                android:targetPackage="@string/application_id" />
         </Preference>
 
     </PreferenceCategory>
 
 
-    <PreferenceCategory
-        android:title="@string/settings_detail_view">
+    <PreferenceCategory android:title="@string/settings_detail_view">
 
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="auto_wrap"
             android:summary="@string/settings_auto_wrap_summary"
             android:title="@string/settings_auto_wrap"
-            android:widgetLayout="@layout/preference_switch_layout"/>
+            android:widgetLayout="@layout/preference_switch_layout" />
 
     </PreferenceCategory>
 
 
-    <PreferenceCategory
-        android:title="@string/settings_misc">
+    <PreferenceCategory android:title="@string/settings_misc">
 
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="ignore_threaddeath"
             android:summary="@string/settings_ignore_threaddeath_summary"
             android:title="@string/settings_ignore_threaddeath"
-            android:widgetLayout="@layout/preference_switch_layout"/>
+            android:widgetLayout="@layout/preference_switch_layout" />
 
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="force_english"
             android:title="@string/settings_force_eng"
-            android:widgetLayout="@layout/preference_switch_layout"/>
+            android:widgetLayout="@layout/preference_switch_layout" />
 
-        <Preference
-            android:title="@string/settings_about">
+        <Preference android:title="@string/settings_about">
             <intent
                 android:targetClass="tk.wasdennnoch.scoop.ui.AboutActivity"
-                android:targetPackage="@string/application_id"/>
+                android:targetPackage="@string/application_id" />
         </Preference>
 
     </PreferenceCategory>

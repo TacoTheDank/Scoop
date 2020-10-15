@@ -4,18 +4,18 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.os.Build;
-import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
-import androidx.appcompat.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewPropertyAnimator;
 import android.view.animation.Interpolator;
 
+import androidx.appcompat.widget.Toolbar;
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
+
 public class AnimationUtils {
 
-    private static final Interpolator FAST_OUT_SLOW_IN = new FastOutSlowInInterpolator();
-
     public static final int ANIM_DURATION_DEFAULT = 400;
+    private static final Interpolator FAST_OUT_SLOW_IN = new FastOutSlowInInterpolator();
 
     public static void slideToolbar(Toolbar t, boolean out, int duration) {
         slideToolbar(t, out, duration, false, null);

@@ -18,12 +18,12 @@
 package tk.wasdennnoch.scoop.view
 
 import android.content.Context
-import androidx.appcompat.widget.AppCompatTextView
-import androidx.appcompat.widget.Toolbar
 import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.appcompat.widget.Toolbar
 import tk.wasdennnoch.scoop.R
 
 /*
@@ -43,7 +43,7 @@ import tk.wasdennnoch.scoop.R
  */
 
 class CenteredToolbar @JvmOverloads constructor(
-        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = R.attr.toolbarStyle
+    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = R.attr.toolbarStyle
 ) : Toolbar(context, attrs, defStyleAttr) {
 
     private var mTitleTextView: AppCompatTextView? = null

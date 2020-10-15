@@ -18,6 +18,15 @@ import android.view.ViewStub;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
+import androidx.core.view.MenuItemCompat;
+
 import com.afollestad.inquiry.Inquiry;
 import com.afollestad.materialcab.MaterialCab;
 import com.afollestad.materialdialogs.DialogAction;
@@ -27,14 +36,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
-import androidx.core.view.MenuItemCompat;
 import tk.wasdennnoch.scoop.CrashReceiver;
 import tk.wasdennnoch.scoop.R;
 import tk.wasdennnoch.scoop.ScoopApplication;
@@ -76,10 +77,34 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
     private boolean mCheckPending = true;
     private boolean mIsAvailable = true;
     private boolean mWasLoading = false;
-
+    private final Runnable mUpdateCheckerRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if (sUpdateRequired) {
+                sUpdateRequired = false;
+                if (mCombineApps)
+                    return; // It doesn't look right when there's suddenly a single crash of a different app in the list
+                if (sVisible && sNewCrash != null) {
+                    mAdapter.addCrash(sNewCrash);
+                    updateViewStates(false);
+                    sNewCrash = null;
+                } else {
+                    loadData();
+                }
+            }
+            mHandler.postDelayed(mUpdateCheckerRunnable, UPDATE_DELAY);
+        }
+    };
     private Toolbar mToolbar;
     private int mToolbarElevation;
     private boolean mWasElevated;
+
+    public static void requestUpdate(Crash newCrash) {
+        sUpdateRequired = true;
+        if (sVisible) {
+            sNewCrash = newCrash;
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -409,32 +434,6 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
         }
         return super.onOptionsItemSelected(item);
     }
-
-    public static void requestUpdate(Crash newCrash) {
-        sUpdateRequired = true;
-        if (sVisible) {
-            sNewCrash = newCrash;
-        }
-    }
-
-    private final Runnable mUpdateCheckerRunnable = new Runnable() {
-        @Override
-        public void run() {
-            if (sUpdateRequired) {
-                sUpdateRequired = false;
-                if (mCombineApps)
-                    return; // It doesn't look right when there's suddenly a single crash of a different app in the list
-                if (sVisible && sNewCrash != null) {
-                    mAdapter.addCrash(sNewCrash);
-                    updateViewStates(false);
-                    sNewCrash = null;
-                } else {
-                    loadData();
-                }
-            }
-            mHandler.postDelayed(mUpdateCheckerRunnable, UPDATE_DELAY);
-        }
-    };
 
     class AvailabilityCheck extends AsyncTask<Void, Void, Boolean> {
 

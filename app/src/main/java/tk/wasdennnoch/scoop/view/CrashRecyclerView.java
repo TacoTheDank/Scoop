@@ -1,10 +1,11 @@
 package tk.wasdennnoch.scoop.view;
 
 import android.content.Context;
+import android.util.AttributeSet;
+
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import android.util.AttributeSet;
 
 public class CrashRecyclerView extends RecyclerView {
 

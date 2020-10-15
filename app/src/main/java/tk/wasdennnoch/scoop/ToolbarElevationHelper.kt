@@ -3,8 +3,10 @@ package tk.wasdennnoch.scoop
 import android.os.Build
 import android.view.View
 
-class ToolbarElevationHelper @JvmOverloads constructor(scrollingView: View, private val targetView: View,
-                             private val targetElevation: Float = targetView.elevation) {
+class ToolbarElevationHelper @JvmOverloads constructor(
+    scrollingView: View, private val targetView: View,
+    private val targetElevation: Float = targetView.elevation
+) {
 
     private var elevated = false
         set(value) {

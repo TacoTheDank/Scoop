@@ -59,11 +59,11 @@ abstract class CrashDetector : ICrashDetector.Stub() {
         if (lines.size < 2) return lastLine
         val packageName = processInfoPattern.find(lines[0])?.groupValues?.get(1) ?: return lastLine
         val intent = Intent(INTENT_ACTION)
-                .setClassName(BuildConfig.APPLICATION_ID, CrashReceiver::class.java.name)
-                .putExtra(INTENT_PACKAGE_NAME, packageName)
-                .putExtra(INTENT_TIME, System.currentTimeMillis())
-                .putExtra(INTENT_DESCRIPTION, lines.subList(1, foundTraceAt).joinToString("\n"))
-                .putExtra(INTENT_STACKTRACE, "$firstLine\n" + lines.joinToString("\n"))
+            .setClassName(BuildConfig.APPLICATION_ID, CrashReceiver::class.java.name)
+            .putExtra(INTENT_PACKAGE_NAME, packageName)
+            .putExtra(INTENT_TIME, System.currentTimeMillis())
+            .putExtra(INTENT_DESCRIPTION, lines.subList(1, foundTraceAt).joinToString("\n"))
+            .putExtra(INTENT_STACKTRACE, "$firstLine\n" + lines.joinToString("\n"))
         sendBroadcast(intent)
         return lastLine
     }
@@ -76,10 +76,15 @@ abstract class CrashDetector : ICrashDetector.Stub() {
 
     companion object {
 
-        private val beginPattern = Regex("[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3}( )+[0-9]+( )+[0-9]+( )+E AndroidRuntime: (.)*")
-        private val arPattern = Regex("[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3}( )+[0-9]+( )+[0-9]+( )+E AndroidRuntime: ")
-        private val fePattern = Regex("[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3}( )+[0-9]+( )+[0-9]+( )+E AndroidRuntime: FATAL EXCEPTION: (?:.)*")
-        private val linePattern = Regex("[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3}( )+[0-9]+( )+[0-9]+( )+E AndroidRuntime: \tat(.)*")
-        private val processInfoPattern = Regex("Process: ([a-z][a-z0-9_]*(?:\\.[a-z0-9_]+)+[0-9a-z_]), PID: ([0-9]+)")
+        private val beginPattern =
+            Regex("[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3}( )+[0-9]+( )+[0-9]+( )+E AndroidRuntime: (.)*")
+        private val arPattern =
+            Regex("[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3}( )+[0-9]+( )+[0-9]+( )+E AndroidRuntime: ")
+        private val fePattern =
+            Regex("[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3}( )+[0-9]+( )+[0-9]+( )+E AndroidRuntime: FATAL EXCEPTION: (?:.)*")
+        private val linePattern =
+            Regex("[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3}( )+[0-9]+( )+[0-9]+( )+E AndroidRuntime: \tat(.)*")
+        private val processInfoPattern =
+            Regex("Process: ([a-z][a-z0-9_]*(?:\\.[a-z0-9_]+)+[0-9a-z_]), PID: ([0-9]+)")
     }
 }

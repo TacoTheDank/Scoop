@@ -16,10 +16,9 @@
 
 package tk.wasdennnoch.scoop.dogbin;
 
-import android.util.JsonReader;
 import android.os.Handler;
 import android.os.HandlerThread;
-
+import android.util.JsonReader;
 
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -42,7 +41,7 @@ public final class DogbinUtils {
     /**
      * Uploads {@code content} to dogbin
      *
-     * @param content the content to upload to dogbin
+     * @param content  the content to upload to dogbin
      * @param callback the callback to call on success / failure
      */
     public static void upload(final String content, final UploadResultCallback callback) {

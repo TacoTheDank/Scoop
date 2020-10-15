@@ -13,6 +13,34 @@ import java.util.List;
 @Table
 public class Crash implements Parcelable {
 
+    public static final Creator<Crash> CREATOR = new Creator<Crash>() {
+        @Override
+        public Crash createFromParcel(Parcel in) {
+            return new Crash(in);
+        }
+
+        @Override
+        public Crash[] newArray(int size) {
+            return new Crash[size];
+        }
+    };
+    @Column(name = "_id", primaryKey = true, notNull = true, autoIncrement = true)
+    public long id;
+    @Column
+    public long time;
+    @Column
+    public String packageName;
+    @Column
+    public String description;
+    @Column
+    public String stackTrace;
+    // Adapter states
+    public int count = 1;
+    public int displayCount = 1;
+    public boolean selected = false;
+    public List<Crash> children;
+    public List<Long> hiddenIds;
+
     @SuppressWarnings("unused")
     public Crash() {
         // Required for Inquiry
@@ -24,24 +52,6 @@ public class Crash implements Parcelable {
         this.description = description;
         this.stackTrace = stackTrace;
     }
-
-    @Column(name = "_id", primaryKey = true, notNull = true, autoIncrement = true)
-    public long id;
-    @Column
-    public long time;
-    @Column
-    public String packageName;
-    @Column
-    public String description;
-    @Column
-    public String stackTrace;
-
-    // Adapter states
-    public int count = 1;
-    public int displayCount = 1;
-    public boolean selected = false;
-    public List<Crash> children;
-    public List<Long> hiddenIds;
 
     private Crash(Parcel in) {
         id = in.readLong();
@@ -59,18 +69,6 @@ public class Crash implements Parcelable {
         in.readList(hiddenIds, Long.class.getClassLoader());
         if (hiddenIds.isEmpty()) hiddenIds = null;
     }
-
-    public static final Creator<Crash> CREATOR = new Creator<Crash>() {
-        @Override
-        public Crash createFromParcel(Parcel in) {
-            return new Crash(in);
-        }
-
-        @Override
-        public Crash[] newArray(int size) {
-            return new Crash[size];
-        }
-    };
 
     @Override
     public int describeContents() {

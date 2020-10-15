@@ -1,14 +1,11 @@
 package tk.wasdennnoch.scoop.view;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
-import androidx.core.view.ViewCompat;
-import androidx.core.widget.EdgeEffectCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
@@ -28,6 +25,9 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.OverScroller;
 import android.widget.TextView;
+
+import androidx.core.view.ViewCompat;
+import androidx.core.widget.EdgeEffectCompat;
 
 import java.util.List;
 
@@ -60,86 +60,71 @@ public class MergedScrollView extends FrameLayout {
     static final float MAX_SCROLL_FACTOR = 0.5f;
 
     private static final String TAG = "MergedScrollView";
-
-    private long mLastScroll;
-
+    /**
+     * Sentinel value for no current active pointer.
+     * Used by {@link #mActivePointerId}.
+     */
+    private static final int INVALID_POINTER = -1;
+    /**
+     * Always return a size of 0 for MeasureSpec values with a mode of UNSPECIFIED
+     */
+    static boolean sUseZeroUnspecifiedMeasureSpec = false;
+    /**
+     * Signals that compatibility booleans have been initialized according to
+     * target SDK versions.
+     */
+    private static boolean sCompatibilityDone = false;
     private final Rect mTempRect = new Rect();
+    private long mLastScroll;
     private OverScroller mScroller;
     private EdgeEffectCompat mEdgeGlowTop;
     private EdgeEffectCompat mEdgeGlowBottom;
     private EdgeEffectCompat mEdgeGlowLeft;
     private EdgeEffectCompat mEdgeGlowRight;
-
     /**
      * Position of the last motion event.
      */
     private int mLastMotionY;
     private int mLastMotionX;
-
     /**
      * True when the layout has changed but the traversal has not come through yet.
      * Ideally the view hierarchy would keep track of this for us.
      */
     private boolean mIsLayoutDirty = true;
-
     /**
      * The child to give focus to in the event that a child has requested focus while the
      * layout is dirty. This prevents the scroll from being wrong if the child has not been
      * laid out before requesting focus.
      */
     private View mChildToScrollTo = null;
-
     /**
      * True if the user is currently dragging this MergedScrollView around. This is
      * not the same as 'is being flinged', which can be checked by
      * mScroller.isFinished() (flinging begins when the user lifts his finger).
      */
     private boolean mIsBeingDragged = false;
-
     /**
      * Determines speed during touch scrolling
      */
     private VelocityTracker mVelocityTracker;
-
     /**
      * When set to true, the scroll view measure its child to make it fill the currently
      * visible area.
      */
     @ViewDebug.ExportedProperty(category = "layout")
     private boolean mFillViewport;
-
     /**
      * Whether arrow scrolling is animated.
      */
     private boolean mSmoothScrollingEnabled = true;
-
     private int mTouchSlop;
     private int mMinimumVelocity;
     private int mMaximumVelocity;
-
     /**
      * ID of the active pointer. This is used to retain consistency during
      * drags/flings if multiple pointers are used.
      */
     private int mActivePointerId = INVALID_POINTER;
-
-    /**
-     * Sentinel value for no current active pointer.
-     * Used by {@link #mActivePointerId}.
-     */
-    private static final int INVALID_POINTER = -1;
-
-    /**
-     * Signals that compatibility booleans have been initialized according to
-     * target SDK versions.
-     */
-    private static boolean sCompatibilityDone = false;
-
-    /**
-     * Always return a size of 0 for MeasureSpec values with a mode of UNSPECIFIED
-     */
-    static boolean sUseZeroUnspecifiedMeasureSpec = false;
-
     /**
      * Vertical scroll factor cached by {@link #getVerticalScrollFactor}.
      */
@@ -170,6 +155,59 @@ public class MergedScrollView extends FrameLayout {
     public MergedScrollView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initScrollView();
+    }
+
+    /**
+     * Like {@link MeasureSpec#makeMeasureSpec(int, int)}, but any spec with a mode of UNSPECIFIED
+     * will automatically get a size of 0. Older apps expect this.
+     */
+    public static int makeSafeMeasureSpec(int size, int mode) {
+        if (sUseZeroUnspecifiedMeasureSpec && mode == MeasureSpec.UNSPECIFIED) {
+            return 0;
+        }
+        return MeasureSpec.makeMeasureSpec(size, mode);
+    }
+
+    /**
+     * Return true if child is a descendant of parent, (or equal to the parent).
+     */
+    private static boolean isViewDescendantOf(View child, View parent) {
+        if (child == parent) {
+            return true;
+        }
+
+        final ViewParent theParent = child.getParent();
+        return (theParent instanceof ViewGroup) && isViewDescendantOf((View) theParent, parent);
+    }
+
+    private static int clamp(int n, int my, int child) {
+        if (my >= child || n < 0) {
+            /* my >= child is this case:
+             *                    |--------------- me ---------------|
+             *     |------ child ------|
+             * or
+             *     |--------------- me ---------------|
+             *            |------ child ------|
+             * or
+             *     |--------------- me ---------------|
+             *                                  |------ child ------|
+             *
+             * n < 0 is this case:
+             *     |------ me ------|
+             *                    |-------- child --------|
+             *     |-- mScrollX --|
+             */
+            return 0;
+        }
+        if ((my + n) > child) {
+            /* this case:
+             *                    |------ me ------|
+             *     |------ child ------|
+             *     |-- mScrollX --|
+             */
+            return child - my;
+        }
+        return n;
     }
 
     @Override
@@ -239,7 +277,7 @@ public class MergedScrollView extends FrameLayout {
 
     /**
      * @return The maximum amount this scroll view will scroll in response to
-     *   an arrow event.
+     * an arrow event.
      */
     //public int getMaxScrollAmount() {
     //    return (int) (MAX_SCROLL_FACTOR * (getBottom() - getTop()));
@@ -247,10 +285,10 @@ public class MergedScrollView extends FrameLayout {
     public int getMaxScrollAmountVertical() {
         return (int) (MAX_SCROLL_FACTOR * getHeight());
     }
+
     public int getMaxScrollAmountHorizontal() {
         return (int) (MAX_SCROLL_FACTOR * getWidth());
     }
-
 
     private void initScrollView() {
         mScroller = new OverScroller(getContext());
@@ -317,7 +355,6 @@ public class MergedScrollView extends FrameLayout {
      * Indicates whether this MergedScrollView's content is stretched to fill the viewport.
      *
      * @return True if the content fills the viewport, false otherwise.
-     *
      * @attr ref android.R.styleable#ScrollView_fillViewport
      */
     public boolean isFillViewport() {
@@ -329,8 +366,7 @@ public class MergedScrollView extends FrameLayout {
      * the viewport or not.
      *
      * @param fillViewport True to stretch the content's height to the viewport's
-     *        boundaries, false otherwise.
-     *
+     *                     boundaries, false otherwise.
      * @attr ref android.R.styleable#ScrollView_fillViewport
      */
     public void setFillViewport(boolean fillViewport) {
@@ -349,6 +385,7 @@ public class MergedScrollView extends FrameLayout {
 
     /**
      * Set whether arrow scrolling will animate its transition.
+     *
      * @param smoothScrollingEnabled whether arrow scrolling will animate its transition
      */
     public void setSmoothScrollingEnabled(boolean smoothScrollingEnabled) {
@@ -520,7 +557,6 @@ public class MergedScrollView extends FrameLayout {
         super.requestDisallowInterceptTouchEvent(disallowIntercept);
     }
 
-
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
         /*
@@ -530,10 +566,10 @@ public class MergedScrollView extends FrameLayout {
          */
 
         /*
-        * Shortcut the most recurring case: the user is in the dragging
-        * state and he is moving his finger.  We want to intercept this
-        * motion.
-        */
+         * Shortcut the most recurring case: the user is in the dragging
+         * state and he is moving his finger.  We want to intercept this
+         * motion.
+         */
         final int action = ev.getAction();
         if ((action == MotionEvent.ACTION_MOVE) && (mIsBeingDragged)) {
             return true;
@@ -558,9 +594,9 @@ public class MergedScrollView extends FrameLayout {
                  */
 
                 /*
-                * Locally do absolute value. mLastMotionX/Y is set to the x/y value
-                * of the down event.
-                */
+                 * Locally do absolute value. mLastMotionX/Y is set to the x/y value
+                 * of the down event.
+                 */
                 final int activePointerId = mActivePointerId;
                 if (activePointerId == INVALID_POINTER) {
                     // If we don't have a valid id, the touch down wasn't on content.
@@ -616,7 +652,7 @@ public class MergedScrollView extends FrameLayout {
                  * otherwise don't. mScroller.isFinished should be false when
                  * being flinged. We need to call computeScrollOffset() first so that
                  * isFinished() is correct.
-                */
+                 */
                 mScroller.computeScrollOffset();
                 mIsBeingDragged = !mScroller.isFinished();
                 break;
@@ -642,9 +678,9 @@ public class MergedScrollView extends FrameLayout {
         }
 
         /*
-        * The only time we want to intercept motion events is if we are in the
-        * drag mode.
-        */
+         * The only time we want to intercept motion events is if we are in the
+         * drag mode.
+         */
         return mIsBeingDragged;
     }
 
@@ -864,6 +900,7 @@ public class MergedScrollView extends FrameLayout {
     /**
      * Gets a scale factor that determines the distance the view should scroll
      * vertically in response to {@link MotionEvent#ACTION_SCROLL}.
+     *
      * @return The vertical scroll scale factor.
      * @hide
      */
@@ -884,6 +921,7 @@ public class MergedScrollView extends FrameLayout {
     /**
      * Gets a scale factor that determines the distance the view should scroll
      * horizontally in response to {@link MotionEvent#ACTION_SCROLL}.
+     *
      * @return The horizontal scroll scale factor.
      * @hide
      */
@@ -934,7 +972,7 @@ public class MergedScrollView extends FrameLayout {
     }
 
     private View findFocusableViewInMyBoundsHorizontal(final boolean leftFocus,
-                                             final int left, View preferredFocusable) {
+                                                       final int left, View preferredFocusable) {
         /*
          * The fading edge's transparent side should be considered for focus
          * since it's mostly visible, so we divide the actual fading edge length
@@ -1034,7 +1072,7 @@ public class MergedScrollView extends FrameLayout {
      * @param bottom   the bottom offset of the bounds in which a focusable must
      *                 be found
      * @return the next focusable component in the bounds or null if none can
-     *         be found
+     * be found
      */
     private View findFocusableViewInBoundsVertical(boolean topFocus, int top, int bottom) {
 
@@ -1112,8 +1150,8 @@ public class MergedScrollView extends FrameLayout {
      * focus.</p>
      *
      * @param directionY the scroll direction: {@link android.view.View#FOCUS_UP}
-     *                  to go one page up or
-     *                  {@link android.view.View#FOCUS_DOWN} to go one page down
+     *                   to go one page up or
+     *                   {@link android.view.View#FOCUS_DOWN} to go one page down
      * @return true if the key event is consumed by this method, false otherwise
      */
     public boolean pageScroll(int directionX, int directionY) {
@@ -1166,8 +1204,8 @@ public class MergedScrollView extends FrameLayout {
      * focus.</p>
      *
      * @param directionY the scroll direction: {@link android.view.View#FOCUS_UP}
-     *                  to go the top of the view or
-     *                  {@link android.view.View#FOCUS_DOWN} to go the bottom
+     *                   to go the top of the view or
+     *                   {@link android.view.View#FOCUS_DOWN} to go the bottom
      * @return true if the key event is consumed by this method, false otherwise
      */
     public boolean fullScroll(int directionX, int directionY) {
@@ -1210,8 +1248,8 @@ public class MergedScrollView extends FrameLayout {
      * the new visible area, the focus is reclaimed by this MergedScrollView.</p>
      *
      * @param directionY the scroll direction: {@link android.view.View#FOCUS_UP}
-     *                  to go upward, {@link android.view.View#FOCUS_DOWN} to downward
-     * @param bounds       the bounds (offset) of the new area to be made visible
+     *                   to go upward, {@link android.view.View#FOCUS_DOWN} to downward
+     * @param bounds     the bounds (offset) of the new area to be made visible
      * @return true if the key event is consumed by this method, false otherwise
      */
     private boolean scrollAndFocus(int directionX, int directionY, Rect bounds) {
@@ -1234,7 +1272,8 @@ public class MergedScrollView extends FrameLayout {
         View newFocusedV = findFocusableViewInBoundsVertical(up, top, bottom);
         if (newFocusedH == null) {
             newFocusedH = this;
-        }if (newFocusedV == null) {
+        }
+        if (newFocusedV == null) {
             newFocusedV = this;
         }
 
@@ -1332,7 +1371,7 @@ public class MergedScrollView extends FrameLayout {
 
     /**
      * @return whether the descendant of this scroll view is scrolled off
-     *  screen.
+     * screen.
      */
     private boolean isOffScreen(View descendant) {
         return !isWithinDeltaOfScreen(descendant, 0, getHeight());
@@ -1340,7 +1379,7 @@ public class MergedScrollView extends FrameLayout {
 
     /**
      * @return whether the descendant of this scroll view is within delta
-     *  pixels of being on the screen.
+     * pixels of being on the screen.
      */
     private boolean isWithinDeltaOfScreen(View descendant, int delta, int height) {
         descendant.getDrawingRect(mTempRect);
@@ -1482,18 +1521,6 @@ public class MergedScrollView extends FrameLayout {
         child.measure(childWidthMeasureSpec, childHeightMeasureSpec);
     }
 
-
-    /**
-     * Like {@link MeasureSpec#makeMeasureSpec(int, int)}, but any spec with a mode of UNSPECIFIED
-     * will automatically get a size of 0. Older apps expect this.
-     */
-    public static int makeSafeMeasureSpec(int size, int mode) {
-        if (sUseZeroUnspecifiedMeasureSpec && mode == MeasureSpec.UNSPECIFIED) {
-            return 0;
-        }
-        return MeasureSpec.makeMeasureSpec(size, mode);
-    }
-
     @Override
     protected void measureChildWithMargins(View child, int parentWidthMeasureSpec, int widthUsed,
                                            int parentHeightMeasureSpec, int heightUsed) {
@@ -1580,7 +1607,7 @@ public class MergedScrollView extends FrameLayout {
         int scrollDeltaX = computeScrollDeltaToGetChildRectOnScreenX(mTempRect);
         int scrollDeltaY = computeScrollDeltaToGetChildRectOnScreenY(mTempRect);
 
-        if (scrollDeltaX != 0 ||scrollDeltaY != 0) {
+        if (scrollDeltaX != 0 || scrollDeltaY != 0) {
             scrollBy(scrollDeltaX, scrollDeltaY);
         }
     }
@@ -1750,11 +1777,10 @@ public class MergedScrollView extends FrameLayout {
         super.requestChildFocus(child, focused);
     }
 
-
     /**
      * When looking for focus in children of a scroll view, need to be a little
      * more careful not to give focus to something that is scrolled off screen.
-     *
+     * <p>
      * This is more expensive than the default {@link android.view.ViewGroup}
      * implementation, otherwise this behavior might have been made the default.
      */
@@ -1866,18 +1892,6 @@ public class MergedScrollView extends FrameLayout {
             int scrollDeltaY = computeScrollDeltaToGetChildRectOnScreenY(mTempRect);
             doScroll(scrollDeltaX, scrollDeltaY);
         }
-    }
-
-    /**
-     * Return true if child is a descendant of parent, (or equal to the parent).
-     */
-    private static boolean isViewDescendantOf(View child, View parent) {
-        if (child == parent) {
-            return true;
-        }
-
-        final ViewParent theParent = child.getParent();
-        return (theParent instanceof ViewGroup) && isViewDescendantOf((View) theParent, parent);
     }
 
     /**
@@ -2040,36 +2054,6 @@ public class MergedScrollView extends FrameLayout {
         }
     }
 
-    private static int clamp(int n, int my, int child) {
-        if (my >= child || n < 0) {
-            /* my >= child is this case:
-             *                    |--------------- me ---------------|
-             *     |------ child ------|
-             * or
-             *     |--------------- me ---------------|
-             *            |------ child ------|
-             * or
-             *     |--------------- me ---------------|
-             *                                  |------ child ------|
-             *
-             * n < 0 is this case:
-             *     |------ me ------|
-             *                    |-------- child --------|
-             *     |-- mScrollX --|
-             */
-            return 0;
-        }
-        if ((my+n) > child) {
-            /* this case:
-             *                    |------ me ------|
-             *     |------ child ------|
-             *     |-- mScrollX --|
-             */
-            return child-my;
-        }
-        return n;
-    }
-
     @Override
     protected void onRestoreInstanceState(Parcelable state) {
         if (getContext().getApplicationInfo().targetSdkVersion <= Build.VERSION_CODES.JELLY_BEAN_MR2) {
@@ -2099,6 +2083,16 @@ public class MergedScrollView extends FrameLayout {
     }
 
     private static class SavedState extends BaseSavedState {
+        public static final Parcelable.Creator<SavedState> CREATOR
+                = new Parcelable.Creator<SavedState>() {
+            public SavedState createFromParcel(Parcel in) {
+                return new SavedState(in);
+            }
+
+            public SavedState[] newArray(int size) {
+                return new SavedState[size];
+            }
+        };
         int scrollOffsetFromStart;
         int scrollPositionY;
 
@@ -2126,17 +2120,6 @@ public class MergedScrollView extends FrameLayout {
                     + " scrollPositionX=" + scrollOffsetFromStart + "}"
                     + " scrollPositionY=" + scrollPositionY + "}";
         }
-
-        public static final Parcelable.Creator<SavedState> CREATOR
-                = new Parcelable.Creator<SavedState>() {
-            public SavedState createFromParcel(Parcel in) {
-                return new SavedState(in);
-            }
-
-            public SavedState[] newArray(int size) {
-                return new SavedState[size];
-            }
-        };
     }
 
 }

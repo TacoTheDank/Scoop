@@ -4,16 +4,16 @@ import android.graphics.drawable.Drawable;
 
 public class App {
 
+    Drawable icon;
+    String name;
+    String packageName;
+    boolean selected;
+
     App(Drawable icon, String name, String packageName) {
         this.icon = icon;
         this.name = name;
         this.packageName = packageName;
     }
-
-    Drawable icon;
-    String name;
-    String packageName;
-    boolean selected;
 
     @Override
     public String toString() {
