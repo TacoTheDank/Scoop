@@ -20,6 +20,7 @@ import android.view.ViewDebug;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.animation.AnimationUtils;
+import android.widget.EdgeEffect;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -27,7 +28,6 @@ import android.widget.OverScroller;
 import android.widget.TextView;
 
 import androidx.core.view.ViewCompat;
-import androidx.core.widget.EdgeEffectCompat;
 
 import java.util.List;
 
@@ -77,10 +77,10 @@ public class MergedScrollView extends FrameLayout {
     private final Rect mTempRect = new Rect();
     private long mLastScroll;
     private OverScroller mScroller;
-    private EdgeEffectCompat mEdgeGlowTop;
-    private EdgeEffectCompat mEdgeGlowBottom;
-    private EdgeEffectCompat mEdgeGlowLeft;
-    private EdgeEffectCompat mEdgeGlowRight;
+    private EdgeEffect mEdgeGlowTop;
+    private EdgeEffect mEdgeGlowBottom;
+    private EdgeEffect mEdgeGlowLeft;
+    private EdgeEffect mEdgeGlowRight;
     /**
      * Position of the last motion event.
      */
@@ -1954,10 +1954,10 @@ public class MergedScrollView extends FrameLayout {
         if (mode != OVER_SCROLL_NEVER) {
             if (mEdgeGlowTop == null) {
                 Context context = getContext();
-                mEdgeGlowTop = new EdgeEffectCompat(context);
-                mEdgeGlowBottom = new EdgeEffectCompat(context);
-                mEdgeGlowLeft = new EdgeEffectCompat(context);
-                mEdgeGlowRight = new EdgeEffectCompat(context);
+                mEdgeGlowTop = new EdgeEffect(context);
+                mEdgeGlowBottom = new EdgeEffect(context);
+                mEdgeGlowLeft = new EdgeEffect(context);
+                mEdgeGlowRight = new EdgeEffect(context);
             }
         } else {
             mEdgeGlowTop = null;

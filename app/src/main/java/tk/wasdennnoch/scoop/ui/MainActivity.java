@@ -25,7 +25,6 @@ import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
-import androidx.core.view.MenuItemCompat;
 
 import com.afollestad.inquiry.Inquiry;
 import com.afollestad.materialcab.MaterialCab;
@@ -385,7 +384,7 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         MenuItem searchItem = menu.findItem(R.id.action_search);
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        SearchView searchView = (SearchView) searchItem.getActionView();
         searchView.setOnQueryTextListener(this);
         searchView.setOnCloseListener(this);
         return true;
