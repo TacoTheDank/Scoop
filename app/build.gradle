@@ -1,55 +1,79 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 ext.fakeData = System.getenv("WDN_PC") ?: "true"
 
 android {
     compileSdkVersion 28
-    buildToolsVersion '28.0.3'
+    buildToolsVersion "29.0.3"
 
     defaultConfig {
-        applicationId "xyz.paphonb.scoop"
+        applicationId "taco.scoop"
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 19
         versionName "2.0.3"
 
-        vectorDrawables.useSupportLibrary = true
+        vectorDrawables.useSupportLibrary true
 
         buildConfigField 'boolean', 'FAKE_DATA', "$fakeData"
         resValue 'string', 'application_id', applicationId
     }
+
     dexOptions {
         maxProcessCount 4
         javaMaxHeapSize "4g"
         preDexLibraries true
     }
+
     buildTypes {
         release {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        debug {
+            zipAlignEnabled true
+            applicationIdSuffix ".debug"
+            versionNameSuffix "-debug"
+        }
     }
+
+    compileOptions {
+        encoding "UTF-8"
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
     lintOptions {
         abortOnError false
+    }
+
+    packagingOptions {
+        exclude 'META-INF/*'
     }
 }
 
 dependencies {
+// Local
     compileOnly files('libs-provide/XposedBridgeApi-52.jar')
-    implementation 'androidx.appcompat:appcompat:1.1.0-alpha01'
-    implementation 'androidx.legacy:legacy-support-v13:1.0.0'
-    implementation 'androidx.recyclerview:recyclerview:1.1.0-alpha01'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha3'
-    implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
+
+// Kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+
+// AndroidX
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+
+// Other
     implementation 'com.afollestad:inquiry:4.1.2'
     implementation 'com.afollestad:material-cab:0.1.12'
+    implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
     implementation 'me.zhanghai.android.materialprogressbar:library:1.4.2'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
-repositories {
-    mavenCentral()
-}
-
-apply plugin: 'kotlin-android-extensions'
