@@ -4,9 +4,9 @@ import android.graphics.drawable.Drawable;
 
 public class App {
 
-    Drawable icon;
-    String name;
-    String packageName;
+    final Drawable icon;
+    final String name;
+    final String packageName;
     boolean selected;
 
     App(Drawable icon, String name, String packageName) {

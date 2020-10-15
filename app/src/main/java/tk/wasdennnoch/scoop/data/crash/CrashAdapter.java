@@ -24,6 +24,8 @@ import tk.wasdennnoch.scoop.view.RelativeTimeTextView;
 
 public class CrashAdapter extends RecyclerView.Adapter<CrashAdapter.CrashViewHolder> {
 
+    private final Listener mListener;
+    private final int mSelectedColor;
     private ArrayList<Crash> mItems = new ArrayList<>();
     private ArrayList<Crash> mSearchedItems = new ArrayList<>();
     private boolean mSearchActive;
@@ -31,8 +33,6 @@ public class CrashAdapter extends RecyclerView.Adapter<CrashAdapter.CrashViewHol
     private String mLastSearchTerm;
     private boolean mSelectionEnabled;
     private int mSelectedCount;
-    private Listener mListener;
-    private int mSelectedColor;
     private boolean mCombineSameApps;
 
     public CrashAdapter(Context context, Listener listener) {
@@ -195,13 +195,12 @@ public class CrashAdapter extends RecyclerView.Adapter<CrashAdapter.CrashViewHol
 
     class CrashViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
+        final ImageView icon;
+        final TextView title;
+        final RelativeTimeTextView time;
+        final TextView crashText;
+        final Drawable normalBackground;
         Crash crash;
-        ImageView icon;
-        TextView title;
-        RelativeTimeTextView time;
-        TextView crashText;
-
-        Drawable normalBackground;
 
         CrashViewHolder(View v) {
             super(v);

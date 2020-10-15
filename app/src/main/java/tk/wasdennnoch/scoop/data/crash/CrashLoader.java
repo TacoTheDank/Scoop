@@ -26,8 +26,8 @@ import tk.wasdennnoch.scoop.ui.MainActivity;
 
 public class CrashLoader {
 
-    private static Map<String, Drawable> sIconCache = new ArrayMap<>();
-    private static Map<String, String> sNameCache = new ArrayMap<>();
+    private static final Map<String, Drawable> sIconCache = new ArrayMap<>();
+    private static final Map<String, String> sNameCache = new ArrayMap<>();
 
     private WeakReference<MainActivity> mListener;
     private boolean mCombineSameTrace;

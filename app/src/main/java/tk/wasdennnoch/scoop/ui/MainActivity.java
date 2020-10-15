@@ -56,13 +56,12 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
     private static boolean sUpdateRequired;
     private static boolean sVisible;
     private static Crash sNewCrash;
-
+    private final CrashLoader mLoader = new CrashLoader();
     private boolean mCombineApps;
     private boolean mHasCrash;
     private SharedPreferences mPrefs;
     private Handler mHandler;
     private CrashAdapter mAdapter;
-    private CrashLoader mLoader = new CrashLoader();
     private CrashRecyclerView mList;
     private ProgressBar mLoading;
     private ViewStub mNoItemsStub;

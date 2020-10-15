@@ -18,8 +18,8 @@ import tk.wasdennnoch.scoop.R;
 
 public class AppAdapter extends RecyclerView.Adapter<AppAdapter.ViewHolder> {
 
+    private final ArrayList<App> mSearchedItems = new ArrayList<>();
     private ArrayList<App> mItems = new ArrayList<>();
-    private ArrayList<App> mSearchedItems = new ArrayList<>();
     private boolean mSearchActive = false;
 
     public void setApps(ArrayList<App> items, List<String> blacklisted) {
@@ -87,11 +87,11 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.ViewHolder> {
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
+        final ImageView appIcon;
+        final TextView appName;
+        final TextView packageName;
+        final CheckBox check;
         App app;
-        ImageView appIcon;
-        TextView appName;
-        TextView packageName;
-        CheckBox check;
 
         ViewHolder(View itemView) {
             super(itemView);

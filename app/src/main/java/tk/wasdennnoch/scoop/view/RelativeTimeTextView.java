@@ -24,9 +24,8 @@ import tk.wasdennnoch.scoop.R;
 public class RelativeTimeTextView extends TextView {
 
     private static final long INITIAL_UPDATE_INTERVAL = DateUtils.MINUTE_IN_MILLIS;
-
+    private final Handler mHandler = new Handler();
     private long mReferenceTime;
-    private Handler mHandler = new Handler();
     private UpdateTimeRunnable mUpdateTimeTask;
     private boolean isUpdateTaskRunning = false;
 
@@ -167,7 +166,7 @@ public class RelativeTimeTextView extends TextView {
     private static class UpdateTimeRunnable implements Runnable {
 
         private final WeakReference<RelativeTimeTextView> weakRefRttv;
-        private long mRefTime;
+        private final long mRefTime;
 
         UpdateTimeRunnable(RelativeTimeTextView rttv, long refTime) {
             this.mRefTime = refTime;

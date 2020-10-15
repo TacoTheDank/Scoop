@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class CrashRecyclerView extends RecyclerView {
 
-    private LinearLayoutManager mManager;
+    private final LinearLayoutManager mManager;
 
     public CrashRecyclerView(Context context) {
         this(context, null);
