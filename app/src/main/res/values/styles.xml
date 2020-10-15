@@ -19,9 +19,9 @@
     </style>
 
     <style name="BaseTheme.Button" parent="Widget.AppCompat.Button">
-        <item name="android:fontFamily">@font/google_sans</item>
+        <item name="fontFamily">@font/google_sans</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textAllCaps">false</item>
+        <item name="textAllCaps">false</item>
     </style>
 
     <style name="BaseTheme.AlertDialog" parent="Theme.AppCompat.DayNight.Dialog.Alert">
