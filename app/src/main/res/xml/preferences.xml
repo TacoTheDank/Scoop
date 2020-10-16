@@ -3,53 +3,47 @@
 
     <PreferenceCategory android:title="@string/settings_notif">
 
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="true"
             android:key="show_notification"
-            android:title="@string/settings_show_notif"
-            android:widgetLayout="@layout/preference_switch_layout" />
+            android:title="@string/settings_show_notif" />
 
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="true"
             android:dependency="show_notification"
             android:key="show_action_buttons"
             android:summary="@string/settings_action_buttons_summary"
-            android:title="@string/settings_action_buttons"
-            android:widgetLayout="@layout/preference_switch_layout" />
+            android:title="@string/settings_action_buttons" />
 
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="false"
             android:dependency="show_notification"
             android:key="show_stack_trace_notif"
             android:summary="@string/settings_show_stack_trace_summary"
-            android:title="@string/settings_show_stack_trace"
-            android:widgetLayout="@layout/preference_switch_layout" />
+            android:title="@string/settings_show_stack_trace" />
 
     </PreferenceCategory>
 
 
     <PreferenceCategory android:title="@string/settings_overview">
 
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="false"
             android:key="combine_same_apps"
             android:summary="@string/settings_combime_same_apps_summary"
-            android:title="@string/settings_combime_same_apps"
-            android:widgetLayout="@layout/preference_switch_layout" />
+            android:title="@string/settings_combime_same_apps" />
 
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="true"
             android:key="combine_same_stack_trace"
             android:summary="@string/settings_combime_same_trace_summary"
-            android:title="@string/settings_combime_same_trace"
-            android:widgetLayout="@layout/preference_switch_layout" />
+            android:title="@string/settings_combime_same_trace" />
 
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="true"
             android:key="search_package_name"
             android:summary="@string/settings_search_pkg_summary"
-            android:title="@string/settings_search_pkg"
-            android:widgetLayout="@layout/preference_switch_layout" />
+            android:title="@string/settings_search_pkg" />
 
         <Preference
             android:summary="@string/settings_blacklisted_apps_summary"
@@ -64,30 +58,27 @@
 
     <PreferenceCategory android:title="@string/settings_detail_view">
 
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="false"
             android:key="auto_wrap"
             android:summary="@string/settings_auto_wrap_summary"
-            android:title="@string/settings_auto_wrap"
-            android:widgetLayout="@layout/preference_switch_layout" />
+            android:title="@string/settings_auto_wrap" />
 
     </PreferenceCategory>
 
 
     <PreferenceCategory android:title="@string/settings_misc">
 
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="true"
             android:key="ignore_threaddeath"
             android:summary="@string/settings_ignore_threaddeath_summary"
-            android:title="@string/settings_ignore_threaddeath"
-            android:widgetLayout="@layout/preference_switch_layout" />
+            android:title="@string/settings_ignore_threaddeath" />
 
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="false"
             android:key="force_english"
-            android:title="@string/settings_force_eng"
-            android:widgetLayout="@layout/preference_switch_layout" />
+            android:title="@string/settings_force_eng" />
 
         <Preference android:title="@string/settings_about">
             <intent
