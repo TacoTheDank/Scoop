@@ -77,5 +77,5 @@ dependencies {
     implementation 'com.afollestad:inquiry:4.1.2'
     implementation 'com.afollestad:material-cab:0.1.12'
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
-    implementation 'me.zhanghai.android.materialprogressbar:library:1.4.2'
+    implementation 'me.zhanghai.android.materialprogressbar:library:1.6.1'
 }
