@@ -104,6 +104,7 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
     protected void onCreate(Bundle savedInstanceState) {
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
         if (mPrefs.getBoolean("force_english", false)) {
+            // TODO: Use ConfigurationCompat
             Configuration config = getResources().getConfiguration();
             config.locale = Locale.ENGLISH;
             getResources().updateConfiguration(config, null);

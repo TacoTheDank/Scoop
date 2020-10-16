@@ -116,7 +116,7 @@ public class DetailActivity extends AppCompatActivity implements SearchView.OnQu
                 mCrashScroll.setVisibility(mSelectionEnabled ? View.GONE : View.VISIBLE);
                 break;
             case R.id.action_copy:
-                ((ClipboardManager) getSystemService(CLIPBOARD_SERVICE)).setPrimaryClip(
+                ContextCompat.getSystemService(this, ClipboardManager.class).setPrimaryClip(
                         ClipData.newPlainText(
                                 getResources().getString(R.string.copy_label, CrashLoader.getAppName(this, mCrash.packageName, false)),
                                 mCrash.stackTrace));

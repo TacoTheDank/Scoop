@@ -18,12 +18,11 @@
 package tk.wasdennnoch.scoop.view
 
 import android.content.Context
-import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.view.View
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.isGone
 import tk.wasdennnoch.scoop.R
 
 /*
@@ -58,7 +57,7 @@ class CenteredToolbar @JvmOverloads constructor(
     }
 
     override fun setTitle(title: CharSequence) {
-        if (!TextUtils.isEmpty(title)) {
+        if (title.isNotEmpty()) {
             if (mTitleTextView == null) {
                 inflateTitle()
             }
@@ -74,12 +73,12 @@ class CenteredToolbar @JvmOverloads constructor(
     }
 
     override fun setSubtitle(subtitle: CharSequence) {
-        if (!TextUtils.isEmpty(subtitle)) {
+        if (subtitle.isNotEmpty()) {
             if (mSubtitleTextView == null) {
                 inflateTitle()
             }
         }
-        mSubtitleTextView?.visibility = if (TextUtils.isEmpty(subtitle)) View.GONE else View.VISIBLE
+        mSubtitleTextView?.isGone = subtitle.isEmpty()
         if (mSubtitleTextView != null) {
             mSubtitleTextView!!.text = subtitle
         }

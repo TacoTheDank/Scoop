@@ -71,7 +71,7 @@ public class CrashReceiver extends BroadcastReceiver {
 
         if (prefs.getBoolean("show_notification", true) &&
                 !Arrays.asList(PreferenceManager.getDefaultSharedPreferences(context).getString("blacklisted_packages", "").split(",")).contains(packageName)) {
-            NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            NotificationManager manager = ContextCompat.getSystemService(context, NotificationManager.class);
 
             Intent clickIntent = new Intent(context, DetailActivity.class).putExtra(DetailActivity.EXTRA_CRASH, crash);
             TaskStackBuilder stackBuilder = TaskStackBuilder.create(context)

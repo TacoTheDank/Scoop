@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.pm.PackageInfoCompat;
 
 import tk.wasdennnoch.scoop.R;
 
@@ -21,7 +22,10 @@ public class AboutActivity extends AppCompatActivity {
 
         try {
             PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-            ((TextView) findViewById(R.id.version)).setText(String.format(getString(R.string.about_version), pInfo.versionName, pInfo.versionCode));
+            ((TextView) findViewById(R.id.version))
+                    .setText(String.format(getString(R.string.about_version),
+                            pInfo.versionName,
+                            PackageInfoCompat.getLongVersionCode(pInfo)));
         } catch (PackageManager.NameNotFoundException e) {
             // No.
         }

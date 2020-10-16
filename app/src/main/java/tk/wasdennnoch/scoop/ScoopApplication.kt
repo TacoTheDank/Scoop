@@ -1,5 +1,6 @@
 package tk.wasdennnoch.scoop
 
+import android.Manifest
 import android.annotation.TargetApi
 import android.app.Application
 import android.app.NotificationChannel
@@ -11,6 +12,7 @@ import android.os.Handler
 import android.os.HandlerThread
 import android.os.SystemClock
 import androidx.core.content.ContextCompat
+import androidx.core.content.getSystemService
 import tk.wasdennnoch.scoop.detector.CrashDetectorService
 
 class ScoopApplication : Application() {
@@ -37,7 +39,7 @@ class ScoopApplication : Application() {
         val name = getString(R.string.crash_channel)
         val importance = NotificationManager.IMPORTANCE_HIGH
         val channel = NotificationChannel("crashes", name, importance)
-        val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        val notificationManager = getSystemService<NotificationManager>()!!
         notificationManager.createNotificationChannel(channel)
     }
 
@@ -47,7 +49,7 @@ class ScoopApplication : Application() {
         val importance = NotificationManager.IMPORTANCE_MIN
         val channel = NotificationChannel("status", name, importance)
         channel.setShowBadge(false)
-        val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        val notificationManager = getSystemService<NotificationManager>()!!
         notificationManager.createNotificationChannel(channel)
     }
 
@@ -61,17 +63,17 @@ class ScoopApplication : Application() {
         stopService(Intent(this, CrashDetectorService::class.java))
     }
 
+    // TODO: Catch exception when permission isn't granted
     private fun isPermissionGranted(tryGranting: Boolean = true): Boolean {
         synchronized(permissionLock) {
-            val permission = "android.permission.READ_LOGS"
             val granted = ContextCompat.checkSelfPermission(
                 this,
-                permission
+                Manifest.permission.READ_LOGS
             ) == PackageManager.PERMISSION_GRANTED
             return if (!granted && tryGranting) {
                 Runtime.getRuntime().exec(
                     "su -c pm grant ${BuildConfig.APPLICATION_ID}" +
-                            " $permission"
+                            Manifest.permission.READ_LOGS
                 ).waitFor()
                 isPermissionGranted(false)
             } else {
