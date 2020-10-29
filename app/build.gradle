@@ -35,8 +35,6 @@ android {
         }
         debug {
             zipAlignEnabled true
-            applicationIdSuffix ".debug"
-            versionNameSuffix "-debug"
         }
     }
 
