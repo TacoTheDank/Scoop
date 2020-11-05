@@ -29,8 +29,8 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled true
-            shrinkResources true
+            minifyEnabled false
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
@@ -59,8 +59,8 @@ android {
 }
 
 dependencies {
-// Local
-    compileOnly files('libs-provide/XposedBridgeApi-52.jar')
+// Xposed
+    compileOnly 'de.robv.android.xposed:api:82'
 
 // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"

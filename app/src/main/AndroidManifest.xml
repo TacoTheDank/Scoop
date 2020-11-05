@@ -24,7 +24,7 @@
             android:value="true" />
         <meta-data
             android:name="xposedminversion"
-            android:value="52" />
+            android:value="82" />
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
