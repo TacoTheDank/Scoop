@@ -8,6 +8,7 @@
         android:orderInCategory="50"
         android:title="@string/action_search"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:iconTint="?android:textColorSecondary"
         app:showAsAction="always|collapseActionView" />
 
     <item
@@ -15,6 +16,7 @@
         android:icon="@drawable/ic_select"
         android:orderInCategory="75"
         android:title="@string/action_select"
+        app:iconTint="?android:textColorSecondary"
         app:showAsAction="ifRoom" />
 
     <item
@@ -22,6 +24,7 @@
         android:icon="@drawable/ic_content_copy"
         android:orderInCategory="100"
         android:title="@string/action_copy"
+        app:iconTint="?android:textColorSecondary"
         app:showAsAction="ifRoom" />
 
     <item
@@ -29,6 +32,7 @@
         android:icon="@drawable/ic_share"
         android:orderInCategory="150"
         android:title="@string/action_share"
+        app:iconTint="?android:textColorSecondary"
         app:showAsAction="ifRoom" />
 
 </menu>
