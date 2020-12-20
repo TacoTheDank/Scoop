@@ -101,7 +101,7 @@ public class RelativeTimeTextView extends AppCompatTextView {
     private CharSequence getRelativeTimeDisplayString() {
         long now = System.currentTimeMillis();
         long difference = now - mReferenceTime;
-        return (difference >= 0 && difference <= DateUtils.MINUTE_IN_MILLIS)
+        return difference >= 0 && difference <= DateUtils.MINUTE_IN_MILLIS
                 ? getResources().getString(R.string.just_now)
                 : DateUtils.getRelativeTimeSpanString(
                 mReferenceTime,

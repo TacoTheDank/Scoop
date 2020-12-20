@@ -235,7 +235,7 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
                 SpannableString spannable = new SpannableString(makeCrashText);
                 Drawable drawable = ContextCompat.getDrawable(this, R.drawable.ic_devious_face);
                 int height = makeCrashTextView.getLineHeight();
-                int width = (int) (((float) height / drawable.getIntrinsicHeight()) * drawable.getIntrinsicWidth());
+                int width = (int) ((float) height / drawable.getIntrinsicHeight() * drawable.getIntrinsicWidth());
                 drawable.setBounds(0, 0, width, height);
                 drawable = DrawableCompat.wrap(drawable);
                 DrawableCompat.setTint(drawable.mutate(), Utils.getAttrColor(this, android.R.attr.textColorSecondary));

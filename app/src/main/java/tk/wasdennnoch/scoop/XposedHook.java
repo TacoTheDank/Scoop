@@ -26,13 +26,6 @@ public class XposedHook implements IXposedHookLoadPackage {
     public static final String INTENT_UPLOAD_ERROR = "uploadError";
     public static final String INTENT_DOGBIN_LINK = "dogbinLink";
     private static String mPkg;
-    private final XC_MethodHook setUncaughtExceptionHandlerHook = new XC_MethodHook() {
-        @Override
-        protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-            if (param.args[0] != null)
-                hookUncaughtException(param.args[0].getClass());
-        }
-    };
     private Application mApplication;
     private boolean mSent;
     private final XC_MethodHook uncaughtExceptionHook = new XC_MethodHook() {
@@ -55,6 +48,13 @@ public class XposedHook implements IXposedHookLoadPackage {
             // Also I have no idea how to detect custom subclasses efficiently.
             mApplication.sendBroadcast(intent);
             mSent = true; // Doesn't need to be reset as process dies soon
+        }
+    };
+    private final XC_MethodHook setUncaughtExceptionHandlerHook = new XC_MethodHook() {
+        @Override
+        protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+            if (param.args[0] != null)
+                hookUncaughtException(param.args[0].getClass());
         }
     };
 

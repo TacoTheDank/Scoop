@@ -92,7 +92,7 @@ public class CrashAdapter extends RecyclerView.Adapter<CrashAdapter.CrashViewHol
         mSearchActive = !TextUtils.isEmpty(text);
         if (mSearchActive) {
             for (Crash c : mItems) { // Search app name and package (if configured)
-                if ((mSearchPackageName && c.packageName.toLowerCase(Locale.ENGLISH).contains(text))
+                if (mSearchPackageName && c.packageName.toLowerCase(Locale.ENGLISH).contains(text)
                         || CrashLoader.getAppName(context, c.packageName, false).toLowerCase(Locale.ENGLISH).contains(text)) {
                     mSearchedItems.add(c);
                 }

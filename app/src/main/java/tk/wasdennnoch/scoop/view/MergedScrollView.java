@@ -177,7 +177,7 @@ public class MergedScrollView extends FrameLayout {
         }
 
         final ViewParent theParent = child.getParent();
-        return (theParent instanceof ViewGroup) && isViewDescendantOf((View) theParent, parent);
+        return theParent instanceof ViewGroup && isViewDescendantOf((View) theParent, parent);
     }
 
     private static int clamp(int n, int my, int child) {
@@ -199,7 +199,7 @@ public class MergedScrollView extends FrameLayout {
              */
             return 0;
         }
-        if ((my + n) > child) {
+        if (my + n > child) {
             /* this case:
              *                    |------ me ------|
              *     |------ child ------|
@@ -345,8 +345,8 @@ public class MergedScrollView extends FrameLayout {
         if (child != null) {
             int childHeight = child.getHeight();
             int childWidth = child.getWidth();
-            return (getHeight() < childHeight + getPaddingTop() + getPaddingBottom()) ||
-                    (getWidth() < childWidth + getPaddingLeft() + getPaddingRight());
+            return getHeight() < childHeight + getPaddingTop() + getPaddingBottom() ||
+                    getWidth() < childWidth + getPaddingLeft() + getPaddingRight();
         }
         return false;
     }
@@ -571,7 +571,7 @@ public class MergedScrollView extends FrameLayout {
          * motion.
          */
         final int action = ev.getAction();
-        if ((action == MotionEvent.ACTION_MOVE) && (mIsBeingDragged)) {
+        if (action == MotionEvent.ACTION_MOVE && mIsBeingDragged) {
             return true;
         }
 
@@ -582,7 +582,7 @@ public class MergedScrollView extends FrameLayout {
         /*
          * Don't try to intercept touch if we can't scroll anyway.
          */
-        if ((getScrollY() == 0 && !canScrollVertically(1)) || (getScrollX() == 0 && !canScrollHorizontally(1))) {
+        if (getScrollY() == 0 && !canScrollVertically(1) || getScrollX() == 0 && !canScrollHorizontally(1)) {
             return false;
         }
 
@@ -694,7 +694,7 @@ public class MergedScrollView extends FrameLayout {
                 if (getChildCount() == 0) {
                     return false;
                 }
-                if ((mIsBeingDragged = !mScroller.isFinished())) {
+                if (mIsBeingDragged = !mScroller.isFinished()) {
                     final ViewParent parent = getParent();
                     if (parent != null) {
                         parent.requestDisallowInterceptTouchEvent(true);
@@ -753,16 +753,16 @@ public class MergedScrollView extends FrameLayout {
                     final int rangeY = getScrollRangeVertical();
                     final int overscrollMode = getOverScrollMode();
                     final boolean canOverscroll = overscrollMode == OVER_SCROLL_ALWAYS ||
-                            (overscrollMode == OVER_SCROLL_IF_CONTENT_SCROLLS && (rangeX > 0 || rangeY > 0));
+                            overscrollMode == OVER_SCROLL_IF_CONTENT_SCROLLS && (rangeX > 0 || rangeY > 0);
 
                     scrollBy(deltaX, deltaY);
                     final int newX = getScrollX();
                     final int newY = getScrollY();
                     // In corners
-                    if ((newX == 0 && newY == 0) ||
-                            (newX == rangeX && newY == rangeY) ||
-                            (newX == 0 && newY == rangeY) ||
-                            (newX == rangeX && newY == 0)) {
+                    if (newX == 0 && newY == 0 ||
+                            newX == rangeX && newY == rangeY ||
+                            newX == 0 && newY == rangeY ||
+                            newX == rangeX && newY == 0) {
                         mVelocityTracker.clear();
                     }
 
@@ -977,9 +977,9 @@ public class MergedScrollView extends FrameLayout {
         final int leftWithoutFadingEdge = left + fadingEdgeLength;
         final int rightWithoutFadingEdge = left + getWidth() - fadingEdgeLength;
 
-        if ((preferredFocusable != null)
-                && (preferredFocusable.getLeft() < rightWithoutFadingEdge)
-                && (preferredFocusable.getRight() > leftWithoutFadingEdge)) {
+        if (preferredFocusable != null
+                && preferredFocusable.getLeft() < rightWithoutFadingEdge
+                && preferredFocusable.getRight() > leftWithoutFadingEdge) {
             return preferredFocusable;
         }
 
@@ -1013,8 +1013,8 @@ public class MergedScrollView extends FrameLayout {
                  * focusing
                  */
 
-                final boolean viewIsFullyContained = (left < viewLeft) &&
-                        (viewRight < right);
+                final boolean viewIsFullyContained = left < viewLeft &&
+                        viewRight < right;
 
                 if (focusCandidate == null) {
                     /* No candidate, take this one */
@@ -1094,8 +1094,8 @@ public class MergedScrollView extends FrameLayout {
                  * focusing
                  */
 
-                final boolean viewIsFullyContained = (top < viewTop) &&
-                        (viewBottom < bottom);
+                final boolean viewIsFullyContained = top < viewTop &&
+                        viewBottom < bottom;
 
                 if (focusCandidate == null) {
                     /* No candidate, take this one */
@@ -1272,13 +1272,13 @@ public class MergedScrollView extends FrameLayout {
         if (left >= containerLeft && right <= containerRight) {
             handled = false;
         } else {
-            int delta = goLeft ? (left - containerLeft) : (right - containerRight);
+            int delta = goLeft ? left - containerLeft : right - containerRight;
             doScroll(delta, 0);
         }
         if (top >= containerTop && bottom <= containerBottom) {
             handled = false;
         } else {
-            int delta = up ? (top - containerTop) : (bottom - containerBottom);
+            int delta = up ? top - containerTop : bottom - containerBottom;
             doScroll(0, delta);
         }
 
@@ -1377,10 +1377,10 @@ public class MergedScrollView extends FrameLayout {
         descendant.getDrawingRect(mTempRect);
         offsetDescendantRectToMyCoords(descendant, mTempRect);
 
-        return (mTempRect.bottom + delta) >= getScrollY()
-                && (mTempRect.top - delta) <= (getScrollY() + height)
-                && (mTempRect.right + delta) >= getScrollX()
-                && (mTempRect.left - delta) <= (getScrollX() + getWidth());
+        return mTempRect.bottom + delta >= getScrollY()
+                && mTempRect.top - delta <= getScrollY() + height
+                && mTempRect.right + delta >= getScrollX()
+                && mTempRect.left - delta <= getScrollX() + getWidth();
     }
 
     private void doScroll(int x, int y) {
@@ -1559,7 +1559,7 @@ public class MergedScrollView extends FrameLayout {
                 final int rangeY = getScrollRangeVertical();
                 final int overscrollMode = getOverScrollMode();
                 final boolean canOverscroll = overscrollMode == OVER_SCROLL_ALWAYS ||
-                        (overscrollMode == OVER_SCROLL_IF_CONTENT_SCROLLS && (rangeX > 0 || rangeY > 0));
+                        overscrollMode == OVER_SCROLL_IF_CONTENT_SCROLLS && (rangeX > 0 || rangeY > 0);
 
                 overScrollBy(x - oldX, y - oldY, oldX, oldY, rangeX, rangeY,
                         0, 0, false);
@@ -1662,10 +1662,10 @@ public class MergedScrollView extends FrameLayout {
 
             if (rect.width() > width) {
                 // just enough to get screen size chunk on
-                scrollXDelta += (rect.left - screenLeft);
+                scrollXDelta += rect.left - screenLeft;
             } else {
                 // get entire rect at right of screen
-                scrollXDelta += (rect.right - screenRight);
+                scrollXDelta += rect.right - screenRight;
             }
 
             // make sure we aren't scrolling beyond the end of our content
@@ -1680,10 +1680,10 @@ public class MergedScrollView extends FrameLayout {
 
             if (rect.width() > width) {
                 // screen size chunk
-                scrollXDelta -= (screenRight - rect.right);
+                scrollXDelta -= screenRight - rect.right;
             } else {
                 // entire rect at left
-                scrollXDelta -= (screenLeft - rect.left);
+                scrollXDelta -= screenLeft - rect.left;
             }
 
             // make sure we aren't scrolling any further than the left our content
@@ -1728,10 +1728,10 @@ public class MergedScrollView extends FrameLayout {
 
             if (rect.height() > height) {
                 // just enough to get screen size chunk on
-                scrollYDelta += (rect.top - screenTop);
+                scrollYDelta += rect.top - screenTop;
             } else {
                 // get entire rect at bottom of screen
-                scrollYDelta += (rect.bottom - screenBottom);
+                scrollYDelta += rect.bottom - screenBottom;
             }
 
             // make sure we aren't scrolling beyond the end of our content
@@ -1746,10 +1746,10 @@ public class MergedScrollView extends FrameLayout {
 
             if (rect.height() > height) {
                 // screen size chunk
-                scrollYDelta -= (screenBottom - rect.bottom);
+                scrollYDelta -= screenBottom - rect.bottom;
             } else {
                 // entire rect at top
-                scrollYDelta -= (screenTop - rect.top);
+                scrollYDelta -= screenTop - rect.top;
             }
 
             // make sure we aren't scrolling any further than the top our content
@@ -1823,8 +1823,8 @@ public class MergedScrollView extends FrameLayout {
         mChildToScrollTo = null;
 
         if (!this.isLaidOut()) {
-            final int childWidth = (getChildCount() > 0) ? getChildAt(0).getMeasuredWidth() : 0;
-            final int childHeight = (getChildCount() > 0) ? getChildAt(0).getMeasuredHeight() : 0;
+            final int childWidth = getChildCount() > 0 ? getChildAt(0).getMeasuredWidth() : 0;
+            final int childHeight = getChildCount() > 0 ? getChildAt(0).getMeasuredHeight() : 0;
             final int scrollRangeX = Math.max(0,
                     childWidth - (r - l - getPaddingLeft() - getPaddingRight()));
             if (mSavedState != null) {
@@ -1861,7 +1861,7 @@ public class MergedScrollView extends FrameLayout {
     }
 
     public boolean isLayoutRtl() {
-        return (this.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL);
+        return this.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL;
     }
 
     @Override
