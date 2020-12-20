@@ -53,10 +53,10 @@
     <string name="settings_show_stack_trace_summary">Zeige den Anfang der Stack Trace anstatt nur der Beschreibung in der Benachrichtigung</string>
     <string name="settings_search_pkg">Suche im Package Name</string>
     <string name="settings_search_pkg_summary">Suche den gegebenen Term im Appnamen sowie im Paketnamen</string>
-    <string name="settings_combime_same_apps">Selbe Apps kombinieren</string>
-    <string name="settings_combime_same_apps_summary">Sortiere Crashes nach individuellen Appeinträgen, welche die verschiedenen Crashes enthalten</string>
-    <string name="settings_combime_same_trace">Selbe Crashes kombinieren</string>
-    <string name="settings_combime_same_trace_summary">Kombiniere Crashes von der Selben App mit gleichen Stack Traces in einen Eintrag</string>
+    <string name="settings_combine_same_apps">Selbe Apps kombinieren</string>
+    <string name="settings_combine_same_apps_summary">Sortiere Crashes nach individuellen Appeinträgen, welche die verschiedenen Crashes enthalten</string>
+    <string name="settings_combine_same_trace">Selbe Crashes kombinieren</string>
+    <string name="settings_combine_same_trace_summary">Kombiniere Crashes von der Selben App mit gleichen Stack Traces in einen Eintrag</string>
     <string name="settings_blacklisted_apps">Ausnahmen</string>
     <string name="settings_blacklisted_apps_summary">Crahes von ausgewählten Apps werden ignoriert</string>
     <string name="settings_auto_wrap">Automatischer Zeilenumbruch</string>

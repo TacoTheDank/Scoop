@@ -59,10 +59,10 @@
     <string name="settings_show_stack_trace_summary">Display the beginning of the stack trace in the notification instead of just the description</string>
     <string name="settings_search_pkg">Search in package name</string>
     <string name="settings_search_pkg_summary">Search for the given term in the app name as well as in the package name</string>
-    <string name="settings_combime_same_apps">Combine same apps</string>
-    <string name="settings_combime_same_apps_summary">Sort crashes by individual app entries which contain the different crashes</string>
-    <string name="settings_combime_same_trace">Combine same crashes</string>
-    <string name="settings_combime_same_trace_summary">Combine crashes from the same app with the same stack trace into one item</string>
+    <string name="settings_combine_same_apps">Combine same apps</string>
+    <string name="settings_combine_same_apps_summary">Sort crashes by individual app entries which contain the different crashes</string>
+    <string name="settings_combine_same_trace">Combine same crashes</string>
+    <string name="settings_combine_same_trace_summary">Combine crashes from the same app with the same stack trace into one item</string>
     <string name="settings_blacklisted_apps">Blacklisted apps</string>
     <string name="settings_blacklisted_apps_summary">Crashes caused by blacklisted apps will be hidden</string>
     <string name="settings_auto_wrap">Automatic line wrap</string>

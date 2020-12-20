@@ -30,14 +30,14 @@
         <SwitchPreference
             android:defaultValue="false"
             android:key="combine_same_apps"
-            android:summary="@string/settings_combime_same_apps_summary"
-            android:title="@string/settings_combime_same_apps" />
+            android:summary="@string/settings_combine_same_apps_summary"
+            android:title="@string/settings_combine_same_apps" />
 
         <SwitchPreference
             android:defaultValue="true"
             android:key="combine_same_stack_trace"
-            android:summary="@string/settings_combime_same_trace_summary"
-            android:title="@string/settings_combime_same_trace" />
+            android:summary="@string/settings_combine_same_trace_summary"
+            android:title="@string/settings_combine_same_trace" />
 
         <SwitchPreference
             android:defaultValue="true"

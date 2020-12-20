@@ -44,10 +44,10 @@
     <string name="settings_show_stack_trace_summary">Exibir o começo do stack trace na notificação ao invés de apenas a descrição</string>
     <string name="settings_search_pkg">Procurar no nome do pacote</string>
     <string name="settings_search_pkg_summary">Procurar pelo termo provido no nome do app assim como no nome do pacote</string>
-    <string name="settings_combime_same_apps">Combinar apps idênticos</string>
-    <string name="settings_combime_same_apps_summary">Ordenar travamentos por entradas de apps individuais que contém diferentes travamentos</string>
-    <string name="settings_combime_same_trace">Combinar travamentos idênticos</string>
-    <string name="settings_combime_same_trace_summary">Combinar travamentos do mesmo app com o mesmo stack trace em um item</string>
+    <string name="settings_combine_same_apps">Combinar apps idênticos</string>
+    <string name="settings_combine_same_apps_summary">Ordenar travamentos por entradas de apps individuais que contém diferentes travamentos</string>
+    <string name="settings_combine_same_trace">Combinar travamentos idênticos</string>
+    <string name="settings_combine_same_trace_summary">Combinar travamentos do mesmo app com o mesmo stack trace em um item</string>
     <string name="settings_blacklisted_apps">Apps na lista negra</string>
     <string name="settings_blacklisted_apps_summary">Travamentos causados por apps na lista negra serão escondidos</string>
     <string name="settings_auto_wrap">Quebra de linha automática</string>
