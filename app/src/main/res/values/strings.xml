@@ -16,8 +16,6 @@
     <string name="action_copy_short">Copy</string>
     <string name="action_delete">Delete</string>
 
-    <string name="dialog_ok">OK</string>
-    <string name="dialog_cancel">Cancel</string>
     <string name="just_now">Just Now</string>
     <!-- Scoop (2) -->
     <string name="crash_count">%1$s (%2$d)</string>

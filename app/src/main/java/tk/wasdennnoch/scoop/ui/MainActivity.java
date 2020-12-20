@@ -321,8 +321,8 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
             String content = String.format(getResources().getQuantityString(R.plurals.delete_multiple_confirm, items.size()), items.size());
             new MaterialDialog.Builder(this)
                     .content(content)
-                    .positiveText(R.string.dialog_ok)
-                    .negativeText(R.string.dialog_cancel)
+                    .positiveText(android.R.string.ok)
+                    .negativeText(android.R.string.cancel)
                     .onPositive((materialDialog, dialogAction) -> {
                         // TODO THIS IS A MESS
                         Inquiry instance = Inquiry.get("main");
