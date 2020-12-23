@@ -16,7 +16,7 @@
 #   public *;
 #}
 
-#-dontobfuscate
+-dontobfuscate
 -keep class tk.wasdennnoch.scoop.XposedHook
 -keep class tk.wasdennnoch.scoop.MockThrowable { *; }
 -keep class androidx.appcompat.widget.SearchView { *; }
