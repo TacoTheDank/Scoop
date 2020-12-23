@@ -4,11 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <tk.wasdennnoch.scoop.view.CenteredToolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:theme="?actionBarTheme" />
+    <include layout="@layout/toolbar" />
 
     <LinearLayout
         android:layout_width="match_parent"

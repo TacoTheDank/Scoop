@@ -4,13 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <tk.wasdennnoch.scoop.view.CenteredToolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:elevation="4dp"
-        android:theme="?actionBarTheme" />
+    <include layout="@layout/toolbar" />
 
     <fragment
         android:name="tk.wasdennnoch.scoop.ui.SettingsActivity$SettingsFragment"
