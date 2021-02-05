@@ -1,15 +1,9 @@
 package tk.wasdennnoch.scoop;
 
 import android.content.BroadcastReceiver;
-import android.content.ClipData;
-import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
-
-import androidx.core.content.ContextCompat;
-
-import tk.wasdennnoch.scoop.data.crash.CrashLoader;
 
 public class ShareReceiver extends BroadcastReceiver {
 
@@ -25,20 +19,15 @@ public class ShareReceiver extends BroadcastReceiver {
                 context.startActivity(Intent.createChooser(shareIntent, context.getString(R.string.action_share)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                 break;
             case XposedHook.INTENT_ACTION_COPY:
-                ContextCompat.getSystemService(context, ClipboardManager.class).setPrimaryClip(
-                        ClipData.newPlainText(
-                                context.getResources().getString(R.string.copy_label, CrashLoader.getAppName(context, pkg, false)),
-                                stackTrace));
+                Utils.copyTextToClipboard(
+                        context, R.string.copy_label, pkg, stackTrace);
                 Toast.makeText(context, R.string.copied_toast, Toast.LENGTH_LONG).show();
                 break;
             case XposedHook.INTENT_ACTION_COPY_LINK:
-                ContextCompat.getSystemService(context, ClipboardManager.class).setPrimaryClip(
-                        ClipData.newPlainText(
-                                context.getResources().getString(R.string.copy_link_label, CrashLoader.getAppName(context, pkg, false)),
-                                intent.getStringExtra(XposedHook.INTENT_DOGBIN_LINK)));
+                Utils.copyTextToClipboard(
+                        context, R.string.copy_link_label, pkg, intent.getStringExtra(XposedHook.INTENT_DOGBIN_LINK));
                 Toast.makeText(context, R.string.copied_link_toast, Toast.LENGTH_LONG).show();
                 break;
         }
     }
-
 }

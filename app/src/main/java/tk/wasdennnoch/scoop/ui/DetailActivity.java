@@ -1,7 +1,5 @@
 package tk.wasdennnoch.scoop.ui;
 
-import android.content.ClipData;
-import android.content.ClipboardManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -24,6 +22,7 @@ import androidx.core.content.ContextCompat;
 import java.util.Locale;
 
 import tk.wasdennnoch.scoop.R;
+import tk.wasdennnoch.scoop.Utils;
 import tk.wasdennnoch.scoop.data.crash.Crash;
 import tk.wasdennnoch.scoop.data.crash.CrashLoader;
 import tk.wasdennnoch.scoop.view.CroppingScrollView;
@@ -116,10 +115,8 @@ public class DetailActivity extends AppCompatActivity implements SearchView.OnQu
                 mCrashScroll.setVisibility(mSelectionEnabled ? View.GONE : View.VISIBLE);
                 break;
             case R.id.action_copy:
-                ContextCompat.getSystemService(this, ClipboardManager.class).setPrimaryClip(
-                        ClipData.newPlainText(
-                                getResources().getString(R.string.copy_label, CrashLoader.getAppName(this, mCrash.packageName, false)),
-                                mCrash.stackTrace));
+                Utils.copyTextToClipboard(
+                        this, R.string.copy_label, mCrash.packageName, mCrash.stackTrace);
                 Toast.makeText(this, R.string.copied_toast, Toast.LENGTH_LONG).show();
                 return true;
             case R.id.action_share:
