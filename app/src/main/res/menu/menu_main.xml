@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <item
-        android:id="@+id/action_search"
+        android:id="@+id/menu_main_search"
         android:icon="@drawable/ic_search"
         android:title="@string/action_search"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
@@ -12,12 +12,12 @@
         tools:ignore="AlwaysShowAction" />
 
     <item
-        android:id="@+id/action_clear"
+        android:id="@+id/menu_main_clear"
         android:title="@string/action_clear"
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/menu_main_settings"
         android:title="@string/action_settings"
         app:showAsAction="never" />
 

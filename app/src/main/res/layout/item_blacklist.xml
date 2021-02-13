@@ -9,37 +9,37 @@
     android:padding="8dp">
 
     <ImageView
-        android:id="@+id/appIcon"
+        android:id="@+id/blacklist_item_appIcon"
         android:layout_width="48dp"
         android:layout_height="48dp" />
 
     <TextView
-        android:id="@+id/appName"
+        android:id="@+id/blacklist_item_appName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_toStartOf="@+id/check"
-        android:layout_toEndOf="@id/appIcon"
+        android:layout_toStartOf="@+id/blacklist_item_checkBox"
+        android:layout_toEndOf="@id/blacklist_item_appIcon"
         android:maxLines="1"
         android:textColor="?android:textColorPrimary"
         android:textSize="20sp"
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/packageName"
+        android:id="@+id/blacklist_item_packageName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/appName"
+        android:layout_below="@id/blacklist_item_appName"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_toStartOf="@+id/check"
-        android:layout_toEndOf="@id/appIcon"
+        android:layout_toStartOf="@+id/blacklist_item_checkBox"
+        android:layout_toEndOf="@id/blacklist_item_appIcon"
         android:maxLines="1"
         android:textColor="?android:textColorSecondary" />
 
     <CheckBox
-        android:id="@+id/check"
+        android:id="@+id/blacklist_item_checkBox"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_alignParentEnd="true"

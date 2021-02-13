@@ -43,21 +43,21 @@ public class DetailActivity extends AppCompatActivity implements SearchView.OnQu
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-        setSupportActionBar(findViewById(R.id.toolbar));
+        setSupportActionBar(findViewById(R.id.detail_toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mHighlightColor = ContextCompat.getColor(this, R.color.highlightColor);
         mCrash = getIntent().getParcelableExtra(EXTRA_CRASH);
         getSupportActionBar().setTitle(CrashLoader.getAppName(this, mCrash.packageName, true));
-        mCrashScroll = findViewById(R.id.scroll);
-        mCrashEdit = findViewById(R.id.crashEdit);
-        mCrashText = findViewById(R.id.crash);
+        mCrashScroll = findViewById(R.id.detail_scroll_view);
+        mCrashEdit = findViewById(R.id.detail_crash_edit);
+        mCrashText = findViewById(R.id.detail_crashLog_view);
         mCrashText.setText(mCrash.stackTrace);
         mCrashEdit.setText(mCrash.stackTrace);
         mCrashEdit.setTextSize(TypedValue.COMPLEX_UNIT_PX, mCrashText.getTextSize());
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        ((CroppingScrollView) findViewById(R.id.scroll)).setCropHorizontally(prefs.getBoolean("auto_wrap", false));
+        ((CroppingScrollView) mCrashScroll).setCropHorizontally(prefs.getBoolean("auto_wrap", false));
     }
 
     private void highlightText(String text) {
@@ -78,7 +78,7 @@ public class DetailActivity extends AppCompatActivity implements SearchView.OnQu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_detail, menu);
-        MenuItem searchItem = menu.findItem(R.id.action_search);
+        MenuItem searchItem = menu.findItem(R.id.menu_detail_search);
         SearchView searchView = (SearchView) searchItem.getActionView();
         searchView.setOnQueryTextListener(this);
         searchView.setOnCloseListener(this);
@@ -108,18 +108,18 @@ public class DetailActivity extends AppCompatActivity implements SearchView.OnQu
             case android.R.id.home:
                 finish();
                 return true;
-            case R.id.action_select:
+            case R.id.menu_detail_select:
                 mSelectionEnabled = !mSelectionEnabled;
                 item.setIcon(mSelectionEnabled ? R.drawable.ic_unselect : R.drawable.ic_select);
                 mCrashEdit.setVisibility(mSelectionEnabled ? View.VISIBLE : View.GONE);
                 mCrashScroll.setVisibility(mSelectionEnabled ? View.GONE : View.VISIBLE);
                 break;
-            case R.id.action_copy:
+            case R.id.menu_detail_copy:
                 Utils.copyTextToClipboard(
                         this, R.string.copy_label, mCrash.packageName, mCrash.stackTrace);
                 Toast.makeText(this, R.string.copied_toast, Toast.LENGTH_LONG).show();
                 return true;
-            case R.id.action_share:
+            case R.id.menu_detail_share:
                 Intent intent = new Intent(Intent.ACTION_SEND)
                         .setType("text/plain")
                         .putExtra(Intent.EXTRA_TEXT, mCrash.stackTrace);

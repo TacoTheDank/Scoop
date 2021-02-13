@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_search"
+        android:id="@+id/menu_detail_search"
         android:icon="@drawable/ic_search"
         android:title="@string/action_search"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
@@ -11,21 +11,21 @@
         app:showAsAction="always|collapseActionView" />
 
     <item
-        android:id="@+id/action_select"
+        android:id="@+id/menu_detail_select"
         android:icon="@drawable/ic_select"
         android:title="@string/action_select"
         app:iconTint="?android:textColorSecondary"
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/action_copy"
+        android:id="@+id/menu_detail_copy"
         android:icon="@drawable/ic_content_copy"
         android:title="@string/action_copy"
         app:iconTint="?android:textColorSecondary"
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/action_share"
+        android:id="@+id/menu_detail_share"
         android:icon="@drawable/ic_share"
         android:title="@string/action_share"
         app:iconTint="?android:textColorSecondary"

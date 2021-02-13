@@ -38,15 +38,15 @@ public class BlacklistAppsActivity extends AppCompatActivity implements SearchVi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_blacklist_apps);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.blacklist_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-        mList = findViewById(R.id.list);
+        mList = findViewById(R.id.blacklist_view);
         mList.setLayoutManager(new LinearLayoutManager(this));
-        mLoading = findViewById(R.id.loading);
+        mLoading = findViewById(R.id.blacklist_progressbar);
 
         if (savedInstanceState != null) {
             mIsLoading = savedInstanceState.getBoolean("mIsLoading");
@@ -94,7 +94,7 @@ public class BlacklistAppsActivity extends AppCompatActivity implements SearchVi
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_blacklist, menu);
-        MenuItem searchItem = menu.findItem(R.id.action_search);
+        MenuItem searchItem = menu.findItem(R.id.menu_blacklist_search);
         SearchView searchView = (SearchView) searchItem.getActionView();
         searchView.setOnQueryTextListener(this);
         searchView.setOnCloseListener(this);

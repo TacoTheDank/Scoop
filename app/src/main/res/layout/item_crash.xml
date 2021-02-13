@@ -9,7 +9,7 @@
     android:padding="@dimen/crash_container_padding">
 
     <ImageView
-        android:id="@+id/icon"
+        android:id="@+id/crash_item_appIcon"
         android:layout_width="@dimen/crash_icon_size"
         android:layout_height="@dimen/crash_icon_size"
         app:layout_constraintStart_toStartOf="parent"
@@ -17,39 +17,39 @@
         tools:src="@mipmap/ic_launcher" />
 
     <TextView
-        android:id="@+id/title"
+        android:id="@+id/crash_item_appName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="8dp"
-        android:layout_toStartOf="@+id/time"
+        android:layout_toStartOf="@+id/crash_item_time"
         android:ellipsize="end"
         android:fontFamily="@font/google_sans_medium"
         android:maxLines="1"
         android:textColor="?android:textColorPrimary"
         android:textSize="@dimen/crash_header_size"
-        app:layout_constraintBottom_toTopOf="@+id/crash"
-        app:layout_constraintEnd_toStartOf="@+id/time"
+        app:layout_constraintBottom_toTopOf="@+id/crash_item_crashLog"
+        app:layout_constraintEnd_toStartOf="@+id/crash_item_time"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/icon"
+        app:layout_constraintStart_toEndOf="@+id/crash_item_appIcon"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
         tools:text="@string/app_name" />
 
     <tk.wasdennnoch.scoop.view.RelativeTimeTextView
-        android:id="@+id/time"
+        android:id="@+id/crash_item_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/title"
+        android:layout_alignBaseline="@+id/crash_item_appName"
         android:layout_alignParentEnd="true"
         android:layout_gravity="end"
         android:textColor="?android:textColorSecondary"
-        app:layout_constraintBaseline_toBaselineOf="@+id/title"
+        app:layout_constraintBaseline_toBaselineOf="@+id/crash_item_appName"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
-        android:id="@+id/crash"
+        android:id="@+id/crash_item_crashLog"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -58,8 +58,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/icon"
-        app:layout_constraintTop_toBottomOf="@+id/title"
+        app:layout_constraintStart_toEndOf="@+id/crash_item_appIcon"
+        app:layout_constraintTop_toBottomOf="@+id/crash_item_appName"
         app:layout_constraintVertical_chainStyle="packed"
         tools:text="java.lang.RuntimeException: Dummy error" />
 

@@ -3,17 +3,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include layout="@layout/toolbar" />
+    <include
+        android:id="@+id/detail_toolbar"
+        layout="@layout/toolbar" />
 
     <tk.wasdennnoch.scoop.view.CroppingScrollView
-        android:id="@+id/scroll"
+        android:id="@+id/detail_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/actionBarSize"
         android:scrollbars="horizontal|vertical">
 
         <TextView
-            android:id="@+id/crash"
+            android:id="@+id/detail_crashLog_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="@dimen/detail_text_padding"
@@ -22,7 +24,7 @@
     </tk.wasdennnoch.scoop.view.CroppingScrollView>
 
     <EditText
-        android:id="@+id/crashEdit"
+        android:id="@+id/detail_crash_edit"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/actionBarSize"

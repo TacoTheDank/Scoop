@@ -17,12 +17,12 @@ public class AboutActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
-        setSupportActionBar(findViewById(R.id.toolbar));
+        setSupportActionBar(findViewById(R.id.about_toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         try {
             PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-            ((TextView) findViewById(R.id.version))
+            ((TextView) findViewById(R.id.about_version))
                     .setText(String.format(getString(R.string.about_version),
                             pInfo.versionName,
                             PackageInfoCompat.getLongVersionCode(pInfo)));
@@ -30,7 +30,7 @@ public class AboutActivity extends AppCompatActivity {
             // No.
         }
 
-        ((TextView) findViewById(R.id.credits)).setText(getString(R.string.about_author,
+        ((TextView) findViewById(R.id.about_credits)).setText(getString(R.string.about_author,
                 "@MrWasdennnoch (XDA), @paphonb (XDA)"));
     }
 

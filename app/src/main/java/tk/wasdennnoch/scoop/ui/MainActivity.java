@@ -113,12 +113,12 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true); // To make vector drawables work as menu item drawables
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar mToolbar;
-        setSupportActionBar(mToolbar = findViewById(R.id.toolbar));
+        Toolbar mToolbar = findViewById(R.id.main_toolbar);
+        setSupportActionBar(mToolbar);
 
-        mList = findViewById(R.id.list);
-        mLoading = findViewById(R.id.loading);
-        mNoItemsStub = findViewById(R.id.noItemStub);
+        mList = findViewById(R.id.main_crash_view);
+        mLoading = findViewById(R.id.main_progressbar);
+        mNoItemsStub = findViewById(R.id.main_noItem_stub);
 
         mAdapter = new CrashAdapter(this, this);
         mList.setAdapter(mAdapter);
@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
 
         if (savedInstanceState == null) {
             sUpdateRequired = false;
-            mCab = new MaterialCab(this, R.id.cab_stub);
+            mCab = new MaterialCab(this, R.id.main_cab_stub);
             if (!mHasCrash)
                 loadData();
             else
@@ -230,7 +230,7 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
                 mNoItems = mNoItemsStub.inflate();
                 // Need to do it that way because the devious face doesn't show
                 // up as text pre-LP for some reason (at least in my emulators)
-                TextView makeCrashTextView = findViewById(R.id.makeCrash);
+                TextView makeCrashTextView = findViewById(R.id.no_items_wannaMakeCrashText);
                 String makeCrashText = getResources().getString(R.string.make_crash_plain);
                 SpannableString spannable = new SpannableString(makeCrashText);
                 Drawable drawable = ContextCompat.getDrawable(this, R.drawable.ic_devious_face);
@@ -248,7 +248,7 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
             mNoItems.setVisibility(View.GONE);
         }
         if (!mIsAvailable) {
-            ViewStub noXposedStub = findViewById(R.id.noXposedStub);
+            ViewStub noXposedStub = findViewById(R.id.main_noXposed_stub);
             if (noXposedStub != null)
                 noXposedStub.inflate();
         }
@@ -315,7 +315,7 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
 
     @Override
     public boolean onCabItemClicked(MenuItem item) {
-        if (item.getItemId() == R.id.action_delete) {
+        if (item.getItemId() == R.id.menu_cab_delete) {
             final ArrayList<Crash> items = mAdapter.getSelectedItems();
             if (items.isEmpty()) return true;
             String content = String.format(getResources().getQuantityString(R.plurals.delete_multiple_confirm, items.size()), items.size());
@@ -364,7 +364,7 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        MenuItem searchItem = menu.findItem(R.id.action_search);
+        MenuItem searchItem = menu.findItem(R.id.menu_main_search);
         SearchView searchView = (SearchView) searchItem.getActionView();
         searchView.setOnQueryTextListener(this);
         searchView.setOnCloseListener(this);
@@ -391,7 +391,7 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_clear:
+            case R.id.menu_main_clear:
                 new MaterialDialog.Builder(this)
                         .content(R.string.dialog_clear_content)
                         .negativeText(android.R.string.cancel)
@@ -402,7 +402,7 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
                             onDataLoaded(null);
                         }).show();
                 return true;
-            case R.id.action_settings:
+            case R.id.menu_main_settings:
                 startActivity(new Intent(this, SettingsActivity.class));
                 return true;
             case android.R.id.home:

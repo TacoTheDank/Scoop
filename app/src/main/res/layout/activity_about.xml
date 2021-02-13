@@ -4,7 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include layout="@layout/toolbar" />
+    <include
+        android:id="@+id/about_toolbar"
+        layout="@layout/toolbar" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,7 +17,6 @@
         android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/icon"
             android:layout_width="130dp"
             android:layout_height="130dp"
             android:contentDescription="@null"
@@ -31,14 +32,14 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/credits"
+            android:id="@+id/about_credits"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:textColor="?android:textColorTertiary" />
 
         <TextView
-            android:id="@+id/version"
+            android:id="@+id/about_version"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"

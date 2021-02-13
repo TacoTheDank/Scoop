@@ -4,10 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include layout="@layout/toolbar" />
+    <include
+        android:id="@+id/main_toolbar"
+        layout="@layout/toolbar" />
 
     <ViewStub
-        android:id="@+id/cab_stub"
+        android:id="@+id/main_cab_stub"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize" />
 
@@ -17,13 +19,13 @@
         android:layout_marginTop="?actionBarSize">
 
         <tk.wasdennnoch.scoop.view.CrashRecyclerView
-            android:id="@+id/list"
+            android:id="@+id/main_crash_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbars="vertical" />
 
         <me.zhanghai.android.materialprogressbar.MaterialProgressBar
-            android:id="@+id/loading"
+            android:id="@+id/main_progressbar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -32,14 +34,14 @@
             app:mpb_progressStyle="circular" />
 
         <ViewStub
-            android:id="@+id/noItemStub"
+            android:id="@+id/main_noItem_stub"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout="@layout/no_items" />
 
         <ViewStub
-            android:id="@+id/noXposedStub"
+            android:id="@+id/main_noXposed_stub"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

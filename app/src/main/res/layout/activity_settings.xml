@@ -4,7 +4,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/toolbar" />
+    <include
+        android:id="@+id/settings_toolbar"
+        layout="@layout/toolbar" />
 
     <fragment
         android:name="tk.wasdennnoch.scoop.ui.SettingsActivity$SettingsFragment"
