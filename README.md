@@ -19,4 +19,4 @@ The instructions for this fork are the same, with one difference:
 
 #### Bugs
 
-If the app itself crashes, please open an issue and post the crashlog :) (in full spirit of irony, the app will catch its own crashlog as long as you did the inital setup).
+If the app itself crashes, please open an issue and post the crashlog :) (in full spirit of irony, the app will catch its own crashlog as long as you did the initial setup).
