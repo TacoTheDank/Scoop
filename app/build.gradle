@@ -72,7 +72,8 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
 
 // Other
-    implementation 'com.afollestad:inquiry:4.1.2'
+    // TODO: Replace Inquiry with AndroidX Room
+    implementation 'com.afollestad:inquiry:5.0.0'
     implementation 'com.afollestad:material-cab:0.1.12'
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
     implementation 'me.zhanghai.android.materialprogressbar:library:1.6.1'

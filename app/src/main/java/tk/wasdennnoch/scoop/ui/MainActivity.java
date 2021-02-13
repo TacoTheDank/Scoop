@@ -32,6 +32,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Locale;
 
 import tk.wasdennnoch.scoop.CrashReceiver;
@@ -339,7 +340,7 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
                             if (c.hiddenIds != null) {
                                 instance.delete(Crash.class).whereIn("_id", c.hiddenIds.toArray()).run();
                             }
-                            instance.delete(Crash.class).values(c).run();
+                            instance.delete(Crash.class).values(Collections.singletonList(c)).run();
                             mAdapter.removeCrash(c);
                         }
                         mAdapter.setSelectionEnabled(false);

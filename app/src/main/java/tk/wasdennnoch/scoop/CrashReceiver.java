@@ -20,6 +20,7 @@ import androidx.core.content.ContextCompat;
 import com.afollestad.inquiry.Inquiry;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 import tk.wasdennnoch.scoop.data.crash.Crash;
 import tk.wasdennnoch.scoop.data.crash.CrashLoader;
@@ -59,7 +60,7 @@ public class CrashReceiver extends BroadcastReceiver {
 
             Inquiry.get("receiver")
                     .insert(Crash.class)
-                    .values(crash)
+                    .values(Collections.singletonList(crash))
                     .run();
 
             Inquiry.destroy("receiver");
