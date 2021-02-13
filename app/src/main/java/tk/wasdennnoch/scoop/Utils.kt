@@ -17,9 +17,11 @@ object Utils {
     }
 
     /**
-     * Copies the text to the clipboard
+     * Copies the text to the clipboard.
      *
-     * @param text The text to place in the clipboard
+     * @param context   The context to pass.
+     * @param label     User-visible label for the clip data.
+     * @param text      The actual text in the clip.
      */
     @JvmStatic
     private fun copyToClipboard(context: Context, label: CharSequence, text: CharSequence) {
