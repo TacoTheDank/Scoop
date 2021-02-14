@@ -1,6 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <string name="app_name" translatable="false">Scoop</string>
     <string name="settings_title">Settings</string>
     <string name="blacklist_title">Blacklist</string>
     <string name="about_title">About</string>
@@ -43,8 +42,6 @@
     <string name="no_items">No crashes yet.</string>
     <!-- You can get a bit creative here as it's probably not too easy to translate directly -->
     <string name="make_crash_plain" tools:ignore="Typos">Wanna make something crash? .</string> <!-- dot gets replaced with image (ಠ‿ಠ), see explanation in MainActivity -->
-    <string name="no_xposed_1" translatable="false">Y U NO</string>
-    <string name="no_xposed_2" translatable="false">GRANT ROOT OR GIB XPOSED</string>
 
     <string name="settings_notif">Notifications</string>
     <string name="settings_overview">Overview</string>
@@ -67,7 +64,6 @@
     <string name="settings_auto_wrap_summary">Limit maximum line width to screen width</string>
     <string name="settings_ignore_threaddeath">Ignore ThreadDeath Errors</string>
     <string name="settings_ignore_threaddeath_summary">A ThreadDeath Error gets thrown to force stop a worker thread. It is a \"normal occurrence\" and does not make apps crash</string>
-    <string name="settings_force_eng" translatable="false">Force English app language</string>
     <string name="settings_about">About Scoop</string>
 
     <string name="about_author">Developed by %1$s</string>
