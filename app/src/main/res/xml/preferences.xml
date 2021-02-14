@@ -1,53 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory android:title="@string/settings_notif">
+    <PreferenceCategory
+        android:title="@string/settings_notif"
+        app:iconSpaceReserved="false">
 
-        <SwitchPreference
+        <SwitchPreferenceCompat
             android:defaultValue="true"
             android:key="show_notification"
-            android:title="@string/settings_show_notif" />
+            android:title="@string/settings_show_notif"
+            app:iconSpaceReserved="false" />
 
-        <SwitchPreference
+        <SwitchPreferenceCompat
             android:defaultValue="true"
             android:dependency="show_notification"
             android:key="show_action_buttons"
             android:summary="@string/settings_action_buttons_summary"
-            android:title="@string/settings_action_buttons" />
+            android:title="@string/settings_action_buttons"
+            app:iconSpaceReserved="false" />
 
-        <SwitchPreference
+        <SwitchPreferenceCompat
             android:defaultValue="false"
             android:dependency="show_notification"
             android:key="show_stack_trace_notif"
             android:summary="@string/settings_show_stack_trace_summary"
-            android:title="@string/settings_show_stack_trace" />
+            android:title="@string/settings_show_stack_trace"
+            app:iconSpaceReserved="false" />
 
     </PreferenceCategory>
 
 
-    <PreferenceCategory android:title="@string/settings_overview">
+    <PreferenceCategory
+        android:title="@string/settings_overview"
+        app:iconSpaceReserved="false">
 
-        <SwitchPreference
+        <SwitchPreferenceCompat
             android:defaultValue="false"
             android:key="combine_same_apps"
             android:summary="@string/settings_combine_same_apps_summary"
-            android:title="@string/settings_combine_same_apps" />
+            android:title="@string/settings_combine_same_apps"
+            app:iconSpaceReserved="false" />
 
-        <SwitchPreference
+        <SwitchPreferenceCompat
             android:defaultValue="true"
             android:key="combine_same_stack_trace"
             android:summary="@string/settings_combine_same_trace_summary"
-            android:title="@string/settings_combine_same_trace" />
+            android:title="@string/settings_combine_same_trace"
+            app:iconSpaceReserved="false" />
 
-        <SwitchPreference
+        <SwitchPreferenceCompat
             android:defaultValue="true"
             android:key="search_package_name"
             android:summary="@string/settings_search_pkg_summary"
-            android:title="@string/settings_search_pkg" />
+            android:title="@string/settings_search_pkg"
+            app:iconSpaceReserved="false" />
 
         <Preference
             android:summary="@string/settings_blacklisted_apps_summary"
-            android:title="@string/settings_blacklisted_apps">
+            android:title="@string/settings_blacklisted_apps"
+            app:iconSpaceReserved="false">
             <intent
                 android:targetClass="tk.wasdennnoch.scoop.ui.BlacklistAppsActivity"
                 android:targetPackage="@string/application_id" />
@@ -56,31 +68,40 @@
     </PreferenceCategory>
 
 
-    <PreferenceCategory android:title="@string/settings_detail_view">
+    <PreferenceCategory
+        android:title="@string/settings_detail_view"
+        app:iconSpaceReserved="false">
 
-        <SwitchPreference
+        <SwitchPreferenceCompat
             android:defaultValue="false"
             android:key="auto_wrap"
             android:summary="@string/settings_auto_wrap_summary"
-            android:title="@string/settings_auto_wrap" />
+            android:title="@string/settings_auto_wrap"
+            app:iconSpaceReserved="false" />
 
     </PreferenceCategory>
 
 
-    <PreferenceCategory android:title="@string/settings_misc">
+    <PreferenceCategory
+        android:title="@string/settings_misc"
+        app:iconSpaceReserved="false">
 
-        <SwitchPreference
+        <SwitchPreferenceCompat
             android:defaultValue="true"
             android:key="ignore_threaddeath"
             android:summary="@string/settings_ignore_threaddeath_summary"
-            android:title="@string/settings_ignore_threaddeath" />
+            android:title="@string/settings_ignore_threaddeath"
+            app:iconSpaceReserved="false" />
 
-        <SwitchPreference
+        <SwitchPreferenceCompat
             android:defaultValue="false"
             android:key="force_english"
-            android:title="@string/settings_force_eng" />
+            android:title="@string/settings_force_eng"
+            app:iconSpaceReserved="false" />
 
-        <Preference android:title="@string/settings_about">
+        <Preference
+            android:title="@string/settings_about"
+            app:iconSpaceReserved="false">
             <intent
                 android:targetClass="tk.wasdennnoch.scoop.ui.AboutActivity"
                 android:targetPackage="@string/application_id" />
