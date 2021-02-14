@@ -23,11 +23,11 @@ class DogbinUploadService : Service() {
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         val data = intent.getParcelableExtra<Intent>("data")
         val crash = intent.getParcelableExtra<Crash>("crash")
-        data.putExtra("crash", crash)
-        data.putExtra(XposedHook.INTENT_UPDATE, true)
-        data.putExtra(XposedHook.INTENT_HIDE_UPLOAD, true)
+        data?.putExtra("crash", crash)
+        data?.putExtra(XposedHook.INTENT_UPDATE, true)
+        data?.putExtra(XposedHook.INTENT_HIDE_UPLOAD, true)
         sendBroadcast(data)
-        data.putExtra(XposedHook.INTENT_HIDE_UPLOAD, false)
+        data?.putExtra(XposedHook.INTENT_HIDE_UPLOAD, false)
 
         uploadQueue.offer(data)
         if (!uploadStarted) {

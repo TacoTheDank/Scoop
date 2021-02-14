@@ -13,6 +13,7 @@ import android.os.HandlerThread
 import android.os.SystemClock
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
+import com.topjohnwu.superuser.Shell
 import tk.wasdennnoch.scoop.detector.CrashDetectorService
 
 class ScoopApplication : Application() {
@@ -63,7 +64,6 @@ class ScoopApplication : Application() {
         stopService(Intent(this, CrashDetectorService::class.java))
     }
 
-    // TODO: Catch exception when permission isn't granted
     private fun isPermissionGranted(tryGranting: Boolean = true): Boolean {
         synchronized(permissionLock) {
             val permission = Manifest.permission.READ_LOGS
@@ -72,10 +72,9 @@ class ScoopApplication : Application() {
                 permission
             ) == PackageManager.PERMISSION_GRANTED
             return if (!granted && tryGranting) {
-                Runtime.getRuntime().exec(
-                    "su -c pm grant ${BuildConfig.APPLICATION_ID}" +
-                            " $permission"
-                ).waitFor()
+                Shell.su(
+                    "pm grant ${BuildConfig.APPLICATION_ID} $permission"
+                ).exec()
                 isPermissionGranted(false)
             } else {
                 granted

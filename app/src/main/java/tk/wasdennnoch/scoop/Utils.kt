@@ -28,7 +28,7 @@ object Utils {
         val clipboard: ClipboardManager =
             ContextCompat.getSystemService(context, ClipboardManager::class.java)!!
         val data = ClipData.newPlainText(label, text)
-        clipboard.primaryClip = data
+        clipboard.setPrimaryClip(data)
     }
 
     @JvmStatic
