@@ -66,14 +66,15 @@ class ScoopApplication : Application() {
     // TODO: Catch exception when permission isn't granted
     private fun isPermissionGranted(tryGranting: Boolean = true): Boolean {
         synchronized(permissionLock) {
+            val permission = Manifest.permission.READ_LOGS
             val granted = ContextCompat.checkSelfPermission(
                 this,
-                Manifest.permission.READ_LOGS
+                permission
             ) == PackageManager.PERMISSION_GRANTED
             return if (!granted && tryGranting) {
                 Runtime.getRuntime().exec(
                     "su -c pm grant ${BuildConfig.APPLICATION_ID}" +
-                            Manifest.permission.READ_LOGS
+                            " $permission"
                 ).waitFor()
                 isPermissionGranted(false)
             } else {
