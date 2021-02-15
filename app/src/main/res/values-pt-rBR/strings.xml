@@ -1,58 +1,94 @@
-<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
 <resources>
+
+    <!-- App description -->
+    <string name="xposed_description">Captura um stack trace quando um app trava de forma inesperada</string>
+
+    <!-- Toolbar titles -->
     <string name="settings_title">Configurações</string>
     <string name="blacklist_title">Lista negra</string>
     <string name="about_title">Sobre</string>
-    <string name="xposed_description">Captura um stack trace quando um app trava de forma inesperada</string>
+
+    <!-- Actions -->
     <string name="action_clear">Limpar</string>
     <string name="action_settings">Configurações</string>
     <string name="action_search">Procurar</string>
+    <string name="action_select">Toggle selection mode</string>
     <string name="action_share">Compartilhar</string>
     <string name="action_copy">Copiar para clipboard</string>
     <string name="action_copy_short">Copiar</string>
     <string name="action_delete">Deletar</string>
+
+    <!-- Main activity stuff -->
     <string name="just_now">Agora mesmo</string>
     <string name="crash_count">%1$s (%2$d)</string>
     <string name="app_not_installed">%s (não instalado)</string>
     <string name="copy_label">Stack trace de %s</string>
+    <string name="copy_link_label">Stack trace link of %s</string>
     <string name="copied_toast">Stack trace copiado para o clipboard</string>
+    <string name="copied_link_toast">Stack trace link copied to clipboard</string>
     <plurals name="items_selected_count">
-        <item quantity="other">%d travamentos selecionados</item>
         <item quantity="one">%d travamento selecionado</item>
+        <item quantity="other">%d travamentos selecionados</item>
     </plurals>
     <plurals name="items_children_count">
-        <item quantity="other">%d Travamentos</item>
         <item quantity="one">%d Travamento</item>
+        <item quantity="other">%d Travamentos</item>
     </plurals>
     <string name="dialog_clear_content">Você tem certeza que deseja limpar todos os travamentos?</string>
     <plurals name="delete_multiple_confirm">
-        <item quantity="other">Deletar %d travamentos? Isso não pode ser desfeito!</item>
         <item quantity="one">Deletar %d travamento? Isso não pode ser desfeito!</item>
+        <item quantity="other">Deletar %d travamentos? Isso não pode ser desfeito!</item>
     </plurals>
     <string name="no_items">Nenhum travamento ainda.</string>
-    <string name="make_crash_plain">Quer fazer algo travar? .</string>
+    <!--        You can get a bit creative here as it's probably not too easy to translate directly -->
+    <string name="make_crash_plain">Quer fazer algo travar? .</string> <!-- dot gets replaced with image (ಠ‿ಠ), see explanation in MainActivity -->
+
+    <!-- Setting categories -->
     <string name="settings_notif">Notificações</string>
     <string name="settings_overview">Visão geral</string>
     <string name="settings_detail_view">Visualização detalhada</string>
     <string name="settings_misc">Variado</string>
+
+    <!-- Settings (notifications) -->
     <string name="settings_show_notif">Mostrar notificação ao travar</string>
     <string name="settings_action_buttons">Mostrar botões de ações</string>
     <string name="settings_action_buttons_summary">Adicionar botões para copiar e compartilhar o travamento na notificação</string>
     <string name="settings_show_stack_trace">Mostrar stack trace na notificação</string>
     <string name="settings_show_stack_trace_summary">Exibir o começo do stack trace na notificação ao invés de apenas a descrição</string>
-    <string name="settings_search_pkg">Procurar no nome do pacote</string>
-    <string name="settings_search_pkg_summary">Procurar pelo termo provido no nome do app assim como no nome do pacote</string>
+
+    <!-- Settings (overview) -->
     <string name="settings_combine_same_apps">Combinar apps idênticos</string>
     <string name="settings_combine_same_apps_summary">Ordenar travamentos por entradas de apps individuais que contém diferentes travamentos</string>
     <string name="settings_combine_same_trace">Combinar travamentos idênticos</string>
     <string name="settings_combine_same_trace_summary">Combinar travamentos do mesmo app com o mesmo stack trace em um item</string>
+    <string name="settings_search_pkg">Procurar no nome do pacote</string>
+    <string name="settings_search_pkg_summary">Procurar pelo termo provido no nome do app assim como no nome do pacote</string>
     <string name="settings_blacklisted_apps">Apps na lista negra</string>
     <string name="settings_blacklisted_apps_summary">Travamentos causados por apps na lista negra serão escondidos</string>
+
+    <!-- Settings (detail view) -->
     <string name="settings_auto_wrap">Quebra de linha automática</string>
     <string name="settings_auto_wrap_summary">Limitar a largura máxima da linha à largura da tela</string>
+
+    <!-- Settings (miscellaneous) -->
     <string name="settings_ignore_threaddeath">Ignorar erros ThreadDeath</string>
     <string name="settings_ignore_threaddeath_summary">Um erro ThreadDeath é ativado para forçar a parada de um thread de trabalho. É uma \"ocorrência normal\" e não faz apps travarem</string>
     <string name="settings_about">Sobre Scoop</string>
+
+    <!-- About screen -->
     <string name="about_author">Desenvolvido por %1$s</string>
     <string name="about_version">Versão %1$s (%2$d)</string>
+    <string name="about_updates">Check for updates</string>
+
+    <!-- Notification channels -->
+    <string name="crash_channel">Application crashes</string>
+    <string name="status_channel">Scoop status</string>
+    <string name="scoop_running">Monitoring app crashes</string>
+    <string name="action_kill">Stop</string>
+
+    <!-- Dogbin -->
+    <string name="dogbin_uploading">Upload in progress…</string>
+    <string name="action_dogbin_upload">Upload to dogbin</string>
+    <string name="action_dogbin_upload_error">Upload failed</string>
+    <string name="action_dogbin_copy_link">Copy link</string>
 </resources>
