@@ -41,7 +41,7 @@
     </plurals>
     <string name="no_items">Nenhum travamento ainda.</string>
     <!--        You can get a bit creative here as it's probably not too easy to translate directly -->
-    <string name="make_crash_plain">Quer fazer algo travar? .</string> <!-- dot gets replaced with image (ಠ‿ಠ), see explanation in MainActivity -->
+    <string name="make_crash">Quer fazer algo travar? ಠ‿ಠ</string>
 
     <!-- Setting categories -->
     <string name="settings_notif">Notificações</string>

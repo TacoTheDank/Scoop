@@ -3,27 +3,20 @@ package tk.wasdennnoch.scoop.ui;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.ImageSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewStub;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.preference.PreferenceManager;
 
 import com.afollestad.inquiry.Inquiry;
@@ -39,7 +32,6 @@ import tk.wasdennnoch.scoop.CrashReceiver;
 import tk.wasdennnoch.scoop.R;
 import tk.wasdennnoch.scoop.ScoopApplication;
 import tk.wasdennnoch.scoop.ToolbarElevationHelper;
-import tk.wasdennnoch.scoop.Utils;
 import tk.wasdennnoch.scoop.data.crash.Crash;
 import tk.wasdennnoch.scoop.data.crash.CrashAdapter;
 import tk.wasdennnoch.scoop.data.crash.CrashLoader;
@@ -229,20 +221,6 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
         if (!loading && empty && mIsAvailable) {
             if (mNoItems == null) {
                 mNoItems = mNoItemsStub.inflate();
-                // Need to do it that way because the devious face doesn't show
-                // up as text pre-LP for some reason (at least in my emulators)
-                TextView makeCrashTextView = findViewById(R.id.no_items_wannaMakeCrashText);
-                String makeCrashText = getResources().getString(R.string.make_crash_plain);
-                SpannableString spannable = new SpannableString(makeCrashText);
-                Drawable drawable = ContextCompat.getDrawable(this, R.drawable.ic_devious_face);
-                int height = makeCrashTextView.getLineHeight();
-                int width = (int) ((float) height / drawable.getIntrinsicHeight() * drawable.getIntrinsicWidth());
-                drawable.setBounds(0, 0, width, height);
-                drawable = DrawableCompat.wrap(drawable);
-                DrawableCompat.setTint(drawable.mutate(), Utils.getAttrColor(this, android.R.attr.textColorSecondary));
-                ImageSpan imageSpan = new ImageSpan(drawable, ImageSpan.ALIGN_BASELINE);
-                spannable.setSpan(imageSpan, makeCrashText.length() - 1, makeCrashText.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-                makeCrashTextView.setText(spannable);
             }
             mNoItems.setVisibility(View.VISIBLE);
         } else if (mNoItems != null) {

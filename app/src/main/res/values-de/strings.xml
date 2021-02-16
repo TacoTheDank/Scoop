@@ -41,7 +41,7 @@
     </plurals>
     <string name="no_items">Noch keine Crashes.</string>
     <!--        You can get a bit creative here as it's probably not too easy to translate directly -->
-    <string name="make_crash_plain" tools:ignore="Typos">Mal was crashen lassen? .</string> <!-- dot gets replaced with image (ಠ‿ಠ), see explanation in MainActivity -->
+    <string name="make_crash">Mal was crashen lassen? ಠ‿ಠ</string>
 
     <!-- Setting categories -->
     <string name="settings_notif">Benachrichtigungen</string>

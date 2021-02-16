@@ -22,11 +22,11 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/no_items_wannaMakeCrashText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/no_crash_item_spacing"
         android:gravity="center_horizontal"
+        android:text="@string/make_crash"
         android:textColor="?android:textColorTertiary" />
 
 </LinearLayout>
