@@ -18,6 +18,7 @@ public class AppLoader {
         mListener = new WeakReference<>(activity);
         new Thread(() -> {
             PackageManager pm = mListener.get().getPackageManager();
+            // TODO: Deal with https://developer.android.com/about/versions/11/privacy/package-visibility
             List<ApplicationInfo> apps = pm.getInstalledApplications(0);
             Collections.sort(apps, new ApplicationInfo.DisplayNameComparator(pm));
             final ArrayList<App> finalApps = new ArrayList<>();
