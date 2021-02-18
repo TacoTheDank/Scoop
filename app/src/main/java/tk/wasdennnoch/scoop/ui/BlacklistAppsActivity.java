@@ -6,15 +6,12 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
 import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,38 +21,37 @@ import tk.wasdennnoch.scoop.ToolbarElevationHelper;
 import tk.wasdennnoch.scoop.data.app.App;
 import tk.wasdennnoch.scoop.data.app.AppAdapter;
 import tk.wasdennnoch.scoop.data.app.AppLoader;
+import tk.wasdennnoch.scoop.databinding.ActivityBlacklistAppsBinding;
 
 public class BlacklistAppsActivity extends AppCompatActivity implements SearchView.OnQueryTextListener, SearchView.OnCloseListener {
 
+    private ActivityBlacklistAppsBinding binding;
     private SharedPreferences mPrefs;
-    private RecyclerView mList;
-    private ProgressBar mLoading;
     private AppAdapter mAdapter;
     private boolean mIsLoading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_blacklist_apps);
 
-        Toolbar toolbar = findViewById(R.id.blacklist_toolbar);
-        setSupportActionBar(toolbar);
+        binding = ActivityBlacklistAppsBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        setSupportActionBar(binding.blacklistToolbar.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-        mList = findViewById(R.id.blacklist_view);
-        mList.setLayoutManager(new LinearLayoutManager(this));
-        mLoading = findViewById(R.id.blacklist_progressbar);
+        binding.blacklistView.setLayoutManager(new LinearLayoutManager(this));
 
         if (savedInstanceState != null) {
             mIsLoading = savedInstanceState.getBoolean("mIsLoading");
         }
 
         mAdapter = new AppAdapter();
-        mList.setAdapter(mAdapter);
+        binding.blacklistView.setAdapter(mAdapter);
 
-        new ToolbarElevationHelper(mList, toolbar);
+        new ToolbarElevationHelper(binding.blacklistView, binding.blacklistToolbar.toolbar);
     }
 
     @Override
@@ -82,8 +78,8 @@ public class BlacklistAppsActivity extends AppCompatActivity implements SearchVi
     private void updateViewStates(boolean loading) {
         mIsLoading = loading;
         boolean empty = mAdapter.isEmpty();
-        mLoading.setVisibility(loading ? View.VISIBLE : View.GONE);
-        mList.setVisibility(loading || empty ? View.GONE : View.VISIBLE);
+        binding.blacklistProgressbar.setVisibility(loading ? View.VISIBLE : View.GONE);
+        binding.blacklistView.setVisibility(loading || empty ? View.GONE : View.VISIBLE);
     }
 
     public void onDataLoaded(ArrayList<App> apps) {

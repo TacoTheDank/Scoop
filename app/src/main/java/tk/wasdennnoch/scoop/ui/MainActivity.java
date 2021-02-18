@@ -9,14 +9,11 @@ import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewStub;
-import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
 import androidx.preference.PreferenceManager;
 
 import com.afollestad.inquiry.Inquiry;
@@ -35,28 +32,25 @@ import tk.wasdennnoch.scoop.ToolbarElevationHelper;
 import tk.wasdennnoch.scoop.data.crash.Crash;
 import tk.wasdennnoch.scoop.data.crash.CrashAdapter;
 import tk.wasdennnoch.scoop.data.crash.CrashLoader;
+import tk.wasdennnoch.scoop.databinding.ActivityMainBinding;
 import tk.wasdennnoch.scoop.ui.utils.AnimationUtils;
-import tk.wasdennnoch.scoop.view.CrashRecyclerView;
 
 public class MainActivity extends AppCompatActivity implements CrashAdapter.Listener,
         SearchView.OnQueryTextListener, SearchView.OnCloseListener, MaterialCab.Callback {
 
     private static final String EXTRA_CRASH = "tk.wasdennnoch.scoop.EXTRA_CRASH";
     private static final int CODE_CHILDREN_VIEW = 1;
-
     private static final int UPDATE_DELAY = 200;
     private static boolean sUpdateRequired;
     private static boolean sVisible;
     private static Crash sNewCrash;
     private final CrashLoader mLoader = new CrashLoader();
+    private ActivityMainBinding binding;
     private boolean mCombineApps;
     private boolean mHasCrash;
     private SharedPreferences mPrefs;
     private Handler mHandler;
     private CrashAdapter mAdapter;
-    private CrashRecyclerView mList;
-    private ProgressBar mLoading;
-    private ViewStub mNoItemsStub;
     private View mNoItems;
 
     private MaterialCab mCab;
@@ -105,18 +99,15 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
 
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true); // To make vector drawables work as menu item drawables
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar mToolbar = findViewById(R.id.main_toolbar);
-        setSupportActionBar(mToolbar);
 
-        mList = findViewById(R.id.main_crash_view);
-        mLoading = findViewById(R.id.main_progressbar);
-        mNoItemsStub = findViewById(R.id.main_noItem_stub);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        setSupportActionBar(binding.mainToolbar.toolbar);
 
         mAdapter = new CrashAdapter(this, this);
-        mList.setAdapter(mAdapter);
-        mList.setVisibility(View.GONE);
-        new ToolbarElevationHelper(mList, mToolbar);
+        binding.mainCrashView.setAdapter(mAdapter);
+        binding.mainCrashView.setVisibility(View.GONE);
+        new ToolbarElevationHelper(binding.mainCrashView, binding.mainToolbar.toolbar);
 
         Intent i = getIntent();
         mHasCrash = i.hasExtra(EXTRA_CRASH);
@@ -133,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
 
         mCombineApps = mPrefs.getBoolean("combine_same_apps", false);
         mAdapter.setCombineSameApps(!mHasCrash && mCombineApps);
-        mList.setReverseOrder(mHasCrash || !mCombineApps);
+        binding.mainCrashView.setReverseOrder(mHasCrash || !mCombineApps);
 
         Inquiry.newInstance(this, "crashes")
                 .instanceName("main")
@@ -216,20 +207,18 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
             loading = true;
         }
         boolean empty = mAdapter.isEmpty();
-        mLoading.setVisibility(loading ? View.VISIBLE : View.GONE);
-        mList.setVisibility(loading || empty || !mIsAvailable ? View.GONE : View.VISIBLE);
+        binding.mainProgressbar.setVisibility(loading ? View.VISIBLE : View.GONE);
+        binding.mainCrashView.setVisibility(loading || empty || !mIsAvailable ? View.GONE : View.VISIBLE);
         if (!loading && empty && mIsAvailable) {
             if (mNoItems == null) {
-                mNoItems = mNoItemsStub.inflate();
+                mNoItems = binding.mainNoItemsStub.inflate();
             }
             mNoItems.setVisibility(View.VISIBLE);
         } else if (mNoItems != null) {
             mNoItems.setVisibility(View.GONE);
         }
         if (!mIsAvailable) {
-            ViewStub noXposedStub = findViewById(R.id.main_noXposed_stub);
-            if (noXposedStub != null)
-                noXposedStub.inflate();
+            binding.mainNoXposedStub.inflate();
         }
     }
 

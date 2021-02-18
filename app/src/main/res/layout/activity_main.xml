@@ -34,7 +34,7 @@
             app:mpb_progressStyle="circular" />
 
         <ViewStub
-            android:id="@+id/main_noItem_stub"
+            android:id="@+id/main_noItems_stub"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

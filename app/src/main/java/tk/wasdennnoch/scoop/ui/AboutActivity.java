@@ -6,28 +6,27 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatButton;
 import androidx.core.content.pm.PackageInfoCompat;
 
 import tk.wasdennnoch.scoop.R;
+import tk.wasdennnoch.scoop.databinding.ActivityAboutBinding;
 
 public class AboutActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_about);
-        setSupportActionBar(findViewById(R.id.about_toolbar));
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        AppCompatButton checkUpdate = findViewById(R.id.about_updates);
+        ActivityAboutBinding binding = ActivityAboutBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        setSupportActionBar(binding.aboutToolbar.toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         try {
             PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-            ((TextView) findViewById(R.id.about_version))
+            binding.aboutVersion
                     .setText(String.format(getString(R.string.about_version),
                             pInfo.versionName,
                             PackageInfoCompat.getLongVersionCode(pInfo)));
@@ -35,10 +34,10 @@ public class AboutActivity extends AppCompatActivity {
             // No.
         }
 
-        ((TextView) findViewById(R.id.about_credits)).setText(getString(R.string.about_author,
+        binding.aboutCredits.setText(getString(R.string.about_author,
                 "@MrWasdennnoch (XDA), @paphonb (XDA), @TacoTheDank (GitHub)"));
 
-        checkUpdate.setOnClickListener(v -> {
+        binding.aboutUpdates.setOnClickListener(v -> {
             Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/TacoTheDank/Scoop/releases"));
             startActivity(i);
         });

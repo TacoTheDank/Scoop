@@ -25,39 +25,35 @@ import tk.wasdennnoch.scoop.R;
 import tk.wasdennnoch.scoop.Utils;
 import tk.wasdennnoch.scoop.data.crash.Crash;
 import tk.wasdennnoch.scoop.data.crash.CrashLoader;
-import tk.wasdennnoch.scoop.view.CroppingScrollView;
-import tk.wasdennnoch.scoop.view.MergedScrollView;
+import tk.wasdennnoch.scoop.databinding.ActivityDetailBinding;
 
 public class DetailActivity extends AppCompatActivity implements SearchView.OnQueryTextListener, SearchView.OnCloseListener {
 
     public static final String EXTRA_CRASH = "crash";
-
-    private TextView mCrashText;
-    private TextView mCrashEdit;
-    private MergedScrollView mCrashScroll;
     private Crash mCrash;
     private int mHighlightColor;
     private boolean mSelectionEnabled = false;
+    private ActivityDetailBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail);
-        setSupportActionBar(findViewById(R.id.detail_toolbar));
+
+        binding = ActivityDetailBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        setSupportActionBar(binding.detailToolbar.toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mHighlightColor = ContextCompat.getColor(this, R.color.highlightColor);
         mCrash = getIntent().getParcelableExtra(EXTRA_CRASH);
         getSupportActionBar().setTitle(CrashLoader.getAppName(this, mCrash.packageName, true));
-        mCrashScroll = findViewById(R.id.detail_scroll_view);
-        mCrashEdit = findViewById(R.id.detail_crash_edit);
-        mCrashText = findViewById(R.id.detail_crashLog_view);
-        mCrashText.setText(mCrash.stackTrace);
-        mCrashEdit.setText(mCrash.stackTrace);
-        mCrashEdit.setTextSize(TypedValue.COMPLEX_UNIT_PX, mCrashText.getTextSize());
+
+        binding.detailCrashLogText.setText(mCrash.stackTrace);
+        binding.detailCrashEdit.setText(mCrash.stackTrace);
+        binding.detailCrashEdit.setTextSize(TypedValue.COMPLEX_UNIT_PX, binding.detailCrashLogText.getTextSize());
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        ((CroppingScrollView) mCrashScroll).setCropHorizontally(prefs.getBoolean("auto_wrap", false));
+        binding.detailScrollView.setCropHorizontally(prefs.getBoolean("auto_wrap", false));
     }
 
     private void highlightText(String text) {
@@ -72,7 +68,7 @@ public class DetailActivity extends AppCompatActivity implements SearchView.OnQu
                 index += size;
             }
         }
-        mCrashText.setText(span, TextView.BufferType.SPANNABLE);
+        binding.detailCrashLogText.setText(span, TextView.BufferType.SPANNABLE);
     }
 
     @Override
@@ -111,8 +107,8 @@ public class DetailActivity extends AppCompatActivity implements SearchView.OnQu
             case R.id.menu_detail_select:
                 mSelectionEnabled = !mSelectionEnabled;
                 item.setIcon(mSelectionEnabled ? R.drawable.ic_unselect : R.drawable.ic_select);
-                mCrashEdit.setVisibility(mSelectionEnabled ? View.VISIBLE : View.GONE);
-                mCrashScroll.setVisibility(mSelectionEnabled ? View.GONE : View.VISIBLE);
+                binding.detailCrashEdit.setVisibility(mSelectionEnabled ? View.VISIBLE : View.GONE);
+                binding.detailScrollView.setVisibility(mSelectionEnabled ? View.GONE : View.VISIBLE);
                 break;
             case R.id.menu_detail_copy:
                 Utils.copyTextToClipboard(
