@@ -11,8 +11,8 @@ android {
         applicationId "taco.scoop"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 26
-        versionName "2.1.1"
+        versionCode 27
+        versionName "2.1.2"
 
         vectorDrawables.useSupportLibrary true
 
