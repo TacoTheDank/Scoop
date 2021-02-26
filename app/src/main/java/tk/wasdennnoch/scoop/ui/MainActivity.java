@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SearchView;
@@ -18,7 +19,6 @@ import androidx.preference.PreferenceManager;
 
 import com.afollestad.inquiry.Inquiry;
 import com.afollestad.materialcab.MaterialCab;
-import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -287,11 +287,11 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
             final ArrayList<Crash> items = mAdapter.getSelectedItems();
             if (items.isEmpty()) return true;
             String content = String.format(getResources().getQuantityString(R.plurals.delete_multiple_confirm, items.size()), items.size());
-            new MaterialDialog.Builder(this)
-                    .content(content)
-                    .positiveText(android.R.string.ok)
-                    .negativeText(android.R.string.cancel)
-                    .onPositive((materialDialog, dialogAction) -> {
+            new AlertDialog.Builder(this)
+                    .setMessage(content)
+                    .setNegativeButton(android.R.string.cancel, (dialog, which) -> {
+                    })
+                    .setPositiveButton(android.R.string.ok, (dialog, which) -> {
                         // TODO THIS IS A MESS
                         Inquiry instance = Inquiry.get("main");
                         for (Crash c : items) {
@@ -360,11 +360,11 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_main_clear:
-                new MaterialDialog.Builder(this)
-                        .content(R.string.dialog_clear_content)
-                        .negativeText(android.R.string.cancel)
-                        .positiveText(android.R.string.ok)
-                        .onPositive((dialog, which) -> {
+                new AlertDialog.Builder(this)
+                        .setMessage(R.string.dialog_clear_content)
+                        .setNegativeButton(android.R.string.cancel, (dialog, which) -> {
+                        })
+                        .setPositiveButton(android.R.string.ok, (dialog, which) -> {
                             Inquiry.get("main")
                                     .dropTable(Crash.class); // bam!
                             onDataLoaded(null);
