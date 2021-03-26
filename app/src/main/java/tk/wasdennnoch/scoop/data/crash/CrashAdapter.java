@@ -21,6 +21,7 @@ import java.util.Locale;
 
 import tk.wasdennnoch.scoop.R;
 import tk.wasdennnoch.scoop.Utils;
+import tk.wasdennnoch.scoop.databinding.ItemCrashBinding;
 import tk.wasdennnoch.scoop.view.RelativeTimeTextView;
 
 public class CrashAdapter extends RecyclerView.Adapter<CrashAdapter.CrashViewHolder> {
@@ -93,7 +94,9 @@ public class CrashAdapter extends RecyclerView.Adapter<CrashAdapter.CrashViewHol
         if (mSearchActive) {
             for (Crash c : mItems) { // Search app name and package (if configured)
                 if (mSearchPackageName && c.packageName.toLowerCase(Locale.ENGLISH).contains(text)
-                        || CrashLoader.getAppName(context, c.packageName, false).toLowerCase(Locale.ENGLISH).contains(text)) {
+                        || CrashLoader.getAppName(
+                        context, c.packageName, false)
+                        .toLowerCase(Locale.ENGLISH).contains(text)) {
                     mSearchedItems.add(c);
                 }
             }
@@ -147,8 +150,10 @@ public class CrashAdapter extends RecyclerView.Adapter<CrashAdapter.CrashViewHol
 
     @NonNull
     @Override
-    public CrashViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new CrashViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_crash, parent, false));
+    public CrashViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new CrashViewHolder(
+                ItemCrashBinding.inflate(
+                        LayoutInflater.from(parent.getContext()), parent, false));
     }
 
     @Override
@@ -202,15 +207,17 @@ public class CrashAdapter extends RecyclerView.Adapter<CrashAdapter.CrashViewHol
         final RelativeTimeTextView time;
         final TextView crashText;
         final Drawable normalBackground;
+        final ItemCrashBinding binding;
         Crash crash;
 
-        CrashViewHolder(View v) {
-            super(v);
-            icon = v.findViewById(R.id.crash_item_appIcon);
-            title = v.findViewById(R.id.crash_item_appName);
-            time = v.findViewById(R.id.crash_item_time);
-            crashText = v.findViewById(R.id.crash_item_crashLog);
-            normalBackground = v.getBackground();
+        CrashViewHolder(final ItemCrashBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
+            icon = binding.crashItemAppIcon;
+            title = binding.crashItemAppName;
+            time = binding.crashItemTime;
+            crashText = binding.crashItemCrashLog;
+            normalBackground = binding.getRoot().getBackground();
         }
 
         @Override

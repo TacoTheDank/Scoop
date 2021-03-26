@@ -15,9 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import tk.wasdennnoch.scoop.R;
+import tk.wasdennnoch.scoop.databinding.ItemBlacklistBinding;
 
-public class AppAdapter extends RecyclerView.Adapter<AppAdapter.ViewHolder> {
+public class AppAdapter extends RecyclerView.Adapter<AppAdapter.AppViewHolder> {
 
     private final ArrayList<App> mSearchedItems = new ArrayList<>();
     private ArrayList<App> mItems = new ArrayList<>();
@@ -69,12 +69,14 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.ViewHolder> {
 
     @NonNull
     @Override
-    public AppAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new AppAdapter.ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_blacklist, parent, false));
+    public AppViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new AppViewHolder(
+                ItemBlacklistBinding.inflate(
+                        LayoutInflater.from(parent.getContext()), parent, false));
     }
 
     @Override
-    public void onBindViewHolder(AppAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(AppViewHolder holder, int position) {
         App app = (mSearchActive ? mSearchedItems : mItems).get(position);
         holder.app = app;
         holder.appIcon.setImageDrawable(app.icon);
@@ -89,20 +91,22 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.ViewHolder> {
         return (mSearchActive ? mSearchedItems : mItems).size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class AppViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         final ImageView appIcon;
         final TextView appName;
         final TextView packageName;
         final CheckBox check;
+        final ItemBlacklistBinding binding;
         App app;
 
-        ViewHolder(View itemView) {
-            super(itemView);
-            appIcon = itemView.findViewById(R.id.blacklist_item_appIcon);
-            appName = itemView.findViewById(R.id.blacklist_item_appName);
-            packageName = itemView.findViewById(R.id.blacklist_item_packageName);
-            check = itemView.findViewById(R.id.blacklist_item_checkBox);
+        AppViewHolder(final ItemBlacklistBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
+            appIcon = binding.blacklistItemAppIcon;
+            appName = binding.blacklistItemAppName;
+            packageName = binding.blacklistItemPackageName;
+            check = binding.blacklistItemCheckBox;
         }
 
         @Override
