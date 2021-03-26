@@ -17,11 +17,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import tk.wasdennnoch.scoop.R;
-import tk.wasdennnoch.scoop.ToolbarElevationHelper;
 import tk.wasdennnoch.scoop.data.app.App;
 import tk.wasdennnoch.scoop.data.app.AppAdapter;
 import tk.wasdennnoch.scoop.data.app.AppLoader;
 import tk.wasdennnoch.scoop.databinding.ActivityBlacklistAppsBinding;
+import tk.wasdennnoch.scoop.ui.helpers.ToolbarElevationHelper;
 
 public class BlacklistAppsActivity extends AppCompatActivity implements SearchView.OnQueryTextListener, SearchView.OnCloseListener {
 

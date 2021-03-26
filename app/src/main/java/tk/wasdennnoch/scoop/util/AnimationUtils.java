@@ -1,4 +1,4 @@
-package tk.wasdennnoch.scoop.ui.utils;
+package tk.wasdennnoch.scoop.util;
 
 import android.content.Context;
 import android.util.TypedValue;

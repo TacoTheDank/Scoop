@@ -1,4 +1,4 @@
-package tk.wasdennnoch.scoop
+package tk.wasdennnoch.scoop.ui.helpers
 
 import android.os.Build
 import android.view.View

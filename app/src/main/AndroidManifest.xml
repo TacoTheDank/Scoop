@@ -67,7 +67,7 @@
             android:label="@string/about_title" />
 
         <receiver
-            android:name=".CrashReceiver"
+            android:name=".receiver.CrashReceiver"
             android:exported="true"
             tools:ignore="ExportedReceiver">
             <intent-filter>
@@ -75,7 +75,7 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name=".ShareReceiver"
+            android:name=".receiver.ShareReceiver"
             android:exported="true"
             tools:ignore="ExportedReceiver">
             <intent-filter>
@@ -89,7 +89,7 @@
             android:enabled="true" />
 
         <receiver
-            android:name=".StopReceiver"
+            android:name=".receiver.StopReceiver"
             android:enabled="true" />
 
         <service

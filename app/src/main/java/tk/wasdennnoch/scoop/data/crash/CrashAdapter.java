@@ -20,8 +20,8 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import tk.wasdennnoch.scoop.R;
-import tk.wasdennnoch.scoop.Utils;
 import tk.wasdennnoch.scoop.databinding.ItemCrashBinding;
+import tk.wasdennnoch.scoop.util.Utils;
 import tk.wasdennnoch.scoop.view.RelativeTimeTextView;
 
 public class CrashAdapter extends RecyclerView.Adapter<CrashAdapter.CrashViewHolder> {

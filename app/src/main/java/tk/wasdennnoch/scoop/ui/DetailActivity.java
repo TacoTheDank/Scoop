@@ -22,10 +22,10 @@ import androidx.preference.PreferenceManager;
 import java.util.Locale;
 
 import tk.wasdennnoch.scoop.R;
-import tk.wasdennnoch.scoop.Utils;
 import tk.wasdennnoch.scoop.data.crash.Crash;
 import tk.wasdennnoch.scoop.data.crash.CrashLoader;
 import tk.wasdennnoch.scoop.databinding.ActivityDetailBinding;
+import tk.wasdennnoch.scoop.util.Utils;
 
 public class DetailActivity extends AppCompatActivity implements SearchView.OnQueryTextListener, SearchView.OnCloseListener {
 

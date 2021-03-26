@@ -3,8 +3,8 @@ package tk.wasdennnoch.scoop.detector
 import android.content.Intent
 import android.util.Log
 import tk.wasdennnoch.scoop.BuildConfig
-import tk.wasdennnoch.scoop.CrashReceiver
 import tk.wasdennnoch.scoop.XposedHook.*
+import tk.wasdennnoch.scoop.receiver.CrashReceiver
 import java.io.BufferedReader
 import java.io.InputStreamReader
 

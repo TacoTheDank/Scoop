@@ -9,6 +9,7 @@ import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XC_MethodReplacement;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
+import tk.wasdennnoch.scoop.receiver.CrashReceiver;
 
 @SuppressWarnings("WeakerAccess")
 public class XposedHook implements IXposedHookLoadPackage {

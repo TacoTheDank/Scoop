@@ -25,15 +25,15 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Locale;
 
-import tk.wasdennnoch.scoop.CrashReceiver;
 import tk.wasdennnoch.scoop.R;
 import tk.wasdennnoch.scoop.ScoopApplication;
-import tk.wasdennnoch.scoop.ToolbarElevationHelper;
 import tk.wasdennnoch.scoop.data.crash.Crash;
 import tk.wasdennnoch.scoop.data.crash.CrashAdapter;
 import tk.wasdennnoch.scoop.data.crash.CrashLoader;
 import tk.wasdennnoch.scoop.databinding.ActivityMainBinding;
-import tk.wasdennnoch.scoop.ui.utils.AnimationUtils;
+import tk.wasdennnoch.scoop.receiver.CrashReceiver;
+import tk.wasdennnoch.scoop.ui.helpers.ToolbarElevationHelper;
+import tk.wasdennnoch.scoop.util.AnimationUtils;
 
 public class MainActivity extends AppCompatActivity implements CrashAdapter.Listener,
         SearchView.OnQueryTextListener, SearchView.OnCloseListener, MaterialCab.Callback {

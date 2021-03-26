@@ -1,4 +1,4 @@
-package tk.wasdennnoch.scoop;
+package tk.wasdennnoch.scoop.receiver;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -22,6 +22,9 @@ import com.afollestad.inquiry.Inquiry;
 import java.util.Arrays;
 import java.util.Collections;
 
+import tk.wasdennnoch.scoop.R;
+import tk.wasdennnoch.scoop.ScoopApplication;
+import tk.wasdennnoch.scoop.XposedHook;
 import tk.wasdennnoch.scoop.data.crash.Crash;
 import tk.wasdennnoch.scoop.data.crash.CrashLoader;
 import tk.wasdennnoch.scoop.dogbin.DogbinUploadService;

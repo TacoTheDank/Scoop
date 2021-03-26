@@ -1,4 +1,4 @@
-package tk.wasdennnoch.scoop
+package tk.wasdennnoch.scoop.util
 
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -34,7 +34,9 @@ object Utils {
     fun copyTextToClipboard(context: Context, label: Int, pkg: String, str: String) {
         copyToClipboard(
             context,
-            context.resources.getString(label, CrashLoader.getAppName(context, pkg, false)),
+            context.resources.getString(
+                label, CrashLoader.getAppName(context, pkg, false)
+            ),
             str
         )
     }
