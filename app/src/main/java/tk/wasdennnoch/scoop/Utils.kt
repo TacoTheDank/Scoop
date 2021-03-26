@@ -3,7 +3,7 @@ package tk.wasdennnoch.scoop
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
-import androidx.core.content.ContextCompat
+import androidx.core.content.getSystemService
 import tk.wasdennnoch.scoop.data.crash.CrashLoader
 
 object Utils {
@@ -24,9 +24,8 @@ object Utils {
      * @param text      The actual text in the clip.
      */
     @JvmStatic
-    private fun copyToClipboard(context: Context, label: CharSequence, text: CharSequence) {
-        val clipboard: ClipboardManager =
-            ContextCompat.getSystemService(context, ClipboardManager::class.java)!!
+    private fun copyToClipboard(context: Context, label: CharSequence?, text: CharSequence?) {
+        val clipboard = context.getSystemService<ClipboardManager>()!!
         val data = ClipData.newPlainText(label, text)
         clipboard.setPrimaryClip(data)
     }

@@ -71,7 +71,7 @@ public class CrashReceiver extends BroadcastReceiver {
         }
 
         if (prefs.getBoolean("show_notification", true) &&
-                !Arrays.asList(PreferenceManager.getDefaultSharedPreferences(context).getString("blacklisted_packages", "").split(",")).contains(packageName)) {
+                !Arrays.asList(prefs.getString("blacklisted_packages", "").split(",")).contains(packageName)) {
             NotificationManager manager = ContextCompat.getSystemService(context, NotificationManager.class);
 
             Intent clickIntent = new Intent(context, DetailActivity.class).putExtra(DetailActivity.EXTRA_CRASH, crash);
@@ -126,7 +126,6 @@ public class CrashReceiver extends BroadcastReceiver {
                         context.getString(R.string.action_share), sharePendingIntent));
 
                 if (dogbinLink != null) {
-
                     Intent copyLinkIntent = new Intent(context, ShareReceiver.class)
                             .putExtra("pkg", packageName)
                             .putExtra(XposedHook.INTENT_DOGBIN_LINK, dogbinLink)
@@ -137,7 +136,6 @@ public class CrashReceiver extends BroadcastReceiver {
                             context.getString(R.string.action_dogbin_copy_link), copyLinkPendingIntent));
 
                 } else if (!hideUpload) {
-
                     int uploadTitle = uploadError ? R.string.action_dogbin_upload_error : R.string.action_dogbin_upload;
                     Intent dogbinIntent = new Intent(context, DogbinUploadService.class)
                             .putExtra("data", broadcastIntent)
