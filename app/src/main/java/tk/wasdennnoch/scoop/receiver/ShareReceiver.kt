@@ -6,7 +6,7 @@ import android.content.Intent
 import android.widget.Toast
 import tk.wasdennnoch.scoop.R
 import tk.wasdennnoch.scoop.XposedHook
-import tk.wasdennnoch.scoop.util.Utils.copyTextToClipboard
+import tk.wasdennnoch.scoop.util.copyTextToClipboard
 
 class ShareReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
@@ -23,14 +23,11 @@ class ShareReceiver : BroadcastReceiver() {
                 )
             }
             XposedHook.INTENT_ACTION_COPY -> {
-                copyTextToClipboard(
-                    context, R.string.copy_label, pkg, stackTrace
-                )
+                context.copyTextToClipboard(R.string.copy_label, pkg, stackTrace)
                 Toast.makeText(context, R.string.copied_toast, Toast.LENGTH_LONG).show()
             }
             XposedHook.INTENT_ACTION_COPY_LINK -> {
-                copyTextToClipboard(
-                    context,
+                context.copyTextToClipboard(
                     R.string.copy_link_label,
                     pkg,
                     intent.getStringExtra(XposedHook.INTENT_DOGBIN_LINK)!!

@@ -1,3 +1,5 @@
+@file:JvmName("Utils")
+
 package tk.wasdennnoch.scoop.util
 
 import android.content.ClipData
@@ -6,38 +8,30 @@ import android.content.Context
 import androidx.core.content.getSystemService
 import tk.wasdennnoch.scoop.data.crash.CrashLoader
 
-object Utils {
+fun Context.getAttrColor(attr: Int): Int {
+    val ta = this.obtainStyledAttributes(intArrayOf(attr))
+    val colorAccent = ta.getColor(0, 0)
+    ta.recycle()
+    return colorAccent
+}
 
-    @JvmStatic
-    fun getAttrColor(context: Context, attr: Int): Int {
-        val ta = context.obtainStyledAttributes(intArrayOf(attr))
-        val colorAccent = ta.getColor(0, 0)
-        ta.recycle()
-        return colorAccent
-    }
+/**
+ * Copies the text to the clipboard.
+ *
+ * @param label  User-visible label for the clip data.
+ * @param text   The actual text in the clip.
+ */
+private fun Context.copyToClipboard(label: CharSequence?, text: CharSequence?) {
+    val clipboard = this.getSystemService<ClipboardManager>()!!
+    val data = ClipData.newPlainText(label, text)
+    clipboard.setPrimaryClip(data)
+}
 
-    /**
-     * Copies the text to the clipboard.
-     *
-     * @param context   The context to pass.
-     * @param label     User-visible label for the clip data.
-     * @param text      The actual text in the clip.
-     */
-    @JvmStatic
-    private fun copyToClipboard(context: Context, label: CharSequence?, text: CharSequence?) {
-        val clipboard = context.getSystemService<ClipboardManager>()!!
-        val data = ClipData.newPlainText(label, text)
-        clipboard.setPrimaryClip(data)
-    }
-
-    @JvmStatic
-    fun copyTextToClipboard(context: Context, label: Int, pkg: String, str: String) {
-        copyToClipboard(
-            context,
-            context.resources.getString(
-                label, CrashLoader.getAppName(context, pkg, false)
-            ),
-            str
-        )
-    }
+fun Context.copyTextToClipboard(label: Int, pkg: String, str: String) {
+    this.copyToClipboard(
+        this.resources.getString(
+            label, CrashLoader.getAppName(this, pkg, false)
+        ),
+        str
+    )
 }
