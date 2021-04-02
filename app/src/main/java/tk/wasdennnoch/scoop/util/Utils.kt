@@ -22,16 +22,15 @@ fun Context.getAttrColor(attr: Int): Int {
  * @param text   The actual text in the clip.
  */
 private fun Context.copyToClipboard(label: CharSequence?, text: CharSequence?) {
-    val clipboard = this.getSystemService<ClipboardManager>()!!
+    val clipboard = this.getSystemService<ClipboardManager>()
     val data = ClipData.newPlainText(label, text)
-    clipboard.setPrimaryClip(data)
+    clipboard?.setPrimaryClip(data)
 }
 
 fun Context.copyTextToClipboard(label: Int, pkg: String?, str: String?) {
     this.copyToClipboard(
-        this.resources.getString(
+        this.getString(
             label, CrashLoader.getAppName(this, pkg, false)
-        ),
-        str
+        ), str
     )
 }
