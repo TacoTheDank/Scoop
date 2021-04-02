@@ -13,14 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package tk.wasdennnoch.scoop.dogbin
 
-package tk.wasdennnoch.scoop.dogbin;
-
-public class DogbinException extends Exception {
-
-    private static final long serialVersionUID = 666L;
-
-    public DogbinException(String message) {
-        super(message);
+class DogbinException(message: String?) : Exception(message) {
+    companion object {
+        private const val serialVersionUID = 666L
     }
 }

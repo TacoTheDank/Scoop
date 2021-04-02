@@ -26,7 +26,7 @@ public class AppLoader {
             for (ApplicationInfo a : apps) {
                 // Some apps (like .Wave) add multiple launcher icons, this bugs blacklist selection, so only add one item per package name
                 for (App app : finalApps) {
-                    if (app.packageName.equals(a.packageName))
+                    if (app.getPackageName().equals(a.packageName))
                         continue Loop;
                 }
                 finalApps.add(new App(a.loadIcon(pm), a.loadLabel(pm).toString(), a.packageName));

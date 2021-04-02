@@ -27,7 +27,7 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.AppViewHolder> {
         mItems = items;
         for (App a : mItems)
             for (String pkg : blacklisted)
-                if (a.packageName.equals(pkg)) {
+                if (a.getPackageName().equals(pkg)) {
                     a.selected = true;
                     break;
                 }
@@ -42,7 +42,7 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.AppViewHolder> {
         ArrayList<String> items = new ArrayList<>();
         for (App a : mItems)
             if (a.selected)
-                items.add(a.packageName);
+                items.add(a.getPackageName());
         return items;
     }
 
@@ -53,8 +53,8 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.AppViewHolder> {
         mSearchActive = !TextUtils.isEmpty(text);
         if (mSearchActive) {
             for (App a : mItems) {
-                if (a.packageName.toLowerCase(Locale.ENGLISH).contains(text)
-                        || a.name.toLowerCase(Locale.ENGLISH).contains(text)) {
+                if (a.getPackageName().toLowerCase(Locale.ENGLISH).contains(text)
+                        || a.getName().toLowerCase(Locale.ENGLISH).contains(text)) {
                     mSearchedItems.add(a);
                 }
             }
@@ -79,9 +79,9 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.AppViewHolder> {
     public void onBindViewHolder(AppViewHolder holder, int position) {
         App app = (mSearchActive ? mSearchedItems : mItems).get(position);
         holder.app = app;
-        holder.appIcon.setImageDrawable(app.icon);
-        holder.appName.setText(app.name);
-        holder.packageName.setText(app.packageName);
+        holder.appIcon.setImageDrawable(app.getIcon());
+        holder.appName.setText(app.getName());
+        holder.packageName.setText(app.getPackageName());
         holder.check.setChecked(app.selected);
         holder.itemView.setOnClickListener(holder);
     }
