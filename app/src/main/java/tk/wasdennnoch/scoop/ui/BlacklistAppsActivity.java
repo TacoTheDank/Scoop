@@ -23,7 +23,8 @@ import tk.wasdennnoch.scoop.data.app.AppLoader;
 import tk.wasdennnoch.scoop.databinding.ActivityBlacklistAppsBinding;
 import tk.wasdennnoch.scoop.ui.helpers.ToolbarElevationHelper;
 
-public class BlacklistAppsActivity extends AppCompatActivity implements SearchView.OnQueryTextListener, SearchView.OnCloseListener {
+public class BlacklistAppsActivity extends AppCompatActivity
+        implements SearchView.OnQueryTextListener, SearchView.OnCloseListener {
 
     private ActivityBlacklistAppsBinding binding;
     private SharedPreferences mPrefs;
@@ -71,7 +72,9 @@ public class BlacklistAppsActivity extends AppCompatActivity implements SearchVi
 
     @Override
     protected void onPause() {
-        mPrefs.edit().putString("blacklisted_packages", TextUtils.join(",", mAdapter.getSelectedPackages())).apply();
+        mPrefs.edit().putString(
+                "blacklisted_packages",
+                TextUtils.join(",", mAdapter.getSelectedPackages())).apply();
         super.onPause();
     }
 
@@ -83,7 +86,10 @@ public class BlacklistAppsActivity extends AppCompatActivity implements SearchVi
     }
 
     public void onDataLoaded(ArrayList<App> apps) {
-        mAdapter.setApps(apps, Arrays.asList(mPrefs.getString("blacklisted_packages", "").split(",")));
+        mAdapter.setApps(apps,
+                Arrays.asList(mPrefs
+                        .getString("blacklisted_packages", "")
+                        .split(",")));
         updateViewStates(false);
     }
 
@@ -122,5 +128,4 @@ public class BlacklistAppsActivity extends AppCompatActivity implements SearchVi
         }
         return super.onOptionsItemSelected(item);
     }
-
 }

@@ -13,9 +13,15 @@ class ToolbarElevationHelper @JvmOverloads constructor(
             if (field != value) {
                 field = value
                 if (value) {
-                    targetView.animate().translationZ(targetElevation).setDuration(100).start()
+                    targetView.animate()
+                        .translationZ(targetElevation)
+                        .setDuration(100)
+                        .start()
                 } else {
-                    targetView.animate().translationZ(0f).setDuration(100).start()
+                    targetView.animate()
+                        .translationZ(0f)
+                        .setDuration(100)
+                        .start()
                 }
             }
         }

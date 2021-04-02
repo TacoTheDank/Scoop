@@ -27,7 +27,8 @@ import tk.wasdennnoch.scoop.data.crash.CrashLoader;
 import tk.wasdennnoch.scoop.databinding.ActivityDetailBinding;
 import tk.wasdennnoch.scoop.util.Utils;
 
-public class DetailActivity extends AppCompatActivity implements SearchView.OnQueryTextListener, SearchView.OnCloseListener {
+public class DetailActivity extends AppCompatActivity
+        implements SearchView.OnQueryTextListener, SearchView.OnCloseListener {
 
     public static final String EXTRA_CRASH = "crash";
     private Crash mCrash;
@@ -46,11 +47,13 @@ public class DetailActivity extends AppCompatActivity implements SearchView.OnQu
 
         mHighlightColor = ContextCompat.getColor(this, R.color.highlightColor);
         mCrash = getIntent().getParcelableExtra(EXTRA_CRASH);
-        getSupportActionBar().setTitle(CrashLoader.getAppName(this, mCrash.packageName, true));
+        getSupportActionBar().setTitle(
+                CrashLoader.getAppName(this, mCrash.packageName, true));
 
         binding.detailCrashLogText.setText(mCrash.stackTrace);
         binding.detailCrashEdit.setText(mCrash.stackTrace);
-        binding.detailCrashEdit.setTextSize(TypedValue.COMPLEX_UNIT_PX, binding.detailCrashLogText.getTextSize());
+        binding.detailCrashEdit.setTextSize(
+                TypedValue.COMPLEX_UNIT_PX, binding.detailCrashLogText.getTextSize());
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         binding.detailScrollView.setCropHorizontally(prefs.getBoolean("auto_wrap", false));
@@ -64,7 +67,10 @@ public class DetailActivity extends AppCompatActivity implements SearchView.OnQu
             final int size = text.length();
             int index = 0;
             while ((index = stackTrace.indexOf(text, index)) != -1) {
-                span.setSpan(new BackgroundColorSpan(mHighlightColor), index, index + size, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                span.setSpan(
+                        new BackgroundColorSpan(mHighlightColor),
+                        index, index + size,
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 index += size;
             }
         }

@@ -70,13 +70,34 @@ public class XposedHook implements IXposedHookLoadPackage {
                 mSent = false;
             }
         });
-        XposedHelpers.findAndHookMethod(Thread.class, "setDefaultUncaughtExceptionHandler", Thread.UncaughtExceptionHandler.class, setUncaughtExceptionHandlerHook);
-        XposedHelpers.findAndHookMethod(Thread.class, "setUncaughtExceptionHandler", Thread.UncaughtExceptionHandler.class, setUncaughtExceptionHandlerHook);
-        XposedHelpers.findAndHookMethod(ThreadGroup.class, "uncaughtException", Thread.class, Throwable.class, uncaughtExceptionHook);
-        hookUncaughtException(Thread.getDefaultUncaughtExceptionHandler().getClass()); // Gets initialized in between native application creation, handleLoadPackage gets called after native creation
+        XposedHelpers.findAndHookMethod(
+                Thread.class,
+                "setDefaultUncaughtExceptionHandler",
+                Thread.UncaughtExceptionHandler.class,
+                setUncaughtExceptionHandlerHook);
+
+        XposedHelpers.findAndHookMethod(
+                Thread.class,
+                "setUncaughtExceptionHandler",
+                Thread.UncaughtExceptionHandler.class,
+                setUncaughtExceptionHandlerHook);
+
+        XposedHelpers.findAndHookMethod(
+                ThreadGroup.class,
+                "uncaughtException",
+                Thread.class,
+                Throwable.class,
+                uncaughtExceptionHook);
+
+        // Gets initialized in between native application creation, handleLoadPackage gets
+        //  called after native creation
+        hookUncaughtException(Thread.getDefaultUncaughtExceptionHandler().getClass());
 
         if (lpparam.packageName.equals(BuildConfig.APPLICATION_ID)) {
-            XposedHelpers.findAndHookMethod(ScoopApplication.class, "xposedActive", XC_MethodReplacement.returnConstant(true));
+            XposedHelpers.findAndHookMethod(
+                    ScoopApplication.class,
+                    "xposedActive",
+                    XC_MethodReplacement.returnConstant(true));
         }
     }
 
@@ -84,8 +105,14 @@ public class XposedHook implements IXposedHookLoadPackage {
         int i = 0;
         do { // Search through superclasses
             try {
-                XposedHelpers.findAndHookMethod(clazz, "uncaughtException", Thread.class, Throwable.class, uncaughtExceptionHook);
-                Log.d("scoop", "hookUncaughtException (" + mPkg + "): Hooked class " + clazz.getName() + " after " + i + " loops");
+                XposedHelpers.findAndHookMethod(
+                        clazz,
+                        "uncaughtException",
+                        Thread.class,
+                        Throwable.class,
+                        uncaughtExceptionHook);
+                Log.d("scoop", "hookUncaughtException (" + mPkg
+                        + "): Hooked class " + clazz.getName() + " after " + i + " loops");
                 return;
             } catch (Throwable ignore) {
             }
@@ -93,5 +120,4 @@ public class XposedHook implements IXposedHookLoadPackage {
         } while ((clazz = clazz.getSuperclass()) != null);
         Log.d("scoop", "hookUncaughtException (" + mPkg + "): No class found to hook!");
     }
-
 }

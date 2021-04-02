@@ -17,7 +17,8 @@ import java.lang.ref.WeakReference;
 import tk.wasdennnoch.scoop.R;
 
 /**
- * A {@code TextView} that, given a reference time, renders that time as a time period relative to the current time.
+ * A {@code TextView} that, given a reference time, renders that time as a time
+ * period relative to the current time.
  *
  * @author Kiran Rao
  * @see #setReferenceTime(long)
@@ -44,7 +45,8 @@ public class RelativeTimeTextView extends AppCompatTextView {
         if (isInEditMode() || attrs == null) {
             mReferenceTime = System.currentTimeMillis() - 1000 * 60 * 30;
         } else {
-            TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.RelativeTimeTextView, 0, 0);
+            TypedArray a = context.getTheme().obtainStyledAttributes(
+                    attrs, R.styleable.RelativeTimeTextView, 0, 0);
             String text = a.getString(R.styleable.RelativeTimeTextView_reference_time);
             a.recycle();
             try {
@@ -61,11 +63,13 @@ public class RelativeTimeTextView extends AppCompatTextView {
     }
 
     /**
-     * Sets the reference time for this view. At any moment, the view will render a relative time period relative to the time set here.
+     * Sets the reference time for this view. At any moment, the view will render
+     * a relative time period relative to the time set here.
      * <p/>
      * This value can also be set with the XML attribute {@code reference_time}
      *
-     * @param referenceTime The timestamp (in milliseconds since epoch) that will be the reference point for this view.
+     * @param referenceTime The timestamp (in milliseconds since epoch)
+     *                      that will be the reference point for this view.
      */
     public void setReferenceTime(long referenceTime) {
         if (referenceTime < 0)
@@ -225,5 +229,4 @@ public class RelativeTimeTextView extends AppCompatTextView {
             dest.writeLong(referenceTime);
         }
     }
-
 }

@@ -24,7 +24,8 @@ public class AppLoader {
             final ArrayList<App> finalApps = new ArrayList<>();
             Loop:
             for (ApplicationInfo a : apps) {
-                // Some apps (like .Wave) add multiple launcher icons, this bugs blacklist selection, so only add one item per package name
+                // Some apps (like .Wave) add multiple launcher icons, this bugs blacklist
+                // selection, so only add one item per package name
                 for (App app : finalApps) {
                     if (app.getPackageName().equals(a.packageName))
                         continue Loop;
@@ -39,5 +40,4 @@ public class AppLoader {
             listener.runOnUiThread(() -> listener.onDataLoaded(finalApps));
         }).start();
     }
-
 }

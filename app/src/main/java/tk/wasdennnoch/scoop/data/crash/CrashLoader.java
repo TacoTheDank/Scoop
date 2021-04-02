@@ -63,7 +63,8 @@ public class CrashLoader {
                 name = packageName;
                 notInstalled = true;
             }
-            sNameCache.put(packageName, notInstalled ? "!=!" + name : name); // Let's hope no app name starts with that
+            // Let's hope no app name starts with this
+            sNameCache.put(packageName, notInstalled ? "!=!" + name : name);
         }
         if (!notInstalled && name.startsWith("!=!")) {
             name = name.substring(3);
@@ -76,7 +77,8 @@ public class CrashLoader {
         return (long) (System.currentTimeMillis() * Math.random());
     }
 
-    public void loadData(MainActivity activity, boolean combineSameStackTrace, boolean combineSameApps, List<String> blacklist) {
+    public void loadData(MainActivity activity, boolean combineSameStackTrace,
+                         boolean combineSameApps, List<String> blacklist) {
         mListener = new WeakReference<>(activity);
         mCombineSameTrace = combineSameStackTrace;
         mCombineSameApps = combineSameApps;
@@ -143,7 +145,10 @@ public class CrashLoader {
         for (int i = 1; i < crashes.size() + 1; i++) {
             Crash previousCrash = crashes.get(i - 1);
             Crash c = i >= crashes.size() ? null : crashes.get(i);
-            if (mCombineSameTrace && c != null && previousCrash.stackTrace.equals(c.stackTrace) && previousCrash.packageName.equals(c.packageName)) {
+            if (mCombineSameTrace && c != null
+                    && previousCrash.stackTrace.equals(c.stackTrace)
+                    && previousCrash.packageName.equals(c.packageName)
+            ) {
                 c.count = previousCrash.count + 1;
                 if (c.hiddenIds == null)
                     c.hiddenIds = new ArrayList<>();
@@ -171,7 +176,9 @@ public class CrashLoader {
 
             @Override
             public int compare(Crash o1, Crash o2) {
-                return sC.compare(getAppName(context, o1.packageName, false), getAppName(context, o2.packageName, false));
+                return sC.compare(
+                        getAppName(context, o1.packageName, false),
+                        getAppName(context, o2.packageName, false));
             }
         });
     }
@@ -211,5 +218,4 @@ public class CrashLoader {
             c.displayCount = count;
         }
     }
-
 }

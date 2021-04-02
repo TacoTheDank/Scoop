@@ -54,7 +54,8 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.AppViewHolder> {
         if (mSearchActive) {
             for (App a : mItems) {
                 if (a.getPackageName().toLowerCase(Locale.ENGLISH).contains(text)
-                        || a.getName().toLowerCase(Locale.ENGLISH).contains(text)) {
+                        || a.getName().toLowerCase(Locale.ENGLISH).contains(text)
+                ) {
                     mSearchedItems.add(a);
                 }
             }
@@ -115,5 +116,4 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.AppViewHolder> {
             check.setChecked(!check.isChecked());
         }
     }
-
 }

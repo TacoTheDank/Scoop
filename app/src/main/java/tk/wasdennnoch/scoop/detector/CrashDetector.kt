@@ -75,7 +75,6 @@ abstract class CrashDetector : ICrashDetector.Stub() {
     }
 
     companion object {
-
         private val beginPattern =
             Regex("[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3}( )+[0-9]+( )+[0-9]+( )+E AndroidRuntime: (.)*")
         private val arPattern =

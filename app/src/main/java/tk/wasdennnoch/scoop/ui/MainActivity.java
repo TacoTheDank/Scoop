@@ -35,8 +35,9 @@ import tk.wasdennnoch.scoop.receiver.CrashReceiver;
 import tk.wasdennnoch.scoop.ui.helpers.ToolbarElevationHelper;
 import tk.wasdennnoch.scoop.util.AnimationUtils;
 
-public class MainActivity extends AppCompatActivity implements CrashAdapter.Listener,
-        SearchView.OnQueryTextListener, SearchView.OnCloseListener, MaterialCab.Callback {
+public class MainActivity extends AppCompatActivity
+        implements CrashAdapter.Listener, SearchView.OnQueryTextListener,
+        SearchView.OnCloseListener, MaterialCab.Callback {
 
     private static final String EXTRA_CRASH = "tk.wasdennnoch.scoop.EXTRA_CRASH";
     private static final int CODE_CHILDREN_VIEW = 1;
@@ -54,7 +55,8 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
     private View mNoItems;
 
     private MaterialCab mCab;
-    private boolean mAnimatingCab; // Required to properly animate the cab (otherwise it instantly hides when pressing the up button)
+    // Required to properly animate the cab (otherwise it instantly hides when pressing the up button)
+    private boolean mAnimatingCab;
 
     private boolean mDestroyed;
 
@@ -67,7 +69,9 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
             if (sUpdateRequired) {
                 sUpdateRequired = false;
                 if (mCombineApps)
-                    return; // It doesn't look right when there's suddenly a single crash of a different app in the list
+                    // It doesn't look right when there's suddenly a single crash of
+                    // a different app in the list
+                    return;
                 if (sVisible && sNewCrash != null) {
                     mAdapter.addCrash(sNewCrash);
                     updateViewStates(false);
@@ -97,7 +101,9 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
             getResources().updateConfiguration(config, null);
         }
 
-        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true); // To make vector drawables work as menu item drawables
+        // To make vector drawables work as menu item drawables
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+
         super.onCreate(savedInstanceState);
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
@@ -118,7 +124,8 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
             if (c.children != null)
                 crashes.addAll(c.children);
             mAdapter.setCrashes(crashes);
-            getSupportActionBar().setTitle(CrashLoader.getAppName(this, c.packageName, true));
+            getSupportActionBar().setTitle(
+                    CrashLoader.getAppName(this, c.packageName, true));
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
@@ -151,7 +158,7 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
                     .putExtra("pkg", getPackageName())
                     .putExtra("time", System.currentTimeMillis())
                     .putExtra("description", "java.lang.NullPointerException: Someone screwed up")
-                    .putExtra("stacktrace", "Testtrace Testtrace Testtrace Testtrace Testtrace Testtrace Testtrace Testtrace Testtrace Testtrace Testtrace Testtrace");
+                    .putExtra("stacktrace", "Testtrace Testtrace Testtrace");
             mHandler.postDelayed(() -> sendBroadcast(intent), 1000);
         }
 
@@ -168,7 +175,9 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
     @Override
     protected void onResume() {
         super.onResume();
-        mAdapter.setSearchPackageName(this, mPrefs.getBoolean("search_package_name", true)); // Cheap way to instantly apply changes
+        // Cheap way to instantly apply changes
+        mAdapter.setSearchPackageName(
+                this, mPrefs.getBoolean("search_package_name", true));
         sVisible = true;
         mHandler.post(mUpdateCheckerRunnable);
     }
@@ -228,7 +237,9 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
         mLoader.loadData(this,
                 mPrefs.getBoolean("combine_same_stack_trace", true),
                 mPrefs.getBoolean("combine_same_apps", false),
-                Arrays.asList(mPrefs.getString("blacklisted_packages", "").split(",")));
+                Arrays.asList(mPrefs
+                        .getString("blacklisted_packages", "")
+                        .split(",")));
     }
 
     public void onDataLoaded(ArrayList<Crash> data) {
@@ -240,13 +251,16 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
         if (active) {
             mCab.start(this);
             mCab.getToolbar().setOutlineProvider(null);
-            AnimationUtils.slideToolbar(mCab.getToolbar(), false, AnimationUtils.ANIM_DURATION_DEFAULT);
+            AnimationUtils.slideToolbar(
+                    mCab.getToolbar(), false, AnimationUtils.ANIM_DURATION_DEFAULT);
         } else {
             mAnimatingCab = true;
-            AnimationUtils.slideToolbar(mCab.getToolbar(), true, AnimationUtils.ANIM_DURATION_DEFAULT, false, () -> {
-                mAnimatingCab = false;
-                mCab.finish();
-            });
+            AnimationUtils.slideToolbar(
+                    mCab.getToolbar(), true, AnimationUtils.ANIM_DURATION_DEFAULT, false,
+                    () -> {
+                        mAnimatingCab = false;
+                        mCab.finish();
+                    });
         }
     }
 
@@ -260,9 +274,13 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
     @Override
     public void onCrashClicked(Crash crash) {
         if (mCombineApps && !mHasCrash) {
-            startActivityForResult(new Intent(this, MainActivity.class).putExtra(EXTRA_CRASH, crash), CODE_CHILDREN_VIEW);
+            startActivityForResult(
+                    new Intent(this, MainActivity.class)
+                            .putExtra(EXTRA_CRASH, crash), CODE_CHILDREN_VIEW);
         } else {
-            startActivity(new Intent(this, DetailActivity.class).putExtra(DetailActivity.EXTRA_CRASH, crash));
+            startActivity(
+                    new Intent(this, DetailActivity.class)
+                            .putExtra(DetailActivity.EXTRA_CRASH, crash));
         }
     }
 
@@ -285,12 +303,15 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
     public boolean onCabItemClicked(MenuItem item) {
         if (item.getItemId() == R.id.menu_cab_delete) {
             final ArrayList<Crash> items = mAdapter.getSelectedItems();
-            if (items.isEmpty()) return true;
-            String content = String.format(getResources().getQuantityString(R.plurals.delete_multiple_confirm, items.size()), items.size());
+            if (items.isEmpty()) {
+                return true;
+            }
+            String content = String.format(
+                    getResources().getQuantityString(R.plurals.delete_multiple_confirm, items.size()),
+                    items.size());
             new AlertDialog.Builder(this)
                     .setMessage(content)
-                    .setNegativeButton(android.R.string.cancel, (dialog, which) -> {
-                    })
+                    .setNegativeButton(android.R.string.cancel, null)
                     .setPositiveButton(android.R.string.ok, (dialog, which) -> {
                         // TODO THIS IS A MESS
                         Inquiry instance = Inquiry.get("main");
@@ -298,16 +319,22 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
                             if (!mHasCrash && c.children != null) {
                                 for (Crash cc : c.children) {
                                     if (cc.hiddenIds != null) {
-                                        instance.delete(Crash.class).whereIn("_id", cc.hiddenIds.toArray()).run();
+                                        instance.delete(Crash.class)
+                                                .whereIn("_id", cc.hiddenIds.toArray())
+                                                .run();
                                     }
                                     mAdapter.removeCrash(cc);
                                 }
                                 instance.delete(Crash.class).values(c.children).run();
                             }
                             if (c.hiddenIds != null) {
-                                instance.delete(Crash.class).whereIn("_id", c.hiddenIds.toArray()).run();
+                                instance.delete(Crash.class)
+                                        .whereIn("_id", c.hiddenIds.toArray())
+                                        .run();
                             }
-                            instance.delete(Crash.class).values(Collections.singletonList(c)).run();
+                            instance.delete(Crash.class)
+                                    .values(Collections.singletonList(c))
+                                    .run();
                             mAdapter.removeCrash(c);
                         }
                         mAdapter.setSelectionEnabled(false);
@@ -362,8 +389,7 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
             case R.id.menu_main_clear:
                 new AlertDialog.Builder(this)
                         .setMessage(R.string.dialog_clear_content)
-                        .setNegativeButton(android.R.string.cancel, (dialog, which) -> {
-                        })
+                        .setNegativeButton(android.R.string.cancel, null)
                         .setPositiveButton(android.R.string.ok, (dialog, which) -> {
                             Inquiry.get("main")
                                     .dropTable(Crash.class); // bam!
@@ -397,5 +423,4 @@ public class MainActivity extends AppCompatActivity implements CrashAdapter.List
             }
         }
     }
-
 }

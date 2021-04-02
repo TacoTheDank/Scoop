@@ -49,7 +49,9 @@ public class CroppingScrollView extends MergedScrollView {
             final int desiredWidth = getMeasuredWidth() - widthPadding;
 
             if (mCropHorizontally && child.getMeasuredWidth() > desiredWidth) {
-                child.measure(MeasureSpec.makeMeasureSpec(desiredWidth, MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
+                child.measure(
+                        MeasureSpec.makeMeasureSpec(desiredWidth, MeasureSpec.EXACTLY),
+                        MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
             }
         }
     }

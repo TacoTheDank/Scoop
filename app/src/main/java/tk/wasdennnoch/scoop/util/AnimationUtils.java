@@ -18,7 +18,8 @@ public class AnimationUtils {
         slideToolbar(t, out, duration, false, null);
     }
 
-    public static void slideToolbar(final Toolbar t, final boolean out, int duration, final boolean setVisibility, final Runnable endAction) {
+    public static void slideToolbar(final Toolbar t, final boolean out, int duration,
+                                    final boolean setVisibility, final Runnable endAction) {
         if (setVisibility && !out) t.setVisibility(View.VISIBLE);
         int actionBarSize = getActionBarSize(t.getContext());
         t.setAlpha(out ? 1 : 0);
@@ -30,7 +31,8 @@ public class AnimationUtils {
                 .setDuration(duration)
                 .setInterpolator(FAST_OUT_SLOW_IN);
         addEndAction(animator, () -> {
-            if (setVisibility && out) t.setVisibility(View.GONE);
+            if (setVisibility && out)
+                t.setVisibility(View.GONE);
             if (endAction != null)
                 endAction.run();
         });
@@ -40,7 +42,8 @@ public class AnimationUtils {
     private static int getActionBarSize(Context context) {
         TypedValue value = new TypedValue();
         context.getTheme().resolveAttribute(android.R.attr.actionBarSize, value, true);
-        return TypedValue.complexToDimensionPixelSize(value.data, context.getResources().getDisplayMetrics());
+        return TypedValue.complexToDimensionPixelSize(
+                value.data, context.getResources().getDisplayMetrics());
     }
 
     private static void addEndAction(ViewPropertyAnimator anim, final Runnable action) {
