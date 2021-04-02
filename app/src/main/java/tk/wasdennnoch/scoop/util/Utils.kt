@@ -27,7 +27,7 @@ private fun Context.copyToClipboard(label: CharSequence?, text: CharSequence?) {
     clipboard.setPrimaryClip(data)
 }
 
-fun Context.copyTextToClipboard(label: Int, pkg: String, str: String) {
+fun Context.copyTextToClipboard(label: Int, pkg: String?, str: String?) {
     this.copyToClipboard(
         this.resources.getString(
             label, CrashLoader.getAppName(this, pkg, false)

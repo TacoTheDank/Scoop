@@ -9,10 +9,10 @@ import tk.wasdennnoch.scoop.XposedHook
 import tk.wasdennnoch.scoop.util.copyTextToClipboard
 
 class ShareReceiver : BroadcastReceiver() {
-    override fun onReceive(context: Context, intent: Intent) {
-        val stackTrace = intent.getStringExtra("stackTrace")!!
-        val pkg = intent.getStringExtra("pkg")!!
-        when (intent.action) {
+    override fun onReceive(context: Context, intent: Intent?) {
+        val stackTrace = intent?.getStringExtra("stackTrace")
+        val pkg = intent?.getStringExtra("pkg")
+        when (intent?.action) {
             XposedHook.INTENT_ACTION_SHARE -> {
                 val shareIntent = Intent(Intent.ACTION_SEND)
                     .setType("text/plain")
@@ -30,7 +30,7 @@ class ShareReceiver : BroadcastReceiver() {
                 context.copyTextToClipboard(
                     R.string.copy_link_label,
                     pkg,
-                    intent.getStringExtra(XposedHook.INTENT_DOGBIN_LINK)!!
+                    intent.getStringExtra(XposedHook.INTENT_DOGBIN_LINK)
                 )
                 Toast.makeText(context, R.string.copied_link_toast, Toast.LENGTH_LONG).show()
             }
