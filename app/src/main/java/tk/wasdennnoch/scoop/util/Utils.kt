@@ -5,6 +5,8 @@ package tk.wasdennnoch.scoop.util
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.widget.Toast
+import androidx.annotation.StringRes
 import androidx.core.content.getSystemService
 import tk.wasdennnoch.scoop.data.crash.CrashLoader
 
@@ -33,4 +35,14 @@ fun Context.copyTextToClipboard(label: Int, pkg: String?, str: String?) {
             label, CrashLoader.getAppName(this, pkg, false)
         ), str
     )
+}
+
+/**
+ * Displays a toast to the viewer.
+ *
+ * @param string      The text displayed in the toast.
+ * @param toastLength The length of time for which the toast will be displayed.
+ */
+fun Context.displayToast(@StringRes string: Int, toastLength: Int) {
+    Toast.makeText(this, string, toastLength).show()
 }

@@ -113,7 +113,7 @@ public class DetailActivity extends AppCompatActivity implements SearchView.OnQu
             case R.id.menu_detail_copy:
                 Utils.copyTextToClipboard(
                         this, R.string.copy_label, mCrash.packageName, mCrash.stackTrace);
-                Toast.makeText(this, R.string.copied_toast, Toast.LENGTH_LONG).show();
+                Utils.displayToast(this, R.string.copied_toast, Toast.LENGTH_LONG);
                 return true;
             case R.id.menu_detail_share:
                 Intent intent = new Intent(Intent.ACTION_SEND)

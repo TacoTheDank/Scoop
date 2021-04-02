@@ -7,6 +7,7 @@ import android.widget.Toast
 import tk.wasdennnoch.scoop.R
 import tk.wasdennnoch.scoop.XposedHook
 import tk.wasdennnoch.scoop.util.copyTextToClipboard
+import tk.wasdennnoch.scoop.util.displayToast
 
 class ShareReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent?) {
@@ -24,7 +25,7 @@ class ShareReceiver : BroadcastReceiver() {
             }
             XposedHook.INTENT_ACTION_COPY -> {
                 context.copyTextToClipboard(R.string.copy_label, pkg, stackTrace)
-                Toast.makeText(context, R.string.copied_toast, Toast.LENGTH_LONG).show()
+                context.displayToast(R.string.copied_toast, Toast.LENGTH_LONG)
             }
             XposedHook.INTENT_ACTION_COPY_LINK -> {
                 context.copyTextToClipboard(
@@ -32,7 +33,7 @@ class ShareReceiver : BroadcastReceiver() {
                     pkg,
                     intent.getStringExtra(XposedHook.INTENT_DOGBIN_LINK)
                 )
-                Toast.makeText(context, R.string.copied_link_toast, Toast.LENGTH_LONG).show()
+                context.displayToast(R.string.copied_link_toast, Toast.LENGTH_LONG)
             }
         }
     }
