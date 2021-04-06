@@ -4,7 +4,7 @@ Catches a stack trace when an app crashes unexpectedly.
 
 
 Xposed repo: http://repo.xposed.info/module/tk.wasdennnoch.scoop <br>
-XDA: http://forum.xda-developers.com/xposed/modules/xposed-scoop-catch-stack-trace-app-t3524271/
+XDA: https://forum.xda-developers.com/t/xposed-scoop-catch-the-stack-trace-when-an-app-crashes.3524271/
 
 
 ### License
