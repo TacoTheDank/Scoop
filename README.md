@@ -2,27 +2,53 @@
 
 Catches a stack trace when an app crashes unexpectedly.
 
-Get releases here: https://github.com/TacoTheDank/Scoop/releases
+[<img src="images/get-it-on-github.png"
+      alt="Get it on GitHub"
+      height="80">](https://github.com/TacoTheDank/Scoop/releases)
+[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
+      alt="Get it on F-Droid"
+      height="80">](https://f-droid.org/packages/taco.scoop/)
+
+This app saves the stack trace of a crashing app and displays all crashes in a list so you don't have to look through a long annoying logcat anymore.
+Additionally, you get a notification on every crash that displays the most important information.
+
+Features:
+- Search in crashed apps
+- Search in stack traces
+- Crash preview in notifications (configurable in settings)
+- Combination of the same crashes / apps to avoid long repetitive lists (configurable in settings)
+- Crash blacklist
+- Quick actions in notifications to copy / share a stack trace
+- Supports uploading to dogbin for convenient sharing
 
 
-### Fork info
+## Instructions
 
-This fork aims to further improve and maintain the app, as it seems to me that paphonb is finished with it.
-
-Fork differences will be included in this README as they are made. You can also read the release notes.
-
-The original app with instructions on how to set it up can be found here: https://forum.xda-developers.com/android/apps-games/adb-root-scoop-catch-stack-trace-app-t3888798
-
-The instructions for this fork are the same, with one difference:
- - If you're unrooted or using ADB, type `taco.scoop` instead of `xyz.paphonb.scoop` for the command.
+Instructions on how to set up the app can be found [here](https://github.com/TacoTheDank/Scoop/wiki).
 
 
-#### Bugs
+## Fork info
 
-If the app itself crashes, please open an issue and post the crashlog :) (in full spirit of irony, the app will catch its own crashlog as long as you did the initial setup).
+This fork aims to further improve and maintain the original app, as it seems to me that paphonb is finished with it.
+
+Most important differences with this fork:
+- Lots of under-the-hood improvements
+- Using topjohnwu's libsu
+- App now has an adaptive icon
+
+You can also read the release notes for changes that have been made to the app since then.
+
+Here is the info for the original app by paphonb: https://forum.xda-developers.com/android/apps-games/adb-root-scoop-catch-stack-trace-app-t3888798
 
 
-### License
+## Bugs
+
+Please open an issue if you encounter any problems or have a feature request. :) Thank you!
+
+
+## License
+
+This app is under the Apache 2.0 license as licensed by @wasdennnoch (Scoop's original ORIGINAL author).
 
 ```
 Copyright (C) 2017 Adrian Paschkowski
