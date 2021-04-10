@@ -227,7 +227,9 @@ public class MainActivity extends AppCompatActivity
             mNoItems.setVisibility(View.GONE);
         }
         if (!mIsAvailable) {
-            binding.mainNoXposedStub.inflate();
+            if (mNoItems == null) {
+                mNoItems = binding.mainNoXposedStub.inflate();
+            }
         }
     }
 
