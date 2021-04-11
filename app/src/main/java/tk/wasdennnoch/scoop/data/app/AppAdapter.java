@@ -112,7 +112,7 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.AppViewHolder> {
 
         @Override
         public void onClick(View v) {
-            toggleItemSelection(getAdapterPosition());
+            toggleItemSelection(getBindingAdapterPosition());
             check.setChecked(!check.isChecked());
         }
     }

@@ -225,7 +225,7 @@ public class CrashAdapter extends RecyclerView.Adapter<CrashAdapter.CrashViewHol
         @Override
         public void onClick(View v) {
             if (mSelectionEnabled) {
-                setItemSelected(getAdapterPosition(), !crash.selected);
+                setItemSelected(getBindingAdapterPosition(), !crash.selected);
                 if (mSelectedCount == 0)
                     setSelectionEnabled(false);
             } else {
@@ -237,7 +237,7 @@ public class CrashAdapter extends RecyclerView.Adapter<CrashAdapter.CrashViewHol
         public boolean onLongClick(View v) {
             if (!mSelectionEnabled) {
                 setSelectionEnabled(true);
-                setItemSelected(getAdapterPosition(), !crash.selected);
+                setItemSelected(getBindingAdapterPosition(), !crash.selected);
             }
             return false;
         }
