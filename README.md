@@ -35,6 +35,7 @@ Most important differences with this fork:
 - Lots of under-the-hood improvements
 - Using topjohnwu's libsu
 - App now has an adaptive icon
+- Removed Xposed support
 
 You can also read the release notes for changes that have been made to the app since then.
 

@@ -22,9 +22,9 @@ import com.afollestad.inquiry.Inquiry;
 import java.util.Arrays;
 import java.util.Collections;
 
+import tk.wasdennnoch.scoop.Intents;
 import tk.wasdennnoch.scoop.R;
 import tk.wasdennnoch.scoop.ScoopApplication;
-import tk.wasdennnoch.scoop.XposedHook;
 import tk.wasdennnoch.scoop.data.crash.Crash;
 import tk.wasdennnoch.scoop.data.crash.CrashLoader;
 import tk.wasdennnoch.scoop.dogbin.DogbinUploadService;
@@ -36,19 +36,19 @@ public class CrashReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent broadcastIntent) {
 
-        if (!broadcastIntent.getAction().equals(XposedHook.INTENT_ACTION)) return;
+        if (!broadcastIntent.getAction().equals(Intents.INTENT_ACTION)) return;
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
-        String packageName = broadcastIntent.getStringExtra(XposedHook.INTENT_PACKAGE_NAME);
-        long time = broadcastIntent.getLongExtra(XposedHook.INTENT_TIME, System.currentTimeMillis());
-        String description = broadcastIntent.getStringExtra(XposedHook.INTENT_DESCRIPTION);
-        String stackTrace = broadcastIntent.getStringExtra(XposedHook.INTENT_STACKTRACE);
+        String packageName = broadcastIntent.getStringExtra(Intents.INTENT_PACKAGE_NAME);
+        long time = broadcastIntent.getLongExtra(Intents.INTENT_TIME, System.currentTimeMillis());
+        String description = broadcastIntent.getStringExtra(Intents.INTENT_DESCRIPTION);
+        String stackTrace = broadcastIntent.getStringExtra(Intents.INTENT_STACKTRACE);
 
-        boolean update = broadcastIntent.getBooleanExtra(XposedHook.INTENT_UPDATE, false);
-        boolean hideUpload = broadcastIntent.getBooleanExtra(XposedHook.INTENT_HIDE_UPLOAD, false);
-        boolean uploadError = broadcastIntent.getBooleanExtra(XposedHook.INTENT_UPLOAD_ERROR, false);
-        String dogbinLink = broadcastIntent.getStringExtra(XposedHook.INTENT_DOGBIN_LINK);
+        boolean update = broadcastIntent.getBooleanExtra(Intents.INTENT_UPDATE, false);
+        boolean hideUpload = broadcastIntent.getBooleanExtra(Intents.INTENT_HIDE_UPLOAD, false);
+        boolean uploadError = broadcastIntent.getBooleanExtra(Intents.INTENT_UPLOAD_ERROR, false);
+        String dogbinLink = broadcastIntent.getStringExtra(Intents.INTENT_DOGBIN_LINK);
 
         if (description.startsWith(ThreadDeath.class.getName()) && prefs.getBoolean("ignore_threaddeath", true))
             return;
@@ -113,7 +113,7 @@ public class CrashReceiver extends BroadcastReceiver {
                 Intent copyIntent = new Intent(context, ShareReceiver.class)
                         .putExtra("stackTrace", stackTrace)
                         .putExtra("pkg", packageName)
-                        .setAction(XposedHook.INTENT_ACTION_COPY);
+                        .setAction(Intents.INTENT_ACTION_COPY);
                 PendingIntent copyPendingIntent = PendingIntent.getBroadcast(context,
                         notificationId, copyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
                 builder.addAction(new NotificationCompat.Action(R.drawable.ic_content_copy,
@@ -122,7 +122,7 @@ public class CrashReceiver extends BroadcastReceiver {
                 Intent shareIntent = new Intent(context, ShareReceiver.class)
                         .putExtra("stackTrace", stackTrace)
                         .putExtra("pkg", packageName)
-                        .setAction(XposedHook.INTENT_ACTION_SHARE);
+                        .setAction(Intents.INTENT_ACTION_SHARE);
                 PendingIntent sharePendingIntent = PendingIntent.getBroadcast(context,
                         notificationId, shareIntent, PendingIntent.FLAG_UPDATE_CURRENT);
                 builder.addAction(new NotificationCompat.Action(R.drawable.ic_share,
@@ -131,8 +131,8 @@ public class CrashReceiver extends BroadcastReceiver {
                 if (dogbinLink != null) {
                     Intent copyLinkIntent = new Intent(context, ShareReceiver.class)
                             .putExtra("pkg", packageName)
-                            .putExtra(XposedHook.INTENT_DOGBIN_LINK, dogbinLink)
-                            .setAction(XposedHook.INTENT_ACTION_COPY_LINK);
+                            .putExtra(Intents.INTENT_DOGBIN_LINK, dogbinLink)
+                            .setAction(Intents.INTENT_ACTION_COPY_LINK);
                     PendingIntent copyLinkPendingIntent = PendingIntent.getBroadcast(context,
                             notificationId, copyLinkIntent, PendingIntent.FLAG_UPDATE_CURRENT);
                     builder.addAction(new NotificationCompat.Action(0,

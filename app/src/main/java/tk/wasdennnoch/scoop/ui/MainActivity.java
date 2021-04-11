@@ -228,7 +228,7 @@ public class MainActivity extends AppCompatActivity
         }
         if (!mIsAvailable) {
             if (mNoItems == null) {
-                mNoItems = binding.mainNoXposedStub.inflate();
+                mNoItems = binding.mainNoPermissionStub.inflate();
             }
         }
     }
@@ -413,7 +413,7 @@ public class MainActivity extends AppCompatActivity
         @Override
         protected Boolean doInBackground(Void... voids) {
             ScoopApplication app = (ScoopApplication) getApplication();
-            return ScoopApplication.Companion.xposedActive() || app.startService();
+            return ScoopApplication.Companion.serviceActive() || app.startService();
         }
 
         @Override

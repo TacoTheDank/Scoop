@@ -1,8 +1,4 @@
 <resources>
-
-    <!-- App description -->
-    <string name="xposed_description">Captura um stack trace quando um app trava de forma inesperada</string>
-
     <!-- Toolbar titles -->
     <string name="settings_title">Configurações</string>
     <string name="blacklist_title">Lista negra</string>

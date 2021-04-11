@@ -1,8 +1,4 @@
 <resources>
-
-    <!-- App description -->
-    <string name="xposed_description">Speichert die Stack Trace, wenn eine App unerwartet crasht</string>
-
     <!-- Toolbar titles -->
     <string name="settings_title">Einstellungen</string>
     <string name="blacklist_title">Ausnahmen</string>

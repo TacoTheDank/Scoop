@@ -28,7 +28,7 @@ class ScoopApplication : Application() {
             registerStatusChannel()
         }
 
-        if (!xposedActive()) {
+        if (!serviceActive()) {
             val thread = HandlerThread("startCrashDetector")
             thread.start()
             Handler(thread.looper).post(this@ScoopApplication::startService)
@@ -84,7 +84,7 @@ class ScoopApplication : Application() {
 
     companion object {
 
-        fun xposedActive() = false
+        fun serviceActive() = false
 
         @JvmStatic
         val bootTime = System.currentTimeMillis() - SystemClock.uptimeMillis()

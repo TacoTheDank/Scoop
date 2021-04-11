@@ -6,8 +6,8 @@ import android.os.IBinder
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
+import tk.wasdennnoch.scoop.Intents
 import tk.wasdennnoch.scoop.R
-import tk.wasdennnoch.scoop.XposedHook
 import tk.wasdennnoch.scoop.data.crash.Crash
 import java.util.*
 
@@ -24,10 +24,10 @@ class DogbinUploadService : Service() {
         val data = intent.getParcelableExtra<Intent>("data")
         val crash = intent.getParcelableExtra<Crash>("crash")
         data?.putExtra("crash", crash)
-        data?.putExtra(XposedHook.INTENT_UPDATE, true)
-        data?.putExtra(XposedHook.INTENT_HIDE_UPLOAD, true)
+        data?.putExtra(Intents.INTENT_UPDATE, true)
+        data?.putExtra(Intents.INTENT_HIDE_UPLOAD, true)
         sendBroadcast(data)
-        data?.putExtra(XposedHook.INTENT_HIDE_UPLOAD, false)
+        data?.putExtra(Intents.INTENT_HIDE_UPLOAD, false)
 
         uploadQueue.offer(data)
         if (!uploadStarted) {
@@ -43,16 +43,16 @@ class DogbinUploadService : Service() {
             stopSelf()
         } else {
             DogbinUtils.upload(
-                data.getStringExtra(XposedHook.INTENT_STACKTRACE),
+                data.getStringExtra(Intents.INTENT_STACKTRACE),
                 object : DogbinUtils.UploadResultCallback {
 
                     override fun onSuccess(url: String) {
-                        data.putExtra(XposedHook.INTENT_DOGBIN_LINK, url)
+                        data.putExtra(Intents.INTENT_DOGBIN_LINK, url)
                         next()
                     }
 
                     override fun onFail(message: String, e: Exception) {
-                        data.putExtra(XposedHook.INTENT_UPLOAD_ERROR, true)
+                        data.putExtra(Intents.INTENT_UPLOAD_ERROR, true)
                         next()
                     }
 

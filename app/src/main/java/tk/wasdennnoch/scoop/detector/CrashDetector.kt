@@ -3,7 +3,7 @@ package tk.wasdennnoch.scoop.detector
 import android.content.Intent
 import android.util.Log
 import tk.wasdennnoch.scoop.BuildConfig
-import tk.wasdennnoch.scoop.XposedHook.*
+import tk.wasdennnoch.scoop.Intents
 import tk.wasdennnoch.scoop.receiver.CrashReceiver
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -58,12 +58,12 @@ abstract class CrashDetector : ICrashDetector.Stub() {
         }
         if (lines.size < 2) return lastLine
         val packageName = processInfoPattern.find(lines[0])?.groupValues?.get(1) ?: return lastLine
-        val intent = Intent(INTENT_ACTION)
+        val intent = Intent(Intents.INTENT_ACTION)
             .setClassName(BuildConfig.APPLICATION_ID, CrashReceiver::class.java.name)
-            .putExtra(INTENT_PACKAGE_NAME, packageName)
-            .putExtra(INTENT_TIME, System.currentTimeMillis())
-            .putExtra(INTENT_DESCRIPTION, lines.subList(1, foundTraceAt).joinToString("\n"))
-            .putExtra(INTENT_STACKTRACE, "$firstLine\n" + lines.joinToString("\n"))
+            .putExtra(Intents.INTENT_PACKAGE_NAME, packageName)
+            .putExtra(Intents.INTENT_TIME, System.currentTimeMillis())
+            .putExtra(Intents.INTENT_DESCRIPTION, lines.subList(1, foundTraceAt).joinToString("\n"))
+            .putExtra(Intents.INTENT_STACKTRACE, "$firstLine\n" + lines.joinToString("\n"))
         sendBroadcast(intent)
         return lastLine
     }

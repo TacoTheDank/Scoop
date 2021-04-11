@@ -39,11 +39,11 @@
             android:layout="@layout/no_items" />
 
         <ViewStub
-            android:id="@+id/main_noXposed_stub"
+            android:id="@+id/main_noPermission_stub"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout="@layout/no_xposed" />
+            android:layout="@layout/no_permission" />
 
     </FrameLayout>
 

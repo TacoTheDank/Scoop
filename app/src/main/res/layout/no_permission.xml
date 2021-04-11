@@ -9,23 +9,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:text="@string/no_xposed_1"
+        android:text="@string/no_permission_1"
         android:textColor="?android:textColorSecondary" />
 
     <ImageView
         android:layout_width="@dimen/no_crash_icon_size"
         android:layout_height="@dimen/no_crash_icon_size"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/no_xposed_item_spacing"
+        android:layout_marginTop="@dimen/no_permission_item_spacing"
         android:alpha="0.55"
         app:srcCompat="@drawable/ic_y_u_no" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/no_xposed_item_spacing"
+        android:layout_marginTop="@dimen/no_permission_item_spacing"
         android:gravity="center_horizontal"
-        android:text="@string/no_xposed_2"
+        android:text="@string/no_permission_2"
         android:textColor="?android:textColorSecondary" />
 
 </LinearLayout>

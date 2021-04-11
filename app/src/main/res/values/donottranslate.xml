@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name" translatable="false">Scoop</string>
 
-    <string name="no_xposed_1" translatable="false">Y U NO</string>
-    <string name="no_xposed_2" translatable="false">GRANT ADB PERMISSION OR ROOT OR GIB XPOSED</string>
+    <string name="no_permission_1" translatable="false">Y U NO</string>
+    <string name="no_permission_2" translatable="false">GRANT ADB PERMISSION OR ROOT ACCESS</string>
 
     <string name="settings_force_eng" translatable="false">Force English app language</string>
 </resources>
