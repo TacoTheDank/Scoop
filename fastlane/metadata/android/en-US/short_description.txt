@@ -1,0 +1,1 @@
+Catches a stack trace when an app crashes unexpectedly.

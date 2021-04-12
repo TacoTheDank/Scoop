@@ -9,25 +9,31 @@ Catches a stack trace when an app crashes unexpectedly.
       alt="Get it on F-Droid"
       height="80">](https://f-droid.org/packages/taco.scoop/)
 
-This app saves the stack trace of a crashing app and displays all crashes in a list so you don't have to look through a long annoying logcat anymore.
-Additionally, you get a notification on every crash that displays the most important information.
+Scoop catches and saves the stack traces of crashing apps and displays all crashes in a list so you don't
+have to look through annoyingly long logcats anymore.
+
+Extremely useful for app debugging.
+
+Scoop supports both rooted and non-rooted devices (though non-rooted devices require some [setup](https://github.com/TacoTheDank/Scoop#guide)).
+
 
 Features:
-- Search in crashed apps
-- Search in stack traces
+- Search (apps, stack traces)
 - Crash preview in notifications (configurable in settings)
-- Combination of the same crashes / apps to avoid long repetitive lists (configurable in settings)
-- Crash blacklist
-- Quick actions in notifications to copy / share a stack trace
-- Supports uploading to dogbin for convenient sharing
+- Combination of the same crashes / apps to avoid repetitive lists (configurable in settings)
+- App blacklist
+- Quick actions in notifications to copy / share stack traces
+- Dogbin upload support for convenient sharing
 
 
-## Instructions
+## Guide
 
-Instructions on how to set up the app can be found [here](https://github.com/TacoTheDank/Scoop/wiki).
+Instructions on how to set the app up can be found [here](https://github.com/TacoTheDank/Scoop/wiki).
 
 
-## Fork info
+## General info
+
+This app is a fork of https://github.com/paphonb/Scoop.
 
 This fork aims to further improve and maintain the original app, as it seems to me that paphonb is finished with it.
 

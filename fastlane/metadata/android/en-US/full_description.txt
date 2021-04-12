@@ -1,0 +1,13 @@
+Scoop catches and saves the stack traces of crashing apps and displays all crashes in a list so you don't have to look through annoyingly long logcats anymore.
+
+Extremely useful for app debugging.
+
+Scoop supports both rooted and non-rooted devices (though non-rooted devices require some setup; see the repository wiki for details).
+
+Features:
+- Search (apps, stack traces)
+- Crash preview in notifications (configurable in settings)
+- Combination of the same crashes / apps to avoid repetitive lists (configurable in settings)
+- App blacklist
+- Quick actions in notifications to copy / share stack traces
+- Dogbin upload support for convenient sharing
