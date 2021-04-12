@@ -3,7 +3,6 @@ package tk.wasdennnoch.scoop.receiver
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.widget.Toast
 import tk.wasdennnoch.scoop.Intents
 import tk.wasdennnoch.scoop.R
 import tk.wasdennnoch.scoop.util.copyTextToClipboard
@@ -25,7 +24,7 @@ class ShareReceiver : BroadcastReceiver() {
             }
             Intents.INTENT_ACTION_COPY -> {
                 context.copyTextToClipboard(R.string.copy_label, pkg, stackTrace)
-                context.displayToast(R.string.copied_toast, Toast.LENGTH_LONG)
+                context.displayToast(R.string.copied_toast)
             }
             Intents.INTENT_ACTION_COPY_LINK -> {
                 context.copyTextToClipboard(
@@ -33,7 +32,7 @@ class ShareReceiver : BroadcastReceiver() {
                     pkg,
                     intent.getStringExtra(Intents.INTENT_DOGBIN_LINK)
                 )
-                context.displayToast(R.string.copied_link_toast, Toast.LENGTH_LONG)
+                context.displayToast(R.string.copied_link_toast)
             }
         }
     }

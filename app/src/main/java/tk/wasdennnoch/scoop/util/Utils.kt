@@ -40,9 +40,8 @@ fun Context.copyTextToClipboard(label: Int, pkg: String?, str: String?) {
 /**
  * Displays a toast to the viewer.
  *
- * @param string      The text displayed in the toast.
- * @param toastLength The length of time for which the toast will be displayed.
+ * @param string  The text displayed in the toast.
  */
-fun Context.displayToast(@StringRes string: Int, toastLength: Int) {
-    Toast.makeText(this, string, toastLength).show()
+fun Context.displayToast(@StringRes string: Int) {
+    Toast.makeText(this, string, Toast.LENGTH_SHORT).show()
 }

@@ -12,7 +12,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
@@ -119,7 +118,7 @@ public class DetailActivity extends AppCompatActivity
             case R.id.menu_detail_copy:
                 Utils.copyTextToClipboard(
                         this, R.string.copy_label, mCrash.packageName, mCrash.stackTrace);
-                Utils.displayToast(this, R.string.copied_toast, Toast.LENGTH_LONG);
+                Utils.displayToast(this, R.string.copied_toast);
                 return true;
             case R.id.menu_detail_share:
                 Intent intent = new Intent(Intent.ACTION_SEND)
