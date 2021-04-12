@@ -1,0 +1,4 @@
+2.1.3: First F-Droid release!
+- Some internal improvements
+- Fixed a few crashes
+- Removed unused Xposed stuff
