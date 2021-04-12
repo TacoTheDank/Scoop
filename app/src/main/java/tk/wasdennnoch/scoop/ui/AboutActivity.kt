@@ -35,10 +35,10 @@ class AboutActivity : AppCompatActivity() {
             // No.
         }
 
-        binding.aboutUpdates.setOnClickListener {
+        binding.aboutGithub.setOnClickListener {
             val i = Intent(
                 Intent.ACTION_VIEW,
-                "https://github.com/TacoTheDank/Scoop/releases".toUri()
+                "https://github.com/TacoTheDank/Scoop".toUri()
             )
             startActivity(i)
         }

@@ -52,13 +52,13 @@
             android:textColor="?android:textColorTertiary" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/about_updates"
+            android:id="@+id/about_github"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="16dp"
             android:background="@android:color/transparent"
-            android:text="@string/about_updates"
+            android:text="@string/about_github"
             android:textColor="@color/colorAccent" />
 
     </LinearLayout>

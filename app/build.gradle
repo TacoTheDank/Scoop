@@ -26,16 +26,6 @@ android {
         preDexLibraries true
     }
 
-    flavorDimensions "distro"
-    productFlavors {
-        fdroid {
-            dimension "distro"
-        }
-        github {
-            dimension "distro"
-        }
-    }
-
     buildTypes {
         release {
             minifyEnabled true

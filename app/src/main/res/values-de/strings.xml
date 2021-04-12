@@ -74,7 +74,7 @@
     <!-- About screen -->
     <string name="about_author">Programmiert von %1$s</string>
     <string name="about_version">Version %1$s (%2$d)</string>
-    <string name="about_updates">Check for updates</string>
+    <string name="about_github">Source code</string>
 
     <!-- Notification channels -->
     <string name="crash_channel">Application crashes</string>
