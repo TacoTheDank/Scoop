@@ -1,0 +1,123 @@
+package tk.wasdennnoch.scoop.ui
+
+import android.content.SharedPreferences
+import android.os.Bundle
+import android.text.TextUtils
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
+import androidx.preference.PreferenceManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import tk.wasdennnoch.scoop.R
+import tk.wasdennnoch.scoop.data.app.App
+import tk.wasdennnoch.scoop.data.app.AppAdapter
+import tk.wasdennnoch.scoop.data.app.AppLoader
+import tk.wasdennnoch.scoop.databinding.ActivityBlacklistAppsBinding
+import tk.wasdennnoch.scoop.ui.helpers.ToolbarElevationHelper
+import java.util.*
+
+class BlacklistAppsActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
+    SearchView.OnCloseListener {
+
+    private var binding: ActivityBlacklistAppsBinding? = null
+    private var mPrefs: SharedPreferences? = null
+    private var mAdapter: AppAdapter? = null
+    private var mIsLoading = false
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        binding = ActivityBlacklistAppsBinding.inflate(layoutInflater)
+        setContentView(binding!!.root)
+        setSupportActionBar(binding!!.blacklistToolbar.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(this)
+
+        binding!!.blacklistView.layoutManager = LinearLayoutManager(this)
+
+        if (savedInstanceState != null) {
+            mIsLoading = savedInstanceState.getBoolean("mIsLoading")
+        }
+
+        mAdapter = AppAdapter()
+        binding!!.blacklistView.adapter = mAdapter
+
+        ToolbarElevationHelper(binding!!.blacklistView, binding!!.blacklistToolbar.toolbar)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (!mIsLoading) {
+            AppLoader().loadData(this)
+            updateViewStates(true)
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBoolean("mIsLoading", mIsLoading)
+    }
+
+    override fun onPause() {
+        mPrefs!!.edit().putString(
+            "blacklisted_packages",
+            TextUtils.join(",", mAdapter!!.selectedPackages)
+        ).apply()
+        super.onPause()
+    }
+
+    private fun updateViewStates(loading: Boolean) {
+        mIsLoading = loading
+        val empty = mAdapter!!.isEmpty
+        binding!!.blacklistProgressbar.visibility =
+            if (loading) View.VISIBLE else View.GONE
+        binding!!.blacklistView.visibility =
+            if (loading || empty) View.GONE else View.VISIBLE
+    }
+
+    fun onDataLoaded(apps: ArrayList<App?>?) {
+        mAdapter!!.setApps(
+            apps,
+            Arrays.asList(
+                *mPrefs
+                    ?.getString("blacklisted_packages", "")
+                    ?.split(",".toRegex())!!.toTypedArray()
+            )
+        )
+        updateViewStates(false)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_blacklist, menu)
+        val searchItem = menu.findItem(R.id.menu_blacklist_search)
+        val searchView = searchItem.actionView as SearchView
+        searchView.setOnQueryTextListener(this)
+        searchView.setOnCloseListener(this)
+        return true
+    }
+
+    override fun onClose(): Boolean {
+        mAdapter!!.search(null)
+        return false
+    }
+
+    override fun onQueryTextChange(newText: String): Boolean {
+        mAdapter!!.search(newText)
+        return true
+    }
+
+    override fun onQueryTextSubmit(query: String): Boolean {
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            finish()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
+    }
+}
