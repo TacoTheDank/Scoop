@@ -74,5 +74,5 @@ dependencies {
     // TODO: Replace Inquiry with AndroidX Room
     implementation 'com.afollestad:inquiry:5.0.0'
     implementation 'com.afollestad:material-cab:0.1.12'
-    implementation 'com.github.topjohnwu.libsu:core:3.1.1'
+    implementation 'com.github.topjohnwu.libsu:core:3.1.2'
 }
