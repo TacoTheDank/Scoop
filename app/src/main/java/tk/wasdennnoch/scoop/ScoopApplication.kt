@@ -40,8 +40,7 @@ class ScoopApplication : Application() {
         val name = getString(R.string.crash_channel)
         val importance = NotificationManager.IMPORTANCE_HIGH
         val channel = NotificationChannel("crashes", name, importance)
-        val notificationManager = getSystemService<NotificationManager>()!!
-        notificationManager.createNotificationChannel(channel)
+        channel.createNotifChannel()
     }
 
     @TargetApi(Build.VERSION_CODES.O)
@@ -50,8 +49,13 @@ class ScoopApplication : Application() {
         val importance = NotificationManager.IMPORTANCE_MIN
         val channel = NotificationChannel("status", name, importance)
         channel.setShowBadge(false)
-        val notificationManager = getSystemService<NotificationManager>()!!
-        notificationManager.createNotificationChannel(channel)
+        channel.createNotifChannel()
+    }
+
+    @TargetApi(Build.VERSION_CODES.O)
+    fun NotificationChannel.createNotifChannel() {
+        val notificationManager = getSystemService<NotificationManager>()
+        notificationManager?.createNotificationChannel(this)
     }
 
     fun startService(): Boolean {
