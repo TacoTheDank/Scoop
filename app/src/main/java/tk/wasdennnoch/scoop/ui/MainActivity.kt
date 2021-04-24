@@ -1,6 +1,5 @@
 package tk.wasdennnoch.scoop.ui
 
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.AsyncTask
@@ -13,6 +12,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.preference.PreferenceManager
 import com.afollestad.inquiry.Inquiry
 import com.afollestad.materialcab.MaterialCab
@@ -84,7 +85,7 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
 
         mAdapter = CrashAdapter(this, this)
         binding!!.mainCrashView.adapter = mAdapter
-        binding!!.mainCrashView.visibility = View.GONE
+        binding!!.mainCrashView.isGone = true
         ToolbarElevationHelper(binding!!.mainCrashView, binding!!.mainToolbar.toolbar)
 
         val i = intent
@@ -176,18 +177,16 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
             newLoading = true
         }
         val empty = mAdapter!!.isEmpty
-        binding!!.mainProgressbar.visibility =
-            if (newLoading) View.VISIBLE else View.GONE
-        binding!!.mainCrashView.visibility =
-            if (newLoading || empty || !mIsAvailable) View.GONE else View.VISIBLE
+        binding!!.mainProgressbar.isVisible = newLoading
+        binding!!.mainCrashView.isGone = newLoading || empty || !mIsAvailable
 
         if (!newLoading && empty && mIsAvailable) {
             if (mNoItems == null) {
                 mNoItems = binding!!.mainNoItemsStub.inflate()
             }
-            mNoItems!!.visibility = View.VISIBLE
+            mNoItems!!.isVisible = true
         } else if (mNoItems != null) {
-            mNoItems!!.visibility = View.GONE
+            mNoItems!!.isGone = true
         }
         if (!mIsAvailable) {
             if (mNoItems == null) {
@@ -203,7 +202,7 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
             this,
             mPrefs!!.getBoolean("combine_same_stack_trace", true),
             mPrefs!!.getBoolean("combine_same_apps", false),
-            Arrays.asList(
+            mutableListOf(
                 *mPrefs
                     ?.getString("blacklisted_packages", "")
                     ?.split(",".toRegex())!!.toTypedArray()
@@ -287,7 +286,7 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
             AlertDialog.Builder(this)
                 .setMessage(content)
                 .setNegativeButton(android.R.string.cancel, null)
-                .setPositiveButton(android.R.string.ok) { dialog: DialogInterface?, which: Int ->
+                .setPositiveButton(android.R.string.ok) { _, _ ->
                     // TODO THIS IS A MESS
                     val instance = Inquiry.get("main")
                     for (c in items) {
@@ -300,7 +299,9 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
                                 }
                                 mAdapter!!.removeCrash(cc)
                             }
-                            instance.delete(Crash::class.java).values(c.children).run()
+                            instance.delete(Crash::class.java)
+                                .values(c.children)
+                                .run()
                         }
                         if (c.hiddenIds != null) {
                             instance.delete(Crash::class.java)
@@ -314,8 +315,11 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
                     }
                     mAdapter!!.setSelectionEnabled(false)
                     setResult(RESULT_OK) // Reload overview when going back to reflect changes
-                    if (mHasCrash && mAdapter!!.isEmpty) // Everything deleted, go back to overview
-                        finish() else updateViewStates(false)
+                    if (mHasCrash && mAdapter!!.isEmpty) {
+                        finish() // Everything deleted, go back to overview
+                    } else {
+                        updateViewStates(false)
+                    }
                 }
                 .show()
             return true
@@ -357,11 +361,12 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
                 AlertDialog.Builder(this)
                     .setMessage(R.string.dialog_clear_content)
                     .setNegativeButton(android.R.string.cancel, null)
-                    .setPositiveButton(android.R.string.ok) { dialog: DialogInterface?, which: Int ->
+                    .setPositiveButton(android.R.string.ok) { _, _ ->
                         Inquiry.get("main")
                             .dropTable(Crash::class.java) // bam!
                         onDataLoaded(null)
-                    }.show()
+                    }
+                    .show()
                 return true
             }
             R.id.menu_main_settings -> {
