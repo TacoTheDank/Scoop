@@ -9,6 +9,8 @@ import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.core.content.getSystemService
 import tk.wasdennnoch.scoop.data.crash.CrashLoader
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.contract
 
 fun Context.getAttrColor(attr: Int): Int {
     val ta = this.obtainStyledAttributes(intArrayOf(attr))
@@ -44,4 +46,15 @@ fun Context.copyTextToClipboard(label: Int, pkg: String?, str: String?) {
  */
 fun Context.displayToast(@StringRes string: Int) {
     Toast.makeText(this, string, Toast.LENGTH_SHORT).show()
+}
+
+// Borrowed from https://github.com/K1rakishou/Kuroba-Experimental
+@Suppress("ReplaceSizeCheckWithIsNotEmpty", "NOTHING_TO_INLINE")
+@OptIn(ExperimentalContracts::class)
+inline fun CharSequence?.isNotNullNorEmpty(): Boolean {
+    contract {
+        returns(true) implies (this@isNotNullNorEmpty != null)
+    }
+
+    return this != null && this.length > 0
 }

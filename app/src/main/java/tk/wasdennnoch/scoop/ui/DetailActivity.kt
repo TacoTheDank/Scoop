@@ -3,17 +3,17 @@ package tk.wasdennnoch.scoop.ui
 import android.content.Intent
 import android.os.Bundle
 import android.text.Spannable
-import android.text.SpannableString
-import android.text.TextUtils
 import android.text.style.BackgroundColorSpan
 import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
+import androidx.core.text.toSpannable
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.preference.PreferenceManager
 import tk.wasdennnoch.scoop.R
 import tk.wasdennnoch.scoop.data.crash.Crash
@@ -21,6 +21,7 @@ import tk.wasdennnoch.scoop.data.crash.CrashLoader
 import tk.wasdennnoch.scoop.databinding.ActivityDetailBinding
 import tk.wasdennnoch.scoop.util.copyTextToClipboard
 import tk.wasdennnoch.scoop.util.displayToast
+import tk.wasdennnoch.scoop.util.isNotNullNorEmpty
 import java.util.*
 
 class DetailActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
@@ -55,9 +56,9 @@ class DetailActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
     private fun highlightText(text: String?) {
         var newText = text
         val stackTrace = mCrash!!.stackTrace.toLowerCase(Locale.ENGLISH)
-        val span = SpannableString(mCrash!!.stackTrace)
-        if (!TextUtils.isEmpty(newText)) {
-            newText = newText!!.toLowerCase(Locale.ENGLISH) // Ignore case
+        val span = mCrash!!.stackTrace.toSpannable()
+        if (newText.isNotNullNorEmpty()) {
+            newText = newText.toLowerCase(Locale.ENGLISH) // Ignore case
             val size = newText.length
             var index = 0
             while (stackTrace.indexOf(newText, index).also { index = it } != -1) {
@@ -110,10 +111,9 @@ class DetailActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
                         R.drawable.ic_select
                     }
                 )
-                binding!!.detailCrashEdit.visibility =
-                    if (mSelectionEnabled) View.VISIBLE else View.GONE
-                binding!!.detailScrollView.visibility =
-                    if (mSelectionEnabled) View.GONE else View.VISIBLE
+                // When one is visible, the other isn't (and vice versa)
+                binding!!.detailCrashEdit.isVisible = mSelectionEnabled
+                binding!!.detailScrollView.isGone = mSelectionEnabled
             }
             R.id.menu_detail_copy -> {
                 copyTextToClipboard(

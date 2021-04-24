@@ -5,9 +5,11 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.edit
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import tk.wasdennnoch.scoop.R
@@ -62,26 +64,27 @@ class BlacklistAppsActivity : AppCompatActivity(), SearchView.OnQueryTextListene
     }
 
     override fun onPause() {
-        mPrefs!!.edit().putString(
-            "blacklisted_packages",
-            TextUtils.join(",", mAdapter!!.selectedPackages)
-        ).apply()
+        mPrefs!!.edit {
+            putString(
+                "blacklisted_packages",
+                TextUtils.join(",", mAdapter!!.selectedPackages)
+            )
+        }
         super.onPause()
     }
 
     private fun updateViewStates(loading: Boolean) {
         mIsLoading = loading
         val empty = mAdapter!!.isEmpty
-        binding!!.blacklistProgressbar.visibility =
-            if (loading) View.VISIBLE else View.GONE
-        binding!!.blacklistView.visibility =
-            if (loading || empty) View.GONE else View.VISIBLE
+        // When one is visible, the other isn't (and vice versa)
+        binding!!.blacklistProgressbar.isVisible = loading
+        binding!!.blacklistView.isGone = loading || empty
     }
 
     fun onDataLoaded(apps: ArrayList<App?>?) {
         mAdapter!!.setApps(
             apps,
-            Arrays.asList(
+            mutableListOf(
                 *mPrefs
                     ?.getString("blacklisted_packages", "")
                     ?.split(",".toRegex())!!.toTypedArray()
