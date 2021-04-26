@@ -16,7 +16,10 @@ import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.preference.PreferenceManager
 import com.afollestad.inquiry.Inquiry
-import com.afollestad.materialcab.MaterialCab
+import com.afollestad.materialcab.attached.AttachedCab
+import com.afollestad.materialcab.attached.destroy
+import com.afollestad.materialcab.attached.isActive
+import com.afollestad.materialcab.createCab
 import tk.wasdennnoch.scoop.R
 import tk.wasdennnoch.scoop.ScoopApplication
 import tk.wasdennnoch.scoop.ScoopApplication.Companion.serviceActive
@@ -25,11 +28,11 @@ import tk.wasdennnoch.scoop.data.crash.CrashAdapter
 import tk.wasdennnoch.scoop.data.crash.CrashLoader
 import tk.wasdennnoch.scoop.databinding.ActivityMainBinding
 import tk.wasdennnoch.scoop.ui.helpers.ToolbarElevationHelper
-import tk.wasdennnoch.scoop.util.AnimationUtils
 import java.util.*
+import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQueryTextListener,
-    SearchView.OnCloseListener, MaterialCab.Callback {
+    SearchView.OnCloseListener {
     private val mLoader = CrashLoader()
     private var binding: ActivityMainBinding? = null
     private var mCombineApps = false
@@ -38,10 +41,8 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
     private var mHandler: Handler? = null
     private var mAdapter: CrashAdapter? = null
     private var mNoItems: View? = null
-    private var mCab: MaterialCab? = null
+    private var mCab: AttachedCab? = null
 
-    // Required to properly animate the cab (otherwise it instantly hides when pressing the up button)
-    private var mAnimatingCab = false
     private var mDestroyed = false
     private var mCheckPending = true
     private var mIsAvailable = true
@@ -113,7 +114,6 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
 
         if (savedInstanceState == null) {
             sUpdateRequired = false
-            mCab = MaterialCab(this, R.id.main_cab_stub)
             if (!mHasCrash) {
                 loadData()
             } else {
@@ -121,7 +121,6 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
             }
         } else {
             mAdapter!!.restoreInstanceState(savedInstanceState)
-            mCab = MaterialCab.restoreState(savedInstanceState, this, this)
             updateViewStates(false)
         }
         mHandler = Handler()
@@ -132,7 +131,6 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         mAdapter!!.saveInstanceState(outState)
-        mCab!!.saveState(outState)
     }
 
     override fun onResume() {
@@ -160,7 +158,7 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
     }
 
     override fun onBackPressed() {
-        if (mCab!!.isActive) {
+        if (mCab.isActive()) {
             mAdapter!!.setSelectionEnabled(false)
         } else {
             super.onBackPressed()
@@ -217,19 +215,9 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
 
     private fun setCabActive(active: Boolean) {
         if (active) {
-            mCab!!.start(this)
-            mCab!!.toolbar.outlineProvider = null
-            AnimationUtils.slideToolbar(
-                mCab!!.toolbar, false, AnimationUtils.ANIM_DURATION_DEFAULT
-            )
+            showCab()
         } else {
-            mAnimatingCab = true
-            AnimationUtils.slideToolbar(
-                mCab!!.toolbar, true, AnimationUtils.ANIM_DURATION_DEFAULT, false
-            ) {
-                mAnimatingCab = false
-                mCab!!.finish()
-            }
+            mCab.destroy()
         }
     }
 
@@ -259,77 +247,88 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
     }
 
     override fun onItemSelected(count: Int) {
-        mCab!!.setTitle(
-            String.format(
-                resources.getQuantityString(
-                    R.plurals.items_selected_count,
-                    count
-                ), count
+        mCab?.apply {
+            title(
+                literal = String.format(
+                    resources.getQuantityString(
+                        R.plurals.items_selected_count,
+                        count
+                    ), count
+                )
             )
-        )
-    }
-
-    override fun onCabCreated(cab: MaterialCab, menu: Menu): Boolean {
-        return true
-    }
-
-    override fun onCabItemClicked(item: MenuItem): Boolean {
-        if (item.itemId == R.id.menu_cab_delete) {
-            val items = mAdapter!!.selectedItems
-            if (items.isEmpty()) {
-                return true
-            }
-            val content = String.format(
-                resources.getQuantityString(R.plurals.delete_multiple_confirm, items.size),
-                items.size
-            )
-            AlertDialog.Builder(this)
-                .setMessage(content)
-                .setNegativeButton(android.R.string.cancel, null)
-                .setPositiveButton(android.R.string.ok) { _, _ ->
-                    // TODO THIS IS A MESS
-                    val instance = Inquiry.get("main")
-                    for (c in items) {
-                        if (!mHasCrash && c.children != null) {
-                            for (cc in c.children) {
-                                if (cc.hiddenIds != null) {
-                                    instance.delete(Crash::class.java)
-                                        .whereIn("_id", *cc.hiddenIds.toTypedArray())
-                                        .run()
-                                }
-                                mAdapter!!.removeCrash(cc)
-                            }
-                            instance.delete(Crash::class.java)
-                                .values(c.children)
-                                .run()
-                        }
-                        if (c.hiddenIds != null) {
-                            instance.delete(Crash::class.java)
-                                .whereIn("_id", *c.hiddenIds.toTypedArray())
-                                .run()
-                        }
-                        instance.delete(Crash::class.java)
-                            .values(listOf(c))
-                            .run()
-                        mAdapter!!.removeCrash(c)
-                    }
-                    mAdapter!!.setSelectionEnabled(false)
-                    setResult(RESULT_OK) // Reload overview when going back to reflect changes
-                    if (mHasCrash && mAdapter!!.isEmpty) {
-                        finish() // Everything deleted, go back to overview
-                    } else {
-                        updateViewStates(false)
-                    }
-                }
-                .show()
-            return true
         }
-        return true
     }
 
-    override fun onCabFinished(cab: MaterialCab): Boolean {
-        mAdapter!!.setSelectionEnabled(false)
-        return !mAnimatingCab
+    private fun showCab() {
+        mCab = createCab(R.id.main_cab_stub) {
+            menu(R.menu.menu_cab)
+            slideDown(300)
+            closeDrawable(R.drawable.ic_close)
+            onSelection { item ->
+                if (item.itemId == R.id.menu_cab_delete) {
+                    showDeletePrompt()
+                }
+                true
+            }
+            onDestroy {
+                mAdapter!!.setSelectionEnabled(false)
+                true
+            }
+        }
+    }
+
+    private fun showDeletePrompt() {
+        val items = mAdapter!!.selectedItems
+        if (items.isEmpty()) {
+            return
+        }
+        val content = String.format(
+            resources.getQuantityString(R.plurals.delete_multiple_confirm, items.size),
+            items.size
+        )
+        AlertDialog.Builder(this@MainActivity)
+            .setMessage(content)
+            .setNegativeButton(android.R.string.cancel, null)
+            .setPositiveButton(android.R.string.ok) { _, _ ->
+                deleteItems(items)
+                mAdapter!!.setSelectionEnabled(false)
+                setResult(RESULT_OK) // Reload overview when going back to reflect changes
+                if (mHasCrash && mAdapter!!.isEmpty) {
+                    finish() // Everything deleted, go back to overview
+                } else {
+                    updateViewStates(false)
+                }
+            }
+            .show()
+    }
+
+    private fun deleteItems(items: ArrayList<Crash>) {
+        // TODO THIS IS A MESS
+        val instance = Inquiry.get("main")
+        for (c in items) {
+            if (!mHasCrash && c.children != null) {
+                for (cc in c.children) {
+                    if (cc.hiddenIds != null) {
+                        instance.delete(Crash::class.java)
+                            .whereIn("_id", *cc.hiddenIds.toTypedArray())
+                            .run()
+                    }
+                    mAdapter!!.removeCrash(cc)
+                }
+                instance.delete(Crash::class.java)
+                    .values(c.children)
+                    .run()
+            }
+            if (c.hiddenIds != null) {
+                instance.delete(Crash::class.java)
+                    .whereIn("_id", *c.hiddenIds.toTypedArray())
+                    .run()
+            }
+            instance.delete(Crash::class.java)
+                .values(listOf(c))
+                .run()
+            mAdapter!!.removeCrash(c)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

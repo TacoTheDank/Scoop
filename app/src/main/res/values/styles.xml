@@ -9,9 +9,6 @@
 
         <item name="actionBarTheme">@style/BaseTheme.ActionBar</item>
         <item name="alertDialogTheme">@style/BaseTheme.AlertDialog</item>
-
-        <item name="mcab_background_color">@color/colorPrimary</item>
-        <item name="mcab_menu">@menu/menu_cab</item>
     </style>
 
     <style name="AppTheme" parent="@style/BaseTheme">
