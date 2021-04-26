@@ -23,6 +23,7 @@ import tk.wasdennnoch.scoop.R;
  * @author Kiran Rao
  * @see #setReferenceTime(long)
  */
+// From https://github.com/curioustechizen/android-ago, with custom changes
 public class RelativeTimeTextView extends AppCompatTextView {
 
     private static final long INITIAL_UPDATE_INTERVAL = DateUtils.MINUTE_IN_MILLIS;
@@ -47,15 +48,15 @@ public class RelativeTimeTextView extends AppCompatTextView {
         } else {
             TypedArray a = context.getTheme().obtainStyledAttributes(
                     attrs, R.styleable.RelativeTimeTextView, 0, 0);
-            String text = a.getString(R.styleable.RelativeTimeTextView_reference_time);
+            String referenceTimeText = a.getString(R.styleable.RelativeTimeTextView_reference_time);
             a.recycle();
             try {
-                if (!TextUtils.isEmpty(text))
-                    mReferenceTime = Long.parseLong(text);
+                if (!TextUtils.isEmpty(referenceTimeText))
+                    mReferenceTime = Long.parseLong(referenceTimeText);
                 else
                     mReferenceTime = System.currentTimeMillis();
             } catch (NumberFormatException e) {
-                throw new IllegalArgumentException("Not a valid number: '" + text + "'", e);
+                throw new IllegalArgumentException("Not a valid number: '" + referenceTimeText + "'", e);
             }
         }
 
@@ -85,7 +86,7 @@ public class RelativeTimeTextView extends AppCompatTextView {
         /*
          * Instantiate a new runnable with the new reference time
          */
-        mUpdateTimeTask = new UpdateTimeRunnable(this, mReferenceTime);
+        initUpdateTimeTask();
 
         /*
          * Start a new schedule.
@@ -99,12 +100,24 @@ public class RelativeTimeTextView extends AppCompatTextView {
     }
 
     private void updateTextDisplay() {
-        setText(getRelativeTimeDisplayString());
+        setText(getRelativeTimeDisplayString(mReferenceTime, System.currentTimeMillis()));
     }
 
-    private CharSequence getRelativeTimeDisplayString() {
-        long now = System.currentTimeMillis();
-        long difference = now - mReferenceTime;
+    /**
+     * Get the text to display for relative time. By default, this calls
+     * {@link DateUtils#getRelativeTimeSpanString(long, long, long, int)} passing
+     * {@link DateUtils#FORMAT_ABBREV_RELATIVE} flag.
+     * <br/>
+     * You can override this method to customize the string returned.
+     * For example you could add prefixes or suffixes, or use Spans to style the string, etc.
+     *
+     * @param referenceTime The reference time passed in through {@link #setReferenceTime(long)}
+     *                      or through {@code reference_time} attribute.
+     * @param now           The current time.
+     * @return The display text for the relative time.
+     */
+    private CharSequence getRelativeTimeDisplayString(long referenceTime, long now) {
+        long difference = now - referenceTime;
         return difference >= 0 && difference <= DateUtils.MINUTE_IN_MILLIS
                 ? getResources().getString(R.string.just_now)
                 : DateUtils.getRelativeTimeSpanString(
@@ -137,8 +150,15 @@ public class RelativeTimeTextView extends AppCompatTextView {
     }
 
     private void startTaskForPeriodicallyUpdatingRelativeTime() {
+        if (mUpdateTimeTask.isDetached()) {
+            initUpdateTimeTask();
+        }
         mHandler.post(mUpdateTimeTask);
         isUpdateTaskRunning = true;
+    }
+
+    private void initUpdateTimeTask() {
+        mUpdateTimeTask = new UpdateTimeRunnable(this, mReferenceTime);
     }
 
     private void stopTaskForPeriodicallyUpdatingRelativeTime() {
@@ -176,6 +196,10 @@ public class RelativeTimeTextView extends AppCompatTextView {
         UpdateTimeRunnable(RelativeTimeTextView rttv, long refTime) {
             this.mRefTime = refTime;
             weakRefRttv = new WeakReference<>(rttv);
+        }
+
+        boolean isDetached() {
+            return weakRefRttv.get() == null;
         }
 
         void detach() {
