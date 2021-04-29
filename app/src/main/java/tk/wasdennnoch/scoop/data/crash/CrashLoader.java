@@ -20,7 +20,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
-import tk.wasdennnoch.scoop.BuildConfig;
 import tk.wasdennnoch.scoop.R;
 import tk.wasdennnoch.scoop.ui.MainActivity;
 
@@ -73,10 +72,6 @@ public class CrashLoader {
         return withNotInstalledInfo && notInstalled ? context.getString(R.string.app_not_installed, name) : name;
     }
 
-    private long randomTime() {
-        return (long) (System.currentTimeMillis() * Math.random());
-    }
-
     public void loadData(MainActivity activity, boolean combineSameStackTrace,
                          boolean combineSameApps, List<String> blacklist) {
         mListener = new WeakReference<>(activity);
@@ -84,33 +79,9 @@ public class CrashLoader {
         mCombineSameApps = combineSameApps;
         mBlacklist = blacklist;
         new Thread(() -> {
-            Crash[] result = Inquiry.get("main").select(Crash.class).all();
-            // noinspection ConstantIfStatement,PointlessBooleanExpression
-            if (false && BuildConfig.FAKE_DATA) { // Gonna love random testing code
-                result = new Crash[21];
-                result[0] = new Crash(randomTime(), "com.android.calculator", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
-                result[1] = new Crash(randomTime(), "a.very.very.very.long.package.name", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
-                result[2] = new Crash(randomTime(), BuildConfig.APPLICATION_ID, "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
-                result[3] = new Crash(randomTime(), BuildConfig.APPLICATION_ID, "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
-                result[4] = new Crash(randomTime(), BuildConfig.APPLICATION_ID, "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
-                result[5] = new Crash(randomTime(), BuildConfig.APPLICATION_ID, "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
-                result[6] = new Crash(randomTime(), "com.android.systemui", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
-                result[7] = new Crash(randomTime(), "com.android.systemui", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
-                result[8] = new Crash(randomTime(), "com.android.systemui", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
-                result[9] = new Crash(randomTime(), "com.android.settings", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
-                result[10] = new Crash(randomTime(), "com.android.settings", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
-                result[11] = new Crash(randomTime(), "com.android.systemui", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
-                result[12] = new Crash(randomTime(), "com.android.systemui", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
-                result[13] = new Crash(randomTime(), BuildConfig.APPLICATION_ID, "java.lang.NullPointerException: Forced NullPointerException", "Nope2.");
-                result[14] = new Crash(randomTime(), BuildConfig.APPLICATION_ID, "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
-                result[15] = new Crash(randomTime(), BuildConfig.APPLICATION_ID, "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
-                result[16] = new Crash(randomTime(), BuildConfig.APPLICATION_ID, "java.lang.NullPointerException: Forced NullPointerException", "Nope2.");
-                result[17] = new Crash(randomTime(), BuildConfig.APPLICATION_ID, "java.lang.NullPointerException: Forced NullPointerException", "Nope2.");
-                result[18] = new Crash(randomTime(), BuildConfig.APPLICATION_ID, "java.lang.NullPointerException: Forced NullPointerException", "Nope2.");
-                result[19] = new Crash(randomTime(), "tk.wasdennnoch.puush", "3 Crasheeeeeeeeeees", "Nope.");
-                result[20] = new Crash(randomTime(), "com.android.calculator2", "java.lang.NullPointerException: Forced NullPointerException", "Nope.");
-                Inquiry.get("main").insert(Crash.class).values(result).run();
-            }
+            Crash[] result = Inquiry.get("main")
+                    .select(Crash.class)
+                    .all();
             final MainActivity listener = mListener.get();
             if (listener == null || listener.isFinishing() || listener.isDestroyed())
                 return;
