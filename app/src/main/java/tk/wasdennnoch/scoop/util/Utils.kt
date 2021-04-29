@@ -51,9 +51,9 @@ fun Context.displayToast(@StringRes string: Int) {
 // Borrowed from https://github.com/K1rakishou/Kuroba-Experimental
 @Suppress("ReplaceSizeCheckWithIsNotEmpty", "NOTHING_TO_INLINE")
 @OptIn(ExperimentalContracts::class)
-inline fun CharSequence?.isNotNullNorEmpty(): Boolean {
+inline fun CharSequence?.isNeitherNullNorEmpty(): Boolean {
     contract {
-        returns(true) implies (this@isNotNullNorEmpty != null)
+        returns(true) implies (this@isNeitherNullNorEmpty != null)
     }
 
     return this != null && this.length > 0

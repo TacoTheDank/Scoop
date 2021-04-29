@@ -21,7 +21,7 @@ import tk.wasdennnoch.scoop.data.crash.CrashLoader
 import tk.wasdennnoch.scoop.databinding.ActivityDetailBinding
 import tk.wasdennnoch.scoop.util.copyTextToClipboard
 import tk.wasdennnoch.scoop.util.displayToast
-import tk.wasdennnoch.scoop.util.isNotNullNorEmpty
+import tk.wasdennnoch.scoop.util.isNeitherNullNorEmpty
 import java.util.*
 
 class DetailActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
@@ -57,7 +57,7 @@ class DetailActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
         var newText = text
         val stackTrace = mCrash!!.stackTrace.toLowerCase(Locale.ENGLISH)
         val span = mCrash!!.stackTrace.toSpannable()
-        if (newText.isNotNullNorEmpty()) {
+        if (newText.isNeitherNullNorEmpty()) {
             newText = newText.toLowerCase(Locale.ENGLISH) // Ignore case
             val size = newText.length
             var index = 0
