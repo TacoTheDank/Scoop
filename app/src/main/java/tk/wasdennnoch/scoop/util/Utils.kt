@@ -5,9 +5,15 @@ package tk.wasdennnoch.scoop.util
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.core.content.getSystemService
+import androidx.core.graphics.applyCanvas
+import androidx.core.graphics.createBitmap
+import androidx.core.graphics.drawable.updateBounds
 import tk.wasdennnoch.scoop.data.crash.CrashLoader
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.contract
@@ -57,4 +63,19 @@ inline fun CharSequence?.isNeitherNullNorEmpty(): Boolean {
     }
 
     return this != null && this.length > 0
+}
+
+fun Drawable.convertToBitmap(): Bitmap? {
+    if (this is BitmapDrawable) {
+        return this.bitmap
+    }
+    val bitmap = createBitmap(this.intrinsicWidth, this.intrinsicHeight)
+
+    return bitmap.applyCanvas {
+        updateBounds(
+            right = this.width,
+            bottom = this.height
+        )
+        draw(this)
+    }
 }

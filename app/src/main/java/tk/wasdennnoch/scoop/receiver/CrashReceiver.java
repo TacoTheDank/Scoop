@@ -7,10 +7,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.TaskStackBuilder;
@@ -30,6 +26,7 @@ import tk.wasdennnoch.scoop.data.crash.CrashLoader;
 import tk.wasdennnoch.scoop.dogbin.DogbinUploadService;
 import tk.wasdennnoch.scoop.ui.DetailActivity;
 import tk.wasdennnoch.scoop.ui.MainActivity;
+import tk.wasdennnoch.scoop.util.Utils;
 
 public class CrashReceiver extends BroadcastReceiver {
 
@@ -85,7 +82,7 @@ public class CrashReceiver extends BroadcastReceiver {
 
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "crashes")
                     .setSmallIcon(R.drawable.ic_bug_report)
-                    .setLargeIcon(drawableToBitmap(CrashLoader.getAppIcon(context, packageName)))
+                    .setLargeIcon(Utils.convertToBitmap(CrashLoader.getAppIcon(context, packageName)))
                     .setContentTitle(CrashLoader.getAppName(context, packageName, false))
                     .setContentText(description)
                     .setPriority(NotificationCompat.PRIORITY_MAX)
@@ -157,16 +154,4 @@ public class CrashReceiver extends BroadcastReceiver {
             manager.notify(notificationId, builder.build());
         }
     }
-
-    private Bitmap drawableToBitmap(Drawable drawable) {
-        if (drawable instanceof BitmapDrawable)
-            return ((BitmapDrawable) drawable).getBitmap();
-        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(),
-                drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmap);
-        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-        drawable.draw(canvas);
-        return bitmap;
-    }
-
 }
