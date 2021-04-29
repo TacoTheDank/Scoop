@@ -95,9 +95,7 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
             val c: Crash? = i.getParcelableExtra(EXTRA_CRASH)
             val crashes = ArrayList<Crash?>()
             crashes.add(c)
-            if (c?.children != null) {
-                crashes.addAll(c.children)
-            }
+            c?.children?.let(crashes::addAll)
             mAdapter!!.setCrashes(crashes)
             supportActionBar?.title =
                 CrashLoader.getAppName(this, c?.packageName, true)
@@ -200,7 +198,7 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
             this,
             mPrefs!!.getBoolean("combine_same_stack_trace", true),
             mPrefs!!.getBoolean("combine_same_apps", false),
-            mutableListOf(
+            listOf(
                 *mPrefs
                     ?.getString("blacklisted_packages", "")
                     ?.split(",".toRegex())!!.toTypedArray()
@@ -308,9 +306,9 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
         for (c in items) {
             if (!mHasCrash && c.children != null) {
                 for (cc in c.children) {
-                    if (cc.hiddenIds != null) {
+                    cc.hiddenIds?.let {
                         instance.delete(Crash::class.java)
-                            .whereIn("_id", *cc.hiddenIds.toTypedArray())
+                            .whereIn("_id", *it.toTypedArray())
                             .run()
                     }
                     mAdapter!!.removeCrash(cc)
@@ -319,9 +317,9 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
                     .values(c.children)
                     .run()
             }
-            if (c.hiddenIds != null) {
+            c.hiddenIds?.let {
                 instance.delete(Crash::class.java)
-                    .whereIn("_id", *c.hiddenIds.toTypedArray())
+                    .whereIn("_id", *it.toTypedArray())
                     .run()
             }
             instance.delete(Crash::class.java)

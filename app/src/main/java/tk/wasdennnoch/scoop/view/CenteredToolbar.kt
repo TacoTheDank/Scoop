@@ -64,8 +64,8 @@ class CenteredToolbar @JvmOverloads constructor(
                 inflateTitle()
             }
         }
-        if (mTitleTextView != null) {
-            mTitleTextView!!.text = title
+        mTitleTextView?.let {
+            it.text = title
         }
         mTitleText = title
     }
@@ -81,8 +81,8 @@ class CenteredToolbar @JvmOverloads constructor(
             }
         }
         mSubtitleTextView?.isGone = subtitle.isEmpty()
-        if (mSubtitleTextView != null) {
-            mSubtitleTextView!!.text = subtitle
+        mSubtitleTextView?.let {
+            it.text = subtitle
         }
         mSubtitleText = subtitle
     }

@@ -40,8 +40,8 @@ class BlacklistAppsActivity : AppCompatActivity(), SearchView.OnQueryTextListene
 
         binding!!.blacklistView.layoutManager = LinearLayoutManager(this)
 
-        if (savedInstanceState != null) {
-            mIsLoading = savedInstanceState.getBoolean("mIsLoading")
+        savedInstanceState?.let {
+            mIsLoading = it.getBoolean("mIsLoading")
         }
 
         mAdapter = AppAdapter()
@@ -84,7 +84,7 @@ class BlacklistAppsActivity : AppCompatActivity(), SearchView.OnQueryTextListene
     fun onDataLoaded(apps: ArrayList<App?>?) {
         mAdapter!!.setApps(
             apps,
-            mutableListOf(
+            listOf(
                 *mPrefs
                     ?.getString("blacklisted_packages", "")
                     ?.split(",".toRegex())!!.toTypedArray()
