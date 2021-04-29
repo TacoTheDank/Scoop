@@ -4,6 +4,8 @@ Extremely useful for app debugging.
 
 Scoop supports both rooted and non-rooted devices (though non-rooted devices require some setup; see the repository wiki for details).
 
+Scoop also supports Xposed.
+
 Features:
 - Search (apps, stack traces)
 - Crash preview in notifications (configurable in settings)

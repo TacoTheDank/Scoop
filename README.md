@@ -16,6 +16,7 @@ Extremely useful for app debugging.
 
 Scoop supports both rooted and non-rooted devices (though non-rooted devices require some [setup](https://github.com/TacoTheDank/Scoop#guide)).
 
+Scoop also supports Xposed.
 
 Features:
 - Search (apps, stack traces)
@@ -41,7 +42,6 @@ Most important differences with this fork:
 - Lots of under-the-hood improvements
 - Using topjohnwu's libsu
 - App now has an adaptive icon
-- Removed Xposed support
 
 You can also read the release notes for changes that have been made to the app since then.
 
