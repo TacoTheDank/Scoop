@@ -11,7 +11,6 @@ import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
@@ -70,9 +69,6 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
     override fun onCreate(savedInstanceState: Bundle?) {
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this)
         updateLocale()
-
-        // To make vector drawables work as menu item drawables
-        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
 
         super.onCreate(savedInstanceState)
 
