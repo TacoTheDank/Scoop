@@ -69,12 +69,7 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
 
     override fun onCreate(savedInstanceState: Bundle?) {
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this)
-        if (mPrefs!!.getBoolean("force_english", false)) {
-            // TODO: Use ConfigurationCompat
-            val config = resources.configuration
-            config.locale = Locale.ENGLISH
-            resources.updateConfiguration(config, null)
-        }
+        updateLocale()
 
         // To make vector drawables work as menu item drawables
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
@@ -161,6 +156,15 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
             mAdapter!!.setSelectionEnabled(false)
         } else {
             super.onBackPressed()
+        }
+    }
+
+    private fun updateLocale() {
+        if (mPrefs!!.getBoolean("force_english", false)) {
+            // TODO: Use ConfigurationCompat
+            val config = resources.configuration
+            config.locale = Locale.ENGLISH
+            resources.updateConfiguration(config, null)
         }
     }
 
