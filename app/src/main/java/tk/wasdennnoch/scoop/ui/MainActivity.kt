@@ -8,6 +8,7 @@ import android.os.Handler
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -219,18 +220,17 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == CODE_CHILDREN_VIEW && resultCode == RESULT_OK) {
+    private val activityResultLauncher = registerForActivityResult(StartActivityForResult()) {
+        if (it.resultCode == RESULT_OK) {
             loadData()
         }
     }
 
     override fun onCrashClicked(crash: Crash) {
         if (mCombineApps && !mHasCrash) {
-            startActivityForResult(
+            activityResultLauncher.launch(
                 Intent(this, MainActivity::class.java)
-                    .putExtra(EXTRA_CRASH, crash), CODE_CHILDREN_VIEW
+                    .putExtra(EXTRA_CRASH, crash)
             )
         } else {
             startActivity(
@@ -395,7 +395,6 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
 
     companion object {
         private const val EXTRA_CRASH = "tk.wasdennnoch.scoop.EXTRA_CRASH"
-        private const val CODE_CHILDREN_VIEW = 1
         private const val UPDATE_DELAY = 200
         private var sUpdateRequired = false
         private var sVisible = false
