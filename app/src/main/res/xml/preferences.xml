@@ -61,7 +61,7 @@
             android:title="@string/settings_blacklisted_apps"
             app:iconSpaceReserved="false">
             <intent
-                android:targetClass="tk.wasdennnoch.scoop.ui.BlacklistAppsActivity"
+                android:targetClass="taco.scoop.ui.BlacklistAppsActivity"
                 android:targetPackage="@string/application_id" />
         </Preference>
 
@@ -103,7 +103,7 @@
             android:title="@string/settings_about"
             app:iconSpaceReserved="false">
             <intent
-                android:targetClass="tk.wasdennnoch.scoop.ui.AboutActivity"
+                android:targetClass="taco.scoop.ui.AboutActivity"
                 android:targetPackage="@string/application_id" />
         </Preference>
 

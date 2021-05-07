@@ -18,9 +18,9 @@
 
 -dontobfuscate
 
--keep class tk.wasdennnoch.scoop.XposedHook
--keep class tk.wasdennnoch.scoop.MockThrowable { *; }
+-keep class taco.scoop.XposedHook
+-keep class taco.scoop.MockThrowable { *; }
 -keep class androidx.appcompat.widget.SearchView { *; }
--keep class tk.wasdennnoch.scoop.data.crash.Crash { *; }
+-keep class taco.scoop.data.crash.Crash { *; }
 
 -keep class de.robv.android.xposed.** { *; }

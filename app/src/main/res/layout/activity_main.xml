@@ -17,7 +17,7 @@
         android:layout_height="match_parent"
         android:layout_marginTop="?actionBarSize">
 
-        <tk.wasdennnoch.scoop.view.CrashRecyclerView
+        <taco.scoop.view.CrashRecyclerView
             android:id="@+id/main_crash_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

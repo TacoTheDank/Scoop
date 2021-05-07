@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="tk.wasdennnoch.scoop"
+    package="taco.scoop"
     android:installLocation="internalOnly">
 
     <uses-permission android:name="android.permission.VIBRATE" />
@@ -69,7 +69,7 @@
             android:exported="true"
             tools:ignore="ExportedReceiver">
             <intent-filter>
-                <action android:name="tk.wasdennnoch.scoop.EXCEPTION" />
+                <action android:name="taco.scoop.EXCEPTION" />
             </intent-filter>
         </receiver>
         <receiver
@@ -77,8 +77,8 @@
             android:exported="true"
             tools:ignore="ExportedReceiver">
             <intent-filter>
-                <action android:name="tk.wasdennnoch.scoop.ACTION_SHARE" />
-                <action android:name="tk.wasdennnoch.scoop.ACTION_COPY" />
+                <action android:name="taco.scoop.ACTION_SHARE" />
+                <action android:name="taco.scoop.ACTION_COPY" />
             </intent-filter>
         </receiver>
 
