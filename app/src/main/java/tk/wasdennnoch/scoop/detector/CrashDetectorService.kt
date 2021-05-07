@@ -7,7 +7,7 @@ import tk.wasdennnoch.scoop.IndicatorService
 
 class CrashDetectorService : IndicatorService() {
 
-    lateinit var impl: CrashDetector
+    private lateinit var impl: CrashDetector
 
     override fun onCreate() {
         super.onCreate()

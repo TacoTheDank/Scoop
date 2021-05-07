@@ -55,10 +55,10 @@ class DetailActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
 
     private fun highlightText(text: String?) {
         var newText = text
-        val stackTrace = mCrash!!.stackTrace.toLowerCase(Locale.ENGLISH)
+        val stackTrace = mCrash!!.stackTrace.lowercase(Locale.ENGLISH)
         val span = mCrash!!.stackTrace.toSpannable()
         if (newText.isNeitherNullNorEmpty()) {
-            newText = newText.toLowerCase(Locale.ENGLISH) // Ignore case
+            newText = newText.lowercase(Locale.ENGLISH) // Ignore case
             val size = newText.length
             var index = 0
             while (stackTrace.indexOf(newText, index).also { index = it } != -1) {
