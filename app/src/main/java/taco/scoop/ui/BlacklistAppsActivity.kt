@@ -23,31 +23,33 @@ import java.util.*
 class BlacklistAppsActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
     SearchView.OnCloseListener {
 
-    private var binding: ActivityBlacklistAppsBinding? = null
     private var mPrefs: SharedPreferences? = null
     private var mAdapter: AppAdapter? = null
     private var mIsLoading = false
 
+    private lateinit var _binding: ActivityBlacklistAppsBinding
+    private val binding get() = _binding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityBlacklistAppsBinding.inflate(layoutInflater)
-        setContentView(binding!!.root)
-        setSupportActionBar(binding!!.blacklistToolbar.toolbar)
+        _binding = ActivityBlacklistAppsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setSupportActionBar(binding.blacklistToolbar.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this)
 
-        binding!!.blacklistView.layoutManager = LinearLayoutManager(this)
+        binding.blacklistView.layoutManager = LinearLayoutManager(this)
 
         savedInstanceState?.let {
             mIsLoading = it.getBoolean("mIsLoading")
         }
 
         mAdapter = AppAdapter()
-        binding!!.blacklistView.adapter = mAdapter
+        binding.blacklistView.adapter = mAdapter
 
-        ToolbarElevationHelper(binding!!.blacklistView, binding!!.blacklistToolbar.toolbar)
+        ToolbarElevationHelper(binding.blacklistView, binding.blacklistToolbar.toolbar)
     }
 
     override fun onResume() {
@@ -77,8 +79,8 @@ class BlacklistAppsActivity : AppCompatActivity(), SearchView.OnQueryTextListene
         mIsLoading = loading
         val empty = mAdapter!!.isEmpty
         // When one is visible, the other isn't (and vice versa)
-        binding!!.blacklistProgressbar.isVisible = loading
-        binding!!.blacklistView.isGone = loading || empty
+        binding.blacklistProgressbar.isVisible = loading
+        binding.blacklistView.isGone = loading || empty
     }
 
     fun onDataLoaded(apps: ArrayList<App?>?) {

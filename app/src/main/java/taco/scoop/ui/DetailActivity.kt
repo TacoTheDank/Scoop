@@ -29,28 +29,30 @@ class DetailActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
     private var mCrash: Crash? = null
     private var mHighlightColor = 0
     private var mSelectionEnabled = false
-    private var binding: ActivityDetailBinding? = null
+
+    private lateinit var _binding: ActivityDetailBinding
+    private val binding get() = _binding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityDetailBinding.inflate(layoutInflater)
-        setContentView(binding!!.root)
-        setSupportActionBar(binding!!.detailToolbar.toolbar)
+        _binding = ActivityDetailBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setSupportActionBar(binding.detailToolbar.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         mHighlightColor = ContextCompat.getColor(this, R.color.highlightColor)
         mCrash = intent.getParcelableExtra(EXTRA_CRASH)
         supportActionBar?.title = CrashLoader.getAppName(this, mCrash!!.packageName, true)
 
-        binding!!.detailCrashLogText.text = mCrash!!.stackTrace
-        binding!!.detailCrashEdit.setText(mCrash!!.stackTrace)
-        binding!!.detailCrashEdit.setTextSize(
-            TypedValue.COMPLEX_UNIT_PX, binding!!.detailCrashLogText.textSize
+        binding.detailCrashLogText.text = mCrash!!.stackTrace
+        binding.detailCrashEdit.setText(mCrash!!.stackTrace)
+        binding.detailCrashEdit.setTextSize(
+            TypedValue.COMPLEX_UNIT_PX, binding.detailCrashLogText.textSize
         )
 
         val prefs = PreferenceManager.getDefaultSharedPreferences(this)
-        binding!!.detailScrollView.setCropHorizontally(prefs.getBoolean("auto_wrap", false))
+        binding.detailScrollView.setCropHorizontally(prefs.getBoolean("auto_wrap", false))
     }
 
     private fun highlightText(text: String?) {
@@ -70,7 +72,7 @@ class DetailActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
                 index += size
             }
         }
-        binding!!.detailCrashLogText.setText(span, TextView.BufferType.SPANNABLE)
+        binding.detailCrashLogText.setText(span, TextView.BufferType.SPANNABLE)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -112,8 +114,8 @@ class DetailActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
                     }
                 )
                 // When one is visible, the other isn't (and vice versa)
-                binding!!.detailCrashEdit.isVisible = mSelectionEnabled
-                binding!!.detailScrollView.isGone = mSelectionEnabled
+                binding.detailCrashEdit.isVisible = mSelectionEnabled
+                binding.detailScrollView.isGone = mSelectionEnabled
             }
             R.id.menu_detail_copy -> {
                 copyTextToClipboard(

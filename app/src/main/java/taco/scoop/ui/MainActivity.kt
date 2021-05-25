@@ -34,13 +34,12 @@ import kotlin.collections.ArrayList
 class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQueryTextListener,
     SearchView.OnCloseListener {
     private val mLoader = CrashLoader()
-    private var binding: ActivityMainBinding? = null
     private var mCombineApps = false
     private var mHasCrash = false
     private var mPrefs: SharedPreferences? = null
     private var mHandler: Handler? = null
     private var mAdapter: CrashAdapter? = null
-    private var mNoItems: View? = null
+    private var mNoItemsScreen: View? = null
     private var mCab: AttachedCab? = null
 
     private var mDestroyed = false
@@ -66,20 +65,23 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
         }
     }
 
+    private lateinit var _binding: ActivityMainBinding
+    private val binding get() = _binding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         mPrefs = PreferenceManager.getDefaultSharedPreferences(this)
         updateLocale()
 
         super.onCreate(savedInstanceState)
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding!!.root)
-        setSupportActionBar(binding!!.mainToolbar.toolbar)
+        _binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setSupportActionBar(binding.mainToolbar.toolbar)
 
         mAdapter = CrashAdapter(this, this)
-        binding!!.mainCrashView.adapter = mAdapter
-        binding!!.mainCrashView.isGone = true
-        ToolbarElevationHelper(binding!!.mainCrashView, binding!!.mainToolbar.toolbar)
+        binding.mainCrashView.adapter = mAdapter
+        binding.mainCrashView.isGone = true
+        ToolbarElevationHelper(binding.mainCrashView, binding.mainToolbar.toolbar)
 
         val i = intent
         mHasCrash = i.hasExtra(EXTRA_CRASH)
@@ -96,7 +98,7 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
 
         mCombineApps = mPrefs!!.getBoolean("combine_same_apps", false)
         mAdapter!!.setCombineSameApps(!mHasCrash && mCombineApps)
-        binding!!.mainCrashView.setReverseOrder(mHasCrash || !mCombineApps)
+        binding.mainCrashView.setReverseOrder(mHasCrash || !mCombineApps)
 
         Inquiry.newInstance(this, "crashes")
             .instanceName("main")
@@ -174,20 +176,20 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
             newLoading = true
         }
         val empty = mAdapter!!.isEmpty
-        binding!!.mainProgressbar.isVisible = newLoading
-        binding!!.mainCrashView.isGone = newLoading || empty || !mIsAvailable
+        binding.mainProgressbar.isVisible = newLoading
+        binding.mainCrashView.isGone = newLoading || empty || !mIsAvailable
 
         if (!newLoading && empty && mIsAvailable) {
-            if (mNoItems == null) {
-                mNoItems = binding!!.mainNoItemsStub.inflate()
+            if (mNoItemsScreen == null) {
+                mNoItemsScreen = binding.mainNoItemsStub.inflate()
             }
-            mNoItems!!.isVisible = true
-        } else if (mNoItems != null) {
-            mNoItems!!.isGone = true
+            mNoItemsScreen!!.isVisible = true
+        } else if (mNoItemsScreen != null) {
+            mNoItemsScreen!!.isGone = true
         }
         if (!mIsAvailable) {
-            if (mNoItems == null) {
-                mNoItems = binding!!.mainNoPermissionStub.inflate()
+            if (mNoItemsScreen == null) {
+                mNoItemsScreen = binding.mainNoPermissionStub.inflate()
             }
         }
     }
@@ -262,8 +264,8 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
             menu(R.menu.menu_cab)
             slideDown(300)
             closeDrawable(R.drawable.ic_close)
-            onSelection { item ->
-                if (item.itemId == R.id.menu_cab_delete) {
+            onSelection {
+                if (it.itemId == R.id.menu_cab_delete) {
                     showDeletePrompt()
                 }
                 true
