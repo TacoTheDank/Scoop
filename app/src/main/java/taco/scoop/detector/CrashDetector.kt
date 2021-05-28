@@ -17,10 +17,9 @@ abstract class CrashDetector : ICrashDetector.Stub() {
         Runtime.getRuntime().exec("logcat -c").waitFor()
         logcatProcess = Runtime.getRuntime().exec("logcat")
         reader = BufferedReader(InputStreamReader(logcatProcess.inputStream))
+
         val readThread = object : Thread() {
-
             var pendingLine: String? = null
-
             override fun run() {
                 Log.d("CrashDetector", "thread started")
                 while (true) {

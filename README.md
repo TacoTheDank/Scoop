@@ -48,9 +48,16 @@ You can also read the release notes for changes that have been made to the app s
 Here is the info for the original app by paphonb: https://forum.xda-developers.com/android/apps-games/adb-root-scoop-catch-stack-trace-app-t3888798
 
 
+## Contributing
+
+Yes please! I am not really all that knowledgeable in some things.
+Contributions are absolutely appreciated!
+Feel free to tackle open issues, add something neat, etc. whatever you feel like. :)
+
+
 ## Bugs
 
-Please open an issue if you encounter any problems or have a feature request. :) Thank you!
+Please open an issue if you encounter any problems or have a feature request. Thank you!
 
 
 ## License
