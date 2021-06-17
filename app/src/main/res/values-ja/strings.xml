@@ -1,0 +1,90 @@
+<resources>
+    <!-- Toolbar titles -->
+    <string name="settings_title">設定</string>
+    <string name="blacklist_title">ブラックリスト</string>
+    <string name="about_title">このアプリについて</string>
+
+    <!-- Actions -->
+    <string name="action_clear">消去</string>
+    <string name="action_settings">設定</string>
+    <string name="action_search">検索</string>
+    <string name="action_select">選択モードを切り替え</string>
+    <string name="action_share">共有</string>
+    <string name="action_copy">クリップボードにコピー</string>
+    <string name="action_copy_short">コピー</string>
+    <string name="action_delete">削除</string>
+
+    <!-- Main activity stuff -->
+    <string name="just_now">今すぐ実行</string>
+    <string name="crash_count">%1$s (%2$d)</string>
+    <string name="app_not_installed">%s (未インストール)</string>
+    <string name="copy_label">%s のスタックトレース</string>
+    <string name="copy_link_label">%s のスタックトレースのリンク</string>
+    <string name="copied_toast">スタックトレースはクリップボードにコピーされました</string>
+    <string name="copied_link_toast">スタックトレースのリンクはクリップボードにコピーされました</string>
+    <plurals name="items_selected_count">
+        <item quantity="one">%d 個のクラッシュが選択されました</item>
+        <item quantity="other">%d 個のクラッシュが選択されました</item>
+    </plurals>
+    <plurals name="items_children_count">
+        <item quantity="one">%d 個のクラッシュ</item>
+        <item quantity="other">%d 個のクラッシュ</item>
+    </plurals>
+    <string name="dialog_clear_content">全てのクラッシュ履歴を消去しても宜しいですか？</string>
+    <plurals name="delete_multiple_confirm">
+        <item quantity="one">%d 個のクラッシュを削除しても宜しいですか？この操作はやり直しできません!</item>
+        <item quantity="other">%d 個のクラッシュを削除しても宜しいですか？この操作はやり直しできません</item>
+    </plurals>
+    <string name="no_items">クラッシュがありません</string>
+    <!--        You can get a bit creative here as it's probably not too easy to translate directly -->
+    <string name="make_crash">Wanna make something crash? ಠ‿ಠ</string>
+
+    <!-- Setting categories -->
+    <string name="settings_notif">通知</string>
+    <string name="settings_overview">概要</string>
+    <string name="settings_detail_view">詳細表示</string>
+    <string name="settings_misc">その他の設定</string>
+
+    <!-- Settings (notifications) -->
+    <string name="settings_show_notif">クラッシュ時に通知を表示</string>
+    <string name="settings_action_buttons">アクションボタンを表示</string>
+    <string name="settings_action_buttons_summary">通知にクラッシュをコピー・共有するボタンを追加</string>
+    <string name="settings_show_stack_trace">通知にスタックトレースを表示</string>
+    <string name="settings_show_stack_trace_summary">通知にクラッシュの概要だけでなく、スタックトレースの冒頭を表示する</string>
+
+    <!-- Settings (overview) -->
+    <string name="settings_combine_same_apps">同アプリのログを統合</string>
+    <string name="settings_combine_same_apps_summary">異なるクラッシュを含む、同アプリのクラッシュのログを統合して表示します</string>
+    <string name="settings_combine_same_trace">同じクラッシュのログを統合</string>
+    <string name="settings_combine_same_trace_summary">同じアプリで同一のスタックトレースを統合して表示します</string>
+    <string name="settings_search_pkg">パッケージ名で検索</string>
+    <string name="settings_search_pkg_summary">パッケージ名だけでなくアプリ名でも指定された単語を検索する</string>
+    <string name="settings_blacklisted_apps">ブラックリストのアプリ</string>
+    <string name="settings_blacklisted_apps_summary">ブラックリストに登録されたアプリのクラッシュは非表示になります</string>
+
+    <!-- Settings (detail view) -->
+    <string name="settings_auto_wrap">自動で行を折り返す</string>
+    <string name="settings_auto_wrap_summary">行の文字数を制限して画面幅に合わせ折り返します</string>
+
+    <!-- Settings (miscellaneous) -->
+    <string name="settings_ignore_threaddeath">ThreadDeathエラーを無視</string>
+    <string name="settings_ignore_threaddeath_summary">ワーカースレッドを強制的に停止させるためにThreadDeathエラーが発生します。これは 通常の挙動であり、アプリがクラッシュすることはありません。</string>
+    <string name="settings_about">Scoopについて</string>
+
+    <!-- About screen -->
+    <string name="about_author">%1$s によって開発されました</string>
+    <string name="about_version">バージョン %1$s (%2$d)</string>
+    <string name="about_github">ソースコード</string>
+
+    <!-- Notification channels -->
+    <string name="crash_channel">アプリケーションのクラッシュ</string>
+    <string name="status_channel">Scoopのステータス</string>
+    <string name="scoop_running">アプリのクラッシュを監視中</string>
+    <string name="action_kill">停止</string>
+
+    <!-- Dogbin -->
+    <string name="dogbin_uploading">アップロード中…</string>
+    <string name="action_dogbin_upload">dogbinにアップロード</string>
+    <string name="action_dogbin_upload_error">アップロード失敗</string>
+    <string name="action_dogbin_copy_link">リンクをコピー</string>
+</resources>
