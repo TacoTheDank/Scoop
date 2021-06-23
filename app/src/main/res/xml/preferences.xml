@@ -83,6 +83,11 @@
         android:title="@string/settings_misc"
         app:iconSpaceReserved="false">
 
+        <Preference
+            android:key="pref_permission_status"
+            android:title="@string/settings_permission_status"
+            app:iconSpaceReserved="false" />
+
         <SwitchPreferenceCompat
             android:defaultValue="true"
             android:key="ignore_threaddeath"

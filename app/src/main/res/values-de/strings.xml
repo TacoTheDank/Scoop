@@ -67,6 +67,9 @@
     <string name="settings_auto_wrap_summary">Limitiert die maximale Zeilenbreite auf die Bildschirmbreite</string>
 
     <!-- Settings (miscellaneous) -->
+    <string name="settings_permission_status">Permission status</string>
+    <string name="settings_permission_status_summary_true">READ_LOGS permission is granted</string>
+    <string name="settings_permission_status_summary_false">READ_LOGS permission is denied</string>
     <string name="settings_ignore_threaddeath">Ignoriere ThreadDeath-Errors</string>
     <string name="settings_ignore_threaddeath_summary">Ein ThreadDeath-Error wird geworfen, um einen Thread zu stoppen. Es ist ein \"normales Ereignis\" und führt zu keinem Crash</string>
     <string name="settings_about">Über Scoop</string>

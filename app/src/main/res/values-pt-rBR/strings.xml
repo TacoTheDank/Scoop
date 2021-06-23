@@ -67,6 +67,9 @@
     <string name="settings_auto_wrap_summary">Limitar a largura máxima da linha à largura da tela</string>
 
     <!-- Settings (miscellaneous) -->
+    <string name="settings_permission_status">Permission status</string>
+    <string name="settings_permission_status_summary_true">READ_LOGS permission is granted</string>
+    <string name="settings_permission_status_summary_false">READ_LOGS permission is denied</string>
     <string name="settings_ignore_threaddeath">Ignorar erros ThreadDeath</string>
     <string name="settings_ignore_threaddeath_summary">Um erro ThreadDeath é ativado para forçar a parada de um thread de trabalho. É uma \"ocorrência normal\" e não faz apps travarem</string>
     <string name="settings_about">Sobre Scoop</string>

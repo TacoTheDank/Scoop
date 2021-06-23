@@ -2,18 +2,23 @@
 
 package taco.scoop.util
 
+import android.Manifest
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.widget.Toast
 import androidx.annotation.StringRes
+import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
 import androidx.core.graphics.applyCanvas
 import androidx.core.graphics.createBitmap
 import androidx.core.graphics.drawable.updateBounds
+import com.topjohnwu.superuser.Shell
+import taco.scoop.BuildConfig
 import taco.scoop.data.crash.CrashLoader
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.contract
@@ -78,4 +83,19 @@ fun Drawable.convertToBitmap(): Bitmap? {
         )
         draw(this)
     }
+}
+
+const val readLogsPermission = Manifest.permission.READ_LOGS
+
+fun Context.readLogsPermissionGranted(): Boolean {
+    return ContextCompat.checkSelfPermission(
+        this,
+        readLogsPermission
+    ) == PackageManager.PERMISSION_GRANTED
+}
+
+fun runReadLogsGrantShell() {
+    Shell.su(
+        "pm grant ${BuildConfig.APPLICATION_ID} $readLogsPermission"
+    ).exec()
 }

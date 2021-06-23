@@ -10,6 +10,7 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import taco.scoop.R
 import taco.scoop.databinding.ActivitySettingsBinding
+import taco.scoop.util.readLogsPermissionGranted
 
 class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,6 +40,14 @@ class SettingsActivity : AppCompatActivity() {
 
             val blacklistedAppsPref = findPreference<Preference>("pref_blacklisted_apps")
             blacklistedAppsPref?.setActivityIntent(BlacklistAppsActivity::class.java)
+
+            val permissionStatusPref = findPreference<Preference>("pref_permission_status")
+            permissionStatusPref?.summary =
+                if (requireContext().readLogsPermissionGranted()) {
+                    getString(R.string.settings_permission_status_summary_true)
+                } else {
+                    getString(R.string.settings_permission_status_summary_false)
+                }
 
             val aboutPref = findPreference<Preference>("pref_about_scoop")
             aboutPref?.setActivityIntent(AboutActivity::class.java)

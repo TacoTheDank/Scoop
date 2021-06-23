@@ -67,6 +67,9 @@
     <string name="settings_auto_wrap_summary">Limit maximum line width to screen width</string>
 
     <!-- Settings (miscellaneous) -->
+    <string name="settings_permission_status">Permission status</string>
+    <string name="settings_permission_status_summary_true">READ_LOGS permission is granted</string>
+    <string name="settings_permission_status_summary_false">READ_LOGS permission is denied</string>
     <string name="settings_ignore_threaddeath">Ignore ThreadDeath Errors</string>
     <string name="settings_ignore_threaddeath_summary">A ThreadDeath Error gets thrown to force stop a worker thread. It is a \"normal occurrence\" and does not make apps crash</string>
     <string name="settings_about">About Scoop</string>

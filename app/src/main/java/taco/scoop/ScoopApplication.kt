@@ -1,20 +1,18 @@
 package taco.scoop
 
-import android.Manifest
 import android.annotation.TargetApi
 import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Handler
 import android.os.HandlerThread
 import android.os.SystemClock
-import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
-import com.topjohnwu.superuser.Shell
 import taco.scoop.detector.CrashDetectorService
+import taco.scoop.util.readLogsPermissionGranted
+import taco.scoop.util.runReadLogsGrantShell
 
 class ScoopApplication : Application() {
 
@@ -70,15 +68,9 @@ class ScoopApplication : Application() {
 
     private fun isPermissionGranted(tryGranting: Boolean = true): Boolean {
         synchronized(permissionLock) {
-            val permission = Manifest.permission.READ_LOGS
-            val granted = ContextCompat.checkSelfPermission(
-                this,
-                permission
-            ) == PackageManager.PERMISSION_GRANTED
+            val granted = readLogsPermissionGranted()
             return if (!granted && tryGranting) {
-                Shell.su(
-                    "pm grant ${BuildConfig.APPLICATION_ID} $permission"
-                ).exec()
+                runReadLogsGrantShell()
                 isPermissionGranted(false)
             } else {
                 granted
