@@ -1,10 +1,12 @@
 package taco.scoop.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
+import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import taco.scoop.R
 import taco.scoop.databinding.ActivitySettingsBinding
@@ -34,6 +36,16 @@ class SettingsActivity : AppCompatActivity() {
     class SettingsFragment : PreferenceFragmentCompat() {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             addPreferencesFromResource(R.xml.preferences)
+
+            val blacklistedAppsPref = findPreference<Preference>("pref_blacklisted_apps")
+            blacklistedAppsPref?.setActivityIntent(BlacklistAppsActivity::class.java)
+
+            val aboutPref = findPreference<Preference>("pref_about_scoop")
+            aboutPref?.setActivityIntent(AboutActivity::class.java)
+        }
+
+        private fun Preference.setActivityIntent(clazz: Class<*>) {
+            intent = Intent(activity, clazz)
         }
     }
 }

@@ -57,13 +57,10 @@
             app:iconSpaceReserved="false" />
 
         <Preference
+            android:key="pref_blacklisted_apps"
             android:summary="@string/settings_blacklisted_apps_summary"
             android:title="@string/settings_blacklisted_apps"
-            app:iconSpaceReserved="false">
-            <intent
-                android:targetClass="taco.scoop.ui.BlacklistAppsActivity"
-                android:targetPackage="@string/application_id" />
-        </Preference>
+            app:iconSpaceReserved="false" />
 
     </PreferenceCategory>
 
@@ -100,12 +97,9 @@
             app:iconSpaceReserved="false" />
 
         <Preference
+            android:key="pref_about_scoop"
             android:title="@string/settings_about"
-            app:iconSpaceReserved="false">
-            <intent
-                android:targetClass="taco.scoop.ui.AboutActivity"
-                android:targetPackage="@string/application_id" />
-        </Preference>
+            app:iconSpaceReserved="false" />
 
     </PreferenceCategory>
 
