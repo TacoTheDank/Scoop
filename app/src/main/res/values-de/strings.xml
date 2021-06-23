@@ -46,6 +46,8 @@
     <string name="settings_misc">Verschiedenes</string>
 
     <!-- Settings (notifications) -->
+    <string name="settings_system_notifications">Notification settings</string>
+    <string name="settings_system_notifications_summary">Manage app notifications on the system level</string>
     <string name="settings_show_notif">Benachrichtigung bei Crash zeigen</string>
     <string name="settings_action_buttons">Schnellaktionen zeigen</string>
     <string name="settings_action_buttons_summary">Fügt Buttons zum Kopieren und Teilen des Crashes zur Benachrichtigung hinzu</string>

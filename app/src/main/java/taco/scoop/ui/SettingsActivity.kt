@@ -10,6 +10,7 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import taco.scoop.R
 import taco.scoop.databinding.ActivitySettingsBinding
+import taco.scoop.util.openSystemNotificationSettings
 import taco.scoop.util.readLogsPermissionGranted
 
 class SettingsActivity : AppCompatActivity() {
@@ -37,6 +38,12 @@ class SettingsActivity : AppCompatActivity() {
     class SettingsFragment : PreferenceFragmentCompat() {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             addPreferencesFromResource(R.xml.preferences)
+
+            val notifSettingsPref = findPreference<Preference>("pref_notif_sys_settings")
+            notifSettingsPref?.setOnPreferenceClickListener {
+                requireContext().openSystemNotificationSettings()
+                true
+            }
 
             val blacklistedAppsPref = findPreference<Preference>("pref_blacklisted_apps")
             blacklistedAppsPref?.setActivityIntent(BlacklistAppsActivity::class.java)

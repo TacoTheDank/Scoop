@@ -6,6 +6,12 @@
         android:title="@string/settings_notif"
         app:iconSpaceReserved="false">
 
+        <Preference
+            android:key="pref_notif_sys_settings"
+            android:summary="@string/settings_system_notifications_summary"
+            android:title="@string/settings_system_notifications"
+            app:iconSpaceReserved="false" />
+
         <SwitchPreferenceCompat
             android:defaultValue="true"
             android:key="show_notification"

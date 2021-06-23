@@ -46,6 +46,8 @@
     <string name="settings_misc">Variado</string>
 
     <!-- Settings (notifications) -->
+    <string name="settings_system_notifications">Notification settings</string>
+    <string name="settings_system_notifications_summary">Manage app notifications on the system level</string>
     <string name="settings_show_notif">Mostrar notificação ao travar</string>
     <string name="settings_action_buttons">Mostrar botões de ações</string>
     <string name="settings_action_buttons_summary">Adicionar botões para copiar e compartilhar o travamento na notificação</string>
