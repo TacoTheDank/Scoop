@@ -19,7 +19,7 @@ class SettingsActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         supportFragmentManager.commit {
-            replace<SettingsFragment>(R.id.settings_container)
+            replace<SettingsFragment>(binding.settingsContainer.id)
         }
     }
 
