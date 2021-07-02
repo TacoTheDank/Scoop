@@ -1,0 +1,7 @@
+2.2.0: Miscellaneous improvements!
+- Added Xposed back (requested by users)
+- New setting that displays the permission status of READ_LOGS
+- New setting for easily accessing Scoop's system notification settings
+- Added QUERY_ALL_PACKAGES permission for Android 11
+- Japanese translation (thanks to @gnuhead-chieb on GitHub!)
+- Many internal improvements
