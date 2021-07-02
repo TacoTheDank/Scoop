@@ -1,5 +1,6 @@
 package taco.scoop.data.app;
 
+import android.annotation.SuppressLint;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 
@@ -14,11 +15,12 @@ public class AppLoader {
 
     private WeakReference<BlacklistAppsActivity> mListener;
 
+    @SuppressLint("QueryPermissionsNeeded")
     public void loadData(BlacklistAppsActivity activity) {
         mListener = new WeakReference<>(activity);
         new Thread(() -> {
             PackageManager pm = mListener.get().getPackageManager();
-            // TODO: Deal with https://developer.android.com/about/versions/11/privacy/package-visibility
+            // https://developer.android.com/about/versions/11/privacy/package-visibility
             List<ApplicationInfo> apps = pm.getInstalledApplications(0);
             Collections.sort(apps, new ApplicationInfo.DisplayNameComparator(pm));
             final ArrayList<App> finalApps = new ArrayList<>();
