@@ -1,16 +1,12 @@
 package taco.scoop.ui
 
-import android.content.SharedPreferences
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
-import androidx.core.content.edit
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
-import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import taco.scoop.R
 import taco.scoop.data.app.App
@@ -18,12 +14,12 @@ import taco.scoop.data.app.AppAdapter
 import taco.scoop.data.app.AppLoader
 import taco.scoop.databinding.ActivityBlacklistAppsBinding
 import taco.scoop.ui.helpers.ToolbarElevationHelper
+import taco.scoop.util.PreferenceHelper
 import java.util.*
 
 class BlacklistAppsActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
     SearchView.OnCloseListener {
 
-    private var mPrefs: SharedPreferences? = null
     private var mAdapter: AppAdapter? = null
     private var mIsLoading = false
 
@@ -37,8 +33,6 @@ class BlacklistAppsActivity : AppCompatActivity(), SearchView.OnQueryTextListene
         setContentView(binding.root)
         setSupportActionBar(binding.blacklistToolbar.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        mPrefs = PreferenceManager.getDefaultSharedPreferences(this)
 
         binding.blacklistView.layoutManager = LinearLayoutManager(this)
 
@@ -66,12 +60,7 @@ class BlacklistAppsActivity : AppCompatActivity(), SearchView.OnQueryTextListene
     }
 
     override fun onPause() {
-        mPrefs!!.edit {
-            putString(
-                "blacklisted_packages",
-                TextUtils.join(",", mAdapter!!.selectedPackages)
-            )
-        }
+        PreferenceHelper.editBlacklistPackages(mAdapter!!.selectedPackages)
         super.onPause()
     }
 
@@ -87,8 +76,7 @@ class BlacklistAppsActivity : AppCompatActivity(), SearchView.OnQueryTextListene
         mAdapter!!.setApps(
             apps,
             listOf(
-                *mPrefs
-                    ?.getString("blacklisted_packages", "")
+                *PreferenceHelper.getBlacklistedPackages()
                     ?.split(",".toRegex())!!.toTypedArray()
             )
         )

@@ -11,6 +11,7 @@ import android.os.HandlerThread
 import android.os.SystemClock
 import androidx.core.content.getSystemService
 import taco.scoop.detector.CrashDetectorService
+import taco.scoop.util.PreferenceHelper.initPreferences
 import taco.scoop.util.readLogsPermissionGranted
 import taco.scoop.util.runReadLogsGrantShell
 
@@ -31,6 +32,8 @@ class ScoopApplication : Application() {
             thread.start()
             Handler(thread.looper).post(this@ScoopApplication::startService)
         }
+
+        initPreferences()
     }
 
     @TargetApi(Build.VERSION_CODES.O)

@@ -14,11 +14,11 @@ import androidx.core.content.ContextCompat
 import androidx.core.text.toSpannable
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
-import androidx.preference.PreferenceManager
 import taco.scoop.R
 import taco.scoop.data.crash.Crash
 import taco.scoop.data.crash.CrashLoader
 import taco.scoop.databinding.ActivityDetailBinding
+import taco.scoop.util.PreferenceHelper
 import taco.scoop.util.copyTextToClipboard
 import taco.scoop.util.displayToast
 import taco.scoop.util.isNeitherNullNorEmpty
@@ -51,8 +51,7 @@ class DetailActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
             TypedValue.COMPLEX_UNIT_PX, binding.detailCrashLogText.textSize
         )
 
-        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
-        binding.detailScrollView.setCropHorizontally(prefs.getBoolean("auto_wrap", false))
+        binding.detailScrollView.setCropHorizontally(PreferenceHelper.autoWrap())
     }
 
     private fun highlightText(text: String?) {

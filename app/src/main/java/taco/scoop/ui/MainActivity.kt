@@ -1,7 +1,6 @@
 package taco.scoop.ui
 
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Handler
@@ -14,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
-import androidx.preference.PreferenceManager
 import com.afollestad.inquiry.Inquiry
 import com.afollestad.materialcab.attached.AttachedCab
 import com.afollestad.materialcab.attached.destroy
@@ -28,6 +26,7 @@ import taco.scoop.data.crash.CrashAdapter
 import taco.scoop.data.crash.CrashLoader
 import taco.scoop.databinding.ActivityMainBinding
 import taco.scoop.ui.helpers.ToolbarElevationHelper
+import taco.scoop.util.PreferenceHelper
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -36,7 +35,6 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
     private val mLoader = CrashLoader()
     private var mCombineApps = false
     private var mHasCrash = false
-    private var mPrefs: SharedPreferences? = null
     private var mHandler: Handler? = null
     private var mAdapter: CrashAdapter? = null
     private var mNoItemsScreen: View? = null
@@ -69,7 +67,6 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
     private val binding get() = _binding
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        mPrefs = PreferenceManager.getDefaultSharedPreferences(this)
         updateLocale()
 
         super.onCreate(savedInstanceState)
@@ -96,7 +93,7 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
         }
 
-        mCombineApps = mPrefs!!.getBoolean("combine_same_apps", false)
+        mCombineApps = PreferenceHelper.combineSameApps()
         mAdapter!!.setCombineSameApps(!mHasCrash && mCombineApps)
         binding.mainCrashView.setReverseOrder(mHasCrash || !mCombineApps)
 
@@ -129,7 +126,7 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
         super.onResume()
         // Cheap way to instantly apply changes
         mAdapter!!.setSearchPackageName(
-            this, mPrefs!!.getBoolean("search_package_name", true)
+            this, PreferenceHelper.searchPackageName()
         )
         sVisible = true
         mHandler!!.post(mUpdateCheckerRunnable)
@@ -158,7 +155,7 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
     }
 
     private fun updateLocale() {
-        if (mPrefs!!.getBoolean("force_english", false)) {
+        if (PreferenceHelper.forceEnglish()) {
             // TODO: Use ConfigurationCompat
             val config = resources.configuration
             config.locale = Locale.ENGLISH
@@ -199,11 +196,10 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
         updateViewStates(true)
         mLoader.loadData(
             this,
-            mPrefs!!.getBoolean("combine_same_stack_trace", true),
-            mPrefs!!.getBoolean("combine_same_apps", false),
+            PreferenceHelper.combineSameStackTrace(),
+            PreferenceHelper.combineSameApps(),
             listOf(
-                *mPrefs
-                    ?.getString("blacklisted_packages", "")
+                *PreferenceHelper.getBlacklistedPackages()
                     ?.split(",".toRegex())!!.toTypedArray()
             )
         )

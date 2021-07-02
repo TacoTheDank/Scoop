@@ -6,12 +6,10 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.TaskStackBuilder;
 import androidx.core.content.ContextCompat;
-import androidx.preference.PreferenceManager;
 
 import com.afollestad.inquiry.Inquiry;
 
@@ -26,6 +24,7 @@ import taco.scoop.data.crash.CrashLoader;
 import taco.scoop.dogbin.DogbinUploadService;
 import taco.scoop.ui.DetailActivity;
 import taco.scoop.ui.MainActivity;
+import taco.scoop.util.PreferenceHelper;
 import taco.scoop.util.Utils;
 
 public class CrashReceiver extends BroadcastReceiver {
@@ -34,8 +33,6 @@ public class CrashReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent broadcastIntent) {
 
         if (!broadcastIntent.getAction().equals(Intents.INTENT_ACTION)) return;
-
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
         String packageName = broadcastIntent.getStringExtra(Intents.INTENT_PACKAGE_NAME);
         long time = broadcastIntent.getLongExtra(Intents.INTENT_TIME, System.currentTimeMillis());
@@ -47,7 +44,7 @@ public class CrashReceiver extends BroadcastReceiver {
         boolean uploadError = broadcastIntent.getBooleanExtra(Intents.INTENT_UPLOAD_ERROR, false);
         String dogbinLink = broadcastIntent.getStringExtra(Intents.INTENT_DOGBIN_LINK);
 
-        if (description.startsWith(ThreadDeath.class.getName()) && prefs.getBoolean("ignore_threaddeath", true))
+        if (description.startsWith(ThreadDeath.class.getName()) && PreferenceHelper.ignoreThreadDeath())
             return;
 
         Crash crash;
@@ -70,8 +67,8 @@ public class CrashReceiver extends BroadcastReceiver {
             crash = broadcastIntent.getParcelableExtra("crash");
         }
 
-        if (prefs.getBoolean("show_notification", true) &&
-                !Arrays.asList(prefs.getString("blacklisted_packages", "").split(",")).contains(packageName)) {
+        if (PreferenceHelper.showNotifications() &&
+                !Arrays.asList(PreferenceHelper.getBlacklistedPackages().split(",")).contains(packageName)) {
             NotificationManager manager = ContextCompat.getSystemService(context, NotificationManager.class);
 
             Intent clickIntent = new Intent(context, DetailActivity.class).putExtra(DetailActivity.EXTRA_CRASH, crash);
@@ -93,7 +90,7 @@ public class CrashReceiver extends BroadcastReceiver {
                     .setGroup("crashes")
                     .setContentIntent(clickPendingIntent);
 
-            if (prefs.getBoolean("show_stack_trace_notif", false)) {
+            if (PreferenceHelper.showStackTraceNotifications()) {
                 NotificationCompat.InboxStyle style = new NotificationCompat.InboxStyle();
                 String[] traces = stackTrace.split("\n");
                 for (int i = 0; i < 6 && i < traces.length; i++) { // Inbox style only shows 6 entries
@@ -106,7 +103,7 @@ public class CrashReceiver extends BroadcastReceiver {
 
             int notificationId = (int) (time - ScoopApplication.getBootTime());
 
-            if (prefs.getBoolean("show_action_buttons", true)) {
+            if (PreferenceHelper.showActionButtons()) {
                 Intent copyIntent = new Intent(context, ShareReceiver.class)
                         .putExtra("stackTrace", stackTrace)
                         .putExtra("pkg", packageName)
