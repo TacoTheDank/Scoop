@@ -46,6 +46,8 @@
     <string name="settings_misc">その他の設定</string>
 
     <!-- Settings (notifications) -->
+    <string name="settings_system_notifications">通知設定</string>
+    <string name="settings_system_notifications_summary">システム設定からこのアプリの通知を構成する</string>
     <string name="settings_show_notif">クラッシュ時に通知を表示</string>
     <string name="settings_action_buttons">アクションボタンを表示</string>
     <string name="settings_action_buttons_summary">通知にクラッシュをコピー・共有するボタンを追加</string>
@@ -67,6 +69,9 @@
     <string name="settings_auto_wrap_summary">行の文字数を制限して画面幅に合わせ折り返します</string>
 
     <!-- Settings (miscellaneous) -->
+    <string name="settings_permission_status">権限の状態</string>
+    <string name="settings_permission_status_summary_true">権限 READ_LOGS は許可されました</string>
+    <string name="settings_permission_status_summary_false">権限 READ_LOGS は拒否されました</string>
     <string name="settings_ignore_threaddeath">ThreadDeathエラーを無視</string>
     <string name="settings_ignore_threaddeath_summary">ワーカースレッドを強制的に停止させるためにThreadDeathエラーが発生します。これは 通常の挙動であり、アプリがクラッシュすることはありません。</string>
     <string name="settings_about">Scoopについて</string>
