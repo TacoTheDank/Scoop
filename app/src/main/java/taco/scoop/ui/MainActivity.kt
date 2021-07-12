@@ -1,9 +1,9 @@
 package taco.scoop.ui
 
 import android.content.Intent
-import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -112,9 +112,9 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
             mAdapter!!.restoreInstanceState(savedInstanceState)
             updateViewStates(false)
         }
-        mHandler = Handler()
+        mHandler = Handler(Looper.getMainLooper())
 
-        AvailabilityCheck().execute()
+        checkAvailability()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -376,18 +376,14 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
         return super.onOptionsItemSelected(item)
     }
 
-    internal inner class AvailabilityCheck : AsyncTask<Void?, Void?, Boolean>() {
-        override fun doInBackground(vararg params: Void?): Boolean {
-            val app = application as ScoopApplication
-            return serviceActive() || app.startService()
-        }
+    private fun checkAvailability() {
+        val app = application as ScoopApplication
+        val isAvailable = serviceActive() || app.startService()
 
-        override fun onPostExecute(available: Boolean) {
-            if (!mDestroyed) {
-                mCheckPending = false
-                mIsAvailable = available
-                updateViewStates(null)
-            }
+        if (!mDestroyed) {
+            mCheckPending = false
+            mIsAvailable = isAvailable
+            updateViewStates(null)
         }
     }
 
