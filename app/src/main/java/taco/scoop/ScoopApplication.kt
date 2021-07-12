@@ -9,6 +9,7 @@ import android.os.Build
 import android.os.Handler
 import android.os.HandlerThread
 import android.os.SystemClock
+import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
 import taco.scoop.detector.CrashDetectorService
 import taco.scoop.util.PreferenceHelper.initPreferences
@@ -19,8 +20,12 @@ class ScoopApplication : Application() {
 
     private val permissionLock = Object()
 
+    private lateinit var intent: Intent
+
     override fun onCreate() {
         super.onCreate()
+
+        intent = Intent(this, CrashDetectorService::class.java)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             registerCrashesChannel()
@@ -61,12 +66,12 @@ class ScoopApplication : Application() {
 
     fun startService(): Boolean {
         if (!isPermissionGranted()) return false
-        startService(Intent(this, CrashDetectorService::class.java))
+        ContextCompat.startForegroundService(this, intent)
         return true
     }
 
     fun stopService() {
-        stopService(Intent(this, CrashDetectorService::class.java))
+        stopService(intent)
     }
 
     private fun isPermissionGranted(tryGranting: Boolean = true): Boolean {
