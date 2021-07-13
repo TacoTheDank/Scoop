@@ -1,9 +1,9 @@
 package taco.scoop.ui
 
 import android.content.Intent
-import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -19,14 +19,14 @@ import com.afollestad.materialcab.attached.destroy
 import com.afollestad.materialcab.attached.isActive
 import com.afollestad.materialcab.createCab
 import taco.scoop.R
-import taco.scoop.ScoopApplication
-import taco.scoop.ScoopApplication.Companion.serviceActive
 import taco.scoop.data.crash.Crash
 import taco.scoop.data.crash.CrashAdapter
 import taco.scoop.data.crash.CrashLoader
 import taco.scoop.databinding.ActivityMainBinding
 import taco.scoop.ui.helpers.ToolbarElevationHelper
 import taco.scoop.util.PreferenceHelper
+import taco.scoop.util.initScoopService
+import taco.scoop.util.isServiceActive
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -71,6 +71,8 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
 
         super.onCreate(savedInstanceState)
 
+        initScoopService()
+
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.mainToolbar.toolbar)
@@ -112,9 +114,9 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
             mAdapter!!.restoreInstanceState(savedInstanceState)
             updateViewStates(false)
         }
-        mHandler = Handler()
+        mHandler = Handler(Looper.getMainLooper())
 
-        AvailabilityCheck().execute()
+        checkAvailability()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -376,18 +378,11 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
         return super.onOptionsItemSelected(item)
     }
 
-    internal inner class AvailabilityCheck : AsyncTask<Void?, Void?, Boolean>() {
-        override fun doInBackground(vararg params: Void?): Boolean {
-            val app = application as ScoopApplication
-            return serviceActive() || app.startService()
-        }
-
-        override fun onPostExecute(available: Boolean) {
-            if (!mDestroyed) {
-                mCheckPending = false
-                mIsAvailable = available
-                updateViewStates(null)
-            }
+    private fun checkAvailability() {
+        if (!mDestroyed) {
+            mCheckPending = false
+            mIsAvailable = isServiceActive
+            updateViewStates(null)
         }
     }
 

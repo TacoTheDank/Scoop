@@ -44,6 +44,10 @@ object PreferenceHelper {
         return sharedPreferences.getBoolean("auto_wrap", false)
     }
 
+    fun autostartOnBoot(): Boolean {
+        return sharedPreferences.getBoolean("pref_autostart_on_boot", false)
+    }
+
     @JvmStatic
     fun ignoreThreadDeath(): Boolean {
         return sharedPreferences.getBoolean("ignore_threaddeath", true)
