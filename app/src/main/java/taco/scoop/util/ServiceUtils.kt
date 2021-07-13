@@ -5,7 +5,7 @@ import android.content.Intent
 import android.os.Handler
 import android.os.HandlerThread
 import androidx.core.content.ContextCompat
-import taco.scoop.detector.CrashDetectorService
+import taco.scoop.core.service.detector.CrashDetectorService
 
 lateinit var intent: Intent
 var isServiceActive = false

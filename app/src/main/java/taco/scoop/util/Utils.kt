@@ -17,7 +17,7 @@ import androidx.core.content.getSystemService
 import androidx.core.graphics.applyCanvas
 import androidx.core.graphics.createBitmap
 import androidx.core.graphics.drawable.updateBounds
-import taco.scoop.data.crash.CrashLoader
+import taco.scoop.core.data.crash.CrashLoader
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.contract
 

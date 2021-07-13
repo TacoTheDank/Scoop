@@ -35,7 +35,7 @@
             android:resource="@array/preloaded_fonts" />
 
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".ui.activity.MainActivity"
             android:configChanges="orientation|screenSize|screenLayout"
             android:label="@string/app_name">
             <intent-filter>
@@ -46,15 +46,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.DetailActivity"
-            android:parentActivityName=".ui.MainActivity"
+            android:name=".ui.activity.DetailActivity"
+            android:parentActivityName=".ui.activity.MainActivity"
             tools:ignore="UnusedAttribute">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.MainActivity" />
+                android:value=".ui.activity.MainActivity" />
         </activity>
         <activity
-            android:name=".ui.SettingsActivity"
+            android:name=".ui.activity.SettingsActivity"
             android:label="@string/settings_title">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -63,21 +63,21 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.BlacklistAppsActivity"
+            android:name=".ui.activity.BlacklistAppsActivity"
             android:label="@string/blacklist_title" />
         <activity
-            android:name=".ui.AboutActivity"
+            android:name=".ui.activity.AboutActivity"
             android:label="@string/about_title" />
 
         <receiver
-            android:name=".receiver.BootReceiver"
+            android:name=".core.receiver.BootReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
         <receiver
-            android:name=".receiver.CrashReceiver"
+            android:name=".core.receiver.CrashReceiver"
             android:exported="true"
             tools:ignore="ExportedReceiver">
             <intent-filter>
@@ -85,7 +85,7 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name=".receiver.ShareReceiver"
+            android:name=".core.receiver.ShareReceiver"
             android:exported="true"
             tools:ignore="ExportedReceiver">
             <intent-filter>
@@ -95,19 +95,19 @@
         </receiver>
 
         <service
-            android:name=".IndicatorService"
+            android:name=".core.service.indicator.IndicatorService"
             android:enabled="true" />
 
         <receiver
-            android:name=".receiver.StopReceiver"
+            android:name=".core.receiver.StopReceiver"
             android:enabled="true" />
 
         <service
-            android:name=".detector.CrashDetectorService"
+            android:name=".core.service.detector.CrashDetectorService"
             android:enabled="true"
             android:process=":crashDetectorService" />
         <service
-            android:name=".dogbin.DogbinUploadService"
+            android:name=".core.service.dogbin.DogbinUploadService"
             android:enabled="true"
             android:exported="false" />
     </application>
