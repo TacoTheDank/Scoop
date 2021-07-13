@@ -4,41 +4,22 @@ import android.annotation.TargetApi
 import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.content.Intent
 import android.os.Build
-import android.os.Handler
-import android.os.HandlerThread
 import android.os.SystemClock
-import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
-import taco.scoop.detector.CrashDetectorService
 import taco.scoop.util.PreferenceHelper.initPreferences
-import taco.scoop.util.readLogsPermissionGranted
-import taco.scoop.util.runReadLogsGrantShell
 
 class ScoopApplication : Application() {
-
-    private val permissionLock = Object()
-
-    private lateinit var intent: Intent
 
     override fun onCreate() {
         super.onCreate()
 
-        intent = Intent(this, CrashDetectorService::class.java)
+        initPreferences()
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             registerCrashesChannel()
             registerStatusChannel()
         }
-
-        if (!serviceActive()) {
-            val thread = HandlerThread("startCrashDetector")
-            thread.start()
-            Handler(thread.looper).post(this@ScoopApplication::startService)
-        }
-
-        initPreferences()
     }
 
     @TargetApi(Build.VERSION_CODES.O)
@@ -64,31 +45,7 @@ class ScoopApplication : Application() {
         notificationManager?.createNotificationChannel(this)
     }
 
-    fun startService(): Boolean {
-        if (!isPermissionGranted()) return false
-        ContextCompat.startForegroundService(this, intent)
-        return true
-    }
-
-    fun stopService() {
-        stopService(intent)
-    }
-
-    private fun isPermissionGranted(tryGranting: Boolean = true): Boolean {
-        synchronized(permissionLock) {
-            val granted = readLogsPermissionGranted()
-            return if (!granted && tryGranting) {
-                runReadLogsGrantShell()
-                isPermissionGranted(false)
-            } else {
-                granted
-            }
-        }
-    }
-
     companion object {
-
-        fun serviceActive() = false
 
         @JvmStatic
         val bootTime = System.currentTimeMillis() - SystemClock.uptimeMillis()

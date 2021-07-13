@@ -19,14 +19,14 @@ import com.afollestad.materialcab.attached.destroy
 import com.afollestad.materialcab.attached.isActive
 import com.afollestad.materialcab.createCab
 import taco.scoop.R
-import taco.scoop.ScoopApplication
-import taco.scoop.ScoopApplication.Companion.serviceActive
 import taco.scoop.data.crash.Crash
 import taco.scoop.data.crash.CrashAdapter
 import taco.scoop.data.crash.CrashLoader
 import taco.scoop.databinding.ActivityMainBinding
 import taco.scoop.ui.helpers.ToolbarElevationHelper
 import taco.scoop.util.PreferenceHelper
+import taco.scoop.util.initScoopService
+import taco.scoop.util.isServiceActive
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -70,6 +70,8 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
         updateLocale()
 
         super.onCreate(savedInstanceState)
+
+        initScoopService()
 
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -377,12 +379,9 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
     }
 
     private fun checkAvailability() {
-        val app = application as ScoopApplication
-        val isAvailable = serviceActive() || app.startService()
-
         if (!mDestroyed) {
             mCheckPending = false
-            mIsAvailable = isAvailable
+            mIsAvailable = isServiceActive
             updateViewStates(null)
         }
     }

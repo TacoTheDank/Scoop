@@ -72,6 +72,8 @@
     <string name="settings_permission_status">権限の状態</string>
     <string name="settings_permission_status_summary_true">権限 READ_LOGS は許可されました</string>
     <string name="settings_permission_status_summary_false">権限 READ_LOGS は拒否されました</string>
+    <string name="settings_autostart_on_boot">Autostart Scoop on boot</string>
+    <string name="settings_autostart_on_boot_summary">Automatically start Scoop on device boot alongside other system processes</string>
     <string name="settings_ignore_threaddeath">ThreadDeathエラーを無視</string>
     <string name="settings_ignore_threaddeath_summary">ワーカースレッドを強制的に停止させるためにThreadDeathエラーが発生します。これは 通常の挙動であり、アプリがクラッシュすることはありません。</string>
     <string name="settings_about">Scoopについて</string>

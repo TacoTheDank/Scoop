@@ -72,6 +72,8 @@
     <string name="settings_permission_status">Permission status</string>
     <string name="settings_permission_status_summary_true">READ_LOGS permission is granted</string>
     <string name="settings_permission_status_summary_false">READ_LOGS permission is denied</string>
+    <string name="settings_autostart_on_boot">Autostart Scoop on boot</string>
+    <string name="settings_autostart_on_boot_summary">Automatically start Scoop on device boot alongside other system processes</string>
     <string name="settings_ignore_threaddeath">Ignorar erros ThreadDeath</string>
     <string name="settings_ignore_threaddeath_summary">Um erro ThreadDeath é ativado para forçar a parada de um thread de trabalho. É uma \"ocorrência normal\" e não faz apps travarem</string>
     <string name="settings_about">Sobre Scoop</string>
