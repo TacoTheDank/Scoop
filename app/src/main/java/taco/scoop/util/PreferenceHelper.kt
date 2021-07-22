@@ -2,70 +2,88 @@ package taco.scoop.util
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.content.res.Resources
 import android.text.TextUtils
+import androidx.annotation.StringRes
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
+import taco.scoop.R
 
 object PreferenceHelper {
     private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var mRes: Resources
 
-    fun Context.initPreferences() {
+    fun Context.initPreferences(res: Resources) {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        mRes = res
+    }
+
+    private fun getString(@StringRes key: Int): String {
+        return mRes.getString(key)
+    }
+
+    private fun getSharedBoolean(@StringRes key: Int, defValue: Boolean): Boolean {
+        return sharedPreferences.getBoolean(getString(key), defValue)
     }
 
     @JvmStatic
     fun showNotifications(): Boolean {
-        return sharedPreferences.getBoolean("show_notification", true)
+        return getSharedBoolean(R.string.prefKey_show_notification, true)
     }
 
     @JvmStatic
     fun showActionButtons(): Boolean {
-        return sharedPreferences.getBoolean("show_action_buttons", true)
+        return getSharedBoolean(R.string.prefKey_show_action_buttons, true)
     }
 
     @JvmStatic
     fun showStackTraceNotifications(): Boolean {
-        return sharedPreferences.getBoolean("show_stack_trace_notif", false)
+        return getSharedBoolean(R.string.prefKey_show_stack_trace_notif, false)
     }
 
     fun combineSameApps(): Boolean {
-        return sharedPreferences.getBoolean("combine_same_apps", false)
+        return getSharedBoolean(R.string.prefKey_combine_same_apps, false)
     }
 
     fun combineSameStackTrace(): Boolean {
-        return sharedPreferences.getBoolean("combine_same_stack_trace", true)
+        return getSharedBoolean(R.string.prefKey_combine_same_stack_trace, true)
     }
 
     fun searchPackageName(): Boolean {
-        return sharedPreferences.getBoolean("search_package_name", true)
+        return getSharedBoolean(R.string.prefKey_search_package_name, true)
     }
 
     fun autoWrap(): Boolean {
-        return sharedPreferences.getBoolean("auto_wrap", false)
+        return getSharedBoolean(R.string.prefKey_auto_wrap, false)
     }
 
     fun autostartOnBoot(): Boolean {
-        return sharedPreferences.getBoolean("pref_autostart_on_boot", false)
+        return getSharedBoolean(R.string.prefKey_autostart_on_boot, false)
     }
 
     @JvmStatic
     fun ignoreThreadDeath(): Boolean {
-        return sharedPreferences.getBoolean("ignore_threaddeath", true)
+        return getSharedBoolean(R.string.prefKey_ignore_threaddeath, true)
     }
 
     fun forceEnglish(): Boolean {
-        return sharedPreferences.getBoolean("force_english", false)
+        return getSharedBoolean(R.string.prefKey_force_english, false)
     }
 
 
     @JvmStatic
     fun getBlacklistedPackages(): String? {
-        return sharedPreferences.getString("blacklisted_packages", "")
+        return sharedPreferences.getString(
+            getString(R.string.key_blacklisted_packages), ""
+        )
     }
 
     fun editBlacklistPackages(packages: ArrayList<String>) {
         sharedPreferences.edit {
-            putString("blacklisted_packages", TextUtils.join(",", packages))
+            putString(
+                getString(R.string.key_blacklisted_packages),
+                TextUtils.join(",", packages)
+            )
         }
     }
 }

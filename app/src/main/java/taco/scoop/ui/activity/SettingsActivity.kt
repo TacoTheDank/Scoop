@@ -3,6 +3,7 @@ package taco.scoop.ui.activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
@@ -39,16 +40,16 @@ class SettingsActivity : AppCompatActivity() {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             addPreferencesFromResource(R.xml.preferences)
 
-            val notifSettingsPref = findPreference<Preference>("pref_notif_sys_settings")
+            val notifSettingsPref = findPreference(R.string.prefKey_notif_sys_settings)
             notifSettingsPref?.setOnPreferenceClickListener {
                 requireContext().openSystemNotificationSettings()
                 true
             }
 
-            val blacklistedAppsPref = findPreference<Preference>("pref_blacklisted_apps")
+            val blacklistedAppsPref = findPreference(R.string.prefKey_blacklisted_apps)
             blacklistedAppsPref?.setActivityIntent(BlacklistAppsActivity::class.java)
 
-            val permissionStatusPref = findPreference<Preference>("pref_permission_status")
+            val permissionStatusPref = findPreference(R.string.prefKey_permission_status)
             permissionStatusPref?.summary =
                 if (requireContext().readLogsPermissionGranted()) {
                     getString(R.string.settings_permission_status_summary_true)
@@ -56,12 +57,16 @@ class SettingsActivity : AppCompatActivity() {
                     getString(R.string.settings_permission_status_summary_false)
                 }
 
-            val aboutPref = findPreference<Preference>("pref_about_scoop")
+            val aboutPref = findPreference(R.string.prefKey_about_scoop)
             aboutPref?.setActivityIntent(AboutActivity::class.java)
         }
 
         private fun Preference.setActivityIntent(clazz: Class<*>) {
             intent = Intent(activity, clazz)
+        }
+
+        private fun findPreference(@StringRes key: Int): Preference? {
+            return findPreference(getString(key))
         }
     }
 }

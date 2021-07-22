@@ -7,29 +7,29 @@
         app:iconSpaceReserved="false">
 
         <Preference
-            android:key="pref_notif_sys_settings"
+            android:key="@string/prefKey_notif_sys_settings"
             android:summary="@string/settings_system_notifications_summary"
             android:title="@string/settings_system_notifications"
             app:iconSpaceReserved="false" />
 
         <SwitchPreferenceCompat
             android:defaultValue="true"
-            android:key="show_notification"
+            android:key="@string/prefKey_show_notification"
             android:title="@string/settings_show_notif"
             app:iconSpaceReserved="false" />
 
         <SwitchPreferenceCompat
             android:defaultValue="true"
-            android:dependency="show_notification"
-            android:key="show_action_buttons"
+            android:dependency="@string/prefKey_show_notification"
+            android:key="@string/prefKey_show_action_buttons"
             android:summary="@string/settings_action_buttons_summary"
             android:title="@string/settings_action_buttons"
             app:iconSpaceReserved="false" />
 
         <SwitchPreferenceCompat
             android:defaultValue="false"
-            android:dependency="show_notification"
-            android:key="show_stack_trace_notif"
+            android:dependency="@string/prefKey_show_notification"
+            android:key="@string/prefKey_show_stack_trace_notif"
             android:summary="@string/settings_show_stack_trace_summary"
             android:title="@string/settings_show_stack_trace"
             app:iconSpaceReserved="false" />
@@ -43,27 +43,27 @@
 
         <SwitchPreferenceCompat
             android:defaultValue="false"
-            android:key="combine_same_apps"
+            android:key="@string/prefKey_combine_same_apps"
             android:summary="@string/settings_combine_same_apps_summary"
             android:title="@string/settings_combine_same_apps"
             app:iconSpaceReserved="false" />
 
         <SwitchPreferenceCompat
             android:defaultValue="true"
-            android:key="combine_same_stack_trace"
+            android:key="@string/prefKey_combine_same_stack_trace"
             android:summary="@string/settings_combine_same_trace_summary"
             android:title="@string/settings_combine_same_trace"
             app:iconSpaceReserved="false" />
 
         <SwitchPreferenceCompat
             android:defaultValue="true"
-            android:key="search_package_name"
+            android:key="@string/prefKey_search_package_name"
             android:summary="@string/settings_search_pkg_summary"
             android:title="@string/settings_search_pkg"
             app:iconSpaceReserved="false" />
 
         <Preference
-            android:key="pref_blacklisted_apps"
+            android:key="@string/prefKey_blacklisted_apps"
             android:summary="@string/settings_blacklisted_apps_summary"
             android:title="@string/settings_blacklisted_apps"
             app:iconSpaceReserved="false" />
@@ -77,7 +77,7 @@
 
         <SwitchPreferenceCompat
             android:defaultValue="false"
-            android:key="auto_wrap"
+            android:key="@string/prefKey_auto_wrap"
             android:summary="@string/settings_auto_wrap_summary"
             android:title="@string/settings_auto_wrap"
             app:iconSpaceReserved="false" />
@@ -90,32 +90,32 @@
         app:iconSpaceReserved="false">
 
         <Preference
-            android:key="pref_permission_status"
+            android:key="@string/prefKey_permission_status"
             android:title="@string/settings_permission_status"
             app:iconSpaceReserved="false" />
 
         <SwitchPreferenceCompat
             android:defaultValue="false"
-            android:key="pref_autostart_on_boot"
+            android:key="@string/prefKey_autostart_on_boot"
             android:summary="@string/settings_autostart_on_boot_summary"
             android:title="@string/settings_autostart_on_boot"
             app:iconSpaceReserved="false" />
 
         <SwitchPreferenceCompat
             android:defaultValue="true"
-            android:key="ignore_threaddeath"
+            android:key="@string/prefKey_ignore_threaddeath"
             android:summary="@string/settings_ignore_threaddeath_summary"
             android:title="@string/settings_ignore_threaddeath"
             app:iconSpaceReserved="false" />
 
         <SwitchPreferenceCompat
             android:defaultValue="false"
-            android:key="force_english"
+            android:key="@string/prefKey_force_english"
             android:title="@string/settings_force_eng"
             app:iconSpaceReserved="false" />
 
         <Preference
-            android:key="pref_about_scoop"
+            android:key="@string/prefKey_about_scoop"
             android:title="@string/settings_about"
             app:iconSpaceReserved="false" />
 

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+
+    <!-- Keys -->
+    <string name="key_blacklisted_packages">blacklisted_packages</string>
+
+    <!-- Preference keys -->
+    <string name="prefKey_notif_sys_settings">pref_notif_sys_settings</string>
+    <string name="prefKey_show_notification">show_notification</string>
+    <string name="prefKey_show_action_buttons">show_action_buttons</string>
+    <string name="prefKey_show_stack_trace_notif">show_stack_trace_notif</string>
+
+    <string name="prefKey_combine_same_apps">combine_same_apps</string>
+    <string name="prefKey_combine_same_stack_trace">combine_same_stack_trace</string>
+    <string name="prefKey_search_package_name">search_package_name</string>
+    <string name="prefKey_blacklisted_apps">pref_blacklisted_apps</string>
+
+    <string name="prefKey_auto_wrap">auto_wrap</string>
+
+    <string name="prefKey_permission_status">pref_permission_status</string>
+    <string name="prefKey_autostart_on_boot">pref_autostart_on_boot</string>
+    <string name="prefKey_ignore_threaddeath">ignore_threaddeath</string>
+    <string name="prefKey_force_english">force_english</string>
+    <string name="prefKey_about_scoop">pref_about_scoop</string>
+</resources>
