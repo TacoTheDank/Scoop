@@ -1,6 +1,5 @@
 package taco.scoop.core.data.app;
 
-import android.annotation.SuppressLint;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 
@@ -15,7 +14,6 @@ public class AppLoader {
 
     private WeakReference<BlacklistAppsActivity> mListener;
 
-    @SuppressLint("QueryPermissionsNeeded")
     public void loadData(BlacklistAppsActivity activity) {
         mListener = new WeakReference<>(activity);
         new Thread(() -> {
