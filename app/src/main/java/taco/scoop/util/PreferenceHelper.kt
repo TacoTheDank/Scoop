@@ -3,7 +3,6 @@ package taco.scoop.util
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Resources
-import android.text.TextUtils
 import androidx.annotation.StringRes
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
@@ -82,7 +81,7 @@ object PreferenceHelper {
         sharedPreferences.edit {
             putString(
                 getKey(R.string.key_blacklisted_packages),
-                TextUtils.join(",", packages)
+                packages.joinToString(",")
             )
         }
     }
