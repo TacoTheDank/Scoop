@@ -1,0 +1,3 @@
+2.3.0: Auto-start support!
+- New setting that allows the app to start automatically on device boot
+- A few internal improvements
