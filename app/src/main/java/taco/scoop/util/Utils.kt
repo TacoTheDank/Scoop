@@ -90,7 +90,7 @@ fun Context.openSystemNotificationSettings() {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 action = Settings.ACTION_APP_NOTIFICATION_SETTINGS
                 putExtra(Settings.EXTRA_APP_PACKAGE, packageName)
-            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            } else {
                 action = "android.settings.APP_NOTIFICATION_SETTINGS"
                 putExtra("app_package", packageName)
                 putExtra("app_uid", applicationInfo.uid)
