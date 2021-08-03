@@ -18,12 +18,12 @@ object PreferenceHelper {
         mRes = res
     }
 
-    private fun getString(@StringRes key: Int): String {
+    private fun getKey(@StringRes key: Int): String {
         return mRes.getString(key)
     }
 
     private fun getSharedBoolean(@StringRes key: Int, defValue: Boolean): Boolean {
-        return sharedPreferences.getBoolean(getString(key), defValue)
+        return sharedPreferences.getBoolean(getKey(key), defValue)
     }
 
     @JvmStatic
@@ -74,14 +74,14 @@ object PreferenceHelper {
     @JvmStatic
     fun getBlacklistedPackages(): String? {
         return sharedPreferences.getString(
-            getString(R.string.key_blacklisted_packages), ""
+            getKey(R.string.key_blacklisted_packages), ""
         )
     }
 
     fun editBlacklistPackages(packages: ArrayList<String>) {
         sharedPreferences.edit {
             putString(
-                getString(R.string.key_blacklisted_packages),
+                getKey(R.string.key_blacklisted_packages),
                 TextUtils.join(",", packages)
             )
         }
