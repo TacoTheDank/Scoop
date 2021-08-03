@@ -1,7 +1,7 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-
-ext.fakeData = System.getenv("WDN_PC") ?: "true"
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+}
 
 android {
     compileSdkVersion 30
@@ -15,15 +15,7 @@ android {
         versionName "2.2.0"
 
         vectorDrawables.useSupportLibrary true
-
-        buildConfigField 'boolean', 'FAKE_DATA', "$fakeData"
         resValue 'string', 'application_id', applicationId
-    }
-
-    dexOptions {
-        maxProcessCount 4
-        javaMaxHeapSize "4g"
-        preDexLibraries true
     }
 
     buildTypes {
