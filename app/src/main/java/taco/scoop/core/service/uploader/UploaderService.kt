@@ -1,4 +1,4 @@
-package taco.scoop.core.service.dogbin
+package taco.scoop.core.service.uploader
 
 import android.app.Service
 import android.content.Intent
@@ -11,7 +11,7 @@ import taco.scoop.core.data.crash.Crash
 import taco.scoop.util.Intents
 import java.util.*
 
-class DogbinUploadService : Service() {
+class UploaderService : Service() {
 
     private var uploadStarted = false
     private val uploadQueue: Queue<Intent> = LinkedList()
@@ -42,12 +42,12 @@ class DogbinUploadService : Service() {
         if (data == null) {
             stopSelf()
         } else {
-            DogbinUtils.upload(
+            UploaderUtils.upload(
                 data.getStringExtra(Intents.INTENT_STACKTRACE),
-                object : DogbinUtils.UploadResultCallback {
+                object : UploaderUtils.UploadResultCallback {
 
                     override fun onSuccess(url: String) {
-                        data.putExtra(Intents.INTENT_DOGBIN_LINK, url)
+                        data.putExtra(Intents.INTENT_UPLOADER_LINK, url)
                         next()
                     }
 
@@ -72,7 +72,7 @@ class DogbinUploadService : Service() {
         startForeground(
             101, NotificationCompat.Builder(this, "status")
                 .setSmallIcon(R.drawable.ic_bug_report)
-                .setContentTitle(getString(R.string.dogbin_uploading))
+                .setContentTitle(getString(R.string.uploader_uploading))
                 .setColor(ContextCompat.getColor(this, R.color.colorAccent))
                 .setPriority(NotificationCompat.PRIORITY_MIN)
                 .build()

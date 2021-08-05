@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package taco.scoop.core.service.dogbin
+package taco.scoop.core.service.uploader
 
-class DogbinException(message: String?) : Exception(message) {
+class UploaderException(message: String?) : Exception(message) {
     companion object {
         private const val serialVersionUID = 666L
     }

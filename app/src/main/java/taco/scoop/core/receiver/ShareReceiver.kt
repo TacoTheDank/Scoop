@@ -30,7 +30,7 @@ class ShareReceiver : BroadcastReceiver() {
                 context.copyTextToClipboard(
                     R.string.copy_link_label,
                     pkg,
-                    intent.getStringExtra(Intents.INTENT_DOGBIN_LINK)
+                    intent.getStringExtra(Intents.INTENT_UPLOADER_LINK)
                 )
                 context.displayToast(R.string.copied_link_toast)
             }

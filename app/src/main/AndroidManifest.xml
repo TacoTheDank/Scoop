@@ -107,7 +107,7 @@
             android:enabled="true"
             android:process=":crashDetectorService" />
         <service
-            android:name=".core.service.dogbin.DogbinUploadService"
+            android:name=".core.service.uploader.UploaderService"
             android:enabled="true"
             android:exported="false" />
     </application>

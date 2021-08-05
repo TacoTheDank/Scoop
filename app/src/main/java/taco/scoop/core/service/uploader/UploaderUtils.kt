@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package taco.scoop.core.service.dogbin
+package taco.scoop.core.service.uploader
 
 import android.os.Handler
 import android.os.HandlerThread
@@ -24,16 +24,17 @@ import java.nio.charset.StandardCharsets
 import javax.net.ssl.HttpsURLConnection
 
 /**
- * Helper functions for uploading to del.dog
+ * Helper functions for uploading to a pastebin-like service, preferably one forked from
+ *  the now-nonfunctional "del.dog" service.
  */
-object DogbinUtils {
-    private const val TAG = "DogbinUtils"
+object UploaderUtils {
+    private const val TAG = "UploaderUtils"
     private const val BASE_URL = "https://del.dog"
     private val API_URL = String.format("%s/documents", BASE_URL)
     private var handler: Handler? = null
         get() {
             if (field == null) {
-                val handlerThread = HandlerThread("dogbinThread")
+                val handlerThread = HandlerThread("uploaderThread")
                 if (!handlerThread.isAlive) {
                     handlerThread.start()
                 }
@@ -43,9 +44,9 @@ object DogbinUtils {
         }
 
     /**
-     * Uploads `content` to dogbin
+     * Uploads `content` to the service
      *
-     * @param content  the content to upload to dogbin
+     * @param content  the content to upload
      * @param callback the callback to call on success / failure
      */
     fun upload(content: String?, callback: UploadResultCallback) {
@@ -80,14 +81,14 @@ object DogbinUtils {
                     if (key.isNotEmpty()) {
                         callback.onSuccess(getUrl(key))
                     } else {
-                        val msg = "Failed to upload to dogbin: No key retrieved"
-                        callback.onFail(msg, DogbinException(msg))
+                        val msg = "Failed to upload: No key retrieved"
+                        callback.onFail(msg, UploaderException(msg))
                     }
                 } finally {
                     urlConnection.disconnect()
                 }
             } catch (e: Exception) {
-                callback.onFail("Failed to upload to dogbin", e)
+                callback.onFail("Failed to upload", e)
             }
         }
     }

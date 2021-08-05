@@ -13,5 +13,5 @@ object Intents {
     const val INTENT_UPDATE = "update"
     const val INTENT_HIDE_UPLOAD = "hideUpload"
     const val INTENT_UPLOAD_ERROR = "uploadError"
-    const val INTENT_DOGBIN_LINK = "dogbinLink"
+    const val INTENT_UPLOADER_LINK = "uploaderLink"
 }

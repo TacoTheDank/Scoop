@@ -20,7 +20,7 @@ import taco.scoop.R;
 import taco.scoop.ScoopApplication;
 import taco.scoop.core.data.crash.Crash;
 import taco.scoop.core.data.crash.CrashLoader;
-import taco.scoop.core.service.dogbin.DogbinUploadService;
+import taco.scoop.core.service.uploader.UploaderService;
 import taco.scoop.ui.activity.DetailActivity;
 import taco.scoop.ui.activity.MainActivity;
 import taco.scoop.util.Intents;
@@ -42,7 +42,7 @@ public class CrashReceiver extends BroadcastReceiver {
         boolean update = broadcastIntent.getBooleanExtra(Intents.INTENT_UPDATE, false);
         boolean hideUpload = broadcastIntent.getBooleanExtra(Intents.INTENT_HIDE_UPLOAD, false);
         boolean uploadError = broadcastIntent.getBooleanExtra(Intents.INTENT_UPLOAD_ERROR, false);
-        String dogbinLink = broadcastIntent.getStringExtra(Intents.INTENT_DOGBIN_LINK);
+        String uploaderLink = broadcastIntent.getStringExtra(Intents.INTENT_UPLOADER_LINK);
 
         if (description.startsWith(ThreadDeath.class.getName()) && PreferenceHelper.ignoreThreadDeath())
             return;
@@ -122,25 +122,25 @@ public class CrashReceiver extends BroadcastReceiver {
                 builder.addAction(new NotificationCompat.Action(R.drawable.ic_share,
                         context.getString(R.string.action_share), sharePendingIntent));
 
-                if (dogbinLink != null) {
+                if (uploaderLink != null) {
                     Intent copyLinkIntent = new Intent(context, ShareReceiver.class)
                             .putExtra("pkg", packageName)
-                            .putExtra(Intents.INTENT_DOGBIN_LINK, dogbinLink)
+                            .putExtra(Intents.INTENT_UPLOADER_LINK, uploaderLink)
                             .setAction(Intents.INTENT_ACTION_COPY_LINK);
                     PendingIntent copyLinkPendingIntent = PendingIntent.getBroadcast(context,
                             notificationId, copyLinkIntent, PendingIntent.FLAG_UPDATE_CURRENT);
                     builder.addAction(new NotificationCompat.Action(0,
-                            context.getString(R.string.action_dogbin_copy_link), copyLinkPendingIntent));
+                            context.getString(R.string.action_uploader_copy_link), copyLinkPendingIntent));
 
                 } else if (!hideUpload) {
-                    int uploadTitle = uploadError ? R.string.action_dogbin_upload_error : R.string.action_dogbin_upload;
-                    Intent dogbinIntent = new Intent(context, DogbinUploadService.class)
+                    int uploadTitle = uploadError ? R.string.action_uploader_upload_error : R.string.action_uploader_upload;
+                    Intent uploaderIntent = new Intent(context, UploaderService.class)
                             .putExtra("data", broadcastIntent)
                             .putExtra("crash", crash);
-                    PendingIntent dogbinPendingIntent = PendingIntent.getService(context,
-                            notificationId, dogbinIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                    PendingIntent uploaderPendingIntent = PendingIntent.getService(context,
+                            notificationId, uploaderIntent, PendingIntent.FLAG_UPDATE_CURRENT);
                     builder.addAction(new NotificationCompat.Action(0,
-                            context.getString(uploadTitle), dogbinPendingIntent));
+                            context.getString(uploadTitle), uploaderPendingIntent));
 
                 } else {
                     builder.setProgress(0, 0, true);

@@ -89,9 +89,9 @@
     <string name="scoop_running">Monitoring app crashes</string>
     <string name="action_kill">Stop</string>
 
-    <!-- Dogbin -->
-    <string name="dogbin_uploading">Upload in progress…</string>
-    <string name="action_dogbin_upload">Upload to dogbin</string>
-    <string name="action_dogbin_upload_error">Upload failed</string>
-    <string name="action_dogbin_copy_link">Copy link</string>
+    <!-- Uploader -->
+    <string name="uploader_uploading">Upload in progress…</string>
+    <string name="action_uploader_upload">Upload to dogbin</string>
+    <string name="action_uploader_upload_error">Upload failed</string>
+    <string name="action_uploader_copy_link">Copy link</string>
 </resources>
