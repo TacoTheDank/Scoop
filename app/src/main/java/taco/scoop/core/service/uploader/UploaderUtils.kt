@@ -29,7 +29,7 @@ import javax.net.ssl.HttpsURLConnection
  */
 object UploaderUtils {
     private const val TAG = "UploaderUtils"
-    private const val BASE_URL = "https://del.dog"
+    private const val BASE_URL = "https://catbin.up.railway.app"
     private val API_URL = String.format("%s/documents", BASE_URL)
     private var handler: Handler? = null
         get() {

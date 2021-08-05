@@ -91,7 +91,7 @@
 
     <!-- Uploader -->
     <string name="uploader_uploading">アップロード中…</string>
-    <string name="action_uploader_upload">dogbinにアップロード</string>
+    <string name="action_uploader_upload">catbinにアップロード</string>
     <string name="action_uploader_upload_error">アップロード失敗</string>
     <string name="action_uploader_copy_link">リンクをコピー</string>
 </resources>
