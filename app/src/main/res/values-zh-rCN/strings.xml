@@ -1,0 +1,97 @@
+<resources>
+    <!-- Toolbar titles -->
+    <string name="settings_title">设置</string>
+    <string name="blacklist_title">黑名单</string>
+    <string name="about_title">关于</string>
+
+    <!-- Actions -->
+    <string name="action_clear">清除</string>
+    <string name="action_settings">设置</string>
+    <string name="action_search">搜索</string>
+    <string name="action_select">自由选择</string>
+    <string name="action_share">分享</string>
+    <string name="action_copy">复制到剪切板</string>
+    <string name="action_copy_short">复制</string>
+    <string name="action_delete">删除</string>
+
+    <!-- Main activity stuff -->
+    <string name="just_now">刚刚</string>
+    <string name="crash_count">%1$s (%2$d)</string>
+    <string name="app_not_installed">%s （未安装）</string>
+    <string name="copy_label">%s 的堆栈跟踪</string>
+    <string name="copy_link_label">%s 的堆栈跟踪链</string>
+    <string name="copied_toast">堆栈跟踪已复制到剪切板</string>
+    <string name="copied_link_toast">堆栈跟踪链已复制到剪切板</string>
+    <plurals name="items_selected_count">
+        <item quantity="one">已选中 %d 次崩溃</item>
+        <item quantity="other">已选中 %d 次崩溃</item>
+    </plurals>
+    <plurals name="items_children_count">
+        <item quantity="one">%d 次崩溃</item>
+        <item quantity="other">%d 次崩溃</item>
+    </plurals>
+    <string name="dialog_clear_content">确认删除所有崩溃记录吗？</string>
+    <plurals name="delete_multiple_confirm">
+        <item quantity="one">要删除这 %d 次崩溃吗？此操作不可撤销！</item>
+        <item quantity="other">要删除这 %d 次崩溃吗？此操作不可撤销！</item>
+    </plurals>
+    <string name="no_items">空空如也</string>
+    <!--        For those who use https://github.com/LSPosed/LSPosed as Xposed implementation      -->
+    <string name="make_crash">如果您使用 LSPosed，作用域请勾选『系统框架』</string>
+
+    <!-- Setting categories -->
+    <string name="settings_notif">通知</string>
+    <string name="settings_overview">概览</string>
+    <string name="settings_detail_view">详情</string>
+    <string name="settings_misc">杂项</string>
+
+    <!-- Settings (notifications) -->
+    <string name="settings_system_notifications">通知设置</string>
+    <string name="settings_system_notifications_summary">在系统设置中调整 Scoop 的通知</string>
+    <string name="settings_show_notif">应用崩溃时弹出通知</string>
+    <string name="settings_action_buttons">显示操作按钮</string>
+    <string name="settings_action_buttons_summary">显示复制或分享崩溃信息的按钮</string>
+    <string name="settings_show_stack_trace">在通知中展示堆栈跟踪</string>
+    <string name="settings_show_stack_trace_summary">展示堆栈跟踪的开始部分，而非简单描述</string>
+
+    <!-- Settings (overview) -->
+    <string name="settings_combine_same_apps">合并含相同崩溃的应用</string>
+    <string name="settings_combine_same_apps_summary">按包含不同崩溃的单个应用程序条目对崩溃进行排序</string>
+    <string name="settings_combine_same_trace">合并相同崩溃</string>
+    <string name="settings_combine_same_trace_summary">将具有相同堆栈跟踪的同一应用程序的崩溃合并到一个项目中</string>
+    <string name="settings_search_pkg">按包名搜索</string>
+    <string name="settings_search_pkg_summary">既搜索应用名（哔哩哔哩），也搜索包名 (tv.danmaku.bili)</string>
+    <string name="settings_blacklisted_apps">黑名单应用</string>
+    <string name="settings_blacklisted_apps_summary">隐藏来自黑名单应用的崩溃</string>
+
+    <!-- Settings (detail view) -->
+    <string name="settings_auto_wrap">自动换行</string>
+    <string name="settings_auto_wrap_summary">行宽超过屏幕宽度时自动换行</string>
+
+    <!-- Settings (miscellaneous) -->
+    <string name="settings_permission_status">权限状态</string>
+    <string name="settings_permission_status_summary_true">获取 READ_LOGS 权限成功</string>
+    <string name="settings_permission_status_summary_false">获取 READ_LOGS 权限失败</string>
+    <string name="settings_autostart_on_boot">开机自启</string>
+    <string name="settings_autostart_on_boot_summary">开机时自动启动 Scoop</string>
+    <string name="settings_ignore_threaddeath">忽略 ThreadDeath 错误</string>
+    <string name="settings_ignore_threaddeath_summary">抛出 ThreadDeath 错误可以强制停止某个线程，这个错误经常发生且不会导致整个应用崩溃</string>
+    <string name="settings_about">关于 Scoop</string>
+
+    <!-- About screen -->
+    <string name="about_author">由 %1$s 用爱驱动</string>
+    <string name="about_version">当前版本： %1$s (%2$d)</string>
+    <string name="about_github">开源地址</string>
+
+    <!-- Notification channels -->
+    <string name="crash_channel">应用崩溃</string>
+    <string name="status_channel">Scoop 运行状态</string>
+    <string name="scoop_running">正在监视崩溃状态</string>
+    <string name="action_kill">停止</string>
+
+    <!-- Uploader -->
+    <string name="uploader_uploading">正在上传……</string>
+    <string name="action_uploader_upload">上传到 Catbin</string>
+    <string name="action_uploader_upload_error">上传失败</string>
+    <string name="action_uploader_copy_link">复制链接</string>
+</resources>
