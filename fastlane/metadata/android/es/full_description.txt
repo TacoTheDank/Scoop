@@ -1,0 +1,15 @@
+Scoop captura y guarda los rastros de pila de las aplicaciones que se bloquean y muestra todos los bloqueos en una lista para que no volver a buscar en los molestos y largos registros.
+
+Extremadamente útil para la depuración de aplicaciones.
+
+Scoop es compatible con dispositivos con y sin root (aunque los dispositivos sin root requieren cierta configuración; consulte la wiki del repositorio para más detalles).
+
+Scoop también es compatible con Xposed.
+
+Características:
+- Búsqueda (apps, rastros de pila)
+- Vista previa de los fallos en las notificaciones (configurable en los ajustes)
+- Combinación de los mismos fallos / apps para evitar listas repetitivas (configurable en ajustes)
+- Lista negra de aplicaciones
+- Acciones rápidas en las notificaciones para copiar / compartir rastros de pila
+- Soporte de carga de Catbin para compartir convenientemente

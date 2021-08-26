@@ -1,0 +1,1 @@
+Captura un rastro de pila cuando la app se bloquea inesperadamente

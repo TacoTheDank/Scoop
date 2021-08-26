@@ -1,0 +1,97 @@
+<resources>
+    <!-- Toolbar titles -->
+    <string name="settings_title">Ajustes</string>
+    <string name="blacklist_title">Lista de excepciones</string>
+    <string name="about_title">Acerca de</string>
+
+    <!-- Actions -->
+    <string name="action_clear">Limpiar</string>
+    <string name="action_settings">Ajustes</string>
+    <string name="action_search">Buscar</string>
+    <string name="action_select">Cambiar modo de selección</string>
+    <string name="action_share">Compartir</string>
+    <string name="action_copy">Copiar al portapapeles</string>
+    <string name="action_copy_short">Copiar</string>
+    <string name="action_delete">Borrar</string>
+
+    <!-- Main activity stuff -->
+    <string name="just_now">Ahora mismo</string>
+    <string name="crash_count">%1$s (%2$d)</string>
+    <string name="app_not_installed">%s (no instalado)</string>
+    <string name="copy_label">Rastro de pila de %s</string>
+    <string name="copy_link_label">Enlace de rastro de pila %s</string>
+    <string name="copied_toast">Rastro de pila copiado al portapapeles</string>
+    <string name="copied_link_toast">Enlace de rastro de pila copiado al portapapeles</string>
+    <plurals name="items_selected_count">
+        <item quantity="one">%d bloqueo seleccionado</item>
+        <item quantity="other">%d bloqueos seleccionados</item>
+    </plurals>
+    <plurals name="items_children_count">
+        <item quantity="one">%d bloqueo</item>
+        <item quantity="other">%d bloqueos</item>
+    </plurals>
+    <string name="dialog_clear_content">¿Está seguro de que quiere borrar todos los accidentes?</string>
+    <plurals name="delete_multiple_confirm">
+        <item quantity="one">¿Borrar %d bloqueo? ¡No se podrá deshacer!</item>
+        <item quantity="other">¿Borrar %d bloqueos? ¡No se podrá deshacer!</item>
+    </plurals>
+    <string name="no_items">Sin bloqueos aún.</string>
+    <!--        You can get a bit creative here as it's probably not too easy to translate directly -->
+    <string name="make_crash">¿Desea hacer que algo se bloquee? ಠ‿ಠ</string>
+
+    <!-- Setting categories -->
+    <string name="settings_notif">Notificaciones</string>
+    <string name="settings_overview">Resumen</string>
+    <string name="settings_detail_view">Vista detallada</string>
+    <string name="settings_misc">Miscelánea</string>
+
+    <!-- Settings (notifications) -->
+    <string name="settings_system_notifications">Ajustes de notificación</string>
+    <string name="settings_system_notifications_summary">Gestionar las notificaciones de las aplicaciones a nivel de sistema</string>
+    <string name="settings_show_notif">Mostrar notificación en bloqueo</string>
+    <string name="settings_action_buttons">Mostrar botones de acción</string>
+    <string name="settings_action_buttons_summary">Añade botones para copiar y compartir el bloqueo en las notificaciones</string>
+    <string name="settings_show_stack_trace">Mostrar el rastro de la pila en la notificación</string>
+    <string name="settings_show_stack_trace_summary">Mostrar el principio del seguimiento de la pila en la notificación en lugar de sólo la descripción</string>
+
+    <!-- Settings (overview) -->
+    <string name="settings_combine_same_apps">Combinar las mismas aplicaciones</string>
+    <string name="settings_combine_same_apps_summary">Ordena los bloqueos por las entradas individuales de la aplicación que contienen los diferentes fallos</string>
+    <string name="settings_combine_same_trace">Combinar los mismos bloqueos</string>
+    <string name="settings_combine_same_trace_summary">Combina bloqueos de la misma aplicación con el mismo rastro de pila en un solo elemento</string>
+    <string name="settings_search_pkg">Buscar en nombre del paquete</string>
+    <string name="settings_search_pkg_summary">Busca el término dado en el nombre de la aplicación así como en el nombre del paquete</string>
+    <string name="settings_blacklisted_apps">Apps exceptuadas</string>
+    <string name="settings_blacklisted_apps_summary">Se ocultarán los bloqueos causados por la lista de apps exceptuadas</string>
+
+    <!-- Settings (detail view) -->
+    <string name="settings_auto_wrap">Salto automático de línea</strong>
+    <string name="settings_auto_wrap_summary">Limitar el ancho de línea máximo al ancho de la pantalla</string>
+
+    <!-- Settings (miscellaneous) -->
+    <string name="settings_permission_status">Estado de los permisos</string>
+    <string name="settings_permission_status_summary_true">Se concede el permiso de lectura (read_logs)</string>
+    <string name="settings_permission_status_summary_false">El permiso READ_LOGS está denegado</string>
+    <string name="settings_autostart_on_boot">Autoiniciar Scoop en el arranque</string>
+    <string name="settings_autostart_on_boot_summary">Iniciar automáticamente Scoop en el arranque del dispositivo junto con otros procesos del sistema</string>
+    <string name="settings_ignore_threaddeath">Ignorar los errores de ThreadDeath</string>
+    <string name="settings_ignore_threaddeath_summary">Se lanza un error ThreadDeath para forzar la detención de un hilo trabajador. Es una "ocurrencia normal" y no hace que las aplicaciones se bloqueen</string>
+    <string name="settings_about">Sobre Scoop</string>
+
+    <!-- About screen -->
+    <string name="about_author">Desarrollado por %1$s</string>
+    <string name="about_version">Versión %1$s (%2$d)</string>
+    <string name="about_github">Código fuente</string>
+
+    <!-- Notification channels -->
+    <string name="crash_channel">Caída de la aplicación</string>
+    <string name="status_channel">Estado de Scoop</string>
+    <string name="scoop_running">Monitoreo de caídas de aplicaciones</string>
+    <string name="action_kill">Detener</string>
+
+    <!-- Uploader -->
+    <string name="uploader_uploading">Subida en curso...</string>
+    <string name="action_uploader_upload">Subir a catbin</string>
+    <string name="action_uploader_upload_error">Carga fallida</string>
+    <string name="action_uploader_copy_link">Copiar enlace</string>
+</resources>
