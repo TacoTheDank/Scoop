@@ -46,8 +46,8 @@
     <string name="settings_misc">Verschiedenes</string>
 
     <!-- Settings (notifications) -->
-    <string name="settings_system_notifications">Notification settings</string>
-    <string name="settings_system_notifications_summary">Manage app notifications on the system level</string>
+    <string name="settings_system_notifications">Benachrichtigungseinstellungen</string>
+    <string name="settings_system_notifications_summary">App-Benachrichtigungen auf Systemebene verwalten</string>
     <string name="settings_show_notif">Benachrichtigung bei Crash zeigen</string>
     <string name="settings_action_buttons">Schnellaktionen zeigen</string>
     <string name="settings_action_buttons_summary">Fügt Buttons zum Kopieren und Teilen des Crashes zur Benachrichtigung hinzu</string>
@@ -69,13 +69,13 @@
     <string name="settings_auto_wrap_summary">Begrenzt die maximale Zeilenbreite auf die Bildschirmbreite</string>
 
     <!-- Settings (miscellaneous) -->
-    <string name="settings_permission_status">Permission status</string>
-    <string name="settings_permission_status_summary_true">READ_LOGS permission is granted</string>
-    <string name="settings_permission_status_summary_false">READ_LOGS permission is denied</string>
-    <string name="settings_autostart_on_boot">Autostart Scoop on boot</string>
-    <string name="settings_autostart_on_boot_summary">Automatically start Scoop on device boot alongside other system processes</string>
     <string name="settings_ignore_threaddeath">Ignoriere ThreadDeath-Errors</string>
     <string name="settings_ignore_threaddeath_summary">Ein ThreadDeath-Error wird geworfen, um einen Thread zu stoppen. Es ist ein \"normales Ereignis\" und führt zu keinem Crash</string>
+    <string name="settings_permission_status">Berechtigungsstatus</string>
+    <string name="settings_permission_status_summary_true">READ_LOGS-Berechtigung ist erteilt</string>
+    <string name="settings_permission_status_summary_false">READ_LOGS-Berechtigung ist verweigert</string>
+    <string name="settings_autostart_on_boot">Scoop beim Booten automatisch starten</string>
+    <string name="settings_autostart_on_boot_summary">Scoop automatisch beim Gerätestart starten neben anderen Systemprozessen</string>
     <string name="settings_about">Über Scoop</string>
 
     <!-- About screen -->
@@ -84,14 +84,14 @@
     <string name="about_github">Source code</string>
 
     <!-- Notification channels -->
-    <string name="crash_channel">Application crashes</string>
-    <string name="status_channel">Scoop status</string>
-    <string name="scoop_running">Monitoring app crashes</string>
+    <string name="crash_channel">App-Crashes</string>
+    <string name="status_channel">Scoop-Status</string>
+    <string name="scoop_running">App-Crashes werden überwacht</string>
     <string name="action_kill">Stop</string>
 
     <!-- Uploader -->
-    <string name="uploader_uploading">Upload in progress…</string>
-    <string name="action_uploader_upload">Upload to catbin</string>
-    <string name="action_uploader_upload_error">Upload failed</string>
-    <string name="action_uploader_copy_link">Copy link</string>
+    <string name="uploader_uploading">Wird hochgeladen…</string>
+    <string name="action_uploader_upload">Zu catbin hochladen</string>
+    <string name="action_uploader_upload_error">Upload fehlgeschlagen</string>
+    <string name="action_uploader_copy_link">Link kopieren</string>
 </resources>
