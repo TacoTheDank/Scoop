@@ -18,10 +18,10 @@
     <string name="just_now">Gerade eben</string>
     <string name="crash_count">%1$s (%2$d)</string>
     <string name="app_not_installed">%s (nicht installiert)</string>
-    <string name="copy_label">Stack Trace von %s</string>
-    <string name="copy_link_label">Stack trace link of %s</string>
-    <string name="copied_toast">Stack Trace in Zwischenablage kopiert</string>
-    <string name="copied_link_toast">Stack trace link copied to clipboard</string>
+    <string name="copy_label">Stacktrace von %s</string>
+    <string name="copy_link_label">Stacktrace link of %s</string>
+    <string name="copied_toast">Stacktrace in Zwischenablage kopiert</string>
+    <string name="copied_link_toast">Stacktrace link copied to clipboard</string>
     <plurals name="items_selected_count">
         <item quantity="one">%d Crash ausgewählt</item>
         <item quantity="other">%d Crashes ausgewählt</item>
@@ -51,22 +51,22 @@
     <string name="settings_show_notif">Benachrichtigung bei Crash zeigen</string>
     <string name="settings_action_buttons">Schnellaktionen zeigen</string>
     <string name="settings_action_buttons_summary">Fügt Buttons zum Kopieren und Teilen des Crashes zur Benachrichtigung hinzu</string>
-    <string name="settings_show_stack_trace">Zeige Stack Trace in Benachrichtigung</string>
-    <string name="settings_show_stack_trace_summary">Zeige den Anfang der Stack Trace anstatt nur der Beschreibung in der Benachrichtigung</string>
+    <string name="settings_show_stack_trace">Zeige Stacktrace in Benachrichtigung</string>
+    <string name="settings_show_stack_trace_summary">Zeige den Anfang der Stacktrace anstatt nur der Beschreibung in der Benachrichtigung</string>
 
     <!-- Settings (overview) -->
     <string name="settings_combine_same_apps">Selbe Apps kombinieren</string>
     <string name="settings_combine_same_apps_summary">Sortiere Crashes nach individuellen Appeinträgen, welche die verschiedenen Crashes enthalten</string>
     <string name="settings_combine_same_trace">Selbe Crashes kombinieren</string>
-    <string name="settings_combine_same_trace_summary">Kombiniere Crashes von der Selben App mit gleichen Stack Traces in einen Eintrag</string>
-    <string name="settings_search_pkg">Suche im Package Name</string>
+    <string name="settings_combine_same_trace_summary">Kombiniere Crashes von der selben App mit gleichen Stacktraces in einen Eintrag</string>
+    <string name="settings_search_pkg">Suche im Paketnamen</string>
     <string name="settings_search_pkg_summary">Suche den gegebenen Term im Appnamen sowie im Paketnamen</string>
     <string name="settings_blacklisted_apps">Ausnahmen</string>
-    <string name="settings_blacklisted_apps_summary">Crahes von ausgewählten Apps werden ignoriert</string>
+    <string name="settings_blacklisted_apps_summary">Crashes von ausgewählten Apps werden ignoriert</string>
 
     <!-- Settings (detail view) -->
     <string name="settings_auto_wrap">Automatischer Zeilenumbruch</string>
-    <string name="settings_auto_wrap_summary">Limitiert die maximale Zeilenbreite auf die Bildschirmbreite</string>
+    <string name="settings_auto_wrap_summary">Begrenzt die maximale Zeilenbreite auf die Bildschirmbreite</string>
 
     <!-- Settings (miscellaneous) -->
     <string name="settings_permission_status">Permission status</string>
