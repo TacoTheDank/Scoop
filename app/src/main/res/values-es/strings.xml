@@ -65,7 +65,7 @@
     <string name="settings_blacklisted_apps_summary">Se ocultarán los bloqueos causados por la lista de apps exceptuadas</string>
 
     <!-- Settings (detail view) -->
-    <string name="settings_auto_wrap">Salto automático de línea</strong>
+    <string name="settings_auto_wrap">Salto automático de línea</string>
     <string name="settings_auto_wrap_summary">Limitar el ancho de línea máximo al ancho de la pantalla</string>
 
     <!-- Settings (miscellaneous) -->
@@ -90,7 +90,7 @@
     <string name="action_kill">Detener</string>
 
     <!-- Uploader -->
-    <string name="uploader_uploading">Subida en curso...</string>
+    <string name="uploader_uploading">Subida en curso…</string>
     <string name="action_uploader_upload">Subir a catbin</string>
     <string name="action_uploader_upload_error">Carga fallida</string>
     <string name="action_uploader_copy_link">Copiar enlace</string>
