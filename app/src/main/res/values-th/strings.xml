@@ -1,0 +1,97 @@
+<resources>
+    <!-- Toolbar titles -->
+    <string name="settings_title">การตั้งค่า</string>
+    <string name="blacklist_title">รายการยกเว้น</string>
+    <string name="about_title">เกี่ยวกับ</string>
+
+    <!-- Actions -->
+    <string name="action_clear">ล้าง</string>
+    <string name="action_settings">ตั้งค่า</string>
+    <string name="action_search">ค้นหา</string>
+    <string name="action_select">เปิด/ปิด โหมดเลือกหลายรายการ</string>
+    <string name="action_share">แชร์</string>
+    <string name="action_copy">คัดลอกไปยังคลิปบอร์ด</string>
+    <string name="action_copy_short">คัดลอก</string>
+    <string name="action_delete">ลบ</string>
+
+    <!-- Main activity stuff -->
+    <string name="just_now">ขนะนี้</string>
+    <string name="crash_count">%1$s (%2$d)</string>
+    <string name="app_not_installed">%s (ไม่ได้ติดตั้ง)</string>
+    <string name="copy_label">Stacktrace ของ %s</string>
+    <string name="copy_link_label">ลิ้ง Stacktrace ของ %s</string>
+    <string name="copied_toast">Stacktrace คัดลอกไปยังคลิปบอร์ดแล้ว</string>
+    <string name="copied_link_toast">ลิ้ง Stacktrace คัดลอกไปยังคลิปบอร์ดแล้ว</string>
+    <plurals name="items_selected_count">
+        <item quantity="one">เลือก %d ข้อผิดพลาดแล้ว</item>
+        <item quantity="other">เลือก %d ข้อผิดพลาดแล้ว</item>
+    </plurals>
+    <plurals name="items_children_count">
+        <item quantity="one">%d ข้อผิดพลาด</item>
+        <item quantity="other">%d ข้อผิดพลาด</item>
+    </plurals>
+    <string name="dialog_clear_content">คุณต้องการที่จะลบข้อผิดพลาดทั้งหมดมั้ย?</string>
+    <plurals name="delete_multiple_confirm">
+        <item quantity="one">ลบ %d ข้อผิดพลาดมั้ย? ไม่สารมารถย้อนกลับได้!</item>
+        <item quantity="other">ลบ %d ข้อผิดพลาดมั้ย? ไม่สารมารถย้อนกลับได้!</item>
+    </plurals>
+    <string name="no_items">ยังไม่มีข้อผิดพลาด.</string>
+    <!--        You can get a bit creative here as it's probably not too easy to translate directly -->
+    <string name="make_crash">คุณอาจจะต้องทำบางอย่างให้เออเร่อ? ಠ‿ಠ</string>
+
+    <!-- Setting categories -->
+    <string name="settings_notif">การแจ้งเตือน</string>
+    <string name="settings_overview">ภาพรวม</string>
+    <string name="settings_detail_view">รายละเอียด</string>
+    <string name="settings_misc">อื่นๆ</string>
+
+    <!-- Settings (notifications) -->
+    <string name="settings_system_notifications">การตั้งค่าการแจ้งเตือน</string>
+    <string name="settings_system_notifications_summary">เปิดการตั้งค่าการแจ้งเตือนของระบบ</string>
+    <string name="settings_show_notif">แสดงการแจ้งเตือนเมื่อพบข้อผิดพลาด</string>
+    <string name="settings_action_buttons">แสดงปุ่มบนการแจ้งเตือน</string>
+    <string name="settings_action_buttons_summary">เพิ่มปุ่มคัดลอกและแชร์ไปยังการแจ้งเตือน</string>
+    <string name="settings_show_stack_trace">แสดงข้อผิดพลาดในการแจ้งเตือน</string>
+    <string name="settings_show_stack_trace_summary">แสดงรายละเอียดของข้อผิดพลาดในการแจ้งเตือน</string>
+
+    <!-- Settings (overview) -->
+    <string name="settings_combine_same_apps">จัดเรียงตามรายการแอป</string>
+    <string name="settings_combine_same_apps_summary">จัดเรียงข้อผิดพลาดตามรายการแอพแต่ละรายการแต่ไม่รวมข้อผิดพลาดเป็นอันเดียวกัน</string>
+    <string name="settings_combine_same_trace">จัดเรียงตามข้อผิดพลาด</string>
+    <string name="settings_combine_same_trace_summary">รวมข้อผิดพลาดที่เหมือนกันในแต่ละแอปเป็นอันเดียวกัน</string>
+    <string name="settings_search_pkg">ค้นหาด้วย package name</string>
+    <string name="settings_search_pkg_summary">ค้นหาคำที่กำหนดด้วยชื่อแอพและ package name</string>
+    <string name="settings_blacklisted_apps">แอปที่ยกเว้น</string>
+    <string name="settings_blacklisted_apps_summary">ข้อผิดพลาดที่เกิดจาดแอปที่เลือกจะไม่แสดง</string>
+
+    <!-- Settings (detail view) -->
+    <string name="settings_auto_wrap">ขึ้นบรรทัดใหม่อัตโนมัติ</string>
+    <string name="settings_auto_wrap_summary">จำกัดข้อความตามขนาดความกว้างของหน้าจอ</string>
+
+    <!-- Settings (miscellaneous) -->
+    <string name="settings_permission_status">สถานะสิทธิ์การเข้าถึง</string>
+    <string name="settings_permission_status_summary_true">สิทธิ์การเข้าถึง LOG ได้รับอณุญาติ</string>
+    <string name="settings_permission_status_summary_false">สิทธิ์การเข้าถึง LOG ถูกปฏิเสธ</string>
+    <string name="settings_autostart_on_boot">เริ่ม Scoop เมื่อเปิดเครื่อง</string>
+    <string name="settings_autostart_on_boot_summary">เริ่มการทำงาน Scoop โดนอัตโนมัติเมื่อเปิดเครื่อง</string>
+    <string name="settings_ignore_threaddeath">ไม่สนข้อผิดพลาดที่เกิดจาก ThreadDeath</string>
+    <string name="settings_ignore_threaddeath_summary">ThreadDeath เป็นข้อผิดพลาดที่เกิดจากการบังคับหยุดการทำงานของ worker thread ซึ่งเป็นเหตุการณ์ปกติไม่ได้ทำให้แอปเด้ง</string>
+    <string name="settings_about">เกี่ยวกับ Scoop</string>
+
+    <!-- About screen -->
+    <string name="about_author">พัฒนาโดย %1$s</string>
+    <string name="about_version">เวอร์ชั่น %1$s (%2$d)</string>
+    <string name="about_github">ซอสโค้ด</string>
+
+    <!-- Notification channels -->
+    <string name="crash_channel">ข้อผิดพลาดจากแอป</string>
+    <string name="status_channel">สถานะ Scoop</string>
+    <string name="scoop_running">กำลังตรวจหาข้อผิดพลาด</string>
+    <string name="action_kill">หยุด</string>
+
+    <!-- Uploader -->
+    <string name="uploader_uploading">กำลังอัปโหลด…</string>
+    <string name="action_uploader_upload">อัปโหลดไปยัง catbin</string>
+    <string name="action_uploader_upload_error">อัปโหลดผิดพลาด</string>
+    <string name="action_uploader_copy_link">คัดลอกลิ้ง</string>
+</resources>
