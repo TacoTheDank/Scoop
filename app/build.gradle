@@ -45,6 +45,14 @@ android {
         exclude 'META-INF/*'
     }
 
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            if (variant.buildType.name == "debug") {
+                outputFileName = new File("scoop-app-universal-debug.apk")
+            }
+        }
+    }
+
     buildFeatures {
         viewBinding true
     }

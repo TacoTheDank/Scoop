@@ -1,0 +1,26 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Clone repository
+      uses: actions/checkout@v2
+    - name: Build
+      run: |
+        ./gradlew assembleDebug
+    - name: Store generated universal APK file
+      uses: actions/upload-artifact@v2
+      with:
+        name: scoop-app-universal
+        path: |
+            ./app/build/outputs/apk/debug/scoop-app-universal-debug.apk
+            ./app/build/outputs/apk/debug/output-metadata.json
