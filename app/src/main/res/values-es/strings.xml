@@ -19,9 +19,7 @@
     <string name="crash_count">%1$s (%2$d)</string>
     <string name="app_not_installed">%s (no instalado)</string>
     <string name="copy_label">Rastro de pila de %s</string>
-    <string name="copy_link_label">Enlace de rastro de pila %s</string>
     <string name="copied_toast">Rastro de pila copiado al portapapeles</string>
-    <string name="copied_link_toast">Enlace de rastro de pila copiado al portapapeles</string>
     <plurals name="items_selected_count">
         <item quantity="one">%d bloqueo seleccionado</item>
         <item quantity="other">%d bloqueos seleccionados</item>
@@ -88,10 +86,4 @@
     <string name="status_channel">Estado de Scoop</string>
     <string name="scoop_running">Monitoreo de caídas de aplicaciones</string>
     <string name="action_kill">Detener</string>
-
-    <!-- Uploader -->
-    <string name="uploader_uploading">Subida en curso…</string>
-    <string name="action_uploader_upload">Subir a catbin</string>
-    <string name="action_uploader_upload_error">Carga fallida</string>
-    <string name="action_uploader_copy_link">Copiar enlace</string>
 </resources>

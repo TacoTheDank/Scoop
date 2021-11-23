@@ -20,7 +20,6 @@ import taco.scoop.R;
 import taco.scoop.ScoopApplication;
 import taco.scoop.core.data.crash.Crash;
 import taco.scoop.core.data.crash.CrashLoader;
-import taco.scoop.core.service.uploader.UploaderService;
 import taco.scoop.ui.activity.DetailActivity;
 import taco.scoop.ui.activity.MainActivity;
 import taco.scoop.util.Intents;
@@ -40,9 +39,6 @@ public class CrashReceiver extends BroadcastReceiver {
         String stackTrace = broadcastIntent.getStringExtra(Intents.INTENT_STACKTRACE);
 
         boolean update = broadcastIntent.getBooleanExtra(Intents.INTENT_UPDATE, false);
-        boolean hideUpload = broadcastIntent.getBooleanExtra(Intents.INTENT_HIDE_UPLOAD, false);
-        boolean uploadError = broadcastIntent.getBooleanExtra(Intents.INTENT_UPLOAD_ERROR, false);
-        String uploaderLink = broadcastIntent.getStringExtra(Intents.INTENT_UPLOADER_LINK);
 
         if (description.startsWith(ThreadDeath.class.getName()) && PreferenceHelper.ignoreThreadDeath())
             return;
@@ -121,31 +117,6 @@ public class CrashReceiver extends BroadcastReceiver {
                         notificationId, shareIntent, PendingIntent.FLAG_UPDATE_CURRENT);
                 builder.addAction(new NotificationCompat.Action(R.drawable.ic_share,
                         context.getString(R.string.action_share), sharePendingIntent));
-
-                if (uploaderLink != null) {
-                    Intent copyLinkIntent = new Intent(context, ShareReceiver.class)
-                            .putExtra("pkg", packageName)
-                            .putExtra(Intents.INTENT_UPLOADER_LINK, uploaderLink)
-                            .setAction(Intents.INTENT_ACTION_COPY_LINK);
-                    PendingIntent copyLinkPendingIntent = PendingIntent.getBroadcast(context,
-                            notificationId, copyLinkIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-                    builder.addAction(new NotificationCompat.Action(0,
-                            context.getString(R.string.action_uploader_copy_link), copyLinkPendingIntent));
-
-                } else if (!hideUpload) {
-                    int uploadTitle = uploadError ? R.string.action_uploader_upload_error : R.string.action_uploader_upload;
-                    Intent uploaderIntent = new Intent(context, UploaderService.class)
-                            .putExtra("data", broadcastIntent)
-                            .putExtra("crash", crash);
-                    PendingIntent uploaderPendingIntent = PendingIntent.getService(context,
-                            notificationId, uploaderIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-                    builder.addAction(new NotificationCompat.Action(0,
-                            context.getString(uploadTitle), uploaderPendingIntent));
-
-                } else {
-                    builder.setProgress(0, 0, true);
-                    builder.setOngoing(true);
-                }
             }
 
             manager.notify(notificationId, builder.build());

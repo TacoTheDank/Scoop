@@ -19,9 +19,7 @@
     <string name="crash_count">%1$s (%2$d)</string>
     <string name="app_not_installed">%s （未安装）</string>
     <string name="copy_label">%s 的堆栈跟踪</string>
-    <string name="copy_link_label">%s 的堆栈跟踪链</string>
     <string name="copied_toast">堆栈跟踪已复制到剪切板</string>
-    <string name="copied_link_toast">堆栈跟踪链已复制到剪切板</string>
     <plurals name="items_selected_count">
         <item quantity="one">已选中 %d 次崩溃</item>
         <item quantity="other">已选中 %d 次崩溃</item>
@@ -88,10 +86,4 @@
     <string name="status_channel">Scoop 运行状态</string>
     <string name="scoop_running">正在监视崩溃状态</string>
     <string name="action_kill">停止</string>
-
-    <!-- Uploader -->
-    <string name="uploader_uploading">正在上传……</string>
-    <string name="action_uploader_upload">上传到 Catbin</string>
-    <string name="action_uploader_upload_error">上传失败</string>
-    <string name="action_uploader_copy_link">复制链接</string>
 </resources>

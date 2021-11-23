@@ -19,9 +19,7 @@
     <string name="crash_count">%1$s (%2$d)</string>
     <string name="app_not_installed">%s (未インストール)</string>
     <string name="copy_label">%s のスタックトレース</string>
-    <string name="copy_link_label">%s のスタックトレースのリンク</string>
     <string name="copied_toast">スタックトレースはクリップボードにコピーされました</string>
-    <string name="copied_link_toast">スタックトレースのリンクはクリップボードにコピーされました</string>
     <plurals name="items_selected_count">
         <item quantity="one">%d 個のクラッシュが選択されました</item>
         <item quantity="other">%d 個のクラッシュが選択されました</item>
@@ -88,10 +86,4 @@
     <string name="status_channel">Scoopのステータス</string>
     <string name="scoop_running">アプリのクラッシュを監視中</string>
     <string name="action_kill">停止</string>
-
-    <!-- Uploader -->
-    <string name="uploader_uploading">アップロード中…</string>
-    <string name="action_uploader_upload">catbinにアップロード</string>
-    <string name="action_uploader_upload_error">アップロード失敗</string>
-    <string name="action_uploader_copy_link">リンクをコピー</string>
 </resources>

@@ -26,14 +26,6 @@ class ShareReceiver : BroadcastReceiver() {
                 context.copyTextToClipboard(R.string.copy_label, pkg, stackTrace)
                 context.displayToast(R.string.copied_toast)
             }
-            Intents.INTENT_ACTION_COPY_LINK -> {
-                context.copyTextToClipboard(
-                    R.string.copy_link_label,
-                    pkg,
-                    intent.getStringExtra(Intents.INTENT_UPLOADER_LINK)
-                )
-                context.displayToast(R.string.copied_link_toast)
-            }
         }
     }
 }

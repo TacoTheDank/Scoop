@@ -5,7 +5,6 @@
     android:installLocation="internalOnly">
 
     <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission
@@ -51,8 +50,7 @@
         </activity>
         <activity
             android:name=".ui.activity.DetailActivity"
-            android:parentActivityName=".ui.activity.MainActivity"
-            tools:ignore="UnusedAttribute">
+            android:parentActivityName=".ui.activity.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.activity.MainActivity" />
@@ -111,10 +109,6 @@
             android:name=".core.service.detector.CrashDetectorService"
             android:enabled="true"
             android:process=":crashDetectorService" />
-        <service
-            android:name=".core.service.uploader.UploaderService"
-            android:enabled="true"
-            android:exported="false" />
     </application>
 
 </manifest>
