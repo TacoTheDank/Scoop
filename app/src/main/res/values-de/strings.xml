@@ -69,13 +69,13 @@
     <string name="settings_auto_wrap_summary">Begrenzt die maximale Zeilenbreite auf die Bildschirmbreite</string>
 
     <!-- Settings (miscellaneous) -->
-    <string name="settings_ignore_threaddeath">Ignoriere ThreadDeath-Errors</string>
-    <string name="settings_ignore_threaddeath_summary">Ein ThreadDeath-Error wird geworfen, um einen Thread zu stoppen. Es ist ein \"normales Ereignis\" und führt zu keinem Crash</string>
     <string name="settings_permission_status">Berechtigungsstatus</string>
     <string name="settings_permission_status_summary_true">READ_LOGS-Berechtigung ist erteilt</string>
     <string name="settings_permission_status_summary_false">READ_LOGS-Berechtigung ist verweigert</string>
     <string name="settings_autostart_on_boot">Scoop beim Booten automatisch starten</string>
     <string name="settings_autostart_on_boot_summary">Scoop automatisch beim Gerätestart starten neben anderen Systemprozessen</string>
+    <string name="settings_ignore_threaddeath">Ignoriere ThreadDeath-Errors</string>
+    <string name="settings_ignore_threaddeath_summary">Ein ThreadDeath-Error wird geworfen, um einen Thread zu stoppen. Es ist ein \"normales Ereignis\" und führt zu keinem Crash</string>
     <string name="settings_about">Über Scoop</string>
 
     <!-- About screen -->
