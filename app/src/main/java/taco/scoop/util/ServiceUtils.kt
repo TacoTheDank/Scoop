@@ -7,11 +7,9 @@ import android.os.HandlerThread
 import androidx.core.content.ContextCompat
 import taco.scoop.core.service.detector.CrashDetectorService
 
-lateinit var intent: Intent
 var isServiceActive = false
 
 fun Context.initScoopService() {
-    checkIntentInit()
     if (!isServiceActive) {
         val thread = HandlerThread("startCrashDetector")
         thread.start()
@@ -24,17 +22,14 @@ fun Context.startScoopService(): Boolean {
     if (!isPermissionGranted())
         return false
 
-    ContextCompat.startForegroundService(this, intent)
+    ContextCompat.startForegroundService(this, serviceIntent)
     return true
 }
 
 fun Context.stopScoopService() {
-    checkIntentInit()
-    if (stopService(intent))
+    if (stopService(serviceIntent))
         isServiceActive = false
 }
 
-private fun Context.checkIntentInit() {
-    if (!::intent.isInitialized)
-        intent = Intent(this, CrashDetectorService::class.java)
-}
+private val Context.serviceIntent
+    get() = Intent(this, CrashDetectorService::class.java)
