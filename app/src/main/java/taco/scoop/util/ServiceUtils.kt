@@ -11,10 +11,7 @@ lateinit var intent: Intent
 var isServiceActive = false
 
 fun Context.initScoopService() {
-    if (!::intent.isInitialized) {
-        intent = Intent(this, CrashDetectorService::class.java)
-    }
-
+    checkIntentInit()
     if (!isServiceActive) {
         val thread = HandlerThread("startCrashDetector")
         thread.start()
@@ -32,6 +29,12 @@ fun Context.startScoopService(): Boolean {
 }
 
 fun Context.stopScoopService() {
+    checkIntentInit()
     if (stopService(intent))
         isServiceActive = false
+}
+
+private fun Context.checkIntentInit() {
+    if (!::intent.isInitialized)
+        intent = Intent(this, CrashDetectorService::class.java)
 }
