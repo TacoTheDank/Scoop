@@ -24,7 +24,7 @@ open class IndicatorService : Service() {
             this,
             0,
             Intent(this, StopReceiver::class.java),
-            PendingIntent.FLAG_UPDATE_CURRENT
+            PendingIntent.FLAG_IMMUTABLE
         )
         val stopAction =
             NotificationCompat.Action(0, getString(R.string.action_kill), stopPendingIntent)
