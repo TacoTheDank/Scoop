@@ -2,6 +2,7 @@
 
 package taco.scoop.util
 
+import android.app.PendingIntent
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
@@ -20,6 +21,13 @@ import androidx.core.graphics.drawable.updateBounds
 import taco.scoop.core.data.crash.CrashLoader
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.contract
+
+val pendingIntentFlags
+    get() =
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
+            PendingIntent.FLAG_IMMUTABLE
+        else
+            PendingIntent.FLAG_UPDATE_CURRENT
 
 fun Context.getAttrColor(attr: Int): Int {
     val ta = this.obtainStyledAttributes(intArrayOf(attr))

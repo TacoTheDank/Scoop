@@ -71,7 +71,7 @@ public class CrashReceiver extends BroadcastReceiver {
             TaskStackBuilder stackBuilder = TaskStackBuilder.create(context)
                     .addParentStack(DetailActivity.class)
                     .addNextIntent(clickIntent);
-            PendingIntent clickPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+            PendingIntent clickPendingIntent = stackBuilder.getPendingIntent(0, Utils.getPendingIntentFlags());
 
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "crashes")
                     .setSmallIcon(R.drawable.ic_bug_report)
@@ -105,7 +105,7 @@ public class CrashReceiver extends BroadcastReceiver {
                         .putExtra("pkg", packageName)
                         .setAction(Intents.INTENT_ACTION_COPY);
                 PendingIntent copyPendingIntent = PendingIntent.getBroadcast(context,
-                        notificationId, copyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                        notificationId, copyIntent, Utils.getPendingIntentFlags());
                 builder.addAction(new NotificationCompat.Action(R.drawable.ic_content_copy,
                         context.getString(R.string.action_copy_short), copyPendingIntent));
 
@@ -114,7 +114,7 @@ public class CrashReceiver extends BroadcastReceiver {
                         .putExtra("pkg", packageName)
                         .setAction(Intents.INTENT_ACTION_SHARE);
                 PendingIntent sharePendingIntent = PendingIntent.getBroadcast(context,
-                        notificationId, shareIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                        notificationId, shareIntent, Utils.getPendingIntentFlags());
                 builder.addAction(new NotificationCompat.Action(R.drawable.ic_share,
                         context.getString(R.string.action_share), sharePendingIntent));
             }
