@@ -12,4 +12,3 @@ Características:
 - Combinación de los mismos fallos / apps para evitar listas repetitivas (configurable en ajustes)
 - Lista negra de aplicaciones
 - Acciones rápidas en las notificaciones para copiar / compartir rastros de pila
-- Soporte de carga de Catbin para compartir convenientemente

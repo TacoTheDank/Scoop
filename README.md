@@ -24,7 +24,6 @@ Features:
 - Combination of the same crashes / apps to avoid repetitive lists (configurable in settings)
 - App blacklist
 - Quick actions in notifications to copy / share stack traces
-- [Catbin](https://github.com/TheWeaver786/Catbin) upload support for convenient sharing
 
 
 ## Guide
