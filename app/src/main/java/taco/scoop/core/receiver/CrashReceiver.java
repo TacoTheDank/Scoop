@@ -103,7 +103,7 @@ public class CrashReceiver extends BroadcastReceiver {
             int notificationId = (int) (time - ScoopApplication.getBootTime());
 
             if (PreferenceHelper.showActionButtons()) {
-                Intent copyIntent = new Intent(context, ShareReceiver.class)
+                Intent copyIntent = new Intent(context, NotificationActionReceiver.class)
                         .putExtra("stackTrace", stackTrace)
                         .putExtra("pkg", packageName)
                         .setAction(Intents.INTENT_ACTION_COPY);
@@ -112,12 +112,15 @@ public class CrashReceiver extends BroadcastReceiver {
                 builder.addAction(new NotificationCompat.Action(R.drawable.ic_content_copy,
                         context.getString(R.string.action_copy_short), copyPendingIntent));
 
-                Intent shareIntent = new Intent(context, ShareReceiver.class)
+                Intent shareIntent = new Intent(Intent.ACTION_SEND)
                         .putExtra("stackTrace", stackTrace)
                         .putExtra("pkg", packageName)
-                        .setAction(Intents.INTENT_ACTION_SHARE);
-                PendingIntent sharePendingIntent = PendingIntent.getBroadcast(context,
-                        notificationId, shareIntent, setPendingIntentFlag());
+                        .setType("text/plain")
+                        .putExtra(Intent.EXTRA_TEXT, stackTrace);
+                final Intent shareChooserIntent = Intent.createChooser(shareIntent, null)
+                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                PendingIntent sharePendingIntent = PendingIntent.getActivity(context,
+                        notificationId, shareChooserIntent, setPendingIntentFlag());
                 builder.addAction(new NotificationCompat.Action(R.drawable.ic_share,
                         context.getString(R.string.action_share), sharePendingIntent));
             }
