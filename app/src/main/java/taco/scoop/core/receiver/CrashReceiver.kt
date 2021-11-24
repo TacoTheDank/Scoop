@@ -35,7 +35,7 @@ class CrashReceiver : BroadcastReceiver() {
             return
 
         description = intent.getStringExtra(Intents.INTENT_DESCRIPTION)!!
-        if (description!!.startsWith(ThreadDeath::class.java.name) && ignoreThreadDeath())
+        if (description!!.startsWith(ThreadDeath::class.java.name) && ignoreThreadDeath)
             return
 
         packageName = intent.getStringExtra(Intents.INTENT_PACKAGE_NAME)
@@ -52,7 +52,7 @@ class CrashReceiver : BroadcastReceiver() {
             crash = intent.getParcelableExtra("crash")
         }
 
-        if (!showNotifications() or blacklistList.contains(packageName)) {
+        if (!showNotifications or blacklistList.contains(packageName)) {
             return
         }
 
@@ -80,7 +80,7 @@ class CrashReceiver : BroadcastReceiver() {
         }
 
         val notificationId = (time - bootTime).toInt()
-        if (showActionButtons()) {
+        if (showActionButtons) {
             builder.addActionButtons(context, notificationId)
         }
 
@@ -100,7 +100,7 @@ class CrashReceiver : BroadcastReceiver() {
     }
 
     private fun NotificationCompat.Builder.setNotificationStyle(): NotificationCompat.Builder {
-        return if (showStackTraceNotifications()) {
+        return if (showStackTraceNotifications) {
             val style = NotificationCompat.InboxStyle()
             val traces = stackTrace!!.split("\n".toRegex()).toTypedArray()
             var i = 0

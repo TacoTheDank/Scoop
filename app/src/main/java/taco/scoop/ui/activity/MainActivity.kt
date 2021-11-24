@@ -95,7 +95,7 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
         }
 
-        mCombineApps = PreferenceHelper.combineSameApps()
+        mCombineApps = PreferenceHelper.combineSameApps
         mAdapter!!.setCombineSameApps(!mHasCrash && mCombineApps)
         binding.mainCrashView.setReverseOrder(mHasCrash || !mCombineApps)
 
@@ -128,7 +128,7 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
         super.onResume()
         // Cheap way to instantly apply changes
         mAdapter!!.setSearchPackageName(
-            this, PreferenceHelper.searchPackageName()
+            this, PreferenceHelper.searchPackageName
         )
         sVisible = true
         mHandler!!.post(mUpdateCheckerRunnable)
@@ -157,7 +157,7 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
     }
 
     private fun updateLocale() {
-        if (PreferenceHelper.forceEnglish()) {
+        if (PreferenceHelper.forceEnglish) {
             // TODO: Use ConfigurationCompat
             val config = resources.configuration
             config.locale = Locale.ENGLISH
@@ -198,8 +198,8 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
         updateViewStates(true)
         mLoader.loadData(
             this,
-            PreferenceHelper.combineSameStackTrace(),
-            PreferenceHelper.combineSameApps(),
+            PreferenceHelper.combineSameStackTrace,
+            PreferenceHelper.combineSameApps,
             PreferenceHelper.blacklistList
         )
     }

@@ -13,7 +13,7 @@ class BootReceiver : BroadcastReceiver() {
         if (intent?.action != Intent.ACTION_BOOT_COMPLETED)
             return
 
-        if (PreferenceHelper.autostartOnBoot()) {
+        if (PreferenceHelper.autostartOnBoot) {
             context.initScoopService()
 
             Log.d("Scoop", "Started application on boot")

@@ -25,54 +25,43 @@ object PreferenceHelper {
         return sharedPreferences.getBoolean(getKey(key), defValue)
     }
 
-    fun showNotifications(): Boolean {
-        return getSharedBoolean(R.string.prefKey_show_notification, true)
-    }
+    val showNotifications: Boolean
+        get() = getSharedBoolean(R.string.prefKey_show_notification, true)
 
-    fun showActionButtons(): Boolean {
-        return getSharedBoolean(R.string.prefKey_show_action_buttons, true)
-    }
+    val showActionButtons: Boolean
+        get() = getSharedBoolean(R.string.prefKey_show_action_buttons, true)
 
-    fun showStackTraceNotifications(): Boolean {
-        return getSharedBoolean(R.string.prefKey_show_stack_trace_notif, false)
-    }
+    val showStackTraceNotifications: Boolean
+        get() = getSharedBoolean(R.string.prefKey_show_stack_trace_notif, false)
 
-    fun combineSameApps(): Boolean {
-        return getSharedBoolean(R.string.prefKey_combine_same_apps, false)
-    }
+    val combineSameApps: Boolean
+        get() = getSharedBoolean(R.string.prefKey_combine_same_apps, false)
 
-    fun combineSameStackTrace(): Boolean {
-        return getSharedBoolean(R.string.prefKey_combine_same_stack_trace, true)
-    }
+    val combineSameStackTrace: Boolean
+        get() = getSharedBoolean(R.string.prefKey_combine_same_stack_trace, true)
 
-    fun searchPackageName(): Boolean {
-        return getSharedBoolean(R.string.prefKey_search_package_name, true)
-    }
+    val searchPackageName: Boolean
+        get() = getSharedBoolean(R.string.prefKey_search_package_name, true)
 
-    fun autoWrap(): Boolean {
-        return getSharedBoolean(R.string.prefKey_auto_wrap, false)
-    }
+    val autoWrap: Boolean
+        get() = getSharedBoolean(R.string.prefKey_auto_wrap, false)
 
-    fun autostartOnBoot(): Boolean {
-        return getSharedBoolean(R.string.prefKey_autostart_on_boot, false)
-    }
+    val autostartOnBoot: Boolean
+        get() = getSharedBoolean(R.string.prefKey_autostart_on_boot, false)
 
-    fun ignoreThreadDeath(): Boolean {
-        return getSharedBoolean(R.string.prefKey_ignore_threaddeath, true)
-    }
+    val ignoreThreadDeath: Boolean
+        get() = getSharedBoolean(R.string.prefKey_ignore_threaddeath, true)
 
-    fun forceEnglish(): Boolean {
-        return getSharedBoolean(R.string.prefKey_force_english, false)
-    }
+    val forceEnglish: Boolean
+        get() = getSharedBoolean(R.string.prefKey_force_english, false)
 
-    private fun getBlacklistedPackages(): String? {
-        return sharedPreferences.getString(
+    private val blacklistedPackages: String?
+        get() = sharedPreferences.getString(
             getKey(R.string.key_blacklisted_packages), ""
         )
-    }
 
     val blacklistList: List<String>
-        get() = listOf(*getBlacklistedPackages()?.split(",".toRegex())!!.toTypedArray())
+        get() = listOf(*blacklistedPackages?.split(",".toRegex())!!.toTypedArray())
 
     fun editBlacklistPackages(packages: ArrayList<String>) {
         sharedPreferences.edit {

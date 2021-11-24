@@ -47,7 +47,7 @@ class DetailActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
             TypedValue.COMPLEX_UNIT_PX, binding.detailCrashLogText.textSize
         )
 
-        binding.detailScrollView.setCropHorizontally(PreferenceHelper.autoWrap())
+        binding.detailScrollView.setCropHorizontally(PreferenceHelper.autoWrap)
     }
 
     private fun highlightText(text: String?) {
