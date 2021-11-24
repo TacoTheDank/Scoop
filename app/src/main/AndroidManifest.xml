@@ -88,11 +88,10 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name=".core.receiver.ShareReceiver"
+            android:name=".core.receiver.NotificationActionReceiver"
             android:exported="true"
             tools:ignore="ExportedReceiver">
             <intent-filter>
-                <action android:name="taco.scoop.ACTION_SHARE" />
                 <action android:name="taco.scoop.ACTION_COPY" />
             </intent-filter>
         </receiver>

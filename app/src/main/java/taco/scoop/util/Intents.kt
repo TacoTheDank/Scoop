@@ -3,7 +3,6 @@ package taco.scoop.util
 object Intents {
     const val INTENT_ACTION = "taco.scoop.EXCEPTION"
     const val INTENT_ACTION_COPY = "taco.scoop.ACTION_COPY"
-    const val INTENT_ACTION_SHARE = "taco.scoop.ACTION_SHARE"
 
     const val INTENT_PACKAGE_NAME = "pkg"
     const val INTENT_TIME = "time"

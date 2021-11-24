@@ -1,5 +1,7 @@
 package taco.scoop.core.receiver;
 
+import static taco.scoop.util.Utils.setPendingIntentFlag;
+
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -71,7 +73,7 @@ public class CrashReceiver extends BroadcastReceiver {
             TaskStackBuilder stackBuilder = TaskStackBuilder.create(context)
                     .addParentStack(DetailActivity.class)
                     .addNextIntent(clickIntent);
-            PendingIntent clickPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+            PendingIntent clickPendingIntent = stackBuilder.getPendingIntent(0, setPendingIntentFlag());
 
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "crashes")
                     .setSmallIcon(R.drawable.ic_bug_report)
@@ -83,6 +85,7 @@ public class CrashReceiver extends BroadcastReceiver {
                     .setColor(ContextCompat.getColor(context, R.color.colorAccent))
                     .setAutoCancel(true)
                     .setOnlyAlertOnce(true)
+                    .setForegroundServiceBehavior(NotificationCompat.FOREGROUND_SERVICE_IMMEDIATE)
                     .setGroup("crashes")
                     .setContentIntent(clickPendingIntent);
 
@@ -100,21 +103,24 @@ public class CrashReceiver extends BroadcastReceiver {
             int notificationId = (int) (time - ScoopApplication.getBootTime());
 
             if (PreferenceHelper.showActionButtons()) {
-                Intent copyIntent = new Intent(context, ShareReceiver.class)
+                Intent copyIntent = new Intent(context, NotificationActionReceiver.class)
                         .putExtra("stackTrace", stackTrace)
                         .putExtra("pkg", packageName)
                         .setAction(Intents.INTENT_ACTION_COPY);
                 PendingIntent copyPendingIntent = PendingIntent.getBroadcast(context,
-                        notificationId, copyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                        notificationId, copyIntent, setPendingIntentFlag());
                 builder.addAction(new NotificationCompat.Action(R.drawable.ic_content_copy,
                         context.getString(R.string.action_copy_short), copyPendingIntent));
 
-                Intent shareIntent = new Intent(context, ShareReceiver.class)
+                Intent shareIntent = new Intent(Intent.ACTION_SEND)
                         .putExtra("stackTrace", stackTrace)
                         .putExtra("pkg", packageName)
-                        .setAction(Intents.INTENT_ACTION_SHARE);
-                PendingIntent sharePendingIntent = PendingIntent.getBroadcast(context,
-                        notificationId, shareIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                        .setType("text/plain")
+                        .putExtra(Intent.EXTRA_TEXT, stackTrace);
+                final Intent shareChooserIntent = Intent.createChooser(shareIntent, null)
+                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                PendingIntent sharePendingIntent = PendingIntent.getActivity(context,
+                        notificationId, shareChooserIntent, setPendingIntentFlag());
                 builder.addAction(new NotificationCompat.Action(R.drawable.ic_share,
                         context.getString(R.string.action_share), sharePendingIntent));
             }

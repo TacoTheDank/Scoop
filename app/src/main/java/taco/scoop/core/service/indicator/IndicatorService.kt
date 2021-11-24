@@ -8,6 +8,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import taco.scoop.R
 import taco.scoop.core.receiver.StopReceiver
+import taco.scoop.util.setPendingIntentFlag
 
 open class IndicatorService : Service() {
 
@@ -24,7 +25,7 @@ open class IndicatorService : Service() {
             this,
             0,
             Intent(this, StopReceiver::class.java),
-            PendingIntent.FLAG_UPDATE_CURRENT
+            setPendingIntentFlag()
         )
         val stopAction =
             NotificationCompat.Action(0, getString(R.string.action_kill), stopPendingIntent)
