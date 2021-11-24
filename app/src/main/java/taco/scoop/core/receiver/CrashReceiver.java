@@ -85,6 +85,7 @@ public class CrashReceiver extends BroadcastReceiver {
                     .setColor(ContextCompat.getColor(context, R.color.colorAccent))
                     .setAutoCancel(true)
                     .setOnlyAlertOnce(true)
+                    .setForegroundServiceBehavior(NotificationCompat.FOREGROUND_SERVICE_IMMEDIATE)
                     .setGroup("crashes")
                     .setContentIntent(clickPendingIntent);
 
