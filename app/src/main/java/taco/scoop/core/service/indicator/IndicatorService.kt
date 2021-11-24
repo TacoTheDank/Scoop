@@ -5,9 +5,9 @@ import android.app.Service
 import android.content.Intent
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
-import androidx.core.content.ContextCompat
 import taco.scoop.R
 import taco.scoop.core.receiver.StopReceiver
+import taco.scoop.util.getCompatColor
 import taco.scoop.util.setPendingIntentFlag
 
 open class IndicatorService : Service() {
@@ -34,7 +34,7 @@ open class IndicatorService : Service() {
             100, NotificationCompat.Builder(this, "status")
                 .setSmallIcon(R.drawable.ic_bug_report)
                 .setContentTitle(getString(R.string.scoop_running))
-                .setColor(ContextCompat.getColor(this, R.color.colorAccent))
+                .setColor(getCompatColor(R.color.colorAccent))
                 .setShowWhen(false)
                 .setPriority(NotificationCompat.PRIORITY_MIN)
                 .addAction(stopAction)

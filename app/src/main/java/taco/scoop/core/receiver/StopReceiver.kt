@@ -7,7 +7,7 @@ import taco.scoop.util.stopScoopService
 
 class StopReceiver : BroadcastReceiver() {
 
-    override fun onReceive(context: Context, intent: Intent) {
+    override fun onReceive(context: Context, intent: Intent?) {
         context.stopScoopService()
     }
 }

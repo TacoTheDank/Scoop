@@ -13,7 +13,9 @@ import android.graphics.drawable.Drawable
 import android.os.Build
 import android.provider.Settings
 import android.widget.Toast
+import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
+import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
 import androidx.core.graphics.applyCanvas
 import androidx.core.graphics.createBitmap
@@ -108,4 +110,8 @@ fun setPendingIntentFlag(): Int {
     } else {
         PendingIntent.FLAG_UPDATE_CURRENT
     }
+}
+
+fun Context.getCompatColor(@ColorRes id: Int): Int {
+    return ContextCompat.getColor(this, id)
 }

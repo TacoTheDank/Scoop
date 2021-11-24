@@ -10,7 +10,6 @@ import android.view.MenuItem
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
-import androidx.core.content.ContextCompat
 import androidx.core.text.toSpannable
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
@@ -18,10 +17,7 @@ import taco.scoop.R
 import taco.scoop.core.data.crash.Crash
 import taco.scoop.core.data.crash.CrashLoader
 import taco.scoop.databinding.ActivityDetailBinding
-import taco.scoop.util.PreferenceHelper
-import taco.scoop.util.copyTextToClipboard
-import taco.scoop.util.displayToast
-import taco.scoop.util.isNeitherNullNorEmpty
+import taco.scoop.util.*
 import java.util.*
 
 class DetailActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
@@ -41,7 +37,7 @@ class DetailActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
         setSupportActionBar(binding.detailToolbar.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        mHighlightColor = ContextCompat.getColor(this, R.color.highlightColor)
+        mHighlightColor = getCompatColor(R.color.highlightColor)
         mCrash = intent.getParcelableExtra(EXTRA_CRASH)
         supportActionBar?.title = CrashLoader.getAppName(this, mCrash!!.packageName, true)
 

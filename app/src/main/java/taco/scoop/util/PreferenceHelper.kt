@@ -25,17 +25,14 @@ object PreferenceHelper {
         return sharedPreferences.getBoolean(getKey(key), defValue)
     }
 
-    @JvmStatic
     fun showNotifications(): Boolean {
         return getSharedBoolean(R.string.prefKey_show_notification, true)
     }
 
-    @JvmStatic
     fun showActionButtons(): Boolean {
         return getSharedBoolean(R.string.prefKey_show_action_buttons, true)
     }
 
-    @JvmStatic
     fun showStackTraceNotifications(): Boolean {
         return getSharedBoolean(R.string.prefKey_show_stack_trace_notif, false)
     }
@@ -60,7 +57,6 @@ object PreferenceHelper {
         return getSharedBoolean(R.string.prefKey_autostart_on_boot, false)
     }
 
-    @JvmStatic
     fun ignoreThreadDeath(): Boolean {
         return getSharedBoolean(R.string.prefKey_ignore_threaddeath, true)
     }
@@ -69,13 +65,14 @@ object PreferenceHelper {
         return getSharedBoolean(R.string.prefKey_force_english, false)
     }
 
-
-    @JvmStatic
-    fun getBlacklistedPackages(): String? {
+    private fun getBlacklistedPackages(): String? {
         return sharedPreferences.getString(
             getKey(R.string.key_blacklisted_packages), ""
         )
     }
+
+    val blacklistList: List<String>
+        get() = listOf(*getBlacklistedPackages()?.split(",".toRegex())!!.toTypedArray())
 
     fun editBlacklistPackages(packages: ArrayList<String>) {
         sharedPreferences.edit {

@@ -200,10 +200,7 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
             this,
             PreferenceHelper.combineSameStackTrace(),
             PreferenceHelper.combineSameApps(),
-            listOf(
-                *PreferenceHelper.getBlacklistedPackages()
-                    ?.split(",".toRegex())!!.toTypedArray()
-            )
+            PreferenceHelper.blacklistList
         )
     }
 
@@ -393,7 +390,6 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
         private var sVisible = false
         private var sNewCrash: Crash? = null
 
-        @JvmStatic
         fun requestUpdate(newCrash: Crash?) {
             sUpdateRequired = true
             if (sVisible) {

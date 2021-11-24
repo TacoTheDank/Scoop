@@ -73,13 +73,7 @@ class BlacklistAppsActivity : AppCompatActivity(), SearchView.OnQueryTextListene
     }
 
     fun onDataLoaded(apps: ArrayList<App?>?) {
-        mAdapter!!.setApps(
-            apps,
-            listOf(
-                *PreferenceHelper.getBlacklistedPackages()
-                    ?.split(",".toRegex())!!.toTypedArray()
-            )
-        )
+        mAdapter!!.setApps(apps, PreferenceHelper.blacklistList)
         updateViewStates(false)
     }
 
