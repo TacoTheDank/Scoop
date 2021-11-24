@@ -2,6 +2,7 @@
 
 package taco.scoop.util
 
+import android.app.PendingIntent
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
@@ -98,5 +99,13 @@ fun Context.openSystemNotificationSettings() {
         }.also(this::startActivity)
     } catch (e: Exception) {
         e.printStackTrace()
+    }
+}
+
+fun setPendingIntentFlag(): Int {
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+    } else {
+        PendingIntent.FLAG_UPDATE_CURRENT
     }
 }

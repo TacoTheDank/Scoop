@@ -1,5 +1,7 @@
 package taco.scoop.core.receiver;
 
+import static taco.scoop.util.Utils.setPendingIntentFlag;
+
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -71,7 +73,7 @@ public class CrashReceiver extends BroadcastReceiver {
             TaskStackBuilder stackBuilder = TaskStackBuilder.create(context)
                     .addParentStack(DetailActivity.class)
                     .addNextIntent(clickIntent);
-            PendingIntent clickPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+            PendingIntent clickPendingIntent = stackBuilder.getPendingIntent(0, setPendingIntentFlag());
 
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "crashes")
                     .setSmallIcon(R.drawable.ic_bug_report)
@@ -105,7 +107,7 @@ public class CrashReceiver extends BroadcastReceiver {
                         .putExtra("pkg", packageName)
                         .setAction(Intents.INTENT_ACTION_COPY);
                 PendingIntent copyPendingIntent = PendingIntent.getBroadcast(context,
-                        notificationId, copyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                        notificationId, copyIntent, setPendingIntentFlag());
                 builder.addAction(new NotificationCompat.Action(R.drawable.ic_content_copy,
                         context.getString(R.string.action_copy_short), copyPendingIntent));
 
@@ -114,7 +116,7 @@ public class CrashReceiver extends BroadcastReceiver {
                         .putExtra("pkg", packageName)
                         .setAction(Intents.INTENT_ACTION_SHARE);
                 PendingIntent sharePendingIntent = PendingIntent.getBroadcast(context,
-                        notificationId, shareIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                        notificationId, shareIntent, setPendingIntentFlag());
                 builder.addAction(new NotificationCompat.Action(R.drawable.ic_share,
                         context.getString(R.string.action_share), sharePendingIntent));
             }
