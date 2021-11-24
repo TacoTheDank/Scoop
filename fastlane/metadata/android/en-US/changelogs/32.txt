@@ -1,0 +1,7 @@
+2.4.0: Android 12 support + more!
+- Now targets and supports Android 12 (API 31)
+- Removed all crashlog uploading functionality (please see GitHub release for explanation)
+- Removed INTERNET permission (no longer needed because of above)
+- Improved launcher icon
+- New translations: Spanish, German, Chinese (Simplified), Thai (thank you contributors!)
+- Bug fixes and internal improvements
