@@ -12,9 +12,9 @@ object PreferenceHelper {
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var mRes: Resources
 
-    fun Context.initPreferences(res: Resources) {
+    fun Context.initPreferences() {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        mRes = res
+        mRes = this.resources
     }
 
     private fun getKey(@StringRes key: Int): String {

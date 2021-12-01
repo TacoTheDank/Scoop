@@ -11,7 +11,7 @@ class ScoopApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        initPreferences(resources)
+        initPreferences()
         registerChannels()
     }
 
