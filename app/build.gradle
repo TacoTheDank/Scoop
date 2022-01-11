@@ -4,13 +4,13 @@ plugins {
 }
 
 android {
-    compileSdkVersion 31
+    compileSdk 31
     buildToolsVersion "31.0.0"
 
     defaultConfig {
         applicationId "taco.scoop"
-        minSdkVersion 21
-        targetSdkVersion 31
+        minSdk 21
+        targetSdk 31
         versionCode 32
         versionName "2.4.0"
 
@@ -36,7 +36,7 @@ android {
         freeCompilerArgs = ["-Xopt-in=kotlin.RequiresOptIn"]
     }
 
-    lintOptions {
+    lint {
         disable 'GoogleAppIndexingWarning'
         abortOnError false
     }
@@ -71,5 +71,5 @@ dependencies {
     // TODO: Replace Inquiry with AndroidX Room
     implementation 'com.afollestad:inquiry:5.0.0'
     implementation 'com.afollestad:material-cab:2.0.1'
-    implementation 'com.github.topjohnwu.libsu:core:3.1.2'
+    implementation 'com.github.topjohnwu.libsu:core:3.2.1'
 }
