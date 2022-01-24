@@ -2,7 +2,7 @@
     <!-- Toolbar titles -->
     <string name="settings_title">Ustawienia</string>
     <string name="blacklist_title">Czarna lista</string>
-    <string name="about_title">O</string>
+    <string name="about_title">O Scoop</string>
 
     <!-- Actions -->
     <string name="action_clear">Wyczyść</string>
@@ -30,12 +30,12 @@
     </plurals>
     <string name="dialog_clear_content">Czy na pewno chcesz usunąć wszystkie crashe?</string>
     <plurals name="delete_multiple_confirm">
-        <item quantity="one">Delete %d crash? This can\'t be undone!</item>
-        <item quantity="other">Delete %d crashes? This can\'t be undone!</item>
+        <item quantity="one">Usunąć %d crash? Tej operacji nie da się cofnąć!</item>
+        <item quantity="other">Usunąć %d crashy? Tej operacji nie da się cofnąć!</item>
     </plurals>
     <string name="no_items">Na razie nie ma crashy.</string>
     <!--        You can get a bit creative here as it's probably not too easy to translate directly -->
-    <string name="make_crash">Wanna make something crash? ಠ‿ಠ</string>
+    <string name="make_crash">Chcesz trochę pocrashować aplikacji? ಠ‿ಠ</string>
 
     <!-- Setting categories -->
     <string name="settings_notif">Powiadomienia</string>
@@ -48,36 +48,36 @@
     <string name="settings_system_notifications_summary">Zarządzaj powiadomieniami aplikacji na poziomie systemu</string>
     <string name="settings_show_notif">Pokaż powiadomienie o crashu</string>
     <string name="settings_action_buttons">Pokaż przyciski akcji</string>
-    <string name="settings_action_buttons_summary">Dodaje przyciski kopiowania i udostępniania do Powiadomienia</string>
+    <string name="settings_action_buttons_summary">Dodaje przyciski kopiowania i udostępniania do powiadomienia</string>
     <string name="settings_show_stack_trace">Pokaż stack trace w powiadomieniu</string>
     <string name="settings_show_stack_trace_summary">Wyświetla początek stack trace w powiadomieniu zamiast samego opisu</string>
 
     <!-- Settings (overview) -->
-    <string name="settings_combine_same_apps">Combine same apps</string>
-    <string name="settings_combine_same_apps_summary">Sort crashes by individual app entries which contain the different crashes</string>
-    <string name="settings_combine_same_trace">Combine same crashes</string>
-    <string name="settings_combine_same_trace_summary">Combine crashes from the same app with the same stack trace into one item</string>
-    <string name="settings_search_pkg">Search in package name</string>
-    <string name="settings_search_pkg_summary">Search for the given term in the app name as well as in the package name</string>
-    <string name="settings_blacklisted_apps">Blacklisted apps</string>
-    <string name="settings_blacklisted_apps_summary">Crashes caused by blacklisted apps will be hidden</string>
+    <string name="settings_combine_same_apps">Łączenie tych samych aplikacji</string>
+    <string name="settings_combine_same_apps_summary">Sortuj crashe według poszczególnych wpisów aplikacji, które zawierają różne crashe</string>
+    <string name="settings_combine_same_trace">Połącz te same crashe</string>
+    <string name="settings_combine_same_trace_summary">Połącz crashe z tej samej aplikacji z tym samym stack trace w jeden element</string>
+    <string name="settings_search_pkg">Szukaj w nazwie pakietu</string>
+    <string name="settings_search_pkg_summary">Szukaj podanego terminu zarówno w nazwie aplikacji, jak i w nazwie pakietu</string>
+    <string name="settings_blacklisted_apps">Czarna lista aplikacji</string>
+    <string name="settings_blacklisted_apps_summary">Crashe spowodowane przez aplikacje znajdujące się na czarnej liście będą ukrywane</string>
 
     <!-- Settings (detail view) -->
-    <string name="settings_auto_wrap">Automatic line wrap</string>
-    <string name="settings_auto_wrap_summary">Limit maximum line width to screen width</string>
+    <string name="settings_auto_wrap">Automatyczne zawijanie tekstu</string>
+    <string name="settings_auto_wrap_summary">Ograniczenie maksymalnej szerokości linii do szerokości ekranu</string>
 
     <!-- Settings (miscellaneous) -->
-    <string name="settings_permission_status">Permission status</string>
+    <string name="settings_permission_status">Status uprawnień</string>
     <string name="settings_permission_status_summary_true">Uprawnienie READ_LOGS jest przyznane</string>
     <string name="settings_permission_status_summary_false">Uprawnienie READ_LOGS jest nieprzyznane</string>
-    <string name="settings_autostart_on_boot">Autostart Scoop on boot</string>
-    <string name="settings_autostart_on_boot_summary">Automatically start Scoop on device boot alongside other system processes</string>
-    <string name="settings_ignore_threaddeath">Ignore ThreadDeath Errors</string>
-    <string name="settings_ignore_threaddeath_summary">A ThreadDeath Error gets thrown to force stop a worker thread. It is a \"normal occurrence\" and does not make apps crash</string>
-    <string name="settings_about">About Scoop</string>
+    <string name="settings_autostart_on_boot">Uruchamiaj Scoop przy starcie systemu</string>
+    <string name="settings_autostart_on_boot_summary">Automatycznie uruchamiania program Scoop przy starcie urządzenia wraz z innymi procesami systemowymi</string>
+    <string name="settings_ignore_threaddeath">Ignoruj błędy ThreadDeath</string>
+    <string name="settings_ignore_threaddeath_summary">Błąd ThreadDeath pojawia się w celu wymuszenia zatrzymania wątku aplikacji. Jest to \"normalne wystąpienie błędu\" i nie powoduje awarii aplikacji</string>
+    <string name="settings_about">O Scoop</string>
 
     <!-- About screen -->
-    <string name="about_author">Developed by %1$s</string>
+    <string name="about_author">Opracowywane przez %1$s</string>
     <string name="about_version">Wersja %1$s (%2$d)</string>
     <string name="about_github">Kod źródłowy</string>
 
