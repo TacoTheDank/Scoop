@@ -33,8 +33,6 @@ class ScoopApplication : Application() {
     }
 
     companion object {
-
-        @JvmStatic
         val bootTime = System.currentTimeMillis() - SystemClock.uptimeMillis()
     }
 }
