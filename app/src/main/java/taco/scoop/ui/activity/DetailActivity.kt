@@ -1,6 +1,5 @@
 package taco.scoop.ui.activity
 
-import android.content.Intent
 import android.os.Bundle
 import android.text.Spannable
 import android.text.style.BackgroundColorSpan
@@ -10,6 +9,7 @@ import android.view.MenuItem
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.core.app.ShareCompat
 import androidx.core.text.toSpannable
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
@@ -122,10 +122,12 @@ class DetailActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
                 return true
             }
             R.id.menu_detail_share -> {
-                val intent = Intent(Intent.ACTION_SEND)
+                val intent = ShareCompat.IntentBuilder(this)
                     .setType("text/plain")
-                    .putExtra(Intent.EXTRA_TEXT, mCrash!!.stackTrace)
-                startActivity(Intent.createChooser(intent, getString(R.string.action_share)))
+                    .setText(mCrash!!.stackTrace)
+                    .setChooserTitle(R.string.action_share)
+                    .createChooserIntent()
+                startActivity(intent)
                 return true
             }
         }
