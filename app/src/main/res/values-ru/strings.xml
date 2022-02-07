@@ -1,0 +1,89 @@
+<resources>
+    <!-- Toolbar titles -->
+    <string name="settings_title">Настройки</string>
+    <string name="blacklist_title">Черный список</string>
+    <string name="about_title">О программе</string>
+
+    <!-- Actions -->
+    <string name="action_clear">Очистить</string>
+    <string name="action_settings">Настройки</string>
+    <string name="action_search">Поиск</string>
+    <string name="action_select">Сменить режим выбора</string>
+    <string name="action_share">Поделиться</string>
+    <string name="action_copy">В буфер обмена</string>
+    <string name="action_copy_short">Копировать</string>
+    <string name="action_delete">Удалить</string>
+
+    <!-- Main activity stuff -->
+    <string name="just_now">Только что</string>
+    <string name="crash_count">%1$s (%2$d)</string>
+    <string name="app_not_installed">%s (не установлено)</string>
+    <string name="copy_label">Stack trace от %s</string>
+    <string name="copied_toast">Stack trace скопирован в буфер обмена</string>
+    <plurals name="items_selected_count">
+        <item quantity="one">Выбран %d сбой</item>
+        <item quantity="other">Выбрано сбоев: %d</item>
+    </plurals>
+    <plurals name="items_children_count">
+        <item quantity="one">%d сбой</item>
+        <item quantity="other">Сбоев: %d</item>
+    </plurals>
+    <string name="dialog_clear_content">Уверены, что хотите очистить данные обо всех сбоях?</string>
+    <plurals name="delete_multiple_confirm">
+        <item quantity="one">Удалить данные по %d сбою? Это действие нельзя отменить!</item>
+        <item quantity="other">Удалить данные по сбоям (выбрано %d)? Это действие нельзя отменить!</item>
+    </plurals>
+    <string name="no_items">Пока без сбоев.</string>
+    <!--        You can get a bit creative here as it's probably not too easy to translate directly -->
+    <string name="make_crash">Но мы работаем над этим ಠ‿ಠ</string>
+
+    <!-- Setting categories -->
+    <string name="settings_notif">Уведомления</string>
+    <string name="settings_overview">Обзор</string>
+    <string name="settings_detail_view">Детали</string>
+    <string name="settings_misc">Другие настройки</string>
+
+    <!-- Settings (notifications) -->
+    <string name="settings_system_notifications">Параметры уведомлений</string>
+    <string name="settings_system_notifications_summary">Переход в системные настройки для управления уведомлениями приложения</string>
+    <string name="settings_show_notif">Показ. уведомление при сбое</string>
+    <string name="settings_action_buttons">Показ. кнопки действий</string>
+    <string name="settings_action_buttons_summary">Добавить в уведомление кнопки копирования и отправки информации о сбое</string>
+    <string name="settings_show_stack_trace">Показ. в уведомлении stack trace</string>
+    <string name="settings_show_stack_trace_summary">Вместо краткого описания отображать в уведомлении начало stack trace (трассировки стека)</string>
+
+    <!-- Settings (overview) -->
+    <string name="settings_combine_same_apps">Объединять одни и те же приложения</string>
+    <string name="settings_combine_same_apps_summary">Сортировать сбои по отдельным записям приложения, содержащим разные сбои</string>
+    <string name="settings_combine_same_trace">Объединять одни и те же сбои</string>
+    <string name="settings_combine_same_trace_summary">Собрать сбои из того же самого приложения и с тем же stack trace в один элемент</string>
+    <string name="settings_search_pkg">Искать по имени пакета</string>
+    <string name="settings_search_pkg_summary">Вести поиск нужного слова не только в названии приложения, но и в имени пакета</string>
+    <string name="settings_blacklisted_apps">Приложения из черного списка</string>
+    <string name="settings_blacklisted_apps_summary">Сбои, вызванные приложениями из списка исключений, будут скрыты</string>
+
+    <!-- Settings (detail view) -->
+    <string name="settings_auto_wrap">Автоперенос строки</string>
+    <string name="settings_auto_wrap_summary">Вмещать информацию в пределах ширины экрана</string>
+
+    <!-- Settings (miscellaneous) -->
+    <string name="settings_permission_status">Проверка выдачи разрешения</string>
+    <string name="settings_permission_status_summary_true">Разрешение READ_LOGS выдано</string>
+    <string name="settings_permission_status_summary_false">В разрешении READ_LOGS отказано</string>
+    <string name="settings_autostart_on_boot">Добавить Scoop в автозагрузку</string>
+    <string name="settings_autostart_on_boot_summary">Автоматически запускать Scoop вместе с другими системными процессами каждую загрузку устройства</string>
+    <string name="settings_ignore_threaddeath">Игнорировать ошибки ThreadDeath</string>
+    <string name="settings_ignore_threaddeath_summary">Ошибка ThreadDeath возникает после принудительной остановки рабочего потока. Это \"нормальное явление\" не приводит к сбою приложений</string>
+    <string name="settings_about">О Scoop</string>
+
+    <!-- About screen -->
+    <string name="about_author">Разработано %1$s</string>
+    <string name="about_version">Версия %1$s (%2$d)</string>
+    <string name="about_github">Исходный код</string>
+
+    <!-- Notification channels -->
+    <string name="crash_channel">Сбои приложений</string>
+    <string name="status_channel">Статус работы Scoop</string>
+    <string name="scoop_running">Мониторинг сбоев приложений</string>
+    <string name="action_kill">Остановить</string>
+</resources>
