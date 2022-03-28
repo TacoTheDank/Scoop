@@ -68,7 +68,7 @@
 
     <!--        You can get a bit creative here as it's probably not too easy to translate directly -->
 
-    <string name="make_crash">Vuoi sfasciare qualcosa? ಠ‿ಠ</string>
+    <string name="make_crash">Vuoi rompere qualcosa? ಠ‿ಠ</string>
 
     <!-- Setting categories -->
 
@@ -90,7 +90,7 @@
 
     <string name="settings_action_buttons">Mostra i pulsanti dei comandi</string>
 
-    <string name="settings_action_buttons_summary">Aggiungi pulsanti di copia e condivi la segnalazione alle notifiche</string>
+    <string name="settings_action_buttons_summary">Aggiungi pulsanti \'copia\' e \'condivi\' nelle notifiche delle segnalazioni</string>
 
     <string name="settings_show_stack_trace">Mostra segnalazioni nelle notifiche</string>
 
@@ -100,7 +100,7 @@
 
     <string name="settings_combine_same_apps">Raggruppa per app</string>
 
-    <string name="settings_combine_same_apps_summary">Ordina segnalazioni individualmente per app che contengono diverse segnalazioni</string>
+    <string name="settings_combine_same_apps_summary">Ordina le segnalazioni con contenuto diverso in base alle app di appartenenza</string>
 
     <string name="settings_combine_same_trace">Raggruppa stesse segnalazioni</string>
 
@@ -112,7 +112,7 @@
 
     <string name="settings_blacklisted_apps">App in lista nera</string>
 
-    <string name="settings_blacklisted_apps_summary">Segnalazioni causate da app in lista nera saranno nascoste</string>
+    <string name="settings_blacklisted_apps_summary">Le segnalazioni di app in lista nera saranno nascoste</string>
 
     <!-- Settings (detail view) -->
 
@@ -130,11 +130,11 @@
 
     <string name="settings_autostart_on_boot">Esegui Scoop all\'avvio</string>
 
-    <string name="settings_autostart_on_boot_summary">Avvia automaticamente Scoop all\'avvio del dispositivoAutomatically start Scoop on device boot insieme agli altri processi del sistema</string>
+    <string name="settings_autostart_on_boot_summary">Avvia automaticamente Scoop all\'avvio del dispositivo insieme agli altri processi del sistema</string>
 
-    <string name="settings_ignore_threaddeath">Ignora Errori di Terminazione Processo</string>
+    <string name="settings_ignore_threaddeath">Ignora Errori di Arresto Forzato</string>
 
-    <string name="settings_ignore_threaddeath_summary">A L\'errore \'ThreadDeath\' viene generato per forzare l'arresto di un processo in esecuzione. Questo rappresenta una \"normale occorrenza\" e non fa collassare una applicazione</string>
+    <string name="settings_ignore_threaddeath_summary">L\'errore \'ThreadDeath\' viene generato per forzare l\'arresto di un processo in esecuzione. Questo rappresenta una \"normale occorrenza\" e non fa collassare una applicazione</string>
 
     <string name="settings_about">Info su Scoop</string>
 
