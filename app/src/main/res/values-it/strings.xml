@@ -60,7 +60,7 @@
 
         <item quantity="one">Cancellare %d segnalazione? L\'operazione è irreversibile!</item>
 
-        <item quantity="other">Cancellare %d segnalazioni? This can\'t be undone! L\'operazione è irreversibile!</item>
+        <item quantity="other">Cancellare %d segnalazioni? L\'operazione è irreversibile!</item>
 
     </plurals>
 
