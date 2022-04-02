@@ -1,159 +1,89 @@
 <resources>
-
     <!-- Toolbar titles -->
-
     <string name="settings_title">Impostazioni</string>
-
     <string name="blacklist_title">Lista nera</string>
-
     <string name="about_title">Info</string>
 
     <!-- Actions -->
-
     <string name="action_clear">Pulisci</string>
-
     <string name="action_settings">Impostazioni</string>
-
     <string name="action_search">Ricerca</string>
-
     <string name="action_select">Cambia visualizzazione</string>
-
     <string name="action_share">Condividi</string>
-
     <string name="action_copy">Copia negli appunti</string>
-
     <string name="action_copy_short">Copia</string>
-
     <string name="action_delete">Cancella</string>
 
     <!-- Main activity stuff -->
-
     <string name="just_now">Adesso</string>
-
     <string name="crash_count">%1$s (%2$d)</string>
-
     <string name="app_not_installed">%s (non installata)</string>
-
     <string name="copy_label">Segnalazione di %s</string>
-
     <string name="copied_toast">Segnalazione copiata negli appunti</string>
-
     <plurals name="items_selected_count">
-
         <item quantity="one">%d segnalazione selezionata</item>
-
         <item quantity="other">%d segnalazioni selezionate</item>
-
     </plurals>
-
     <plurals name="items_children_count">
-
         <item quantity="one">%d Segnalazione</item>
-
         <item quantity="other">%d Segnalazioni</item>
-
     </plurals>
-
     <string name="dialog_clear_content">Sei sicuro di voler cancellare tutte le segnalazioni?</string>
-
     <plurals name="delete_multiple_confirm">
-
         <item quantity="one">Cancellare %d segnalazione? L\'operazione è irreversibile!</item>
-
         <item quantity="other">Cancellare %d segnalazioni? L\'operazione è irreversibile!</item>
-
     </plurals>
-
     <string name="no_items">Nessuna segnalazione.</string>
-
     <!--        You can get a bit creative here as it's probably not too easy to translate directly -->
-
     <string name="make_crash">Vuoi rompere qualcosa? ಠ‿ಠ</string>
 
     <!-- Setting categories -->
-
     <string name="settings_notif">Notifiche</string>
-
     <string name="settings_overview">Generale</string>
-
     <string name="settings_detail_view">Dettagli Visualizzazione</string>
-
     <string name="settings_misc">Varie</string>
 
     <!-- Settings (notifications) -->
-
     <string name="settings_system_notifications">Impostazioni Notifiche</string>
-
     <string name="settings_system_notifications_summary">Gestisci le notifiche nelle impostazioni di sistema</string>
-
     <string name="settings_show_notif">Mostra notifiche sulle segnalazioni</string>
-
     <string name="settings_action_buttons">Mostra i pulsanti dei comandi</string>
-
     <string name="settings_action_buttons_summary">Aggiungi pulsanti \'copia\' e \'condivi\' nelle notifiche delle segnalazioni</string>
-
     <string name="settings_show_stack_trace">Mostra segnalazioni nelle notifiche</string>
-
     <string name="settings_show_stack_trace_summary">Mostra l\'inizio della segnalazione nella notifica invece della descrizione</string>
 
     <!-- Settings (overview) -->
-
     <string name="settings_combine_same_apps">Raggruppa per app</string>
-
     <string name="settings_combine_same_apps_summary">Ordina le segnalazioni con contenuto diverso in base alle app di appartenenza</string>
-
     <string name="settings_combine_same_trace">Raggruppa stesse segnalazioni</string>
-
     <string name="settings_combine_same_trace_summary">Raggruppa segnalazioni dalla stessa app con le stesse informazioni in un unico elememto</string>
-
     <string name="settings_search_pkg">Cerca nel nome del pacchetto</string>
-
     <string name="settings_search_pkg_summary"> Cerca il termine di ricerca nel nome delle app e nel nome del pacchetto</string>
-
     <string name="settings_blacklisted_apps">App in lista nera</string>
-
     <string name="settings_blacklisted_apps_summary">Le segnalazioni di app in lista nera saranno nascoste</string>
 
     <!-- Settings (detail view) -->
-
     <string name="settings_auto_wrap">Ritorno a capo automatico</string>
-
     <string name="settings_auto_wrap_summary">Limita la larghezza massima della riga alla larghezza dello schermo</string>
 
     <!-- Settings (miscellaneous) -->
-
     <string name="settings_permission_status">Concessione del permesso</string>
-
     <string name="settings_permission_status_summary_true">Permesso READ_LOGS concesso</string>
-
     <string name="settings_permission_status_summary_false">Permesso READ_LOGS negato</string>
-
     <string name="settings_autostart_on_boot">Esegui Scoop all\'avvio</string>
-
     <string name="settings_autostart_on_boot_summary">Avvia automaticamente Scoop all\'avvio del dispositivo insieme agli altri processi del sistema</string>
-
     <string name="settings_ignore_threaddeath">Ignora Errori di Arresto Forzato</string>
-
     <string name="settings_ignore_threaddeath_summary">L\'errore \'ThreadDeath\' viene generato per forzare l\'arresto di un processo in esecuzione. Questo rappresenta una \"normale occorrenza\" e non fa collassare una applicazione</string>
-
     <string name="settings_about">Info su Scoop</string>
 
     <!-- About screen -->
-
     <string name="about_author">Sviluppato da %1$s</string>
-
     <string name="about_version">Versione %1$s (%2$d)</string>
-
     <string name="about_github">Codice sorgente</string>
 
     <!-- Notification channels -->
-
     <string name="crash_channel">Segnalazioni App</string>
-
     <string name="status_channel">Stato di Scoop</string>
-
     <string name="scoop_running">Monitoraggio segnalazioni</string>
-
     <string name="action_kill">Stop</string>
-
 </resources>
