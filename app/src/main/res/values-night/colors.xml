@@ -2,4 +2,23 @@
 <resources>
     <color name="mainBackground">#ff202124</color>
     <color name="colorEdgeEffect">@android:color/white</color>
+
+    <color name="md_theme_primary">#4CAF50</color>
+    <color name="md_theme_onPrimary">#003907</color>
+    <color name="md_theme_primaryContainer">#00530F</color>
+    <color name="md_theme_onPrimaryContainer">#93F990</color>
+    <color name="md_theme_secondary">#B9CCB3</color>
+    <color name="md_theme_onSecondary">#253423</color>
+    <color name="md_theme_secondaryContainer">#3B4B38</color>
+    <color name="md_theme_onSecondaryContainer">#D5E8CE</color>
+    <color name="md_theme_background">#1A1C19</color>
+    <color name="md_theme_onBackground">#E2E3DD</color>
+    <color name="md_theme_surface">#1A1C19</color>
+    <color name="md_theme_onSurface">#E2E3DD</color>
+    <color name="md_theme_surfaceVariant">#424840</color>
+    <color name="md_theme_onSurfaceVariant">#C2C8BD</color>
+    <color name="md_theme_outline">#8C9288</color>
+    <color name="md_theme_inverseOnSurface">#1A1C19</color>
+    <color name="md_theme_inverseSurface">#E2E3DD</color>
+    <color name="md_theme_inversePrimary">#006E17</color>
 </resources>

@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<taco.scoop.ui.view.CenteredToolbar xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.appbar.MaterialToolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
-    android:background="?attr/colorPrimary"
+    android:background="@color/mainBackground"
     android:elevation="4dp"
-    android:theme="?actionBarTheme" />
+    android:ellipsize="end"
+    android:fontFamily="@font/google_sans"
+    android:singleLine="true"
+    android:theme="?actionBarTheme"
+    app:titleCentered="true"
+    app:toolbarStyle="@style/Widget.Material3.Toolbar" />

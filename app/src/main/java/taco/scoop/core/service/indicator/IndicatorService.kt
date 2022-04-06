@@ -34,7 +34,7 @@ open class IndicatorService : Service() {
             100, NotificationCompat.Builder(this, "status")
                 .setSmallIcon(R.drawable.ic_bug_report)
                 .setContentTitle(getString(R.string.scoop_running))
-                .setColor(getCompatColor(R.color.colorAccent))
+                .setColor(getCompatColor(R.color.colorSecondary))
                 .setShowWhen(false)
                 .setPriority(NotificationCompat.PRIORITY_MIN)
                 .addAction(stopAction)

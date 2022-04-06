@@ -2,10 +2,28 @@
 <resources>
     <color name="mainBackground">@android:color/white</color>
     <color name="colorPrimary">@color/mainBackground</color>
-    <color name="colorPrimaryDark">@color/mainBackground</color>
-    <color name="colorAccent">#4CAF50</color>
+    <color name="colorSecondary">#4CAF50</color>
     <color name="colorEdgeEffect">@android:color/black</color>
 
     <color name="highlightColor">#70FF74</color>
     <color name="selectedBgColor">#22000000</color>
+
+    <color name="md_theme_primary">#4CAF50</color>
+    <color name="md_theme_onPrimary">#FFFFFF</color>
+    <color name="md_theme_primaryContainer">#93F990</color>
+    <color name="md_theme_onPrimaryContainer">#002203</color>
+    <color name="md_theme_secondary">#52634F</color>
+    <color name="md_theme_onSecondary">#FFFFFF</color>
+    <color name="md_theme_secondaryContainer">#D5E8CE</color>
+    <color name="md_theme_onSecondaryContainer">#101F0F</color>
+    <color name="md_theme_background">#FCFDF6</color>
+    <color name="md_theme_onBackground">#1A1C19</color>
+    <color name="md_theme_surface">#FCFDF6</color>
+    <color name="md_theme_onSurface">#1A1C19</color>
+    <color name="md_theme_surfaceVariant">#DEE5D8</color>
+    <color name="md_theme_onSurfaceVariant">#424840</color>
+    <color name="md_theme_outline">#73796F</color>
+    <color name="md_theme_inverseOnSurface">#F0F1EB</color>
+    <color name="md_theme_inverseSurface">#2F312D</color>
+    <color name="md_theme_inversePrimary">#78DC77</color>
 </resources>

@@ -10,7 +10,7 @@ import android.text.format.DateUtils;
 import android.util.AttributeSet;
 import android.view.View;
 
-import androidx.appcompat.widget.AppCompatTextView;
+import com.google.android.material.textview.MaterialTextView;
 
 import java.lang.ref.WeakReference;
 
@@ -24,7 +24,7 @@ import taco.scoop.R;
  * @see #setReferenceTime(long)
  */
 // From https://github.com/curioustechizen/android-ago, with custom changes
-public class RelativeTimeTextView extends AppCompatTextView {
+public class RelativeTimeTextView extends MaterialTextView {
 
     private static final long INITIAL_UPDATE_INTERVAL = DateUtils.MINUTE_IN_MILLIS;
     private final Handler mHandler = new Handler();
