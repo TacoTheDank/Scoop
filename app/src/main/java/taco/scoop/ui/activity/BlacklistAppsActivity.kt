@@ -15,7 +15,6 @@ import taco.scoop.databinding.ActivityBlacklistAppsBinding
 import taco.scoop.ui.adapter.AppAdapter
 import taco.scoop.ui.helper.ToolbarElevationHelper
 import taco.scoop.util.PreferenceHelper
-import java.util.*
 
 class BlacklistAppsActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
     SearchView.OnCloseListener {

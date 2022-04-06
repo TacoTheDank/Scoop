@@ -28,7 +28,6 @@ import taco.scoop.util.PreferenceHelper
 import taco.scoop.util.initScoopService
 import taco.scoop.util.isServiceActive
 import java.util.*
-import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQueryTextListener,
     SearchView.OnCloseListener {
