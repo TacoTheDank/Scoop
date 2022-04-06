@@ -1,0 +1,3 @@
+2.4.1: More languages
+- New translations: Polish, Russian, Chinese (Traditional), Italian (thank you contributors!)
+- A few small internal improvements
