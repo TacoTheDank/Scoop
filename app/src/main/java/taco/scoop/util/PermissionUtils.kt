@@ -27,7 +27,7 @@ fun Context.isPermissionGranted(tryGranting: Boolean = true): Boolean {
 }
 
 fun runReadLogsGrantShell() {
-    Shell.su(
+    Shell.cmd(
         "pm grant ${BuildConfig.APPLICATION_ID} $readLogsPermission"
     ).exec()
 }
