@@ -42,6 +42,10 @@ class CrashReceiver : BroadcastReceiver() {
         val time = intent.getLongExtra(Intents.INTENT_TIME, System.currentTimeMillis())
         stackTrace = intent.getStringExtra(Intents.INTENT_STACKTRACE)
 
+        if (blacklistList.contains(packageName)) {
+            return
+        }
+
         val crash: Crash?
         val update = intent.getBooleanExtra(Intents.INTENT_UPDATE, false)
         if (!update) {
@@ -52,7 +56,7 @@ class CrashReceiver : BroadcastReceiver() {
             crash = intent.getParcelableExtra("crash")
         }
 
-        if (!showNotifications or blacklistList.contains(packageName)) {
+        if (!showNotifications) {
             return
         }
 
