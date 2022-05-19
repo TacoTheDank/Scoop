@@ -13,6 +13,7 @@
     <string name="action_copy">Copy to clipboard</string>
     <string name="action_copy_short">Copy</string>
     <string name="action_delete">Delete</string>
+    <string name="action_create_paste">Create Paste</string>
 
     <!-- Main activity stuff -->
     <string name="just_now">Just Now</string>

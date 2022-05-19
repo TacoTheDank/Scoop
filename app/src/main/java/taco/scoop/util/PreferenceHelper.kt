@@ -6,6 +6,7 @@ import android.content.res.Resources
 import androidx.annotation.StringRes
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
+import org.jetbrains.annotations.Contract
 import taco.scoop.R
 
 object PreferenceHelper {
@@ -23,6 +24,10 @@ object PreferenceHelper {
 
     private fun getSharedBoolean(@StringRes key: Int, defValue: Boolean): Boolean {
         return sharedPreferences.getBoolean(getKey(key), defValue)
+    }
+
+    private fun getSharedString(@StringRes key: Int, defValue: String?): String? {
+        return sharedPreferences.getString(getKey(key), defValue)
     }
 
     val showNotifications: Boolean
@@ -55,10 +60,17 @@ object PreferenceHelper {
     val forceEnglish: Boolean
         get() = getSharedBoolean(R.string.prefKey_force_english, false)
 
+    val pasteUrl: String?
+        get() = getSharedString(R.string.prefKey_paste_url, null)
+
+    val pasteTemplate: String?
+        get() = getSharedString(R.string.prefKey_paste_template, null)
+
+    val pasteResponseJsonKey: String?
+        get() = getSharedString(R.string.prefKey_paste_response_json_key, "key")
+
     private val blacklistedPackages: String?
-        get() = sharedPreferences.getString(
-            getKey(R.string.key_blacklisted_packages), ""
-        )
+        get() = getSharedString(R.string.key_blacklisted_packages, null)
 
     val blacklistList: List<String>
         get() = listOf(*blacklistedPackages?.split(",".toRegex())!!.toTypedArray())

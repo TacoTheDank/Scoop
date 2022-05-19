@@ -22,4 +22,8 @@
     <string name="prefKey_ignore_threaddeath">ignore_threaddeath</string>
     <string name="prefKey_force_english">force_english</string>
     <string name="prefKey_about_scoop">pref_about_scoop</string>
+
+    <string name="prefKey_paste_url">pref_uploader_url</string>
+    <string name="prefKey_paste_response_json_key">pref_uploader_json_key</string>
+    <string name="prefKey_paste_template">pref_uploader_template</string>
 </resources>

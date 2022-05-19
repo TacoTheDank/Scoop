@@ -3,22 +3,26 @@ package taco.scoop.ui.activity
 import android.os.Bundle
 import android.text.Spannable
 import android.text.style.BackgroundColorSpan
+import android.util.Log
 import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.app.ShareCompat
 import androidx.core.text.toSpannable
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
+import com.topjohnwu.superuser.internal.Utils
 import taco.scoop.R
 import taco.scoop.core.data.crash.Crash
 import taco.scoop.core.data.crash.CrashLoader
 import taco.scoop.databinding.ActivityDetailBinding
 import taco.scoop.util.*
 import java.util.*
+import kotlin.concurrent.thread
 
 class DetailActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
     SearchView.OnCloseListener {
@@ -128,6 +132,26 @@ class DetailActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
                     .setChooserTitle(R.string.action_share)
                     .createChooserIntent()
                 startActivity(intent)
+                return true
+            }
+            R.id.menu_detail_create_paste -> {
+                thread {
+                    val message = try {
+                        val url = createPaste(mCrash!!.stackTrace)
+                        copyToClipboard("PasteURL", url)
+                        "YOP"
+                    } catch (ex: Exception) {
+                        Log.e("scoop", "UHOH", ex)
+                        when (ex) {
+                            is PasteException -> ex.message!!
+                            else -> "Failed to upload paste: ${ex.message}"
+                        }
+                    }
+                    runOnUiThread {
+                        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+                    }
+                }
+
                 return true
             }
         }

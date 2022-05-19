@@ -37,7 +37,7 @@ fun Context.getAttrColor(attr: Int): Int {
  * @param label  User-visible label for the clip data.
  * @param text   The actual text in the clip.
  */
-private fun Context.copyToClipboard(label: CharSequence?, text: CharSequence?) {
+fun Context.copyToClipboard(label: CharSequence?, text: CharSequence?) {
     val clipboard = this.getSystemService<ClipboardManager>()
     val data = ClipData.newPlainText(label, text)
     clipboard?.setPrimaryClip(data)

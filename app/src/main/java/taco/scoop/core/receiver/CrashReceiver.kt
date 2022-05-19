@@ -151,7 +151,7 @@ class CrashReceiver : BroadcastReceiver() {
         )
         addAction(
             NotificationCompat.Action(
-                R.drawable.ic_share,
+                android.R.drawable.ic_menu_share,
                 context.getString(R.string.action_share), sharePendingIntent
             )
         )

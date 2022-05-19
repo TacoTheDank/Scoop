@@ -5,7 +5,7 @@
     <item
         android:id="@+id/menu_detail_search"
         android:icon="@drawable/ic_search"
-        android:title="@string/action_search"
+        android:title="@android:string/search_go"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:iconTint="?android:textColorSecondary"
         app:showAsAction="always|collapseActionView" />
@@ -20,14 +20,21 @@
     <item
         android:id="@+id/menu_detail_copy"
         android:icon="@drawable/ic_content_copy"
-        android:title="@string/action_copy"
+        android:title="@android:string/copy"
         app:iconTint="?android:textColorSecondary"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/menu_detail_share"
-        android:icon="@drawable/ic_share"
+        android:icon="@android:drawable/ic_menu_share"
         android:title="@string/action_share"
+        app:iconTint="?android:textColorSecondary"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/menu_detail_create_paste"
+        android:icon="@android:drawable/ic_menu_upload"
+        android:title="@string/action_create_paste"
         app:iconTint="?android:textColorSecondary"
         app:showAsAction="ifRoom" />
 
