@@ -15,7 +15,6 @@ import androidx.core.app.ShareCompat
 import androidx.core.text.toSpannable
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
-import com.topjohnwu.superuser.internal.Utils
 import taco.scoop.R
 import taco.scoop.core.data.crash.Crash
 import taco.scoop.core.data.crash.CrashLoader

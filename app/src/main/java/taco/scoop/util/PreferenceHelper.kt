@@ -6,7 +6,6 @@ import android.content.res.Resources
 import androidx.annotation.StringRes
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
-import org.jetbrains.annotations.Contract
 import taco.scoop.R
 
 object PreferenceHelper {
