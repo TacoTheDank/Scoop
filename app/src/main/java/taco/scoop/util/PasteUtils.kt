@@ -1,14 +1,16 @@
 package taco.scoop.util
 
+import android.content.Context
 import org.json.JSONObject
+import taco.scoop.R
 import java.net.HttpURLConnection
 import java.net.URL
 
 class PasteException(message: String) : Exception(message) {}
 
-fun createPaste(text: String): String {
+fun createPaste(context: Context, text: String): String {
     val url = PreferenceHelper.pasteUrl
-        ?: throw PasteException("Setup a Paste Service in Settings and try again")
+        ?: throw PasteException(context.getString(R.string.setup_paste_service))
 
     val template = PreferenceHelper.pasteTemplate ?: "$url/%s"
 

@@ -85,20 +85,24 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:title="Paste Uploader"
+        android:title="@string/paste_service"
         app:iconSpaceReserved="false">
+
         <EditTextPreference
             android:key="@string/prefKey_paste_url"
             android:title="URL"
+            android:summary="@string/paste_url_summary"
             app:iconSpaceReserved="false" />
         <EditTextPreference
             android:defaultValue="key"
             android:key="@string/prefKey_paste_response_json_key"
-            android:title="PasteID key in json response"
+            android:title="@string/paste_json_key_title"
+            android:summary="@string/paste_json_key_summary"
             app:iconSpaceReserved="false" />
         <EditTextPreference
             android:key="@string/prefKey_paste_template"
-            android:title="Paste URL template"
+            android:title="@string/paste_template_title"
+            android:summary="@string/paste_template_summary"
             app:iconSpaceReserved="false" />
 
     </PreferenceCategory>

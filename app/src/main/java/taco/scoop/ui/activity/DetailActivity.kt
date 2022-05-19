@@ -136,14 +136,14 @@ class DetailActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
             R.id.menu_detail_create_paste -> {
                 thread {
                     val message = try {
-                        val url = createPaste(mCrash!!.stackTrace)
+                        val url = createPaste(this, mCrash!!.stackTrace)
                         copyToClipboard("PasteURL", url)
-                        "YOP"
+                        getString(R.string.create_paste_success)
                     } catch (ex: Exception) {
-                        Log.e("scoop", "UHOH", ex)
+                        Log.e("scoop", "Failed to create Paste", ex)
                         when (ex) {
                             is PasteException -> ex.message!!
-                            else -> "Failed to upload paste: ${ex.message}"
+                            else -> getString(R.string.create_paste_fail, ex.message ?: "-")
                         }
                     }
                     runOnUiThread {
