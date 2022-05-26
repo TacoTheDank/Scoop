@@ -9,9 +9,12 @@ import androidx.core.content.pm.PackageInfoCompat
 import androidx.core.net.toUri
 import taco.scoop.R
 import taco.scoop.databinding.ActivityAboutBinding
+import taco.scoop.util.forceAppEnLanguage
 
 class AboutActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        forceAppEnLanguage()
+
         super.onCreate(savedInstanceState)
 
         val binding = ActivityAboutBinding.inflate(layoutInflater)

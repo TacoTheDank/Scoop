@@ -30,6 +30,8 @@ class DetailActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
     private val binding get() = _binding
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        forceAppEnLanguage()
+
         super.onCreate(savedInstanceState)
 
         _binding = ActivityDetailBinding.inflate(layoutInflater)

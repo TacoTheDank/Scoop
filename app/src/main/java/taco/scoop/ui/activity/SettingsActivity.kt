@@ -13,9 +13,12 @@ import taco.scoop.R
 import taco.scoop.databinding.ActivitySettingsBinding
 import taco.scoop.util.openSystemNotificationSettings
 import taco.scoop.util.readLogsPermissionGranted
+import taco.scoop.util.forceAppEnLanguage
 
 class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        forceAppEnLanguage()
+
         super.onCreate(savedInstanceState)
 
         val binding = ActivitySettingsBinding.inflate(layoutInflater)
