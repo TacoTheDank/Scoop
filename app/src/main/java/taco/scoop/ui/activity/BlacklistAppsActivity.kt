@@ -13,7 +13,6 @@ import taco.scoop.core.data.app.App
 import taco.scoop.core.data.app.AppLoader
 import taco.scoop.databinding.ActivityBlacklistAppsBinding
 import taco.scoop.ui.adapter.AppAdapter
-import taco.scoop.ui.helper.ToolbarElevationHelper
 import taco.scoop.util.PreferenceHelper
 
 class BlacklistAppsActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
@@ -39,8 +38,6 @@ class BlacklistAppsActivity : AppCompatActivity(), SearchView.OnQueryTextListene
 
         mAdapter = AppAdapter()
         binding.blacklistView.adapter = mAdapter
-
-        ToolbarElevationHelper(binding.blacklistView, binding.blacklistToolbar.toolbar)
     }
 
     override fun onResume() {

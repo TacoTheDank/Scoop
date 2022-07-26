@@ -23,7 +23,6 @@ import taco.scoop.core.data.crash.Crash
 import taco.scoop.core.data.crash.CrashLoader
 import taco.scoop.databinding.ActivityMainBinding
 import taco.scoop.ui.adapter.CrashAdapter
-import taco.scoop.ui.helper.ToolbarElevationHelper
 import taco.scoop.util.PreferenceHelper
 import taco.scoop.util.initScoopService
 import taco.scoop.util.isServiceActive
@@ -77,7 +76,6 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
         mAdapter = CrashAdapter(this, this)
         binding.mainCrashView.adapter = mAdapter
         binding.mainCrashView.isGone = true
-        ToolbarElevationHelper(binding.mainCrashView, binding.mainToolbar.toolbar)
 
         val i = intent
         mHasCrash = i.hasExtra(EXTRA_CRASH)
