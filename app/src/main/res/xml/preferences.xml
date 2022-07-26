@@ -86,6 +86,34 @@
 
 
     <PreferenceCategory
+        android:title="@string/settings_paste_service"
+        app:iconSpaceReserved="false">
+
+        <EditTextPreference
+            android:defaultValue=""
+            android:key="@string/prefKey_paste_url"
+            android:summary="@string/settings_paste_url_summary"
+            android:title="@string/settings_paste_url_title"
+            app:iconSpaceReserved="false" />
+
+        <EditTextPreference
+            android:defaultValue="key"
+            android:key="@string/prefKey_paste_response_json_key"
+            android:summary="@string/settings_paste_json_key_summary"
+            android:title="@string/settings_paste_json_key_title"
+            app:iconSpaceReserved="false" />
+
+        <EditTextPreference
+            android:defaultValue=""
+            android:key="@string/prefKey_paste_template"
+            android:summary="@string/settings_paste_template_summary"
+            android:title="@string/settings_paste_template_title"
+            app:iconSpaceReserved="false" />
+
+    </PreferenceCategory>
+
+
+    <PreferenceCategory
         android:title="@string/settings_misc"
         app:iconSpaceReserved="false">
 

@@ -31,4 +31,11 @@
         app:iconTint="?android:textColorSecondary"
         app:showAsAction="ifRoom" />
 
+    <item
+        android:id="@+id/menu_detail_create_paste"
+        android:icon="@drawable/ic_upload_file"
+        android:title="@string/action_create_paste"
+        app:iconTint="?android:textColorSecondary"
+        app:showAsAction="ifRoom" />
+
 </menu>

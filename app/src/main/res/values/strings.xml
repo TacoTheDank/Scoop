@@ -13,6 +13,7 @@
     <string name="action_copy">Copy to clipboard</string>
     <string name="action_copy_short">Copy</string>
     <string name="action_delete">Delete</string>
+    <string name="action_create_paste">Create paste</string>
 
     <!-- Main activity stuff -->
     <string name="just_now">Just Now</string>
@@ -37,10 +38,16 @@
     <!--        You can get a bit creative here as it's probably not too easy to translate directly -->
     <string name="make_crash">Wanna make something crash? ಠ‿ಠ</string>
 
+    <!-- Paste -->
+    <string name="setup_paste_service">No paste service configured. Set one up in the settings and try again.</string>
+    <string name="create_paste_success">Successfully created paste. URL copied to clipboard.</string>
+    <string name="create_paste_fail">"Failed to create paste: %1$s"</string>
+
     <!-- Setting categories -->
     <string name="settings_notif">Notifications</string>
     <string name="settings_overview">Overview</string>
     <string name="settings_detail_view">Detail View</string>
+    <string name="settings_paste_service">Paste Service</string>
     <string name="settings_misc">Miscellaneous</string>
 
     <!-- Settings (notifications) -->
@@ -65,6 +72,14 @@
     <!-- Settings (detail view) -->
     <string name="settings_auto_wrap">Automatic line wrap</string>
     <string name="settings_auto_wrap_summary">Limit maximum line width to screen width</string>
+
+    <!-- Settings (paste service) -->
+    <string name="settings_paste_url_title">Paste URL</string>
+    <string name="settings_paste_url_summary">The paste service URL (e.g. https://hastebin.cc/documents)</string>
+    <string name="settings_paste_json_key_title">Paste ID key</string>
+    <string name="settings_paste_json_key_summary">The key of the paste ID in the JSON response. If the service returns {\"key\":\"PasteID\"}, this should be key.</string>
+    <string name="settings_paste_template_title">Paste URL Template</string>
+    <string name="settings_paste_template_summary">URL where the created paste can be found. It should contain %s, which will be replaced with the paste ID (e.g. https://hastebin.cc/%s)</string>
 
     <!-- Settings (miscellaneous) -->
     <string name="settings_permission_status">Permission status</string>

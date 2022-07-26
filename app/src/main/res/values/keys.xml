@@ -17,6 +17,10 @@
 
     <string name="prefKey_auto_wrap">auto_wrap</string>
 
+    <string name="prefKey_paste_url">uploader_url</string>
+    <string name="prefKey_paste_response_json_key">uploader_json_key</string>
+    <string name="prefKey_paste_template">uploader_template</string>
+
     <string name="prefKey_permission_status">pref_permission_status</string>
     <string name="prefKey_autostart_on_boot">pref_autostart_on_boot</string>
     <string name="prefKey_ignore_threaddeath">ignore_threaddeath</string>

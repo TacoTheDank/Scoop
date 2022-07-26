@@ -25,6 +25,10 @@ object PreferenceHelper {
         return sharedPreferences.getBoolean(getKey(key), defValue)
     }
 
+    private fun getSharedString(@StringRes key: Int, defValue: String?): String? {
+        return sharedPreferences.getString(getKey(key), defValue)
+    }
+
     val showNotifications: Boolean
         get() = getSharedBoolean(R.string.prefKey_show_notification, true)
 
@@ -46,6 +50,15 @@ object PreferenceHelper {
     val autoWrap: Boolean
         get() = getSharedBoolean(R.string.prefKey_auto_wrap, false)
 
+    val pasteUrl: String?
+        get() = getSharedString(R.string.prefKey_paste_url, "")
+
+    val pasteResponseJsonKey: String?
+        get() = getSharedString(R.string.prefKey_paste_response_json_key, "key")
+
+    val pasteTemplate: String?
+        get() = getSharedString(R.string.prefKey_paste_template, "")
+
     val autostartOnBoot: Boolean
         get() = getSharedBoolean(R.string.prefKey_autostart_on_boot, false)
 
@@ -56,9 +69,7 @@ object PreferenceHelper {
         get() = getSharedBoolean(R.string.prefKey_force_english, false)
 
     private val blacklistedPackages: String?
-        get() = sharedPreferences.getString(
-            getKey(R.string.key_blacklisted_packages), ""
-        )
+        get() = getSharedString(R.string.key_blacklisted_packages, "")
 
     val blacklistList: List<String>
         get() = listOf(*blacklistedPackages?.split(",".toRegex())!!.toTypedArray())
