@@ -13,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
-import com.afollestad.inquiry.Inquiry
 import com.afollestad.materialcab.attached.AttachedCab
 import com.afollestad.materialcab.attached.destroy
 import com.afollestad.materialcab.attached.isActive
@@ -21,6 +20,7 @@ import com.afollestad.materialcab.createCab
 import taco.scoop.R
 import taco.scoop.core.data.crash.Crash
 import taco.scoop.core.data.crash.CrashLoader
+import taco.scoop.core.db.*
 import taco.scoop.databinding.ActivityMainBinding
 import taco.scoop.ui.adapter.CrashAdapter
 import taco.scoop.ui.helper.ToolbarElevationHelper
@@ -96,9 +96,7 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
         mAdapter!!.setCombineSameApps(!mHasCrash && mCombineApps)
         binding.mainCrashView.setReverseOrder(mHasCrash || !mCombineApps)
 
-        Inquiry.newInstance(this, "crashes")
-            .instanceName("main")
-            .build()
+        createDatabaseInstance(this, "main")
 
         if (savedInstanceState == null) {
             sUpdateRequired = false
@@ -136,7 +134,7 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
         sVisible = false
         mHandler!!.removeCallbacks(mUpdateCheckerRunnable)
         if (isFinishing && !mHasCrash) {
-            Inquiry.destroy("main")
+            destroyDatabaseInstance("main")
         }
     }
 
@@ -296,29 +294,20 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
 
     private fun deleteItems(items: ArrayList<Crash>) {
         // TODO THIS IS A MESS
-        val instance = Inquiry.get("main")
         for (c in items) {
             if (!mHasCrash && c.children != null) {
                 for (cc in c.children) {
                     cc.hiddenIds?.let {
-                        instance.delete(Crash::class.java)
-                            .whereIn("_id", *it.toTypedArray())
-                            .run()
+                        deleteWhereIn(*it.toTypedArray())
                     }
                     mAdapter!!.removeCrash(cc)
                 }
-                instance.delete(Crash::class.java)
-                    .values(c.children)
-                    .run()
+                deleteValues(c.children)
             }
             c.hiddenIds?.let {
-                instance.delete(Crash::class.java)
-                    .whereIn("_id", *it.toTypedArray())
-                    .run()
+                deleteWhereIn(*it.toTypedArray())
             }
-            instance.delete(Crash::class.java)
-                .values(listOf(c))
-                .run()
+            deleteValues(listOf(c))
             mAdapter!!.removeCrash(c)
         }
     }
@@ -353,8 +342,7 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
                     .setMessage(R.string.dialog_clear_content)
                     .setNegativeButton(android.R.string.cancel, null)
                     .setPositiveButton(android.R.string.ok) { _, _ ->
-                        Inquiry.get("main")
-                            .dropTable(Crash::class.java) // bam!
+                        dropTable()
                         onDataLoaded(null)
                     }
                     .show()

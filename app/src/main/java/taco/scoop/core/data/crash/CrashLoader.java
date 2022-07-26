@@ -9,8 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.collection.ArrayMap;
 import androidx.core.content.ContextCompat;
 
-import com.afollestad.inquiry.Inquiry;
-
 import java.lang.ref.WeakReference;
 import java.text.Collator;
 import java.util.ArrayList;
@@ -21,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 import taco.scoop.R;
+import taco.scoop.core.db.CrashDatabase;
 import taco.scoop.ui.activity.MainActivity;
 
 public class CrashLoader {
@@ -79,9 +78,7 @@ public class CrashLoader {
         mCombineSameApps = combineSameApps;
         mBlacklist = blacklist;
         new Thread(() -> {
-            Crash[] result = Inquiry.get("main")
-                    .select(Crash.class)
-                    .all();
+            Crash[] result = CrashDatabase.selectAll();
             final MainActivity listener = mListener.get();
             if (listener == null || listener.isFinishing() || listener.isDestroyed())
                 return;

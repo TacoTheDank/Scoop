@@ -7,11 +7,13 @@ import android.content.Intent
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.TaskStackBuilder
-import com.afollestad.inquiry.Inquiry
 import taco.scoop.R
 import taco.scoop.ScoopApplication.Companion.bootTime
 import taco.scoop.core.data.crash.Crash
 import taco.scoop.core.data.crash.CrashLoader
+import taco.scoop.core.db.createDatabaseInstance
+import taco.scoop.core.db.destroyDatabaseInstance
+import taco.scoop.core.db.insertValues
 import taco.scoop.ui.activity.DetailActivity
 import taco.scoop.ui.activity.MainActivity
 import taco.scoop.util.Intents
@@ -93,14 +95,9 @@ class CrashReceiver : BroadcastReceiver() {
     }
 
     private fun updateCrashDatabase(context: Context, crash: Crash?) {
-        Inquiry.newInstance(context, "crashes")
-            .instanceName("receiver")
-            .build()
-        Inquiry.get("receiver")
-            .insert(Crash::class.java)
-            .values(listOf(crash))
-            .run()
-        Inquiry.destroy("receiver")
+        createDatabaseInstance(context, "receiver")
+        insertValues(listOf(crash))
+        destroyDatabaseInstance("receiver")
     }
 
     private fun NotificationCompat.Builder.setNotificationStyle(): NotificationCompat.Builder {
