@@ -803,7 +803,7 @@ public class MergedScrollView extends FrameLayout {
                         if (mEdgeGlowTop != null
                                 && (!mEdgeGlowTop.isFinished() || !mEdgeGlowBottom.isFinished()
                                 || !mEdgeGlowLeft.isFinished() || !mEdgeGlowRight.isFinished())) {
-                            this.postInvalidateOnAnimation();
+                            postInvalidateOnAnimation();
                         }
                     }
                 }
@@ -1426,7 +1426,7 @@ public class MergedScrollView extends FrameLayout {
             dy = Math.max(0, Math.min(scrollY + dy, maxY)) - scrollY;
 
             mScroller.startScroll(scrollX, scrollY, dx, dy);
-            this.postInvalidateOnAnimation();
+            postInvalidateOnAnimation();
         } else {
             if (!mScroller.isFinished()) {
                 mScroller.abortAnimation();
@@ -1589,7 +1589,7 @@ public class MergedScrollView extends FrameLayout {
 
             if (!awakenScrollBars()) {
                 // Keep on drawing until the animation has finished.
-                this.postInvalidateOnAnimation();
+                postInvalidateOnAnimation();
             }
         }
     }
@@ -1917,7 +1917,7 @@ public class MergedScrollView extends FrameLayout {
             mScroller.fling(getScrollX(), getScrollY(), velocityX, velocityY, 0,
                     Math.max(0, right - width), 0, Math.max(0, bottom - height));
 
-            this.postInvalidateOnAnimation();
+            postInvalidateOnAnimation();
         }
     }
 
@@ -1986,7 +1986,7 @@ public class MergedScrollView extends FrameLayout {
                 canvas.translate(-height + getPaddingTop() - scrollY, Math.min(0, scrollX));
                 mEdgeGlowLeft.setSize(height, getWidth());
                 if (mEdgeGlowLeft.draw(canvas)) {
-                    this.postInvalidateOnAnimation();
+                    postInvalidateOnAnimation();
                 }
                 canvas.restoreToCount(restoreCount);
             }
@@ -2001,12 +2001,10 @@ public class MergedScrollView extends FrameLayout {
                         -(Math.max(getScrollRangeHorizontal(), scrollX) + width));
                 mEdgeGlowRight.setSize(height, width);
                 if (mEdgeGlowRight.draw(canvas)) {
-                    this.postInvalidateOnAnimation();
+                    postInvalidateOnAnimation();
                 }
                 canvas.restoreToCount(restoreCount);
             }
-
-            final boolean clipToPadding = getClipToPadding();
 
             if (!mEdgeGlowTop.isFinished()) {
                 final int restoreCount = canvas.save();
@@ -2014,7 +2012,7 @@ public class MergedScrollView extends FrameLayout {
                 final int height;
                 final float translateX;
                 final float translateY;
-                if (clipToPadding) {
+                if (getClipToPadding()) {
                     width = getWidth() - getPaddingLeft() - getPaddingRight();
                     height = getHeight() - getPaddingTop() - getPaddingBottom();
                     translateX = getPaddingLeft();
@@ -2028,7 +2026,7 @@ public class MergedScrollView extends FrameLayout {
                 canvas.translate(translateX + scrollX, Math.min(0, scrollY) + translateY);
                 mEdgeGlowTop.setSize(width, height);
                 if (mEdgeGlowTop.draw(canvas)) {
-                    this.postInvalidateOnAnimation();
+                    postInvalidateOnAnimation();
                 }
                 canvas.restoreToCount(restoreCount);
             }
@@ -2038,7 +2036,7 @@ public class MergedScrollView extends FrameLayout {
                 final int height;
                 final float translateX;
                 final float translateY;
-                if (clipToPadding) {
+                if (getClipToPadding()) {
                     width = getWidth() - getPaddingLeft() - getPaddingRight();
                     height = getHeight() - getPaddingTop() - getPaddingBottom();
                     translateX = getPaddingLeft();
@@ -2055,7 +2053,7 @@ public class MergedScrollView extends FrameLayout {
                 canvas.rotate(180, width, 0);
                 mEdgeGlowBottom.setSize(width, height);
                 if (mEdgeGlowBottom.draw(canvas)) {
-                    this.postInvalidateOnAnimation();
+                    postInvalidateOnAnimation();
                 }
                 canvas.restoreToCount(restoreCount);
             }
