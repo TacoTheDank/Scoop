@@ -8,4 +8,7 @@
 
     <color name="highlightColor">#70FF74</color>
     <color name="selectedBgColor">#22000000</color>
+
+    <color name="serviceFabOn">#FF02DA8F</color>
+    <color name="serviceFabOff">#FFFF6C60</color>
 </resources>

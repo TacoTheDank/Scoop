@@ -46,9 +46,6 @@ object PreferenceHelper {
     val autoWrap: Boolean
         get() = getSharedBoolean(R.string.prefKey_auto_wrap, false)
 
-    val autostartOnBoot: Boolean
-        get() = getSharedBoolean(R.string.prefKey_autostart_on_boot, false)
-
     val ignoreThreadDeath: Boolean
         get() = getSharedBoolean(R.string.prefKey_ignore_threaddeath, true)
 
@@ -69,6 +66,16 @@ object PreferenceHelper {
                 getKey(R.string.key_blacklisted_packages),
                 packages.joinToString(",")
             )
+        }
+    }
+
+    val serviceFabOn: Boolean
+        get() = getSharedBoolean(R.string.key_service_fab_state, false)
+
+
+    fun setServiceFabState(state: Boolean) {
+        sharedPreferences.edit {
+            putBoolean(getKey(R.string.key_service_fab_state), state)
         }
     }
 }

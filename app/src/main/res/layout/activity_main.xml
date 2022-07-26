@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -46,5 +47,29 @@
             android:layout="@layout/no_permission" />
 
     </FrameLayout>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.bottomappbar.BottomAppBar
+            android:id="@+id/main_bottomAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            app:backgroundTint="@color/colorPrimary"
+            app:fabAlignmentMode="center"
+            app:fabCradleRoundedCornerRadius="20dp"
+            app:hideOnScroll="false" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/main_serviceFab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/fab_contentDescription"
+            app:layout_anchor="@id/main_bottomAppBar"
+            app:srcCompat="@drawable/ic_power_settings_new" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </FrameLayout>

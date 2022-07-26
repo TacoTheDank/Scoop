@@ -95,13 +95,6 @@
             app:iconSpaceReserved="false" />
 
         <SwitchPreferenceCompat
-            android:defaultValue="false"
-            android:key="@string/prefKey_autostart_on_boot"
-            android:summary="@string/settings_autostart_on_boot_summary"
-            android:title="@string/settings_autostart_on_boot"
-            app:iconSpaceReserved="false" />
-
-        <SwitchPreferenceCompat
             android:defaultValue="true"
             android:key="@string/prefKey_ignore_threaddeath"
             android:summary="@string/settings_ignore_threaddeath_summary"

@@ -3,6 +3,7 @@
 
     <!-- Keys -->
     <string name="key_blacklisted_packages">blacklisted_packages</string>
+    <string name="key_service_fab_state">service_fab_state</string>
 
     <!-- Preference keys -->
     <string name="prefKey_notif_sys_settings">pref_notif_sys_settings</string>
