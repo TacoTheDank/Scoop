@@ -10,6 +10,8 @@ import android.text.format.DateUtils;
 import android.util.AttributeSet;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
 
 import java.lang.ref.WeakReference;
@@ -32,17 +34,18 @@ public class RelativeTimeTextView extends AppCompatTextView {
     private UpdateTimeRunnable mUpdateTimeTask;
     private boolean isUpdateTaskRunning = false;
 
-    public RelativeTimeTextView(Context context, AttributeSet attrs) {
+    public RelativeTimeTextView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
     }
 
-    public RelativeTimeTextView(Context context, AttributeSet attrs, int defStyle) {
+    public RelativeTimeTextView(@NonNull Context context,
+                                @Nullable AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init(context, attrs);
     }
 
-    private void init(Context context, AttributeSet attrs) {
+    private void init(@NonNull Context context, @Nullable AttributeSet attrs) {
         if (isInEditMode() || attrs == null) {
             mReferenceTime = System.currentTimeMillis() - 1000 * 60 * 30;
         } else {
