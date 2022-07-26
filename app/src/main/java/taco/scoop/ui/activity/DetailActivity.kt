@@ -22,17 +22,16 @@ import java.util.*
 
 class DetailActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
     SearchView.OnCloseListener {
+
     private var mCrash: Crash? = null
     private var mHighlightColor = 0
     private var mSelectionEnabled = false
-
-    private lateinit var _binding: ActivityDetailBinding
-    private val binding get() = _binding
+    private lateinit var binding: ActivityDetailBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        _binding = ActivityDetailBinding.inflate(layoutInflater)
+        binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.detailToolbar.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

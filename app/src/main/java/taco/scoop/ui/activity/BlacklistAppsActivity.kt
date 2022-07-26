@@ -21,14 +21,12 @@ class BlacklistAppsActivity : AppCompatActivity(), SearchView.OnQueryTextListene
 
     private var mAdapter: AppAdapter? = null
     private var mIsLoading = false
-
-    private lateinit var _binding: ActivityBlacklistAppsBinding
-    private val binding get() = _binding
+    private lateinit var binding: ActivityBlacklistAppsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        _binding = ActivityBlacklistAppsBinding.inflate(layoutInflater)
+        binding = ActivityBlacklistAppsBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.blacklistToolbar.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

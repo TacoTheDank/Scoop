@@ -61,9 +61,7 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
             mHandler!!.postDelayed(this, UPDATE_DELAY.toLong())
         }
     }
-
-    private lateinit var _binding: ActivityMainBinding
-    private val binding get() = _binding
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         updateLocale()
@@ -72,7 +70,7 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
 
         initScoopService()
 
-        _binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.mainToolbar.toolbar)
 
