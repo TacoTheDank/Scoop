@@ -21,6 +21,7 @@ import androidx.core.graphics.applyCanvas
 import androidx.core.graphics.createBitmap
 import androidx.core.graphics.drawable.updateBounds
 import taco.scoop.core.data.crash.CrashLoader
+import java.util.*
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.contract
 
@@ -114,4 +115,13 @@ fun setPendingIntentFlag(): Int {
 
 fun Context.getCompatColor(@ColorRes id: Int): Int {
     return ContextCompat.getColor(this, id)
+}
+
+fun Context.updateLocale() {
+    if (PreferenceHelper.forceEnglish) {
+        // TODO: Use ConfigurationCompat
+        val config = resources.configuration
+        config.locale = Locale.ENGLISH
+        resources.updateConfiguration(config, null)
+    }
 }

@@ -27,7 +27,7 @@ import taco.scoop.ui.helper.ToolbarElevationHelper
 import taco.scoop.util.PreferenceHelper
 import taco.scoop.util.initScoopService
 import taco.scoop.util.isServiceActive
-import java.util.*
+import taco.scoop.util.updateLocale
 
 class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQueryTextListener,
     SearchView.OnCloseListener {
@@ -148,15 +148,6 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
             mAdapter!!.setSelectionEnabled(false)
         } else {
             super.onBackPressed()
-        }
-    }
-
-    private fun updateLocale() {
-        if (PreferenceHelper.forceEnglish) {
-            // TODO: Use ConfigurationCompat
-            val config = resources.configuration
-            config.locale = Locale.ENGLISH
-            resources.updateConfiguration(config, null)
         }
     }
 
