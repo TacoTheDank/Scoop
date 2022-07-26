@@ -15,11 +15,13 @@ import android.provider.Settings
 import android.widget.Toast
 import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
 import androidx.core.graphics.applyCanvas
 import androidx.core.graphics.createBitmap
 import androidx.core.graphics.drawable.updateBounds
+import androidx.core.os.LocaleListCompat
 import taco.scoop.core.data.crash.CrashLoader
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.contract
@@ -101,6 +103,13 @@ fun Context.openSystemNotificationSettings() {
         }.also(this::startActivity)
     } catch (e: Exception) {
         e.printStackTrace()
+    }
+}
+
+fun forceAppEnLanguage() {
+    if (PreferenceHelper.forceEnglish) {
+        val appLocale = LocaleListCompat.forLanguageTags("en-US")
+        AppCompatDelegate.setApplicationLocales(appLocale)
     }
 }
 

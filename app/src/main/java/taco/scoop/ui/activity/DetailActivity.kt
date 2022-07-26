@@ -29,6 +29,8 @@ class DetailActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
     private lateinit var binding: ActivityDetailBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        forceAppEnLanguage()
+
         super.onCreate(savedInstanceState)
 
         binding = ActivityDetailBinding.inflate(layoutInflater)

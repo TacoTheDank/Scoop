@@ -15,6 +15,7 @@ import taco.scoop.databinding.ActivityBlacklistAppsBinding
 import taco.scoop.ui.adapter.AppAdapter
 import taco.scoop.ui.helper.ToolbarElevationHelper
 import taco.scoop.util.PreferenceHelper
+import taco.scoop.util.forceAppEnLanguage
 
 class BlacklistAppsActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
     SearchView.OnCloseListener {
@@ -24,6 +25,8 @@ class BlacklistAppsActivity : AppCompatActivity(), SearchView.OnQueryTextListene
     private lateinit var binding: ActivityBlacklistAppsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        forceAppEnLanguage()
+
         super.onCreate(savedInstanceState)
 
         binding = ActivityBlacklistAppsBinding.inflate(layoutInflater)
