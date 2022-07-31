@@ -39,7 +39,9 @@ android {
     }
 
     packagingOptions {
-        exclude 'META-INF/*'
+        resources {
+            excludes.add('META-INF/*')
+        }
     }
 
     buildFeatures {
