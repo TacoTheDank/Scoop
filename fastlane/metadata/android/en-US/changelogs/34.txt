@@ -1,0 +1,4 @@
+2.4.2: Android 12L support
+- Now targets and supports Android 12L (API 32)
+- Fix blacklisted apps' crashes being saved
+- A few small internal improvements
