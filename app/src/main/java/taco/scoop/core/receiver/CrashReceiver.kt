@@ -16,15 +16,12 @@ import taco.scoop.core.db.destroyDatabaseInstance
 import taco.scoop.core.db.insertValues
 import taco.scoop.ui.activity.DetailActivity
 import taco.scoop.ui.activity.MainActivity
-import taco.scoop.util.Intents
+import taco.scoop.util.*
 import taco.scoop.util.PreferenceHelper.blacklistList
 import taco.scoop.util.PreferenceHelper.ignoreThreadDeath
 import taco.scoop.util.PreferenceHelper.showActionButtons
 import taco.scoop.util.PreferenceHelper.showNotifications
 import taco.scoop.util.PreferenceHelper.showStackTraceNotifications
-import taco.scoop.util.convertToBitmap
-import taco.scoop.util.getCompatColor
-import taco.scoop.util.setPendingIntentFlag
 
 class CrashReceiver : BroadcastReceiver() {
 
@@ -55,7 +52,7 @@ class CrashReceiver : BroadcastReceiver() {
             updateCrashDatabase(context, crash)
             MainActivity.requestUpdate(crash)
         } else {
-            crash = intent.getParcelableExtra("crash")
+            crash = intent.getParcelableExtraCompat("crash")
         }
 
         if (!showNotifications) {

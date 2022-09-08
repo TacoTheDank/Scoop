@@ -22,6 +22,7 @@ import androidx.core.content.getSystemService
 import androidx.core.graphics.applyCanvas
 import androidx.core.graphics.createBitmap
 import androidx.core.graphics.drawable.updateBounds
+import taco.scoop.core.data.crash.Crash
 import taco.scoop.core.data.crash.CrashLoader
 import java.util.*
 import kotlin.contracts.ExperimentalContracts
@@ -134,5 +135,14 @@ fun PackageManager.getPackageInfoCompat(packageName: String): PackageInfo {
         getPackageInfo(packageName, PackageManager.PackageInfoFlags.of(0))
     } else {
         getPackageInfo(packageName, 0)
+    }
+}
+
+@Suppress("DEPRECATION")
+fun Intent.getParcelableExtraCompat(extra: String): Crash? {
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        getParcelableExtra(extra, Crash::class.java)
+    } else {
+        getParcelableExtra(extra)
     }
 }

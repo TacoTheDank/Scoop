@@ -24,10 +24,7 @@ import taco.scoop.core.db.*
 import taco.scoop.databinding.ActivityMainBinding
 import taco.scoop.ui.adapter.CrashAdapter
 import taco.scoop.ui.helper.ToolbarElevationHelper
-import taco.scoop.util.PreferenceHelper
-import taco.scoop.util.initScoopService
-import taco.scoop.util.isServiceActive
-import taco.scoop.util.updateLocale
+import taco.scoop.util.*
 
 class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQueryTextListener,
     SearchView.OnCloseListener {
@@ -82,7 +79,7 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
         val i = intent
         mHasCrash = i.hasExtra(EXTRA_CRASH)
         if (mHasCrash) {
-            val c: Crash? = i.getParcelableExtra(EXTRA_CRASH)
+            val c: Crash? = i.getParcelableExtraCompat(EXTRA_CRASH)
             val crashes = ArrayList<Crash?>()
             crashes.add(c)
             c?.children?.let(crashes::addAll)
