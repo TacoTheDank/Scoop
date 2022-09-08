@@ -18,6 +18,7 @@
 
     <application
         android:name=".ScoopApplication"
+        android:enableOnBackInvokedCallBack="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"

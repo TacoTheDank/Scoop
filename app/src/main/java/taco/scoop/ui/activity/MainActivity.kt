@@ -7,6 +7,7 @@ import android.os.Looper
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -58,6 +59,13 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
             mHandler!!.postDelayed(this, UPDATE_DELAY.toLong())
         }
     }
+    private val onBackPressedCallback = object : OnBackPressedCallback(false) {
+        override fun handleOnBackPressed() {
+            if (mCab.isActive()) {
+                mAdapter!!.setSelectionEnabled(false)
+            }
+        }
+    }
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,6 +78,8 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.mainToolbar.toolbar)
+
+        onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
 
         mAdapter = CrashAdapter(this, this)
         binding.mainCrashView.adapter = mAdapter
@@ -138,14 +148,6 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
     override fun onDestroy() {
         super.onDestroy()
         mDestroyed = true
-    }
-
-    override fun onBackPressed() {
-        if (mCab.isActive()) {
-            mAdapter!!.setSelectionEnabled(false)
-        } else {
-            super.onBackPressed()
-        }
     }
 
     private fun updateViewStates(loading: Boolean?) {
