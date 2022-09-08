@@ -7,6 +7,8 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
@@ -123,5 +125,14 @@ fun Context.updateLocale() {
         val config = resources.configuration
         config.locale = Locale.ENGLISH
         resources.updateConfiguration(config, null)
+    }
+}
+
+@Suppress("DEPRECATION")
+fun PackageManager.getPackageInfoCompat(packageName: String): PackageInfo {
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        getPackageInfo(packageName, PackageManager.PackageInfoFlags.of(0))
+    } else {
+        getPackageInfo(packageName, 0)
     }
 }
