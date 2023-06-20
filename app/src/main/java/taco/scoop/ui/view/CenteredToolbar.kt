@@ -44,7 +44,7 @@ import taco.scoop.R
 class CenteredToolbar @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
-    defStyleAttr: Int = R.attr.toolbarStyle
+    defStyleAttr: Int = androidx.appcompat.R.attr.toolbarStyle
 ) : Toolbar(context, attrs, defStyleAttr) {
 
     private var mTitleTextView: AppCompatTextView? = null
