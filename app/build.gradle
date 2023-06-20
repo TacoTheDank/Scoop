@@ -6,6 +6,7 @@ plugins {
 android {
     compileSdk 32
     buildToolsVersion "32.0.0"
+    namespace "taco.scoop"
 
     defaultConfig {
         applicationId "taco.scoop"
