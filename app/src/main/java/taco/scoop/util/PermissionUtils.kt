@@ -11,8 +11,7 @@ const val readLogsPermission = Manifest.permission.READ_LOGS
 
 fun Context.readLogsPermissionGranted(): Boolean {
     return ContextCompat.checkSelfPermission(
-        this,
-        readLogsPermission
+        this, readLogsPermission
     ) == PackageManager.PERMISSION_GRANTED
 }
 

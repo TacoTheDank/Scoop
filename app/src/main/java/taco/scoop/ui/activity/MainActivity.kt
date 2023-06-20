@@ -20,7 +20,11 @@ import com.afollestad.materialcab.createCab
 import taco.scoop.R
 import taco.scoop.core.data.crash.Crash
 import taco.scoop.core.data.crash.CrashLoader
-import taco.scoop.core.db.*
+import taco.scoop.core.db.createDatabaseInstance
+import taco.scoop.core.db.deleteValues
+import taco.scoop.core.db.deleteWhereIn
+import taco.scoop.core.db.destroyDatabaseInstance
+import taco.scoop.core.db.dropTable
 import taco.scoop.databinding.ActivityMainBinding
 import taco.scoop.ui.adapter.CrashAdapter
 import taco.scoop.ui.helper.ToolbarElevationHelper
@@ -232,8 +236,7 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
             title(
                 literal = String.format(
                     resources.getQuantityString(
-                        R.plurals.items_selected_count,
-                        count
+                        R.plurals.items_selected_count, count
                     ), count
                 )
             )

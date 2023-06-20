@@ -117,21 +117,20 @@ class CrashReceiver : BroadcastReceiver() {
     }
 
     private fun NotificationCompat.Builder.addActionButtons(
-        context: Context,
-        notificationId: Int
+        context: Context, notificationId: Int
     ): NotificationCompat.Builder {
         val copyIntent = Intent(context, NotificationActionReceiver::class.java)
             .putExtra("stackTrace", stackTrace)
             .putExtra("pkg", packageName)
             .setAction(Intents.INTENT_ACTION_COPY)
         val copyPendingIntent = PendingIntent.getBroadcast(
-            context,
-            notificationId, copyIntent, setPendingIntentFlag()
+            context, notificationId, copyIntent, setPendingIntentFlag()
         )
         addAction(
             NotificationCompat.Action(
                 R.drawable.ic_content_copy,
-                context.getString(R.string.action_copy_short), copyPendingIntent
+                context.getString(R.string.action_copy_short),
+                copyPendingIntent
             )
         )
 
@@ -149,7 +148,8 @@ class CrashReceiver : BroadcastReceiver() {
         addAction(
             NotificationCompat.Action(
                 R.drawable.ic_share,
-                context.getString(R.string.action_share), sharePendingIntent
+                context.getString(R.string.action_share),
+                sharePendingIntent
             )
         )
         return this

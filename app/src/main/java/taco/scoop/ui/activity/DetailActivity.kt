@@ -17,8 +17,12 @@ import taco.scoop.R
 import taco.scoop.core.data.crash.Crash
 import taco.scoop.core.data.crash.CrashLoader
 import taco.scoop.databinding.ActivityDetailBinding
-import taco.scoop.util.*
-import java.util.*
+import taco.scoop.util.PreferenceHelper
+import taco.scoop.util.copyTextToClipboard
+import taco.scoop.util.displayToast
+import taco.scoop.util.getCompatColor
+import taco.scoop.util.isNeitherNullNorEmpty
+import java.util.Locale
 
 class DetailActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
     SearchView.OnCloseListener {
@@ -60,7 +64,8 @@ class DetailActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
             while (stackTrace.indexOf(newText, index).also { index = it } != -1) {
                 span.setSpan(
                     BackgroundColorSpan(mHighlightColor),
-                    index, index + size,
+                    index,
+                    index + size,
                     Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                 )
                 index += size
