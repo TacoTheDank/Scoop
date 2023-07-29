@@ -5,7 +5,7 @@ plugins {
 
 android {
     compileSdk 32
-    buildToolsVersion "32.0.0"
+    buildToolsVersion = "34.0.0"
     namespace "taco.scoop"
 
     defaultConfig {
@@ -25,12 +25,12 @@ android {
 
     compileOptions {
         encoding "UTF-8"
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11
+        jvmTarget = JavaVersion.VERSION_17
         freeCompilerArgs = ["-opt-in=kotlin.RequiresOptIn"]
     }
 
@@ -46,7 +46,9 @@ android {
     }
 
     buildFeatures {
-        viewBinding true
+        viewBinding = true
+        buildConfig = true
+        aidl = true
     }
 }
 
