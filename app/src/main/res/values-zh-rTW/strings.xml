@@ -34,8 +34,8 @@
         <item quantity="other">要刪除這 %d 次崩潰嗎？此操作不可復原！</item>
     </plurals>
     <string name="no_items">空空如也</string>
-    <!--        For those who use https://github.com/LSPosed/LSPosed as Xposed implementation      -->
-    <string name="make_crash">如果您使用 LSPosed，作用域請勾選『系統框架』</string>
+    <!--        You can get a bit creative here as it's probably not too easy to translate directly -->
+    <string name="make_crash">Wanna make something crash? ಠ‿ಠ</string>
 
     <!-- Setting categories -->
     <string name="settings_notif">通知</string>
