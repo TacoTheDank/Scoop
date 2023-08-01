@@ -37,6 +37,7 @@ open class IndicatorService : Service() {
                 .setColor(getCompatColor(R.color.colorAccent))
                 .setShowWhen(false)
                 .setPriority(NotificationCompat.PRIORITY_MIN)
+                .setOngoing(true)
                 .addAction(stopAction)
                 .build()
         )
