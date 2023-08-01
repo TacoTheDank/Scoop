@@ -24,6 +24,7 @@ import taco.scoop.util.PreferenceHelper.showNotifications
 import taco.scoop.util.PreferenceHelper.showStackTraceNotifications
 import taco.scoop.util.convertToBitmap
 import taco.scoop.util.getCompatColor
+import taco.scoop.util.getParcelableExtraCompat
 import taco.scoop.util.setPendingIntentFlag
 
 class CrashReceiver : BroadcastReceiver() {
@@ -55,7 +56,7 @@ class CrashReceiver : BroadcastReceiver() {
             updateCrashDatabase(context, crash)
             MainActivity.requestUpdate(crash)
         } else {
-            crash = intent.getParcelableExtra("crash")
+            crash = intent.getParcelableExtraCompat("crash")
         }
 
         if (!showNotifications) {

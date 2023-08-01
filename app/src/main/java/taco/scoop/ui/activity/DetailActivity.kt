@@ -41,7 +41,7 @@ class DetailActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         mHighlightColor = getCompatColor(R.color.highlightColor)
-        mCrash = intent.getParcelableExtra(EXTRA_CRASH)
+        mCrash = intent.getParcelableExtraCompat(EXTRA_CRASH)
         supportActionBar?.title = CrashLoader.getAppName(this, mCrash!!.packageName, true)
 
         binding.detailCrashLogText.text = mCrash!!.stackTrace
