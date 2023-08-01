@@ -9,6 +9,7 @@ import androidx.core.content.pm.PackageInfoCompat
 import androidx.core.net.toUri
 import taco.scoop.R
 import taco.scoop.databinding.ActivityAboutBinding
+import taco.scoop.util.getPackageInfoCompat
 
 class AboutActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,7 +26,7 @@ class AboutActivity : AppCompatActivity() {
         )
 
         try {
-            val pInfo = packageManager.getPackageInfo(packageName, 0)
+            val pInfo = packageManager.getPackageInfoCompat(packageName)
             binding.aboutVersion.text = String.format(
                 getString(R.string.about_version),
                 pInfo.versionName,
