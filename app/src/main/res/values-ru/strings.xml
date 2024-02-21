@@ -29,6 +29,7 @@
         <item quantity="other">Сбоев: %d</item>
     </plurals>
     <string name="dialog_clear_content">Уверены, что хотите очистить данные обо всех сбоях?</string>
+    <string name="dialog_clear_content_combine">Вы уверены, что хотите удалить со страницы все данные о сбоях?</string>
     <plurals name="delete_multiple_confirm">
         <item quantity="one">Удалить данные по %d сбою? Это действие нельзя отменить!</item>
         <item quantity="other">Удалить данные по сбоям (выбрано %d)? Это действие нельзя отменить!</item>

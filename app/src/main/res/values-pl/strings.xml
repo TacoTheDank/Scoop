@@ -29,6 +29,7 @@
         <item quantity="other">%d Crashe</item>
     </plurals>
     <string name="dialog_clear_content">Czy na pewno chcesz usunąć wszystkie crashe?</string>
+    <string name="dialog_clear_content_combine">Czy na pewno chcesz usunąć wszystkie awarie na stronie?</string>
     <plurals name="delete_multiple_confirm">
         <item quantity="one">Usunąć %d crash? Tej operacji nie da się cofnąć!</item>
         <item quantity="other">Usunąć %d crashy? Tej operacji nie da się cofnąć!</item>

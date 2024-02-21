@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
     private var mCombineApps = false
     private var mHasCrash = false
     private var mHandler: Handler? = null
-    private var mAdapter: CrashAdapter? = null
+    private lateinit var mAdapter: CrashAdapter
     private var mNoItemsScreen: View? = null
     private var mCab: AttachedCab? = null
 
@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
                 // a different app in the list
                     return
                 if (sVisible && sNewCrash != null) {
-                    mAdapter!!.addCrash(sNewCrash)
+                    mAdapter.addCrash(sNewCrash)
                     updateViewStates(false)
                     sNewCrash = null
                 } else {
@@ -90,14 +90,14 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
             val crashes = ArrayList<Crash?>()
             crashes.add(c)
             c?.children?.let(crashes::addAll)
-            mAdapter!!.setCrashes(crashes)
+            mAdapter.setCrashes(crashes)
             supportActionBar?.title =
                 CrashLoader.getAppName(this, c?.packageName, true)
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
         }
 
         mCombineApps = PreferenceHelper.combineSameApps
-        mAdapter!!.setCombineSameApps(!mHasCrash && mCombineApps)
+        mAdapter.setCombineSameApps(!mHasCrash && mCombineApps)
         binding.mainCrashView.setReverseOrder(mHasCrash || !mCombineApps)
 
         createDatabaseInstance(this, "main")
@@ -110,7 +110,7 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
                 updateViewStates(false)
             }
         } else {
-            mAdapter!!.restoreInstanceState(savedInstanceState)
+            mAdapter.restoreInstanceState(savedInstanceState)
             updateViewStates(false)
         }
         mHandler = Handler(Looper.getMainLooper())
@@ -120,13 +120,13 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        mAdapter!!.saveInstanceState(outState)
+        mAdapter.saveInstanceState(outState)
     }
 
     override fun onResume() {
         super.onResume()
         // Cheap way to instantly apply changes
-        mAdapter!!.setSearchPackageName(
+        mAdapter.setSearchPackageName(
             this, PreferenceHelper.searchPackageName
         )
         sVisible = true
@@ -149,7 +149,7 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
 
     override fun onBackPressed() {
         if (mCab.isActive()) {
-            mAdapter!!.setSelectionEnabled(false)
+            mAdapter.setSelectionEnabled(false)
         } else {
             super.onBackPressed()
         }
@@ -164,7 +164,7 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
         if (mCheckPending) {
             newLoading = true
         }
-        val empty = mAdapter!!.isEmpty
+        val empty = mAdapter.isEmpty
         binding.mainProgressbar.isVisible = newLoading
         binding.mainCrashView.isGone = newLoading || empty || !mIsAvailable
 
@@ -184,7 +184,7 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
     }
 
     private fun loadData() {
-        mAdapter!!.setSelectionEnabled(false)
+        mAdapter.setSelectionEnabled(false)
         updateViewStates(true)
         mLoader.loadData(
             this,
@@ -195,7 +195,7 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
     }
 
     fun onDataLoaded(data: ArrayList<Crash?>?) {
-        mAdapter!!.setCrashes(data)
+        mAdapter.setCrashes(data)
         updateViewStates(false)
     }
 
@@ -255,14 +255,14 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
                 true
             }
             onDestroy {
-                mAdapter!!.setSelectionEnabled(false)
+                mAdapter.setSelectionEnabled(false)
                 true
             }
         }
     }
 
     private fun showDeletePrompt() {
-        val items = mAdapter!!.selectedItems
+        val items = mAdapter.selectedItems
         if (items.isEmpty()) {
             return
         }
@@ -275,9 +275,9 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
             .setNegativeButton(android.R.string.cancel, null)
             .setPositiveButton(android.R.string.ok) { _, _ ->
                 deleteItems(items)
-                mAdapter!!.setSelectionEnabled(false)
+                mAdapter.setSelectionEnabled(false)
                 setResult(RESULT_OK) // Reload overview when going back to reflect changes
-                if (mHasCrash && mAdapter!!.isEmpty) {
+                if (mHasCrash && mAdapter.isEmpty) {
                     finish() // Everything deleted, go back to overview
                 } else {
                     updateViewStates(false)
@@ -294,7 +294,7 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
                     cc.hiddenIds?.let {
                         deleteWhereIn(*it.toTypedArray())
                     }
-                    mAdapter!!.removeCrash(cc)
+                    mAdapter.removeCrash(cc)
                 }
                 deleteValues(c.children)
             }
@@ -302,7 +302,7 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
                 deleteWhereIn(*it.toTypedArray())
             }
             deleteValues(listOf(c))
-            mAdapter!!.removeCrash(c)
+            mAdapter.removeCrash(c)
         }
     }
 
@@ -316,12 +316,12 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
     }
 
     override fun onClose(): Boolean {
-        mAdapter!!.search(this, null)
+        mAdapter.search(this, null)
         return false
     }
 
     override fun onQueryTextChange(newText: String): Boolean {
-        mAdapter!!.search(this, newText)
+        mAdapter.search(this, newText)
         return true
     }
 
@@ -332,11 +332,20 @@ class MainActivity : AppCompatActivity(), CrashAdapter.Listener, SearchView.OnQu
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_main_clear -> {
+                val messageId = if (mCombineApps && mHasCrash) {
+                    R.string.dialog_clear_content_combine
+                } else {
+                    R.string.dialog_clear_content
+                }
                 AlertDialog.Builder(this)
-                    .setMessage(R.string.dialog_clear_content)
+                    .setMessage(messageId)
                     .setNegativeButton(android.R.string.cancel, null)
                     .setPositiveButton(android.R.string.ok) { _, _ ->
-                        dropTable()
+                        if (mCombineApps && mHasCrash) {
+                            deleteValues(mAdapter.items)
+                        } else {
+                            dropTable()
+                        }
                         onDataLoaded(null)
                     }
                     .show()

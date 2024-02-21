@@ -29,6 +29,7 @@
         <item quantity="other">%d Crashes</item>
     </plurals>
     <string name="dialog_clear_content">Are you sure you want to clear all crashes?</string>
+    <string name="dialog_clear_content_combine">Are you sure you want to clear all crashes in the page?</string>
     <plurals name="delete_multiple_confirm">
         <item quantity="one">Delete %d crash? This can\'t be undone!</item>
         <item quantity="other">Delete %d crashes? This can\'t be undone!</item>

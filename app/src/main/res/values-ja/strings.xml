@@ -29,6 +29,7 @@
         <item quantity="other">%d 個のクラッシュ</item>
     </plurals>
     <string name="dialog_clear_content">全てのクラッシュ履歴を消去しても宜しいですか？</string>
+    <string name="dialog_clear_content_combine">ページからすべてのクラッシュ履歴を消去してもよろしいですか?</string>
     <plurals name="delete_multiple_confirm">
         <item quantity="one">%d 個のクラッシュを削除しても宜しいですか？この操作はやり直しできません!</item>
         <item quantity="other">%d 個のクラッシュを削除しても宜しいですか？この操作はやり直しできません</item>
