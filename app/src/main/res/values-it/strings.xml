@@ -29,6 +29,7 @@
         <item quantity="other">%d Segnalazioni</item>
     </plurals>
     <string name="dialog_clear_content">Sei sicuro di voler cancellare tutte le segnalazioni?</string>
+    <string name="dialog_clear_content_combine">Sei sicuro di voler eliminare tutti i report nella pagina?</string>
     <plurals name="delete_multiple_confirm">
         <item quantity="one">Cancellare %d segnalazione? L\'operazione è irreversibile!</item>
         <item quantity="other">Cancellare %d segnalazioni? L\'operazione è irreversibile!</item>

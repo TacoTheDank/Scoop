@@ -17,6 +17,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 
 import taco.scoop.R;
@@ -116,6 +118,11 @@ public class CrashAdapter extends RecyclerView.Adapter<CrashAdapter.CrashViewHol
             }
         }
         mListener.onToggleSelectionMode(enabled);
+    }
+
+    // return immutable list
+    public List<Crash> getItems() {
+        return Collections.unmodifiableList(mItems);
     }
 
     public ArrayList<Crash> getSelectedItems() {

@@ -29,6 +29,7 @@
         <item quantity="other">%d Travamentos</item>
     </plurals>
     <string name="dialog_clear_content">Você tem certeza que deseja limpar todos os travamentos?</string>
+    <string name="dialog_clear_content_combine">Tem certeza de que deseja limpar todas as falhas da página?</string>
     <plurals name="delete_multiple_confirm">
         <item quantity="one">Deletar %d travamento? Isso não pode ser desfeito!</item>
         <item quantity="other">Deletar %d travamentos? Isso não pode ser desfeito!</item>
