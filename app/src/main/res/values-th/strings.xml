@@ -29,6 +29,7 @@
         <item quantity="other">%d ข้อผิดพลาด</item>
     </plurals>
     <string name="dialog_clear_content">คุณต้องการที่จะล้างข้อผิดพลาดทั้งหมดมั้ย?</string>
+    <string name="dialog_clear_content_combine">คุณต้องการล้างข้อผิดพลาดทั้งหมดออกจากเพจหรือไม่?</string>
     <plurals name="delete_multiple_confirm">
         <item quantity="one">ลบ %d ข้อผิดพลาดมั้ย? ไม่สารมารถย้อนกลับได้!</item>
         <item quantity="other">ลบ %d ข้อผิดพลาดมั้ย? ไม่สารมารถย้อนกลับได้!</item>

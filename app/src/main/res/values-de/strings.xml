@@ -29,6 +29,7 @@
         <item quantity="other">%d Crashes</item>
     </plurals>
     <string name="dialog_clear_content">Wirklich alle Crashes löschen?</string>
+    <string name="dialog_clear_content_combine">Führt das Löschen aller Inhalte auf der Seite wirklich zum Absturz?</string>
     <plurals name="delete_multiple_confirm">
         <item quantity="one">%d Crash löschen? Das kann nicht rückgängig gemacht werden!</item>
         <item quantity="other">%d Crashes löschen? Das kann nicht rückgängig gemacht werden!</item>

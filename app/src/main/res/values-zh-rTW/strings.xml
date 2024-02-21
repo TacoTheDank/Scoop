@@ -33,6 +33,7 @@
         <item quantity="one">要刪除這 %d 次崩潰嗎？此操作不可復原！</item>
         <item quantity="other">要刪除這 %d 次崩潰嗎？此操作不可復原！</item>
     </plurals>
+    <string name="dialog_clear_content_combine">確認刪除頁面中的所有崩潰記錄嗎？</string>
     <string name="no_items">空空如也</string>
     <!--        You can get a bit creative here as it's probably not too easy to translate directly -->
     <string name="make_crash">Wanna make something crash? ಠ‿ಠ</string>

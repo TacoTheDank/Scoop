@@ -29,6 +29,7 @@
         <item quantity="other">%d bloqueos</item>
     </plurals>
     <string name="dialog_clear_content">¿Está seguro de que quiere borrar todos los accidentes?</string>
+    <string name="dialog_clear_content_combine">¿Está seguro de que desea eliminar todos los incidentes de la página?</string>
     <plurals name="delete_multiple_confirm">
         <item quantity="one">¿Borrar %d bloqueo? ¡No se podrá deshacer!</item>
         <item quantity="other">¿Borrar %d bloqueos? ¡No se podrá deshacer!</item>
